@@ -1,6 +1,7 @@
 import { createHash } from 'node:crypto';
-import { readFileSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 import { describe, expect, it } from 'vitest';
 
@@ -55,19 +56,40 @@ describe('MT DungeonCodec — validation sur les fichiers d’origine', () => {
 });
 
 /**
- * Validation de tous les fichiers de l'archive locale (optionnelle, SANS réseau).
- * Usage : MT_DUNGEON_MAPS_DIR=/.../DinoRPG/xml/fr/dungeons pnpm ... test:unit
- * Chaque fichier est comparé d'abord à son blob Git MT exact, puis décodé.
+ * Les cartes ont été ajoutées au dépôt par le développeur : elles font
+ * désormais partie des fixtures obligatoires de cette suite. Aucune variable
+ * d'environnement, aucun réseau, aucun skip conditionnel.
+ *
+ * Résolution depuis CE fichier, indépendante du répertoire de lancement
+ * de pnpm/Vitest, sur Windows et sur Linux.
  */
-const originalMapsDir = process.env.MT_DUNGEON_MAPS_DIR;
-describe.skipIf(!originalMapsDir)('Archive MT locale complète', () => {
+const originalMapsDir = fileURLToPath(new URL('../../../src/models/dungeon/maps/', import.meta.url));
+
+describe('11 cartes originales MT versionnées avec le projet', () => {
+	it('contient exactement les 11 cartes de l’inventaire historique', () => {
+		const expected = Object.keys(ORIGINAL_MT_DUNGEON_MAP_SHA).sort();
+		const actual = readdirSync(originalMapsDir)
+			.filter(name => name.endsWith('.xml'))
+			.sort();
+		expect(actual).toEqual(expected);
+	});
 	for (const [filename, expectedSha] of Object.entries(ORIGINAL_MT_DUNGEON_MAP_SHA)) {
 		it(`vérifie et décode ${filename}`, () => {
-			const file = readFileSync(join(originalMapsDir!, filename));
-			expect(gitBlobSha(file)).toBe(expectedSha);
-			const result = decodeMtDungeon(file.toString('utf8'));
+			const bytes = readFileSync(join(originalMapsDir, filename));
+			// Vérifie les OCTETS du blob original, avant normalisation CRLF/BOM.
+			expect(gitBlobSha(bytes)).toBe(expectedSha);
+			const result = decodeMtDungeon(bytes.toString('utf8'));
 			expect(result.structure.levels.length).toBeGreaterThan(0);
-			expect(result.structure.levels.every(l => l.rooms.length > 0)).toBe(true);
+			expect(result.structure.levels.every(level => level.rooms.length > 0)).toBe(true);
+			const allPoints = [result.structure.start, result.structure.exit];
+			for (const p of allPoints) {
+				expect(p.x).toBeGreaterThanOrEqual(0);
+				expect(p.y).toBeGreaterThanOrEqual(0);
+				expect(p.l).toBeGreaterThanOrEqual(0);
+				expect(p.x).toBeLessThan(result.structure.width);
+				expect(p.y).toBeLessThan(result.structure.height);
+				expect(p.l).toBeLessThan(result.structure.levels.length);
+			}
 		});
 	}
 });
