@@ -31,30 +31,12 @@
 				</div>
 
 				<div class="mt-test__viewport">
-					<MtOriginalDungeonCanvas v-if="view" :scene="view.scene" />
+					<MtOriginalDungeonCanvas v-if="view" :scene="view.scene" :actors="visualParty" :facing-right="facingRight" />
 					<div v-else class="mt-test__placeholder">Chargement de la vue…</div>
-					<div v-if="view" class="mt-test__actors" aria-label="Groupe de Dinoz">
-						<div
-							v-for="(actor, index) in visualParty"
-							:key="actor.id"
-							class="mt-test__actor"
-							:class="{ 'mt-test__actor--leader': index === 0 }"
-							:style="{ left: `${actor.x}%`, top: `${actor.y}%`, zIndex: actor.z }"
-						>
-							<DinozMini
-								:key="`${actor.id}-${facingRight}`"
-								:display="actor.display"
-								:width="48"
-								:height="48"
-								:flip="facingRight"
-							/>
-						</div>
-						<span v-if="!visualParty.length" class="mt-test__fallback">●</span>
-					</div>
 				</div>
 				<p class="mt-test__caption">
-					Dinoz animés : moteur graphique actuel de Remastered. Le suivi du groupe est visuel ; le serveur conserve
-					l'autorité sur les déplacements. Le brouillard est une approximation du filtre Flash.
+					PixiJS : murs en profondeur, Dinoz intégrés à la scène et sprites MT à taille native. Le brouillard et les
+					points d’ancrage PNG restent une reconstruction graphique à comparer au SWF original.
 				</p>
 
 				<div class="mt-test__controls" aria-label="Déplacements dans le donjon">
@@ -144,7 +126,6 @@ import axios from 'axios';
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import MtOriginalDungeonCanvas from '../components/dungeon/MtOriginalDungeonCanvas.vue';
-import DinozMini from '../components/dinoz/DinozMini.vue';
 import { advanceMtTrail, mtFollowerPositions, type MtTrailPoint } from '../components/dungeon/dungeonPartyTrail.js';
 import { DinozService } from '../services/dinoz.service.js';
 import { MtDungeonService, type MtDungeonCurrentView, type MtDungeonEncounter } from '../services/mtDungeon.service.js';
@@ -177,21 +158,15 @@ const visualParty = computed(() => {
 		asTrailPoint(run),
 		...mtFollowerPositions(movementTrail.value, asTrailPoint(run), visualMembers.value.length - 1)
 	];
+	// If the profile request fails, keep a neutral location marker for testing.
+	if (!visualMembers.value.length) return [{ id: leaderId, display: '', x: run.position.x, y: run.position.y }];
 	return visualMembers.value.flatMap((member, index) => {
 		const location = positions[index]!;
 		if (location.mapId !== run.mapId || location.l !== run.position.l) return [];
 		const x = location.x - currentView.scene.viewport.ix;
 		const y = location.y - currentView.scene.viewport.iy;
-		if (x < -1 || x > 9 || y < -1 || y > 9) return [];
-		return [
-			{
-				id: member.id,
-				display: member.display,
-				x: ((x + 0.5) / 9) * 100,
-				y: ((y + 0.5) / 9) * 100,
-				z: 20 + location.y * 2 + index
-			}
-		];
+		if (x < -2 || x > 10 || y < -2 || y > 10) return [];
+		return [{ id: member.id, display: member.display, x: location.x, y: location.y }];
 	});
 });
 async function loadVisualParty(): Promise<void> {
@@ -439,39 +414,6 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeyDown));
 	background: #3d3325;
 	border: 5px solid #5f4123;
 	box-shadow: inset 0 0 10px #201a13;
-}
-.mt-test__viewport :deep(.mt-dungeon-preview) {
-	width: 100%;
-	max-width: none;
-}
-.mt-test__viewport :deep(.mt-dungeon-preview__caption),
-.mt-test__viewport :deep(.mt-dungeon-preview__diagnostics) {
-	display: none;
-}
-.mt-test__actors {
-	position: absolute;
-	inset: 0;
-	pointer-events: none;
-	overflow: hidden;
-}
-.mt-test__actor {
-	position: absolute;
-	width: 48px;
-	height: 48px;
-	transform: translate(-50%, -65%);
-	filter: drop-shadow(0 3px 3px #0009);
-}
-.mt-test__actor--leader {
-	filter: drop-shadow(0 3px 3px #000b);
-}
-.mt-test__fallback {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	color: #f7eac4;
-	font-size: 20px;
-	text-shadow: 0 0 4px #000;
 }
 .mt-test__placeholder {
 	text-align: center;
