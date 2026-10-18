@@ -193,7 +193,7 @@ function itemArt(feature: MtSceneFeature, unresolved: Set<string>): string | nul
 			// View.hx assigns timeline frame 5 or 6. The historical exports name
 			// the corresponding images stair_up / stair_down (direction from frame).
 			unresolved.add('Orientation/ancrage de l’escalier à vérifier avec gfx.swf (frame 5/6)');
-			return feature.frame === 5 ? 'item_stair_up.png' : 'item_stair_down.png';
+			return feature.frame === 6 ? 'item_stair_up.png' : 'item_stair_down.png';
 		case 'heal':
 			unresolved.add('Objet de soin (frames 7/8) : correspondance à confirmer dans gfx.swf');
 			return null;
