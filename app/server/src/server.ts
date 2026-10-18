@@ -33,6 +33,7 @@ import { loadDialogs } from './Dialog/Controller/dialog.registry.js';
 import { dialogRoutes } from './Dialog/Routes/dialog.routes.js';
 import { dinozRoutes } from './Dinoz/Routes/dinoz.routes.js';
 import { dojoRoutes } from './Dojo/Routes/dojo.routes.js';
+import { mtDungeonRoutes } from './Dungeon/Routes/mtDungeon.routes.js';
 import { fightRoutes } from './Fight/Routes/fight.routes.js';
 import { forcebrutRoutes } from './Forcebrut/Routes/forcebrutTournament.routes.js';
 import { forumRoutes } from './Forum/Routes/forum.routes.js';
@@ -397,6 +398,7 @@ async function buildServer(options: BuildServerOptions = {}) {
 	server.register(shopRoutes, { prefix: 'api/shop' });
 	server.register(bankRoutes, { prefix: 'api/bank' });
 	server.register(dinozRoutes, { prefix: 'api/dinoz' });
+	server.register(mtDungeonRoutes, { prefix: 'api/dungeon/mt' });
 	server.register(fightRoutes, { prefix: 'api/fight' });
 	server.register(levelRoutes, { prefix: 'api/level' });
 	server.register(gatherRoutes, { prefix: 'api/gather' });

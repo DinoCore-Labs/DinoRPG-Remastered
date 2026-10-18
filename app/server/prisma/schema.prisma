@@ -102,6 +102,7 @@ model Dinoz {
 
   @@index([userId])
   @@index([leaderId])
+  mtDungeonRuns MtDungeonRun[]
 }
 
 model DinozCatch {
@@ -810,6 +811,7 @@ model User {
   userEventTrackings UserEventTracking[]
 
   monsterHuntParticipants MonsterHuntParticipant[]
+  mtDungeonRuns MtDungeonRun[]
 }
 
 model Notification {
@@ -1713,4 +1715,28 @@ model MonsterHuntRankingRewardClaim {
   @@index([participantId])
   @@index([rankingRewardId])
   @@map("monster_hunt_ranking_reward_claim")
+}
+
+model MtDungeonRun {
+  id            String   @id @default(uuid()) @db.Uuid
+  userId        String   @db.Uuid
+  leaderDinozId Int
+  mapId         String   @db.VarChar(64)
+  revision      Int      @default(0)
+  x             Int
+  y             Int
+  l             Int
+  keys          Boolean[] @default([])
+  flags         Int[]    @default([])
+  fog           Bytes?
+  locked        Boolean  @default(false)
+  pending       Json?
+  createdAt     DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt     DateTime @updatedAt @db.Timestamptz(3)
+
+  user        User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  leaderDinoz Dinoz @relation(fields: [leaderDinozId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, leaderDinozId])
+  @@index([userId])
 }
