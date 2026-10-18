@@ -33,11 +33,28 @@
 				<div class="mt-test__viewport">
 					<MtOriginalDungeonCanvas v-if="view" :scene="view.scene" />
 					<div v-else class="mt-test__placeholder">Chargement de la vue…</div>
-					<!-- Position only: this is explicitly NOT an archived Flash Dinoz sprite. -->
-					<span v-if="view" class="mt-test__leader-marker" aria-label="Position du Dinoz (repère temporaire)">◆</span>
+					<div v-if="view" class="mt-test__actors" aria-label="Groupe de Dinoz">
+						<div
+							v-for="(actor, index) in visualParty"
+							:key="actor.id"
+							class="mt-test__actor"
+							:class="{ 'mt-test__actor--leader': index === 0 }"
+							:style="{ left: `${actor.x}%`, top: `${actor.y}%`, zIndex: actor.z }"
+						>
+							<DinozMini
+								:key="`${actor.id}-${facingRight}`"
+								:display="actor.display"
+								:width="48"
+								:height="48"
+								:flip="facingRight"
+							/>
+						</div>
+						<span v-if="!visualParty.length" class="mt-test__fallback">●</span>
+					</div>
 				</div>
 				<p class="mt-test__caption">
-					◆ : position du groupe (repère temporaire, non MT). Brouillard et géométrie issus de la session serveur.
+					Dinoz animés : moteur graphique actuel de Remastered. Le suivi du groupe est visuel ; le serveur conserve
+					l'autorité sur les déplacements. Le brouillard est une approximation du filtre Flash.
 				</p>
 
 				<div class="mt-test__controls" aria-label="Déplacements dans le donjon">
@@ -112,8 +129,8 @@
 				<details v-if="view" class="mt-test__details">
 					<summary>Diagnostics de fidélité</summary>
 					<p>
-						Sol et murs : PNG originaux ; sélection mt.Rand conservée. Bruit Perlin et acteur Flash encore non
-						reproduits.
+						Sol et murs : PNG originaux, mais ancrages et sous-clips Flash non entièrement rétablis. Le bruit Perlin
+						Flash est toujours absent. Les Dinoz affichés viennent de l'animation actuelle de Remastered.
 					</p>
 					<p>Les régions inconnues et les événements cachés ne sont pas transmis par l'API de vue.</p>
 				</details>
@@ -127,6 +144,9 @@ import axios from 'axios';
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import MtOriginalDungeonCanvas from '../components/dungeon/MtOriginalDungeonCanvas.vue';
+import DinozMini from '../components/dinoz/DinozMini.vue';
+import { advanceMtTrail, mtFollowerPositions, type MtTrailPoint } from '../components/dungeon/dungeonPartyTrail.js';
+import { DinozService } from '../services/dinoz.service.js';
 import { MtDungeonService, type MtDungeonCurrentView, type MtDungeonEncounter } from '../services/mtDungeon.service.js';
 import { sessionStore } from '../store/sessionStore';
 import { localStore } from '../store/localStore';
@@ -143,6 +163,52 @@ const errorMessage = ref('');
 const notice = ref('');
 const loading = ref(true);
 const busy = ref(false);
+const visualMembers = ref<{ id: number; display: string }[]>([]);
+const movementTrail = ref<MtTrailPoint[]>([]);
+const facingRight = ref(true);
+function asTrailPoint(run: MtDungeonSession): MtTrailPoint {
+	return { mapId: run.mapId, x: run.position.x, y: run.position.y, l: run.position.l };
+}
+const visualParty = computed(() => {
+	const run = session.value;
+	const currentView = view.value;
+	if (!run || !currentView) return [];
+	const positions = [
+		asTrailPoint(run),
+		...mtFollowerPositions(movementTrail.value, asTrailPoint(run), visualMembers.value.length - 1)
+	];
+	return visualMembers.value.flatMap((member, index) => {
+		const location = positions[index]!;
+		if (location.mapId !== run.mapId || location.l !== run.position.l) return [];
+		const x = location.x - currentView.scene.viewport.ix;
+		const y = location.y - currentView.scene.viewport.iy;
+		if (x < -1 || x > 9 || y < -1 || y > 9) return [];
+		return [
+			{
+				id: member.id,
+				display: member.display,
+				x: ((x + 0.5) / 9) * 100,
+				y: ((y + 0.5) / 9) * 100,
+				z: 20 + location.y * 2 + index
+			}
+		];
+	});
+});
+async function loadVisualParty(): Promise<void> {
+	try {
+		const leader = await DinozService.getDinozFiche(leaderId, { silent: true });
+		const followers = await Promise.all(
+			leader.followers.map(follower => DinozService.getDinozFiche(follower.id, { silent: true }))
+		);
+		visualMembers.value = [
+			{ id: leader.id, display: leader.display },
+			...followers.map(follower => ({ id: follower.id, display: follower.display }))
+		];
+	} catch {
+		// Actor data is decorative; never block authoritative exploration.
+		visualMembers.value = [];
+	}
+}
 const stage = computed(() => Number(session.value?.mapId.split('_')[1] ?? 0));
 const isMagnetic = computed(() => session.value?.mapId.startsWith('stepp_') ?? false);
 const cannotMove = computed(
@@ -187,6 +253,12 @@ async function refresh(): Promise<void> {
 	errorMessage.value = '';
 	try {
 		const current = await MtDungeonService.getSession(leaderId);
+		if (
+			session.value &&
+			(session.value.mapId !== current.mapId ||
+				JSON.stringify(session.value.position) !== JSON.stringify(current.position))
+		)
+			movementTrail.value = [];
 		session.value = current;
 		if (current.mapId.startsWith('stepp_')) {
 			view.value = await MtDungeonService.getView(leaderId);
@@ -257,6 +329,14 @@ function move(direction: 'north' | 'south' | 'west' | 'east' | 'up' | 'down') {
 			notice.value = 'Déplacement refusé par le serveur.';
 			return;
 		}
+		if (direction === 'west') facingRight.value = false;
+		if (direction === 'east') facingRight.value = true;
+		movementTrail.value = advanceMtTrail(
+			movementTrail.value,
+			asTrailPoint(previous),
+			asTrailPoint(result.session),
+			Math.max(0, visualMembers.value.length - 1)
+		);
 		await afterMutation(result.session);
 	});
 }
@@ -264,12 +344,20 @@ function transition(action: 'forward' | 'backward') {
 	if (!session.value?.pending) return;
 	void execute(async () => {
 		await afterMutation(await MtDungeonService.transition(leaderId, session.value!.revision, action));
+		movementTrail.value = [];
 	});
 }
 function resolveScenario() {
 	if (encounter.value?.kind !== 'scenario' || !session.value) return;
 	void execute(async () => {
 		const outcome = await MtDungeonService.resolveScenario(leaderId, session.value!.revision, language.value);
+		const previous = session.value!;
+		movementTrail.value = advanceMtTrail(
+			movementTrail.value,
+			asTrailPoint(previous),
+			asTrailPoint(outcome.session),
+			Math.max(0, visualMembers.value.length - 1)
+		);
 		await afterMutation(outcome.session);
 		notice.value = outcome.message ?? 'Événement traité par le serveur.';
 	});
@@ -308,6 +396,7 @@ function onKeyDown(event: KeyboardEvent): void {
 }
 onMounted(() => {
 	window.addEventListener('keydown', onKeyDown);
+	void loadVisualParty();
 	void refresh();
 });
 onBeforeUnmount(() => window.removeEventListener('keydown', onKeyDown));
@@ -359,17 +448,30 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeyDown));
 .mt-test__viewport :deep(.mt-dungeon-preview__diagnostics) {
 	display: none;
 }
-.mt-test__leader-marker {
+.mt-test__actors {
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+	overflow: hidden;
+}
+.mt-test__actor {
+	position: absolute;
+	width: 48px;
+	height: 48px;
+	transform: translate(-50%, -65%);
+	filter: drop-shadow(0 3px 3px #0009);
+}
+.mt-test__actor--leader {
+	filter: drop-shadow(0 3px 3px #000b);
+}
+.mt-test__fallback {
 	position: absolute;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	color: #fff4ba;
-	text-shadow:
-		0 1px 4px #000,
-		0 0 5px #000;
-	font-size: 26px;
-	pointer-events: none;
+	color: #f7eac4;
+	font-size: 20px;
+	text-shadow: 0 0 4px #000;
 }
 .mt-test__placeholder {
 	text-align: center;
