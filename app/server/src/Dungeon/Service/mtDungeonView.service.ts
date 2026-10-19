@@ -1,12 +1,13 @@
 /**
  * Authenticated, viewport-limited MT test renderer.
  * The original Flash perlinNoise pixels have not been recovered; this endpoint
- * intentionally uses a neutral/no-overlay surface rather than inventing noise.
+ * now uses explicitly approximate EternalTwin-style value noise (not Flash perlinNoise).
  * Never return the complete DungeonStructure or hidden event coordinates.
  */
 import { effectiveMtDungeonScenarioIcons } from '@dinorpg/core/models/dungeon/dungeon.blocks.js';
 import { buildMtDungeonScene } from '@dinorpg/core/models/dungeon/dungeon.scene.js';
 import { getDungeonSkin } from '@dinorpg/core/models/dungeon/dungeon.skins.js';
+import { createMtDungeonTerrainNoise } from '@dinorpg/core/models/dungeon/dungeon.terrainNoise.js';
 import { redactMtDungeonViewport } from '@dinorpg/core/models/dungeon/dungeon.viewport.js';
 
 import { getMtDungeonArchive, mtDungeonDependencies } from './mtDungeonRuntime.service.js';
@@ -30,7 +31,7 @@ export async function getMtDungeonCurrentView(identity: MtSessionIdentity) {
 		viewY: position.y - 4,
 		skin,
 		// Neutral fallback until original Flash perlinNoise implementation is ported.
-		noiseAt: () => 255,
+		noiseAt: createMtDungeonTerrainNoise(session.mapId, position.l, skin.perlin),
 		flags: new Set(flags),
 		scenarioIcons: effectiveMtDungeonScenarioIcons(cfg.scenarioIcons, cfg.blockRules, flags),
 		tower: cfg.tower,
@@ -43,6 +44,6 @@ export async function getMtDungeonCurrentView(identity: MtSessionIdentity) {
 		skin: skinName,
 		stage,
 		scene: redactMtDungeonViewport(scene, cfg.map, fog),
-		limitations: ['neutral-perlin-noise', 'flash-actor-not-yet-ported'] as const
+		limitations: ['approximate-terrain-noise', 'flash-actor-not-yet-ported'] as const
 	};
 }
