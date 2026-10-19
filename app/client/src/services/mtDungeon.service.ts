@@ -5,6 +5,13 @@ import type { FightResult } from '@dinorpg/core/models/fight/fightResult.js';
 
 import { api } from '../utils/http';
 
+export interface MtDungeonGuardianVisual {
+	x: number;
+	y: number;
+	gfx: string;
+	source: 'door' | 'scenario';
+}
+
 export interface MtDungeonCurrentView {
 	mapId: string;
 	revision: number;
@@ -12,6 +19,7 @@ export interface MtDungeonCurrentView {
 	skin: string;
 	stage: number;
 	scene: MtDungeonScene;
+	guardianSprites: MtDungeonGuardianVisual[];
 	limitations: readonly string[];
 }
 
