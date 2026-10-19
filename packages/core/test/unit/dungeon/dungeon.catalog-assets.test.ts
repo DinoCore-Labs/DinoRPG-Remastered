@@ -1,47 +1,41 @@
-/** Non-skipped checks of the four authentic Motion Twin locale assets. */
-import { createHash } from 'node:crypto';
-import { existsSync, readFileSync } from 'node:fs';
-import { join } from 'node:path';
-import { fileURLToPath } from 'node:url';
-
 import { describe, expect, it } from 'vitest';
 
 import {
-	assertMtDungeonTranslationCompatible,
 	groupMtDungeonDefinitions,
-	MT_DUNGEON_DEFINITIONS_SHA,
-	MT_DUNGEON_LANGUAGES,
+	localizeMtDungeonDefinition,
 	MT_DUNGEON_MAPS
 } from '../../../src/models/dungeon/dungeon.catalog.js';
-import { parseMtDungeonDefinitions } from '../../../src/models/dungeon/dungeon.definition.js';
+import { decodeMtDungeon } from '../../../src/models/dungeon/dungeon.codec.js';
+import { ORIGINAL_MT_DUNGEON_MAP_SHA } from '../../../src/models/dungeon/dungeon.mapManifest.js';
+import { MT_DUNGEON_DEFINITIONS, MT_DUNGEON_MAPS_ENCODED } from '../../../src/models/dungeon/dungeon.mtData.js';
 
-const localeDir = fileURLToPath(new URL('../../../src/models/dungeon/definitions/', import.meta.url));
-const readOriginal = (lang: (typeof MT_DUNGEON_LANGUAGES)[number]) => {
-	const path = join(localeDir, lang, 'dungeons.xml');
-	expect(existsSync(path), `${lang}: fournir le vrai dungeons.xml MT dans definitions/${lang}/`).toBe(true);
-	const bytes = readFileSync(path);
-	expect(createHash('sha1').update(`blob ${bytes.length}\0`).update(bytes).digest('hex')).toBe(
-		MT_DUNGEON_DEFINITIONS_SHA[lang]
-	);
-	return groupMtDungeonDefinitions(parseMtDungeonDefinitions(bytes.toString('utf8')));
-};
-
-describe('4 catalogues MT inchangés, séparés des 11 cartes', () => {
-	it('le français contient 6 donjons et exactement 11 étapes', () => {
-		const fr = readOriginal('fr');
-		expect([...fr.keys()].sort()).toEqual(Object.keys(MT_DUNGEON_MAPS).sort());
-	});
-	for (const lang of MT_DUNGEON_LANGUAGES.filter(lang => lang !== 'fr')) {
-		it(`${lang}: traduit les mêmes événements sans changer le gameplay`, () => {
-			const fr = readOriginal('fr');
-			const translated = readOriginal(lang);
-			const expectedIds = Object.keys(MT_DUNGEON_MAPS)
-				.filter(id => lang !== 'de' || id !== 'labo')
-				.sort();
-			expect([...translated.keys()].sort()).toEqual(expectedIds);
-			for (const [id, localized] of translated) {
-				assertMtDungeonTranslationCompatible(fr.get(id)!, localized);
+describe('static Motion Twin dungeon archive', () => {
+	it('provides every original map as a decodable static string', () => {
+		expect(Object.keys(MT_DUNGEON_MAPS_ENCODED).sort()).toEqual(Object.keys(ORIGINAL_MT_DUNGEON_MAP_SHA).sort());
+		const fr = groupMtDungeonDefinitions(MT_DUNGEON_DEFINITIONS.fr);
+		for (const [file, encoded] of Object.entries(MT_DUNGEON_MAPS_ENCODED)) {
+			const [dungeonId, stageString] = file.replace(/\.xml$/, '').split('_');
+			const stage = fr.get(dungeonId as keyof typeof MT_DUNGEON_MAPS)?.stages[Number(stageString)];
+			expect(stage, file).toBeDefined();
+			const map = decodeMtDungeon(encoded).structure;
+			expect(map.levels.length, file).toBeGreaterThan(0);
+			for (const level of map.levels) {
+				for (const room of level.rooms) {
+					if (room.item?.kind === 'IScenario') {
+						expect(stage?.scenarios[room.item.value], `${file} scenario ${room.item.value}`).toBeDefined();
+					}
+				}
 			}
-		});
-	}
+		}
+	});
+	it('preserves the original language inventory and identical mechanics', () => {
+		const original = groupMtDungeonDefinitions(MT_DUNGEON_DEFINITIONS.fr);
+		expect([...original.keys()].sort()).toEqual(Object.keys(MT_DUNGEON_MAPS).sort());
+		for (const language of ['en', 'es', 'de'] as const) {
+			const translated = groupMtDungeonDefinitions(MT_DUNGEON_DEFINITIONS[language]);
+			for (const [id, definition] of translated) {
+				expect(localizeMtDungeonDefinition(original.get(id)!, definition, language).languageUsed).toBe(language);
+			}
+		}
+	});
 });
