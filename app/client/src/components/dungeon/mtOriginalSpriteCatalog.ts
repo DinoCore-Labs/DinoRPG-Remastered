@@ -322,10 +322,15 @@ function itemArt(feature: MtSceneFeature, unresolved: Set<string>): string | nul
 
 			return null;
 
-		case 'scenario-icon':
+		case 'scenario-icon': {
+			// The canonical MT definitions use exactly chest, scroll and skel.
+			// These exact PNG files exist in the original export.
+			if (feature.icon === 'chest' || feature.icon === 'scroll' || feature.icon === 'skel') {
+				return `item_${feature.icon}.png`;
+			}
 			unresolved.add(`Scénario : symbole Flash DIIcon « ${feature.icon} » à extraire de gfx.swf`);
-
 			return null;
+		}
 
 		case 'guardian':
 			unresolved.add('Gardien : marqueur item_skel temporaire (le vrai \_smonster SWF reste à porter)');
@@ -441,7 +446,7 @@ export function createMtSpritePlan(scene: MtDungeonScene, options: MtSpriteOptio
 
 	for (const feature of scene.features) {
 		const file = itemArt(feature, unresolved);
-		push(file, feature.x * TILE, feature.y * TILE, 1, `item:${file ?? feature.kind}`);
+		push(file, feature.x * TILE, feature.y * TILE, 1, `item:${feature.kind}:${file ?? 'missing'}`);
 	}
 
 	if (scene.fog.length) unresolved.add('Brouillard original fog + BlurFilter(32,32) non encore porté');
