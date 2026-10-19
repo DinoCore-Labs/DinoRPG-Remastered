@@ -54,6 +54,7 @@ import type { MtDungeonScene, MtWallPart } from '@dinorpg/core/models/dungeon/du
 import { AnimatedSprite, Application, Assets, BlurFilter, Container, Graphics, Sprite, type Texture } from 'pixi.js';
 
 import { createMtSpritePlan, type MtRandomFrameSource } from './mtOriginalSpriteCatalog.js';
+import { placeMtDungeonItem } from './mtDungeonItemPlacement.js';
 
 import { mtWallBounds, placeMtWall } from './mtDungeonWallPlacement.js';
 
@@ -474,18 +475,23 @@ function paintSprite(sprite: ReturnType<typeof createMtSpritePlan>['sprites'][nu
 
 			diagnosticsLayer.addChild(marker);
 		}
-	} else if (sprite.file === 'item_stair_up.png' || sprite.file === 'item_stair_down.png') {
-		// EternalTwin MazeRenderer.drawIcon()/sprite(): separate centered icon plane.
-		// The former label was item:stair for both variants, so it never matched.
-		const size = sprite.file === 'item_stair_up.png' ? 1.2 : 0.9;
-		const cell = 40;
-		visual.anchor.set(0.5);
-		visual.scale.set((cell * size) / Math.max(texture.width, texture.height));
-		visual.position.set(sprite.x + cell / 2 - originX, sprite.y + cell / 2 - cell * 0.4 - originY);
+	} else if (sprite.label.startsWith('item:')) {
+		// Unlike ground tiles, MT items are centered on the logical cell.
+		// Compute placement from the *actual* source PNG, not an item label.
+		const placement = placeMtDungeonItem(sprite.file, sprite.x, sprite.y, texture.width, texture.height);
+		if (placement) {
+			visual.anchor.set(placement.anchorX, placement.anchorY);
+			visual.scale.set(placement.scale);
+			visual.position.set(placement.x - originX, placement.y - originY);
+		} else {
+			// No fabricated artwork for unsupported original Flash frames.
+			visual.position.set(sprite.x - originX, sprite.y - originY);
+		}
 		items.addChild(visual);
 	} else {
+		// Ground and overground remain at their original top-left coordinates.
 		visual.position.set(sprite.x - originX, sprite.y - originY);
-		(sprite.label.startsWith('item:') ? items : ground).addChild(visual);
+		ground.addChild(visual);
 	}
 }
 
@@ -643,7 +649,7 @@ async function setup(): Promise<void> {
 
 		diagnosticsLayer = new Container();
 
-		worldLayer.addChild(ground, northernWalls, items, actorsLayer, nearWalls, fogLayer, diagnosticsLayer);
+		worldLayer.addChild(ground, items, northernWalls, actorsLayer, nearWalls, fogLayer, diagnosticsLayer);
 
 		created.stage.addChild(worldLayer);
 
