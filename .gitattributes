@@ -1,0 +1,4 @@
+# Preserve the exact original Motion Twin XML bytes on Windows checkouts.
+# The dungeon archive validates Git blob SHA-1 values at runtime.
+/packages/core/src/models/dungeon/definitions/**/*.xml text eol=lf
+/packages/core/src/models/dungeon/maps/*.xml text eol=lf
