@@ -37,6 +37,7 @@
 						:stage-key="session.mapId"
 						:actors="visualParty"
 						:facing-right="facingRight"
+						:show-unverified-same-name-overlays="true"
 					/>
 					<div v-else class="mt-test__placeholder">Chargement de la vue…</div>
 				</div>
