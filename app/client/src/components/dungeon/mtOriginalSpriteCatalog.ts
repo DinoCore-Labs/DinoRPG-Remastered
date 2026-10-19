@@ -333,9 +333,8 @@ function itemArt(feature: MtSceneFeature, unresolved: Set<string>): string | nul
 		}
 
 		case 'guardian':
-			unresolved.add('Gardien : marqueur item_skel temporaire (le vrai \_smonster SWF reste à porter)');
-
-			return 'item_skel.png'; // Temporary original MT marker
+			// Animated smonster guardians are drawn on the actor plane, not the item plane.
+			return null;
 	}
 }
 

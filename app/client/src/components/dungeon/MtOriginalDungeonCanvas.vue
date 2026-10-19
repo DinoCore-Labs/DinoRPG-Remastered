@@ -59,6 +59,8 @@ import { placeMtDungeonItem } from './mtDungeonItemPlacement.js';
 import { mtWallBounds, placeMtWall } from './mtDungeonWallPlacement.js';
 
 import { loadMtDungeonActorFrames } from './mtDungeonActorFrames.js';
+import { loadMtDungeonGuardianFrames } from './mtDungeonGuardianFrames.js';
+import type { MtDungeonGuardianVisual } from '../../services/mtDungeon.service.js';
 
 import { easeMtCameraOffset, mtCameraShift, type MtCameraViewport } from './mtDungeonCamera.js';
 
@@ -82,6 +84,7 @@ const props = defineProps<{
 	stageKey?: string;
 
 	actors?: readonly MtDungeonActor[];
+	guardians?: readonly MtDungeonGuardianVisual[];
 
 	facingRight?: boolean;
 
@@ -205,6 +208,7 @@ interface ActorState {
 }
 
 const actorNodes = new Map<number, ActorState>();
+const guardianNodes = new Set<AnimatedSprite>();
 
 function clear(layer: Container): void {
 	for (const child of layer.removeChildren()) child.destroy({ children: true });
@@ -495,6 +499,44 @@ function paintSprite(sprite: ReturnType<typeof createMtSpritePlan>['sprites'][nu
 	}
 }
 
+/** Monsters share the sortable actor plane with the Dinoz. Never use PixiJS 7 nodes. */
+function clearGuardianNodes(): void {
+	for (const visual of guardianNodes) {
+		visual.stop();
+		actorsLayer.removeChild(visual);
+		visual.destroy();
+	}
+	guardianNodes.clear();
+}
+
+function paintGuardians(scene: MtDungeonScene, ticket: number): void {
+	for (const guardian of props.guardians ?? []) {
+		if (!Number.isInteger(guardian.x) || !Number.isInteger(guardian.y)) continue;
+		const x = (guardian.x - scene.viewport.ix + 0.5) * 40;
+		const y = (guardian.y - scene.viewport.iy + 0.75) * 40;
+		void loadMtDungeonGuardianFrames(guardian.gfx)
+			.then(frames => {
+				if (disposed || !app || ticket !== generation || !frames.length) return;
+				const visual = new AnimatedSprite([...frames]);
+				visual.anchor.set(0.5);
+				visual.position.set(x, y);
+				visual.zIndex = guardian.y;
+				visual.animationSpeed = 0.2;
+				visual.loop = true;
+				actorsLayer.addChild(visual);
+				guardianNodes.add(visual);
+				visual.play();
+			})
+			.catch(error => {
+				if (disposed || ticket !== generation) return;
+				diagnostics.value = [
+					...diagnostics.value,
+					`Monstre MT ${guardian.gfx} : chargement impossible (${String(error)})`
+				];
+			});
+	}
+}
+
 function paintFog(scene: MtDungeonScene): void {
 	if (!scene.fog.length) return;
 
@@ -598,6 +640,7 @@ async function repaint(): Promise<void> {
 
 	worldLayer.position.set(shift.offsetX, shift.offsetY);
 
+	clearGuardianNodes();
 	for (const layer of [ground, northernWalls, items, nearWalls, fogLayer, diagnosticsLayer]) clear(layer);
 
 	app.renderer.background.color = palette(scene.fogColor);
@@ -613,6 +656,7 @@ async function repaint(): Promise<void> {
 	renderedScene = scene;
 
 	syncActors(shift.snap);
+	paintGuardians(scene, ticket);
 }
 
 async function setup(): Promise<void> {
@@ -671,6 +715,8 @@ watch(
 	() => [
 		props.scene,
 
+		props.guardians,
+
 		props.stageKey,
 
 		props.frameFor,
@@ -712,6 +758,7 @@ onBeforeUnmount(() => {
 		if (state.visual instanceof AnimatedSprite) state.visual.stop();
 	}
 
+	clearGuardianNodes();
 	actorNodes.clear();
 
 	renderedViewport = null;
