@@ -98,10 +98,10 @@
 					</td>
 					<td class="stats other" v-if="selfMember">
 						<img
-							src="\src\assets\icons\small_hourglass.webp"
+							:src="getImgURL('icons', 'small_hourglass')"
 							alt="lastLogin"
 							v-tippy="{
-								content: $t('	', { date: dateToString(member.user?.lastLogin) }),
+								content: getLastLoginTooltip(member.user?.lastLogin),
 								theme: 'small'
 							}"
 						/>
@@ -193,6 +193,28 @@ export default defineComponent({
 		},
 		dateToString(date: Date | string) {
 			return new Date(date).toLocaleString('fr-FR', { timeZone: 'GMT' });
+		},
+		getLastLoginTooltip(lastLogin: Date | string | null | undefined): string {
+			if (!lastLogin) {
+				return this.$t('clan.members.stat.last_login_never');
+			}
+			const loginDate = new Date(lastLogin);
+			if (isNaN(loginDate.getTime())) {
+				return this.$t('clan.members.stat.last_login_never');
+			}
+			const now = new Date();
+			const msPerDay = 1000 * 60 * 60 * 24;
+			const utcNow = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
+			const utcLogin = Date.UTC(loginDate.getUTCFullYear(), loginDate.getUTCMonth(), loginDate.getUTCDate());
+			const diffDays = Math.max(0, Math.floor((utcNow - utcLogin) / msPerDay));
+
+			if (diffDays === 0) {
+				return this.$t('clan.members.stat.last_login_today');
+			}
+			if (diffDays === 1) {
+				return this.$t('clan.members.stat.last_login_one_day');
+			}
+			return this.$t('clan.members.stat.last_login_days', { count: diffDays });
 		},
 		async getClanMembersList(): Promise<void> {
 			try {
