@@ -1,10 +1,12 @@
 import { describe, expect, it } from 'vitest';
 
-import { mtGitBlobSha } from '../../../src/Dungeon/Service/mtDungeonArchive.service.js';
+import { MtDungeonArchive } from '../../../src/Dungeon/Service/mtDungeonArchive.service.js';
 
-// Git object identity is computed from exactly the original bytes, not modified text.
-describe('MT archive integrity', () => {
-	it('uses Git blob SHA1 rather than raw SHA1', () => {
-		expect(mtGitBlobSha(Buffer.from('test\n', 'utf8'))).toBe('9daeafb9864cf43055ae93beb0afd6c7d144bfa4');
+describe('MT static archive', () => {
+	it('loads authentic MT definitions without filesystem XML', () => {
+		const archive = new MtDungeonArchive();
+		expect(archive.definition('stepp').name).toBe('Les Cavernes Magnétiques');
+		expect(archive.localizedDefinition('stepp', 'en').definition.name).toBe('The Magnetic Caverns');
+		expect(archive.configuration('stepp_0').map.levels.length).toBeGreaterThan(0);
 	});
 });

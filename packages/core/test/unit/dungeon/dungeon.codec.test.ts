@@ -1,12 +1,10 @@
 import { createHash } from 'node:crypto';
-import { readdirSync, readFileSync } from 'node:fs';
-import { join } from 'node:path';
-import { fileURLToPath } from 'node:url';
 
 import { describe, expect, it } from 'vitest';
 
 import { decodeMtDungeon, DungeonCodecError } from '../../../src/models/dungeon/dungeon.codec.js';
 import { ORIGINAL_MT_DUNGEON_MAP_SHA } from '../../../src/models/dungeon/dungeon.mapManifest.js';
+import { MT_DUNGEON_MAPS_ENCODED } from '../../../src/models/dungeon/dungeon.mtData.js';
 
 // Échantillons littéralement repris des archives MT ; aucun plan généré.
 const stepp3 =
@@ -63,26 +61,18 @@ describe('MT DungeonCodec — validation sur les fichiers d’origine', () => {
  * Résolution depuis CE fichier, indépendante du répertoire de lancement
  * de pnpm/Vitest, sur Windows et sur Linux.
  */
-const originalMapsDir = fileURLToPath(new URL('../../../src/models/dungeon/maps/', import.meta.url));
-
-describe('11 cartes originales MT versionnées avec le projet', () => {
-	it('contient exactement les 11 cartes de l’inventaire historique', () => {
-		const expected = Object.keys(ORIGINAL_MT_DUNGEON_MAP_SHA).sort();
-		const actual = readdirSync(originalMapsDir)
-			.filter(name => name.endsWith('.xml'))
-			.sort();
-		expect(actual).toEqual(expected);
+describe('11 cartes originales MT versionnées dans le module TS', () => {
+	it('contient exactement les 11 cartes historiques', () => {
+		expect(Object.keys(MT_DUNGEON_MAPS_ENCODED).sort()).toEqual(Object.keys(ORIGINAL_MT_DUNGEON_MAP_SHA).sort());
 	});
 	for (const [filename, expectedSha] of Object.entries(ORIGINAL_MT_DUNGEON_MAP_SHA)) {
 		it(`vérifie et décode ${filename}`, () => {
-			const bytes = readFileSync(join(originalMapsDir, filename));
-			// Vérifie les OCTETS du blob original, avant normalisation CRLF/BOM.
-			expect(gitBlobSha(bytes)).toBe(expectedSha);
-			const result = decodeMtDungeon(bytes.toString('utf8'));
+			const source = MT_DUNGEON_MAPS_ENCODED[filename as keyof typeof MT_DUNGEON_MAPS_ENCODED];
+			expect(gitBlobSha(Buffer.from(source, 'utf8'))).toBe(expectedSha);
+			const result = decodeMtDungeon(source);
 			expect(result.structure.levels.length).toBeGreaterThan(0);
 			expect(result.structure.levels.every(level => level.rooms.length > 0)).toBe(true);
-			const allPoints = [result.structure.start, result.structure.exit];
-			for (const p of allPoints) {
+			for (const p of [result.structure.start, result.structure.exit]) {
 				expect(p.x).toBeGreaterThanOrEqual(0);
 				expect(p.y).toBeGreaterThanOrEqual(0);
 				expect(p.l).toBeGreaterThanOrEqual(0);
