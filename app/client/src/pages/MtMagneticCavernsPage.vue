@@ -34,6 +34,7 @@
 					<MtOriginalDungeonCanvas
 						v-if="view"
 						:scene="view.scene"
+						:guardians="view.guardianSprites ?? []"
 						:stage-key="session.mapId"
 						:actors="visualParty"
 						:facing-right="facingRight"
