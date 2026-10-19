@@ -384,7 +384,11 @@
 				"leave": "Quitter le clan"
 			},
 			"stat": {
-				"last_login": "Dernière connexion le {date}."
+				"last_login": "Dernière connexion le {date}.",
+				"last_login_today": "Dernière connexion : aujourd'hui",
+				"last_login_one_day": "Dernière connexion : il y a 1 jour",
+				"last_login_days": "Dernière connexion : il y a {count} jours",
+				"last_login_never": "Dernière connexion : inconnue"
 			}
 		},
 		"ingredients": {
