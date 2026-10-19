@@ -296,16 +296,22 @@ a {
 }
 .onglets {
 	list-style: none;
-	height: 20px;
+	min-height: 20px;
+	height: auto;
+	display: flex;
+	flex-wrap: wrap;
+	row-gap: 4px;
 	align-self: center;
 	background-color: transparent;
 	background-image: url('../assets/design/tabs/tabsBg.webp');
 	background-repeat: no-repeat;
 	border-bottom: 1.2px solid #ffe7aa;
+	padding-left: 0;
 	li {
-		float: left;
 		position: relative;
 		margin-right: 5px;
+		display: inline-flex;
+		align-items: flex-end;
 		&.active {
 			margin-top: 1px;
 			text-shadow: 1px 1px 0px #9a4029;
@@ -318,6 +324,9 @@ a {
 			}
 		}
 		a {
+			display: inline-flex;
+			align-items: center;
+			gap: 4px;
 			color: #fce3bc;
 			text-decoration: none;
 			padding-left: 5px;
@@ -328,7 +337,18 @@ a {
 			border-top: 1px solid #d39a65;
 			font-size: 10pt;
 			border-radius: 0px;
+			white-space: nowrap;
 		}
+	}
+}
+
+@media (max-width: 539px) {
+	.main-tabs {
+		margin-bottom: 6px;
+	}
+	.sub-tabs {
+		margin-top: 4px;
+		margin-bottom: 6px;
 	}
 }
 </style>
