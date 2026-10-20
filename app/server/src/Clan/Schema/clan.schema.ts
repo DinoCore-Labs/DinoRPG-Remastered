@@ -1,23 +1,30 @@
+import {
+	CLAN_DESCRIPTION_MAX_LENGTH,
+	CLAN_NAME_MAX_LENGTH,
+	CLAN_NAME_MIN_LENGTH
+} from '@dinorpg/core/models/clan/constants.js';
 import { Language } from '@dinorpg/core/models/config/language.js';
 import { ClanMemberRight } from '@dinorpg/core/models/enums/ClanMemberRight.js';
 import { z } from 'zod';
 
 export const createClanSchema = z.object({
 	name: z
-		.string()
-		.min(3)
-		.max(25)
-		.regex(/^[a-zA-Z0-9 _-]+$/),
+		.string({ message: 'clan.create.nameRequired' })
+		.trim()
+		.min(CLAN_NAME_MIN_LENGTH, { message: 'clan.create.nameTooShort' })
+		.max(CLAN_NAME_MAX_LENGTH, { message: 'clan.create.nameTooLong' })
+		.regex(/^[a-zA-Z0-9 _-]+$/, { message: 'clan.create.nameInvalidCharacters' }),
 	languages: z.array(z.nativeEnum(Language)).optional(),
-	description: z.string().max(500).optional()
+	description: z.string().max(CLAN_DESCRIPTION_MAX_LENGTH, { message: 'clan.create.descriptionTooLong' }).optional()
 });
 
 export const clanNameSchema = z.object({
 	name: z
-		.string()
-		.min(3)
-		.max(25)
-		.regex(/^[a-zA-Z0-9 _-]+$/)
+		.string({ message: 'clan.create.nameRequired' })
+		.trim()
+		.min(CLAN_NAME_MIN_LENGTH, { message: 'clan.create.nameTooShort' })
+		.max(CLAN_NAME_MAX_LENGTH, { message: 'clan.create.nameTooLong' })
+		.regex(/^[a-zA-Z0-9 _-]+$/, { message: 'clan.create.nameInvalidCharacters' })
 });
 
 export const clanIdParamSchema = z.object({

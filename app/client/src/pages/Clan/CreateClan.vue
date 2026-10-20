@@ -41,9 +41,16 @@ import { defineComponent } from 'vue';
 import TitleHeader from '../../components/utils/TitleHeader.vue';
 import { errorHandler } from '../../utils/errorHandler.js';
 import { ClanService } from '../../services/clan.service.ts';
-import { CLAN_CREATE_MONEY } from '@dinorpg/core/models/clan/constants.js';
+import {
+	CLAN_CREATE_MIN_POINTS,
+	CLAN_CREATE_MONEY,
+	CLAN_DESCRIPTION_MAX_LENGTH,
+	CLAN_NAME_MAX_LENGTH,
+	CLAN_NAME_MIN_LENGTH
+} from '@dinorpg/core/models/clan/constants.js';
 import { formatNumber } from '../../utils/formatText.js';
 import { userStore } from '../../store/userStore';
+import { dinozStore } from '../../store/dinozStore';
 import DZDisclaimer from '../../components/utils/DZDisclaimer.vue';
 import DZInput from '../../components/utils/DZInput.vue';
 import LangSelector from '../../components/clan/LangSelector.vue';
@@ -62,29 +69,115 @@ export default defineComponent({
 			clanName: '' as string,
 			langs: [] as Language[],
 			description: '' as string,
-			canCreateClan: false as boolean,
 			creationCost: formatNumber(CLAN_CREATE_MONEY, '.'),
-			userStore: userStore()
+			userStore: userStore(),
+			dinozStore: dinozStore(),
+			isSubmitting: false as boolean
 		};
 	},
+	computed: {
+		playerPoints(): number {
+			const dinozList = this.dinozStore.getDinozList;
+			if (!dinozList || dinozList.length === 0) return 0;
+			return dinozList.reduce((sum, d) => sum + (d.level || 0), 0);
+		}
+	},
 	methods: {
+		validateForm(): boolean {
+			const trimmedName = this.clanName.trim();
+			if (!trimmedName) {
+				this.$toast.open({
+					message: this.$t('toast.clan.create.nameRequired'),
+					type: 'error'
+				});
+				return false;
+			}
+			if (trimmedName.length < CLAN_NAME_MIN_LENGTH) {
+				this.$toast.open({
+					message: this.$t('toast.clan.create.nameTooShort', { min: CLAN_NAME_MIN_LENGTH }),
+					type: 'error'
+				});
+				return false;
+			}
+			if (trimmedName.length > CLAN_NAME_MAX_LENGTH) {
+				this.$toast.open({
+					message: this.$t('toast.clan.create.nameTooLong', { max: CLAN_NAME_MAX_LENGTH }),
+					type: 'error'
+				});
+				return false;
+			}
+			if (!/^[a-zA-Z0-9 _-]+$/.test(trimmedName)) {
+				this.$toast.open({
+					message: this.$t('toast.clan.create.nameInvalidCharacters'),
+					type: 'error'
+				});
+				return false;
+			}
+			if (this.description && this.description.length > CLAN_DESCRIPTION_MAX_LENGTH) {
+				this.$toast.open({
+					message: this.$t('toast.clan.create.descriptionTooLong', { max: CLAN_DESCRIPTION_MAX_LENGTH }),
+					type: 'error'
+				});
+				return false;
+			}
+			if (this.userStore.clanId != null) {
+				this.$toast.open({
+					message: this.$t('toast.clan.create.alreadyInClan'),
+					type: 'error'
+				});
+				return false;
+			}
+			if (this.userStore.gold < CLAN_CREATE_MONEY) {
+				this.$toast.open({
+					message: this.$t('toast.clan.create.notEnoughMoney', {
+						required: formatNumber(CLAN_CREATE_MONEY, '.'),
+						current: formatNumber(this.userStore.gold, '.')
+					}),
+					type: 'error'
+				});
+				return false;
+			}
+			if (this.playerPoints < CLAN_CREATE_MIN_POINTS) {
+				this.$toast.open({
+					message: this.$t('toast.clan.create.notEnoughPoints', {
+						required: CLAN_CREATE_MIN_POINTS,
+						current: this.playerPoints
+					}),
+					type: 'error'
+				});
+				return false;
+			}
+			return true;
+		},
 		async CreateClan(): Promise<void> {
-			try {
-				const clan = await ClanService.createClan(this.clanName, this.description, this.langs);
-				this.userStore.setClanId(clan.id);
+			if (this.isSubmitting) return;
+			if (!this.validateForm()) return;
 
+			this.isSubmitting = true;
+			try {
+				const clan = await ClanService.createClan(this.clanName.trim(), this.description, this.langs);
+				this.userStore.setClanId(clan.id);
+				await this.$refreshGold();
+				this.$toast.open({
+					message: this.$t('toast.clan.create.success', { name: clan.name }),
+					type: 'success'
+				});
 				this.$router.push({ name: 'Clan', params: { id: clan.id } });
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
-				return;
+			} finally {
+				this.isSubmitting = false;
 			}
 		},
 		goToClanList(): void {
 			this.$router.push({ name: 'ClansList' });
 		}
 	},
-	mounted() {
+	async mounted() {
 		this.langs = [this.$i18n.locale as Language];
+		if (!this.dinozStore.getDinozList || this.dinozStore.getDinozList.length === 0) {
+			await this.dinozStore.refreshDinozMenu();
+		}
 	}
 });
 </script>

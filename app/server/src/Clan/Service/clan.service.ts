@@ -1,10 +1,11 @@
-import { CLAN_CREATE_MONEY } from '@dinorpg/core/models/clan/constants.js';
+import { CLAN_CREATE_MIN_POINTS, CLAN_CREATE_MONEY } from '@dinorpg/core/models/clan/constants.js';
 import { ClanHistoryType } from '@dinorpg/core/models/enums/ClanHistoryType.js';
 import { ClanMemberRight } from '@dinorpg/core/models/enums/ClanMemberRight.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { FastifyReply, FastifyRequest } from 'fastify';
 import sharp from 'sharp';
 
+import { MoneyType } from '../../../../prisma/index.js';
 import { getActiveGameEvents } from '../../GameEvent/Service/gameEvent.service.js';
 import { prisma } from '../../prisma.js';
 import { getSpecificClanEventRank } from '../../Ranking/Controller/getEventRanking.controller.js';
@@ -28,7 +29,50 @@ export async function createClan(req: FastifyRequest, reply: FastifyReply) {
 	});
 
 	if (existingMember) {
-		throw new ExpectedError('alreadyInAClan');
+		throw new ExpectedError('clan.create.alreadyInClan');
+	}
+
+	const existingRequest = await prisma.clanJoinRequest.findUnique({
+		where: { userId: userId }
+	});
+
+	if (existingRequest) {
+		throw new ExpectedError('clan.create.hasPendingJoinRequest');
+	}
+
+	const userRanking = await prisma.ranking.findUnique({
+		where: { userId: userId },
+		select: { points: true }
+	});
+	let points = userRanking?.points;
+	if (points === undefined || points === null) {
+		const dinoz = await prisma.dinoz.findMany({
+			where: { userId: userId },
+			select: { level: true }
+		});
+		points = dinoz.reduce((sum, d) => sum + d.level, 0);
+	}
+
+	if (points < CLAN_CREATE_MIN_POINTS) {
+		throw new ExpectedError('clan.create.notEnoughPoints', {
+			params: { required: CLAN_CREATE_MIN_POINTS, current: points }
+		});
+	}
+
+	const wallet = await prisma.userWallet.findUnique({
+		where: {
+			userId_type: {
+				userId,
+				type: MoneyType.GOLD
+			}
+		},
+		select: { amount: true }
+	});
+	const currentGold = wallet?.amount ?? 0;
+	if (currentGold < CLAN_CREATE_MONEY) {
+		throw new ExpectedError('clan.create.notEnoughMoney', {
+			params: { required: CLAN_CREATE_MONEY, current: currentGold }
+		});
 	}
 
 	const newClan = await prisma.$transaction(async tx => {
@@ -37,7 +81,9 @@ export async function createClan(req: FastifyRequest, reply: FastifyReply) {
 		});
 
 		if (existingClan) {
-			throw new ExpectedError('clanNameTaken');
+			throw new ExpectedError('clan.create.nameTaken', {
+				params: { name: body.name }
+			});
 		}
 		await removeMoneyTx(tx, userId, CLAN_CREATE_MONEY);
 
@@ -81,13 +127,10 @@ export async function createClan(req: FastifyRequest, reply: FastifyReply) {
 			}
 		});
 
-		return reply.send(clan);
+		return clan;
 	});
 
-	return reply.status(201).send({
-		message: 'clanCreatedSuccessfully',
-		clan: newClan
-	});
+	return reply.status(201).send(newClan);
 }
 
 export async function getClan(req: FastifyRequest, reply: FastifyReply) {

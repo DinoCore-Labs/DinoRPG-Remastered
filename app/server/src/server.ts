@@ -14,6 +14,7 @@ import swaggerUI from '@fastify/swagger-ui';
 import { randomUUID } from 'crypto';
 import Fastify, { FastifyError, FastifyReply, FastifyRequest, LogController } from 'fastify';
 import {
+	hasZodFastifySchemaValidationErrors,
 	jsonSchemaTransform,
 	jsonSchemaTransformObject,
 	serializerCompiler,
@@ -484,6 +485,16 @@ async function buildServer(options: BuildServerOptions = {}) {
 			});
 		}
 		// 2) Erreurs Fastify / validation
+		if (hasZodFastifySchemaValidationErrors(err)) {
+			const firstValidation = err.validation[0];
+			const code = typeof firstValidation?.message === 'string' ? firstValidation.message : 'request.invalid';
+			return reply.code(400).send({
+				code,
+				message: firstValidation?.message ?? err.message,
+				params: (firstValidation?.params as Record<string, unknown> | undefined) ?? {},
+				errors: err.validation
+			});
+		}
 		const fe = err as FastifyError;
 		if (typeof fe?.statusCode === 'number') {
 			return reply.code(fe.statusCode).send({
