@@ -109,17 +109,17 @@ export const itemNameList: Record<number, string> = {
 	94: 'mahamuti_egg', // x
 	95: 'mahamuti_egg_rare', // x
 	96: 'souffet_egg', // x
-	97: 'soufflet_egg_rare',
+	97: 'soufflet_egg_rare', // x
 	98: 'toufufu_baby', // x
 	99: 'toufufu_baby_rare', // x
-	100: 'quetzu_egg',
+	100: 'quetzu_egg', // x
 	101: 'quetzu_egg_rare', // x
 	102: 'smog_egg', // x
 	103: 'smog_egg_anniversary', // x
 	104: 'smog_egg_christmas_blue', // x
 	105: 'smog_egg_christmas_green', // x
 	106: 'triceragnon_baby', // x
-	107: 'triceragnon_baby_rare',
+	107: 'triceragnon_baby_rare', // x
 	108: 'amnesic_rice', // x
 	109: 'tik_bracelet', // x
 	110: 'magic_star', // x
