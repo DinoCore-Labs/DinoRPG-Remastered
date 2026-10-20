@@ -494,7 +494,7 @@
 			"cashPrice": ":gold: La cagnotte pour ce tournoi est de {cashPrice} :gold: !!",
 			"noTeam": "Vous n'avez pas inscrit d'équipe pour ce tournoi."
 		},
-		"createTournamentTeam": "Vous n'avez pas d'équipe pour le prochain tournoi. L'équipe doit être constituée de **{team} Dinoz** étant au maximum **niveau {level}**. Les races de Dinoz acceptées sont **{races}**. Elles sont déjà filtrées pour vous.",
+		"createTournamentTeam": "Vous n'avez pas d'équipe pour le prochain tournoi. L'équipe doit être constituée d'exactement **{team} Dinoz** étant au maximum **niveau {level}**, avec au moins **{racesMin} races différentes**. Les races de Dinoz acceptées sont **{races}**. Elles sont déjà filtrées pour vous.",
 		"qualification": "Vous avez jusqu'au **{qualificationEnd}** pour être dans les 64 premiers au classement des dojos afin d'être qualifié pour les phases de poules. La phase de poules commencera le **{poolsStart}**, soyez prêt !&&Le cash prize est actuellement à **{cashPrice}** :gold:.",
 		"pools": "Les phases de poules sont en cours, elles termineront le {finalsStart}. &&La cagnotte est maintenant de **{cashPrice}** :gold:.",
 		"finals": "Et voici les phases finales tant attendues.&&La cagnotte est à présent de **{cashPrice}** :gold:.",
@@ -978,6 +978,30 @@
 		"errorFetchingRankings": "Une erreur est survenue lors de la récupération des classements.",
 		"maxDinozSelected": "Vous avez déjà sélectionné le nombre maximum de Dinoz",
 		"noDinozSelected": "Aucun Dinoz sélectionné",
+		"notEnoughDinozSelected": "Vous devez sélectionner au moins {min} Dinoz (vous en avez sélectionné {count}).",
+		"dojo": {
+			"tournament": {
+				"qualificationOver": "Les qualifications pour le Tournoi Inter-Dojo sont terminées.",
+				"wrongNumberOfDinoz": "Votre équipe doit comporter exactement {expected} Dinoz (vous en avez sélectionné {count}).",
+				"dojoNotFound": "Vous devez posséder un Dojo pour inscrire une équipe au tournoi.",
+				"teamAlreadyRegistered": "Vous avez déjà inscrit une équipe pour ce tournoi.",
+				"dinozNotFound": "Un ou plusieurs Dinoz sélectionnés sont introuvables, indisponibles ou ne vous appartiennent pas.",
+				"wrongRaceSelected": "Un ou plusieurs Dinoz sélectionnés ne font pas partie des races autorisées pour ce tournoi.",
+				"dinozTooHighLevel": "Tous les Dinoz de votre équipe doivent être de niveau {maxLevel} ou inférieur.",
+				"notEnoughDiversity": "Votre équipe doit être composée d'au moins {required} races différentes (actuellement {count}).",
+				"noTeamToDelete": "Vous n'avez aucune équipe inscrite à supprimer."
+			}
+		},
+		"qualification over": "Les qualifications pour le Tournoi Inter-Dojo sont terminées.",
+		"wrong number of dinoz": "Votre équipe ne comporte pas le nombre de Dinoz requis pour ce tournoi.",
+		"dojo not found": "Vous devez posséder un Dojo pour inscrire une équipe au tournoi.",
+		"team already registered": "Vous avez déjà inscrit une équipe pour ce tournoi.",
+		"selected dinoz not found": "Un ou plusieurs Dinoz sélectionnés sont introuvables, indisponibles ou ne vous appartiennent pas.",
+		"wrong race selected": "Un ou plusieurs Dinoz sélectionnés ne font pas partie des races autorisées pour ce tournoi.",
+		"dinoz too high level": "Un ou plusieurs Dinoz dépassent le niveau maximum autorisé pour ce tournoi.",
+		"not enough diversity": "Votre équipe ne comporte pas assez de races différentes pour ce tournoi.",
+		"Filtered dinoz is not enought": "Un ou plusieurs Dinoz sélectionnés sont introuvables ou invalides.",
+		"Team inexistant": "Vous n'avez aucune équipe inscrite à supprimer.",
 		"basicError": "Une erreur est survenue",
 		"special": {
 			"box_common": "La boîte commune contenait {qty} {value} !",
