@@ -992,16 +992,6 @@
 				"noTeamToDelete": "Vous n'avez aucune équipe inscrite à supprimer."
 			}
 		},
-		"qualification over": "Les qualifications pour le Tournoi Inter-Dojo sont terminées.",
-		"wrong number of dinoz": "Votre équipe ne comporte pas le nombre de Dinoz requis pour ce tournoi.",
-		"dojo not found": "Vous devez posséder un Dojo pour inscrire une équipe au tournoi.",
-		"team already registered": "Vous avez déjà inscrit une équipe pour ce tournoi.",
-		"selected dinoz not found": "Un ou plusieurs Dinoz sélectionnés sont introuvables, indisponibles ou ne vous appartiennent pas.",
-		"wrong race selected": "Un ou plusieurs Dinoz sélectionnés ne font pas partie des races autorisées pour ce tournoi.",
-		"dinoz too high level": "Un ou plusieurs Dinoz dépassent le niveau maximum autorisé pour ce tournoi.",
-		"not enough diversity": "Votre équipe ne comporte pas assez de races différentes pour ce tournoi.",
-		"Filtered dinoz is not enought": "Un ou plusieurs Dinoz sélectionnés sont introuvables ou invalides.",
-		"Team inexistant": "Vous n'avez aucune équipe inscrite à supprimer.",
 		"basicError": "Une erreur est survenue",
 		"special": {
 			"box_common": "La boîte commune contenait {qty} {value} !",
