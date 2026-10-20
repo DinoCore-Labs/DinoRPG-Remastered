@@ -34,11 +34,17 @@
 				$t(`dojo.createTournamentTeam`, {
 					team: tournamentInfo.teamSize,
 					level: tournamentInfo.levelLimit,
-					races: tournamentInfo.teamRace.map(r => $t(`race.name.${raceList[r]}`)).join(', ')
+					races: tournamentInfo.teamRace.map(r => $t(`race.name.${raceList[r]}`)).join(', '),
+					racesMin: tournamentInfo.raceMinimum ?? 1
 				})
 			"
 		></DZDisclaimer>
-		<SelectDinoz :dinozList="myDinoz" :selectLimit="tournamentInfo.teamSize" @validate="composeMyTeam"></SelectDinoz>
+		<SelectDinoz
+			ref="selectDinozRef"
+			:dinozList="myDinoz"
+			:selectLimit="tournamentInfo.teamSize"
+			@validate="composeMyTeam"
+		></SelectDinoz>
 	</div>
 	<div class="df aic fdc" v-if="tournamentInfo && tournamentTeam">
 		<div class="df jcc fww" v-if="myTeam.length > 0">
@@ -152,10 +158,62 @@ export default defineComponent({
 			}
 		},
 		async composeMyTeam(data: number[]) {
+			if (!this.tournamentInfo) return;
+
+			if (data.length !== this.tournamentInfo.teamSize) {
+				this.$toast.open({
+					message: this.$t('toast.dojo.tournament.wrongNumberOfDinoz', {
+						expected: this.tournamentInfo.teamSize,
+						count: data.length
+					}),
+					type: 'error'
+				});
+				(this.$refs.selectDinozRef as any)?.setSelectionOver(false);
+				return;
+			}
+
+			const allUserDinoz = dinozStore().getDinozList;
+			const selectedDinoz = allUserDinoz.filter(d => data.includes(d.id));
+
+			const distinctRaces = new Set(selectedDinoz.map(d => d.race.raceId));
+			const minRaces = this.tournamentInfo.raceMinimum ?? 1;
+			if (distinctRaces.size < minRaces) {
+				this.$toast.open({
+					message: this.$t('toast.dojo.tournament.notEnoughDiversity', {
+						required: minRaces,
+						count: distinctRaces.size
+					}),
+					type: 'error'
+				});
+				(this.$refs.selectDinozRef as any)?.setSelectionOver(false);
+				return;
+			}
+
+			if (selectedDinoz.some(d => d.level > this.tournamentInfo!.levelLimit)) {
+				this.$toast.open({
+					message: this.$t('toast.dojo.tournament.dinozTooHighLevel', {
+						maxLevel: this.tournamentInfo.levelLimit
+					}),
+					type: 'error'
+				});
+				(this.$refs.selectDinozRef as any)?.setSelectionOver(false);
+				return;
+			}
+
+			if (!selectedDinoz.every(d => this.tournamentInfo!.teamRace.includes(d.race.raceId))) {
+				this.$toast.open({
+					message: this.$t('toast.dojo.tournament.wrongRaceSelected'),
+					type: 'error'
+				});
+				(this.$refs.selectDinozRef as any)?.setSelectionOver(false);
+				return;
+			}
+
 			try {
 				await DojoService.createTournamentTeam(data);
 				await dojoStore().update();
 			} catch (e) {
+				(this.$refs.selectDinozRef as any)?.setSelectionOver(false);
 				errorHandler.handle(e, this.$toast);
 			}
 		},

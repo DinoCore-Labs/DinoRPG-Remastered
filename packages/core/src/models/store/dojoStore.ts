@@ -12,6 +12,6 @@ export interface DojoStore {
 	currentTournament: TournamentState | null;
 	rank: number;
 	worth: number;
-	tournamentInfo?: { id: string; teamRace: number[]; teamSize: number; levelLimit: number };
+	tournamentInfo?: { id: string; teamRace: number[]; teamSize: number; levelLimit: number; raceMinimum?: number };
 	myTeam: DinozDojoFiche[];
 }
