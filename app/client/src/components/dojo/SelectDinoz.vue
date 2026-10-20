@@ -88,6 +88,9 @@ export default defineComponent({
 				this.selectedDinoz.push(dinozId);
 			}
 		},
+		setSelectionOver(val: boolean) {
+			this.selectionOver = val;
+		},
 		async validate() {
 			if (!this.selectionOver) {
 				if (this.selectedDinoz.length === 0) {
@@ -95,7 +98,13 @@ export default defineComponent({
 					return;
 				}
 				if (this.selectedDinoz.length < this.minLimit) {
-					this.$toast.open({ message: this.$t(`toast.notEnoughDinozSelected`), type: 'error' });
+					this.$toast.open({
+						message: this.$t(`toast.notEnoughDinozSelected`, {
+							min: this.minLimit,
+							count: this.selectedDinoz.length
+						}),
+						type: 'error'
+					});
 					return;
 				}
 				this.$emit('validate', this.selectedDinoz);

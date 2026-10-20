@@ -44,7 +44,7 @@ export async function createTournamentTeam(req: FastifyRequest, reply: FastifyRe
 
 	const tournament = await TournamentManager.getCurrentTournamentState(prisma);
 	if (!tournament || tournament.phase !== TournamentPhase.QUALIFICATION) {
-		throw new ExpectedError('qualification over');
+		throw new ExpectedError('dojo.tournament.qualificationOver');
 	}
 
 	const teamIds = body.team;
@@ -57,24 +57,29 @@ export async function createTournamentTeam(req: FastifyRequest, reply: FastifyRe
 
 	// Check if player select the right number of dinoz
 	if (teamIds.length !== latestTournament.teamSize) {
-		throw new ExpectedError('wrong number of dinoz');
+		throw new ExpectedError('dojo.tournament.wrongNumberOfDinoz', {
+			params: {
+				expected: latestTournament.teamSize,
+				count: teamIds.length
+			}
+		});
 	}
 
 	const playerDinoz = await getPlayerDinozInformationForTeam(userId);
 
 	// The player must have visited the dojo at least once
 	if (!playerDinoz.dojo) {
-		throw new ExpectedError('dojo not found');
+		throw new ExpectedError('dojo.tournament.dojoNotFound');
 	}
 
 	// Check if player already has a registered team
 	if (playerDinoz.dojo.tournamentTeamId) {
-		throw new ExpectedError('team already registered');
+		throw new ExpectedError('dojo.tournament.teamAlreadyRegistered');
 	}
 
 	// Check if player possess all the selected dinoz
 	if (!teamIds.every(id => playerDinoz.dinoz.map(d => d.id).includes(id))) {
-		throw new ExpectedError('selected dinoz not found');
+		throw new ExpectedError('dojo.tournament.dinozNotFound');
 	}
 
 	const playerFilteredDinoz = playerDinoz.dinoz.filter(d => teamIds.includes(d.id));
@@ -83,24 +88,33 @@ export async function createTournamentTeam(req: FastifyRequest, reply: FastifyRe
 
 	// Check if dinoz races are authorized for this tournament
 	if (!playerFilteredDinoz.every(d => authorizedRaces.includes(d.raceId))) {
-		throw new ExpectedError('wrong race selected');
+		throw new ExpectedError('dojo.tournament.wrongRaceSelected');
 	}
 
 	//Check if dinoz are under max level
 	if (playerFilteredDinoz.some(d => d.level > latestTournament.levelLimit)) {
-		throw new ExpectedError('dinoz too high level');
+		throw new ExpectedError('dojo.tournament.dinozTooHighLevel', {
+			params: {
+				maxLevel: latestTournament.levelLimit
+			}
+		});
 	}
 
 	// Check filtered dinoz is equal to asked dinoz (shouldn't be possible)
 	if (playerFilteredDinoz.length !== teamIds.length) {
-		throw new ExpectedError('Filtered dinoz is not enought');
+		throw new ExpectedError('dojo.tournament.dinozNotFound');
 	}
 
 	// Check if number of race is at least equal to the limit
 	const playerRaces = new Set<number>();
 	playerFilteredDinoz.forEach(d => playerRaces.add(d.raceId));
 	if (playerRaces.size < latestTournament.raceMinimum) {
-		throw new ExpectedError('not enough diversity');
+		throw new ExpectedError('dojo.tournament.notEnoughDiversity', {
+			params: {
+				required: latestTournament.raceMinimum,
+				count: playerRaces.size
+			}
+		});
 	}
 
 	await prisma.tournamentTeam.create({
@@ -128,7 +142,7 @@ export async function deleteTournamentTeam(req: FastifyRequest, reply: FastifyRe
 
 	const tournament = await TournamentManager.getCurrentTournamentState(prisma);
 	if (!tournament || tournament.phase !== TournamentPhase.QUALIFICATION) {
-		throw new ExpectedError('qualification over');
+		throw new ExpectedError('dojo.tournament.qualificationOver');
 	}
 
 	const myTeam = await prisma.dojo.findUnique({
@@ -141,7 +155,7 @@ export async function deleteTournamentTeam(req: FastifyRequest, reply: FastifyRe
 	});
 
 	if (!myTeam || !myTeam.tournamentTeamId) {
-		throw new ExpectedError('Team inexistant');
+		throw new ExpectedError('dojo.tournament.noTeamToDelete');
 	}
 
 	await prisma.tournamentTeam.delete({
