@@ -56,13 +56,13 @@ export async function skipOpponent(req: FastifyRequest, reply: FastifyReply) {
 	const tournament = await TournamentManager.getCurrentTournamentState(prisma);
 
 	if (!tournament || tournament.phase !== TournamentPhase.QUALIFICATION) {
-		throw new ExpectedError('qualification over');
+		throw new ExpectedError('dojo.tournament.qualificationOver');
 	}
 
 	const user = await getDojoChallengePreparationRequest(userId);
 
 	if (!user.dojo) {
-		throw new ExpectedError('dojo not found');
+		throw new ExpectedError('dojo.tournament.dojoNotFound');
 	}
 
 	const myDojo = user.dojo;
@@ -133,13 +133,13 @@ export async function fightChallenge(req: FastifyRequest, reply: FastifyReply) {
 	const tournament = await TournamentManager.getCurrentTournamentState(prisma);
 
 	if (!tournament || tournament.phase !== TournamentPhase.QUALIFICATION) {
-		throw new ExpectedError('qualification over');
+		throw new ExpectedError('dojo.tournament.qualificationOver');
 	}
 
 	const user = await getDojoChallengePreparationRequest(userId);
 
 	if (!user.dojo) {
-		throw new ExpectedError('dojo not found');
+		throw new ExpectedError('dojo.tournament.dojoNotFound');
 	}
 
 	const myDinoz = user.dojo.team.find(d => d.dinozId === body.myDinozId);
@@ -312,13 +312,13 @@ export async function createMyTeam(req: FastifyRequest, reply: FastifyReply) {
 	const tournament = await TournamentManager.getCurrentTournamentState(prisma);
 
 	if (!tournament || tournament.phase !== TournamentPhase.QUALIFICATION) {
-		throw new ExpectedError('qualification over');
+		throw new ExpectedError('dojo.tournament.qualificationOver');
 	}
 
 	let myDojo = await getDojo(userId);
 
 	if (!myDojo) {
-		throw new ExpectedError('dojo not found');
+		throw new ExpectedError('dojo.tournament.dojoNotFound');
 	}
 
 	if (body.team.length < 5 || body.team.length > 10) {
