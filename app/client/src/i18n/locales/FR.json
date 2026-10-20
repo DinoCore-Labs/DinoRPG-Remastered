@@ -439,6 +439,7 @@
 		"disclaimer": {
 			"text": "Les Clans sont des groupes de joueurs qui combattent ensemble dans l'univers de Dinoland."
 		},
+		"cannot_create_info": "Pour créer votre propre Clan, vous devez avoir au moins 15 points au classement et {money} :gold:.",
 		"button": {
 			"create": "Créer un Clan"
 		},
@@ -454,7 +455,7 @@
 	},
 	"createClan": {
 		"title": "Créer un clan",
-		"information": "Merci de remplir les informations ci-dessous afin de créer votre Clan. La création d'un Clan vous coutera **{cost}** :gold:",
+		"information": "Merci de remplir les informations ci-dessous afin de créer votre Clan. Pour créer un Clan, vous devez posséder au moins **15 points au classement**, avoir au moins **{cost}** :gold: et ne faire partie d'aucun Clan.",
 		"clan_name": "Nom",
 		"clan_langs": "Langues",
 		"clan_description": "Description"
@@ -990,6 +991,27 @@
 				"dinozTooHighLevel": "Tous les Dinoz de votre équipe doivent être de niveau {maxLevel} ou inférieur.",
 				"notEnoughDiversity": "Votre équipe doit être composée d'au moins {required} races différentes (actuellement {count}).",
 				"noTeamToDelete": "Vous n'avez aucune équipe inscrite à supprimer."
+			}
+		},
+		"clan": {
+			"create": {
+				"alreadyInClan": "Vous faites déjà partie d'un clan.",
+				"hasPendingJoinRequest": "Vous avez déjà une demande d'adhésion en cours. Vous devez l'annuler avant de pouvoir créer un clan.",
+				"notEnoughPoints": "Vous devez avoir au moins {required} points au classement pour créer un clan (vous en avez actuellement {current}).",
+				"notEnoughMoney": "Vous devez posséder au moins {required} :gold: pour créer un clan (vous en avez actuellement {current}).",
+				"nameTaken": "Le nom de clan « {name} » est déjà utilisé.",
+				"nameRequired": "Veuillez entrer un nom pour votre clan.",
+				"nameTooShort": "Le nom du clan doit comporter au moins {min} caractères.",
+				"nameTooLong": "Le nom du clan ne doit pas dépasser {max} caractères.",
+				"nameInvalidCharacters": "Le nom du clan ne peut contenir que des lettres, des chiffres, des espaces, des tirets et des tirets bas.",
+				"descriptionTooLong": "La description du clan ne doit pas dépasser {max} caractères.",
+				"success": "Le clan « {name} » a été créé avec succès !"
+			},
+			"join": {
+				"alreadyInClan": "Vous faites déjà partie d'un clan.",
+				"hasPendingRequest": "Vous avez déjà une demande d'adhésion en cours vers un clan.",
+				"clanIsFull": "Ce clan a atteint le nombre maximum de membres.",
+				"requestNotFound": "Cette demande d'adhésion n'existe plus."
 			}
 		},
 		"basicError": "Une erreur est survenue",

@@ -66,13 +66,13 @@ export async function acceptJoinClanRequest(req: FastifyRequest, reply: FastifyR
 		}
 	});
 	if (!clanRequest) {
-		throw new ExpectedError(`Request doesn't exist.`);
+		throw new ExpectedError('clan.join.requestNotFound');
 	}
 	if (!(await memberHasRight(req.user.id, clanRequest.clanId, ClanMemberRight.MEMBER_ACCEPT_AND_DENY_REQUESTS))) {
 		throw new ExpectedError('Permission denied');
 	}
 	if (clanRequest.clan._count.members >= CLAN_MAX_MEMBERS_AMOUNT) {
-		throw new ExpectedError(`Clan is full`);
+		throw new ExpectedError('clan.join.clanIsFull');
 	}
 
 	const newMember = await prisma.$transaction(async tx => {
@@ -141,7 +141,7 @@ export async function denyJoinClanRequest(req: FastifyRequest, reply: FastifyRep
 	});
 
 	if (!clanRequest) {
-		throw new ExpectedError(`Request doesn't exist.`);
+		throw new ExpectedError('clan.join.requestNotFound');
 	}
 
 	const isAdmin = await memberHasRight(
@@ -174,14 +174,14 @@ export async function joinClan(req: FastifyRequest, reply: FastifyReply) {
 		where: { userId }
 	});
 	if (existingMember) {
-		throw new ExpectedError('alreadyInAClan');
+		throw new ExpectedError('clan.join.alreadyInClan');
 	}
 
 	const existingRequest = await prisma.clanJoinRequest.findUnique({
 		where: { userId }
 	});
 	if (existingRequest) {
-		throw new ExpectedError('alreadyHasPendingRequest');
+		throw new ExpectedError('clan.join.hasPendingRequest');
 	}
 
 	const wallet = await prisma.userWallet.findUnique({
