@@ -167,6 +167,7 @@ export enum Item {
 	BATTERY = 142,
 	VOID_SPHERE = 143,
 	SMOG_EGG_RARE = 144,
+	SCALE_DISCHARGED = 145,
 	COUPONS_TREASURE_HANDLER = 991,
 	BOX_HANDLER = 992,
 	BOX_COMMON = 993,
@@ -217,6 +218,7 @@ export const itemNames = [
 	'BATTERING_RAM',
 	'EMBER',
 	'SCALE',
+	'SCALE_DISCHARGED',
 	'BEER',
 	'ENCYCLOPEDIA',
 	'ANTICHROMATIC',
@@ -977,6 +979,19 @@ export const itemList: Readonly<Record<Item, ItemFiche>> = {
 	[Item.SCALE]: {
 		itemId: 38,
 		name: 'scale',
+		canBeEquipped: true,
+		canBeUsedNow: false,
+		itemType: ItemType.MAGICAL,
+		isRare: false,
+		maxQuantity: 5,
+		sellable: false,
+		price: 7, // TODO double check
+		display: 'mbalan'
+	},
+	// Scale Discharged: an enemy dinoz will be killed if your dinoz dies during a fight (recharging)
+	[Item.SCALE_DISCHARGED]: {
+		itemId: 145,
+		name: 'scale_discharged',
 		canBeEquipped: true,
 		canBeUsedNow: false,
 		itemType: ItemType.MAGICAL,

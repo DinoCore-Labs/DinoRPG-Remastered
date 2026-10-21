@@ -102,6 +102,21 @@ export async function ensureJobsExist() {
 		},
 		update: {}
 	});
+	// Recharge magic scales
+	await prisma.jobDefinition.upsert({
+		where: { key: 'recharge-magic-scales' },
+		create: {
+			key: 'recharge-magic-scales',
+			name: 'Recharge discharged magic scales',
+			type: 'DAILY_AT',
+			timezone: 'UTC',
+			dailyHour: 0,
+			dailyMinute: 0,
+			nextRunAt: nextDailyAtUtc(0, 0),
+			enabled: true
+		},
+		update: {}
+	});
 	// Offers Market
 	const nextMarketExpiration = await getNextMarketOfferExpirationDate();
 	await prisma.jobDefinition.upsert({

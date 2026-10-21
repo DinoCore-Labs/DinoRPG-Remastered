@@ -45,6 +45,7 @@ import { sessionStore } from '../store/sessionStore.js';
 import { userStore } from '../store/userStore.js';
 import { Fight } from '@eternaltwin/dinorpg_animations';
 import { localStore } from '../store/localStore.js';
+import eventBus from '../events/index.js';
 
 export default defineComponent({
 	name: 'FightPage',
@@ -166,6 +167,7 @@ export default defineComponent({
 			})
 		);
 		this.sessionStore.setFightResult(undefined);
+		eventBus.emit('refreshDinoz', true);
 	}
 });
 </script>
