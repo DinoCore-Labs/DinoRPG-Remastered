@@ -90,15 +90,34 @@ export default defineComponent({
 		},
 		async submitAccount() {
 			try {
+				const targetUrl =
+					typeof this.$route.query.returnUrl === 'string' && this.$route.query.returnUrl.startsWith('/')
+						? this.$route.query.returnUrl
+						: '/news';
+
 				if (this.mode === 'register') {
 					await UserService.register(this.name, this.password, GAME_RULES_VERSION);
-					this.$toast.success(this.$t('topBar.authMenu.accountCreatedWithSuccess'));
+					await UserService.login(this.name, this.password);
+					sessionStorage.setItem(
+						'authToast',
+						JSON.stringify({
+							message: this.$t('topBar.authMenu.accountCreatedWithSuccess'),
+							type: 'success'
+						})
+					);
 					this.close();
+					window.location.assign(targetUrl);
 				} else {
 					await UserService.login(this.name, this.password);
-					this.$toast.success(this.$t('topBar.authMenu.welcomeBack', { name: this.name }));
+					sessionStorage.setItem(
+						'authToast',
+						JSON.stringify({
+							message: this.$t('topBar.authMenu.welcomeBack', { name: this.name }),
+							type: 'success'
+						})
+					);
 					this.close();
-					this.$router.push('/news');
+					window.location.assign(targetUrl);
 				}
 			} catch (e: any) {
 				const data = e.response?.data;

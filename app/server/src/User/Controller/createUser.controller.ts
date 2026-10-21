@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
 import { GameLogType } from '../../../../prisma/index.js';
+import { ACCESS_TOKEN_COOKIE, authCookieOptions } from '../../config/cookie.js';
 import gameConfig from '../../config/game.config.js';
 import { safeCreateGameLog } from '../../Gamelog/Controller/gamelog.controller.js';
 import { addItemToInventory } from '../../Inventory/Controller/addItem.controller.js';
@@ -109,6 +110,16 @@ export async function createUser(
 			},
 			req.log
 		);
+		const payload = {
+			id: user.id,
+			name: user.name,
+			role: user.role,
+			gameRulesAcceptedVersion: user.gameRulesAcceptedVersion
+		};
+		const token = req.jwt.sign(payload, { expiresIn: '7d' });
+		reply.setCookie(ACCESS_TOKEN_COOKIE, token, {
+			...authCookieOptions
+		});
 		return reply.code(201).send(user);
 	} catch (e) {
 		return reply.code(500).send(e);
