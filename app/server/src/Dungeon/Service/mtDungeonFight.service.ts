@@ -23,6 +23,7 @@ import { Prisma } from '../../../../prisma/index.js';
 import { getDinozFightDataRequest } from '../../Dinoz/Controller/getDinozFight.controller.js';
 import { calculateFightVsMonsters, rewardFightVsMonsters } from '../../Fight/Service/fight.service.js';
 import { prisma } from '../../prisma.js';
+import { isWipedMtDungeonParty } from './mtDungeonDefeat.service.js';
 import { getMtDungeonArchive, mtDungeonDependencies } from './mtDungeonRuntime.service.js';
 import type { MtSessionIdentity } from './mtDungeonSession.service.js';
 
@@ -227,6 +228,21 @@ export async function resolveMtDungeonFight(identity: MtSessionIdentity, token: 
 			const settled = settleMtDungeonInteraction(map, session, result.result);
 			const stored = JSON.parse(JSON.stringify(result)) as Prisma.InputJsonValue;
 			await prisma.$transaction(async tx => {
+				// The fight engine has already persisted all HP losses.
+				// A full-party wipe ends the run; resurrection is possible outside.
+				if (await isWipedMtDungeonParty(tx, identity)) {
+					const removed = await tx.mtDungeonRun.deleteMany({
+						where: {
+							id: attempt.runId,
+							userId: identity.userId,
+							leaderDinozId: identity.leaderDinozId,
+							revision: session.revision
+						}
+					});
+					if (removed.count !== 1) throw new MtDungeonFightError('conflict');
+					// FK cascade deletes the fight attempt; a replay cannot award rewards again.
+					return;
+				}
 				const updated = await tx.mtDungeonRun.updateMany({
 					where: {
 						id: attempt.runId,

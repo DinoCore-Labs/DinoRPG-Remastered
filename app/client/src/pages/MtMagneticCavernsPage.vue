@@ -30,6 +30,11 @@
 					<span>Révision : {{ session.revision }}</span>
 				</div>
 
+				<section v-if="partyDefeated" class="mt-test__panel" aria-live="polite">
+					<p>Tous les Dinoz sont KO. Le groupe doit quitter le donjon pour pouvoir être ressuscité.</p>
+					<button type="button" :disabled="busy" @click="evacuateDefeated">Évacuer le groupe KO</button>
+				</section>
+
 				<div class="mt-test__viewport">
 					<MtOriginalDungeonCanvas
 						v-if="view"
@@ -187,7 +192,7 @@ const devCapabilities = ref<MtDungeonDevCapabilities | null>(null);
 const guardianTrial = ref<MtGuardianTrialPreview | null>(null);
 const loading = ref(true);
 const busy = ref(false);
-const visualMembers = ref<{ id: number; display: string }[]>([]);
+const visualMembers = ref<{ id: number; display: string; life: number }[]>([]);
 const movementTrail = ref<MtTrailPoint[]>([]);
 const facingRight = ref(true);
 function asTrailPoint(run: MtDungeonSession): MtTrailPoint {
@@ -219,8 +224,8 @@ async function loadVisualParty(): Promise<void> {
 			leader.followers.map(follower => DinozService.getDinozFiche(follower.id, { silent: true }))
 		);
 		visualMembers.value = [
-			{ id: leader.id, display: leader.display },
-			...followers.map(follower => ({ id: follower.id, display: follower.display }))
+			{ id: leader.id, display: leader.display, life: leader.life },
+			...followers.map(follower => ({ id: follower.id, display: follower.display, life: follower.life }))
 		];
 	} catch {
 		// Actor data is decorative; never block authoritative exploration.
@@ -229,8 +234,17 @@ async function loadVisualParty(): Promise<void> {
 }
 const stage = computed(() => Number(session.value?.mapId.split('_')[1] ?? 0));
 const isMagnetic = computed(() => session.value?.mapId.startsWith('stepp_') ?? false);
+const partyDefeated = computed(
+	() => visualMembers.value.length > 0 && visualMembers.value.every(dinoz => dinoz.life <= 0)
+);
 const cannotMove = computed(
-	() => busy.value || loading.value || !session.value || !!session.value.pending || session.value.locked
+	() =>
+		partyDefeated.value ||
+		busy.value ||
+		loading.value ||
+		!session.value ||
+		!!session.value.pending ||
+		session.value.locked
 );
 const language = computed(() =>
 	String(localStore().getLanguage ?? 'fr')
@@ -464,6 +478,18 @@ function leaveToSurface(): void {
 		movementTrail.value = [];
 		notice.value = 'Retour aux Pylônes : session de test terminée sans récompenses.';
 		await router.push({ name: 'DinozPage', params: { id: String(leaderId) } });
+	});
+}
+function evacuateDefeated(): void {
+	if (!session.value || !partyDefeated.value) return;
+	void execute(async () => {
+		await MtDungeonService.evacuateDefeatedGroup(leaderId, session.value!.revision);
+		session.value = null;
+		view.value = null;
+		encounter.value = null;
+		guardianTrial.value = null;
+		movementTrail.value = [];
+		await router.replace({ name: 'DinozPage', params: { id: String(leaderId) } });
 	});
 }
 function onKeyDown(event: KeyboardEvent): void {
