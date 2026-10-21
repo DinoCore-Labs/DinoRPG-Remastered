@@ -20,6 +20,7 @@ import { Prisma } from '../../../../prisma/index.js';
 import { addSkillToDinoz } from '../../Dinoz/Controller/addSkillToDinoz.controller.js';
 import { startDinozConcentration } from '../../Dinoz/Controller/concentrationDinoz.controller.js';
 import { addStatusToDinoz, removeStatusFromDinoz } from '../../Dinoz/Controller/dinozStatus.controller.js';
+import { assertNoMtDungeonHealing } from '../../Dungeon/mtDungeonHealingGuard.js';
 import {
 	getUrmaEdition,
 	getUrmaTrackingKey,
@@ -313,6 +314,7 @@ async function healDinoz(tx: DialogTransaction, context: DialogContext, amount: 
 	if (!Number.isInteger(amount)) {
 		throw new Error(`Heal amount must be an integer, received "${amount}"`);
 	}
+	if (amount > 0) await assertNoMtDungeonHealing(context.user.id, context.dinoz.id, tx);
 	const nextLife = Math.max(0, Math.min(context.dinoz.maxLife, context.dinoz.life + amount));
 
 	await tx.dinoz.update({

@@ -189,7 +189,8 @@ function makePending(
 	from: DungeonPoint,
 	to: DungeonPoint,
 	events: readonly MtCellEvent[],
-	command: DungeonCommand
+	command: DungeonCommand,
+	consumedFlags: ReadonlySet<number>
 ): MtPendingInteraction | null {
 	if (command.dl !== 0 && samePoint(from, map.start))
 		return { kind: 'boundary-start', from, to, flag: null, itemValue: null };
@@ -203,6 +204,7 @@ function makePending(
 	for (const event of events) {
 		if (event.kind !== 'pickup') continue;
 		const item = event.item;
+		if (item.kind === 'IHeal' && consumedFlags.has(getMtFlagIndex(map, from.l, item.x, item.y))) continue;
 		if (item.kind === 'IGold' || item.kind === 'IHeal' || item.kind === 'IScenario')
 			return {
 				kind: item.kind === 'IGold' ? 'gold' : item.kind === 'IHeal' ? 'heal' : 'scenario',
@@ -291,7 +293,14 @@ export function applyMtDungeonCommandBatch(
 			result.revision++;
 			return { ok: true, session: result, accepted: index + 1, pending: null };
 		}
-		const pending = makePending(cfg.map, result.position, decision.position, decision.events, command);
+		const pending = makePending(
+			cfg.map,
+			result.position,
+			decision.position,
+			decision.events,
+			command,
+			new Set(result.flags)
+		);
 		if (pending) {
 			if (index !== commands.length - 1) return fail('invalid-batch', index + 1);
 			result.pending = pending;
@@ -332,6 +341,16 @@ export function settleMtDungeonInteraction(
 	if (succeeded) {
 		result.position = { ...event.to };
 		if (event.flag !== null) result.flags = [...new Set([...result.flags, event.flag])].sort((a, b) => a - b);
+		if (event.kind === 'heal') {
+			// Remastered one-use policy; original View.hx does not set IHeal's flag.
+			const actual = cfg.map.levels[event.to.l]?.rooms.some(
+				room => room.item?.kind === 'IHeal' && room.item.x === event.to.x && room.item.y === event.to.y
+			);
+			if (!actual) throw new Error('Invalid original MT healing zone.');
+			result.flags = [...new Set([...result.flags, getMtFlagIndex(cfg.map, event.to.l, event.to.x, event.to.y)])].sort(
+				(a, b) => a - b
+			);
+		}
 		const arrived = applyMtDungeonArrival(cfg.map, asExplorer(result));
 		result.keys = [...arrived.keys];
 		result.flags = [...arrived.flags].sort((a, b) => a - b);

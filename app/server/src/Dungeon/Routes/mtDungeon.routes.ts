@@ -31,6 +31,7 @@ import {
 	prepareMtGuardianTrial,
 	resolveMtGuardianTrial
 } from '../Service/mtDungeonGuardianTrial.service.js';
+import { MtDungeonHealError } from '../Service/mtDungeonHeal.service.js';
 import { getMtDungeonOriginalPendingEvidence } from '../Service/mtDungeonOriginalEvidence.service.js';
 import {
 	getMtDungeonArchive,
@@ -75,6 +76,7 @@ const moveSchema = z
 	.strict();
 
 function handleKnownError(error: unknown): { status: number; code: string } | null {
+	if (error instanceof MtDungeonHealError) return { status: 409, code: error.code };
 	if (error instanceof MtDungeonEvidenceError) return { status: 409, code: error.code };
 	if (error instanceof MtDungeonScenarioRewardError) return { status: 409, code: error.code };
 	if (error instanceof MtDungeonScenarioSettlementError) {
