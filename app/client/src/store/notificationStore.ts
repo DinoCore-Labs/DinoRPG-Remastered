@@ -33,6 +33,10 @@ export const notificationStore = defineStore('notificationStore', {
 			await NotificationService.deleteNotification(id);
 			this.notifications = this.notifications.filter(notification => notification.id !== id);
 		},
+		async deleteAllNotifications(): Promise<void> {
+			await NotificationService.deleteAllNotifications();
+			this.notifications = [];
+		},
 		startPolling(): void {
 			if (this.pollingId) {
 				return;

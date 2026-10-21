@@ -1,6 +1,10 @@
 import { FastifyInstance } from 'fastify';
 
-import { deleteNotification, getUserNotifications } from '../Controller/notification.controller.js';
+import {
+	deleteAllNotifications,
+	deleteNotification,
+	getUserNotifications
+} from '../Controller/notification.controller.js';
 
 export async function notificationRoutes(app: FastifyInstance) {
 	app.get(
@@ -12,6 +16,17 @@ export async function notificationRoutes(app: FastifyInstance) {
 			}
 		},
 		getUserNotifications
+	);
+
+	app.delete(
+		'/',
+		{
+			preHandler: [app.authenticate],
+			schema: {
+				tags: ['Notifications']
+			}
+		},
+		deleteAllNotifications
 	);
 
 	app.delete(

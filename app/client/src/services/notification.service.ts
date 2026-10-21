@@ -17,5 +17,8 @@ export const NotificationService = {
 	},
 	deleteNotification(id: string): Promise<{ message: string }> {
 		return api.delete<{ message: string }>(`/notifications/${id}`);
+	},
+	deleteAllNotifications(): Promise<{ message: string }> {
+		return api.delete<{ message: string }>('/notifications/');
 	}
 };
