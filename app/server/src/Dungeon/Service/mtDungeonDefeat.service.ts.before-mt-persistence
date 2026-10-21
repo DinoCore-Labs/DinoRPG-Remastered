@@ -1,0 +1,74 @@
+/**
+ * Authoritative, post-fight dungeon evacuation.
+ * Full wipe removes the run (and its dependent attempts via Prisma cascade),
+ * but never modifies Dinoz HP, inventory, XP or their overworld place.
+ */
+import { isMtDungeonPartyWiped } from '@dinorpg/core/models/dungeon/dungeon.defeat.js';
+
+import type { Prisma } from '../../../../prisma/index.js';
+import { prisma } from '../../prisma.js';
+import { mtDungeonDependencies } from './mtDungeonRuntime.service.js';
+import type { MtSessionIdentity } from './mtDungeonSession.service.js';
+
+export class MtDungeonDefeatError extends Error {
+	constructor(public readonly code: 'not-found' | 'conflict' | 'party-not-wiped' | 'pending-attempt') {
+		super(`MT dungeon defeat evacuation: ${code}`);
+	}
+}
+
+/** Must be called after the fight reward writer has persisted actual HP loss. */
+export async function isWipedMtDungeonParty(
+	tx: Pick<Prisma.TransactionClient, 'dinoz'>,
+	identity: MtSessionIdentity
+): Promise<boolean> {
+	const members = await tx.dinoz.findMany({
+		where: {
+			userId: identity.userId,
+			OR: [{ id: identity.leaderDinozId }, { leaderId: identity.leaderDinozId }]
+		},
+		select: { id: true, leaderId: true, life: true }
+	});
+	return isMtDungeonPartyWiped(members, identity.leaderDinozId);
+}
+
+/**
+ * Recovery for runs completed before the automatic evacuation fix.
+ * Authenticated leader + expected revision + whole team down are mandatory.
+ * Do not destroy unsettled attempt records requiring reconciliation.
+ */
+export async function evacuateDefeatedMtDungeon(
+	identity: MtSessionIdentity,
+	expectedRevision: number
+): Promise<{ evacuated: true }> {
+	if (!Number.isSafeInteger(expectedRevision) || expectedRevision < 0)
+		throw new MtDungeonDefeatError('conflict');
+	return mtDungeonDependencies().withLock(identity.userId, async () =>
+		prisma.$transaction(async tx => {
+			const run = await tx.mtDungeonRun.findFirst({
+				where: {
+					userId: identity.userId,
+					leaderDinozId: identity.leaderDinozId,
+					leaderDinoz: { userId: identity.userId }
+				},
+				select: { id: true, revision: true }
+			});
+			if (!run) throw new MtDungeonDefeatError('not-found');
+			if (run.revision !== expectedRevision) throw new MtDungeonDefeatError('conflict');
+			if (!(await isWipedMtDungeonParty(tx, identity))) throw new MtDungeonDefeatError('party-not-wiped');
+			const unsafe = await tx.mtDungeonFightAttempt.count({
+				where: { runId: run.id, status: { in: ['PREPARED', 'PROCESSING', 'REVIEW'] } }
+			});
+			if (unsafe > 0) throw new MtDungeonDefeatError('pending-attempt');
+			const removed = await tx.mtDungeonRun.deleteMany({
+				where: {
+					id: run.id,
+					userId: identity.userId,
+					leaderDinozId: identity.leaderDinozId,
+					revision: expectedRevision
+				}
+			});
+			if (removed.count !== 1) throw new MtDungeonDefeatError('conflict');
+			return { evacuated: true as const };
+		})
+	);
+}
