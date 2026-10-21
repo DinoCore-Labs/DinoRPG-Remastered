@@ -224,11 +224,20 @@ export async function getTournamentFightsToShow(
 	fights: Exclude<PublicTournament, 'watched'>[],
 	userId: string,
 	phase: TournamentPhase,
-	pool: number
+	pool: number,
+	isFinished = false
 ): Promise<PublicTournament[]> {
 	const targetFights = fights
 		.filter(t => t.metadata.phase === phase)
 		.filter(t => phase === TournamentPhase.FINALS || t.metadata.poolNumber === pool);
+
+	if (isFinished) {
+		return targetFights.map(fight => ({
+			...fight,
+			watched: true
+		}));
+	}
+
 	const watchedFightIds = (
 		await getViewedTournamentFight(
 			userId,
@@ -260,58 +269,75 @@ export async function getDojoTournamentFights(req: FastifyRequest, reply: Fastif
 	const userId = req.user.id;
 	const body = dojoTournamentRequestSchema.parse(req.params);
 
-	const fights = await prisma.fightArchive.findMany({
-		where: {
-			tournamentId: body.id
-		},
-		select: {
-			id: true,
-			tournamentTeamLeftId: true,
-			tournamentTeamRightId: true,
-			tournamentTeamLeft: {
-				select: {
-					dinoz: {
-						take: 1,
-						select: {
-							id: true,
-							name: true,
-							display: true
-						}
-					}
-				}
-			},
-			tournamentTeamRight: {
-				select: {
-					dinoz: {
-						take: 1,
-						select: {
-							id: true,
-							name: true,
-							display: true
-						}
-					}
-				}
-			},
-			leftUser: {
-				select: {
-					id: true,
-					name: true
-				}
-			},
-			rightUser: {
-				select: {
-					id: true,
-					name: true
-				}
-			},
-			fighters: true,
-			metadata: true,
-			result: true
-		}
-	});
 	if (body.phase === TournamentPhase.FINALS) {
 		body.pool = -1;
 	}
+
+	const [latestTournament, fights] = await Promise.all([
+		prisma.tournament.findFirst({ orderBy: { date: 'desc' }, select: { id: true } }),
+		prisma.fightArchive.findMany({
+			where: {
+				tournamentId: body.id
+			},
+			select: {
+				id: true,
+				tournamentTeamLeftId: true,
+				tournamentTeamRightId: true,
+				tournamentTeamLeft: {
+					select: {
+						dinoz: {
+							take: 1,
+							select: {
+								id: true,
+								name: true,
+								display: true
+							}
+						}
+					}
+				},
+				tournamentTeamRight: {
+					select: {
+						dinoz: {
+							take: 1,
+							select: {
+								id: true,
+								name: true,
+								display: true
+							}
+						}
+					}
+				},
+				leftUser: {
+					select: {
+						id: true,
+						name: true
+					}
+				},
+				rightUser: {
+					select: {
+						id: true,
+						name: true
+					}
+				},
+				fighters: true,
+				metadata: true,
+				result: true,
+				tournamentStep: true
+			}
+		})
+	]);
+
+	const hasFinalsPlayed = fights.some(f => {
+		if (f.tournamentStep !== null && f.tournamentStep >= 14) return true;
+		try {
+			const meta = typeof f.metadata === 'string' ? JSON.parse(f.metadata) : f.metadata;
+			return meta?.phase === TournamentPhase.FINALS && meta?.round >= 14;
+		} catch {
+			return false;
+		}
+	});
+
+	const isFinished = latestTournament?.id !== body.id || hasFinalsPlayed;
 
 	const transformedFights = fights.map(f => {
 		const fighters = JSON.parse(f.fighters) as FighterRecap[]; // fighters are preserved after player deletion
@@ -357,24 +383,26 @@ export async function getDojoTournamentFights(req: FastifyRequest, reply: Fastif
 
 		return {
 			id: f.id,
-			tournamentTeamLeft: f.tournamentTeamLeftId
-				? {
-						dinoz: leftDinoz,
-						user: f.leftUser
-					}
-				: null,
-			tournamentTeamRight: f.tournamentTeamRightId
-				? {
-						dinoz: rightDinoz,
-						user: f.rightUser
-					}
-				: null,
+			tournamentTeamLeft:
+				f.tournamentTeamLeftId || leftDinoz || f.leftUser
+					? {
+							dinoz: leftDinoz,
+							user: f.leftUser
+						}
+					: null,
+			tournamentTeamRight:
+				f.tournamentTeamRightId || rightDinoz || f.rightUser
+					? {
+							dinoz: rightDinoz,
+							user: f.rightUser
+						}
+					: null,
 			metadata: JSON.parse(<string>f.metadata) as PublicMetada,
 			result: f.result
 		};
 	}) as PublicTournament[];
 
-	return reply.send(await getTournamentFightsToShow(transformedFights, userId, body.phase, body.pool));
+	return reply.send(await getTournamentFightsToShow(transformedFights, userId, body.phase, body.pool, isFinished));
 }
 
 export async function viewFight(userId: string, fightArchiveId: string) {

@@ -142,6 +142,8 @@ export default defineComponent({
 		DinozMini
 	},
 	data() {
+		const groupParam = this.$route.params.group;
+		const activeGroup = groupParam !== undefined ? Number(groupParam) : 16;
 		return {
 			userStore: userStore(),
 			GROUP_COUNT: 16 as number,
@@ -150,9 +152,9 @@ export default defineComponent({
 			tournament: [] as PublicTournament[],
 			final: [] as (DisplayedLeader | undefined)[],
 			pool: [] as (DisplayedLeader | undefined)[],
-			activeGroup: 10,
-			displayFinal: false,
-			tournamentId: undefined as undefined | string
+			activeGroup,
+			displayFinal: activeGroup === 16,
+			tournamentId: (this.$route.params.id as string) || undefined
 		};
 	},
 	methods: {
@@ -223,7 +225,9 @@ export default defineComponent({
 				this.dinozInFights.sort((d1, d2) => d1.round - d2.round);
 
 				this.dinozInFights.forEach(d => {
-					d.round = d.round - FINALS_STEP_OFFSET;
+					if (d.round >= FINALS_STEP_OFFSET) {
+						d.round = d.round - FINALS_STEP_OFFSET;
+					}
 				});
 
 				this.GROUP_COUNT = 0;
@@ -425,26 +429,46 @@ export default defineComponent({
 	},
 	async mounted() {
 		this.tournamentId = this.$route.params.id as string;
-		this.activeGroup = +(this.$route.params.group as string);
+		this.activeGroup = Number(this.$route.params.group ?? 16);
+		if (this.activeGroup === 16) {
+			await this.showFinal();
+		} else if (this.activeGroup < 16) {
+			await this.loadPage();
+		}
 	},
 	watch: {
+		'$route.params.id': {
+			handler(newId) {
+				if (newId && newId !== this.tournamentId) {
+					this.tournamentId = String(newId);
+					if (this.activeGroup === 16) {
+						this.showFinal();
+					} else if (this.activeGroup < 16) {
+						this.loadPage();
+					}
+				}
+			}
+		},
 		'$route.params.group': {
 			handler(newGroup) {
 				if (newGroup !== undefined && this.$route.name === 'DojoTournament') {
 					this.activeGroup = Number(newGroup);
 				}
-			},
-			immediate: true
+			}
 		},
 		activeGroup: {
-			handler(newValue) {
-				if (newValue === 16) {
-					this.showFinal();
-				} else if (newValue < 16) {
-					this.loadPage();
+			handler(newValue, oldValue) {
+				if (newValue !== oldValue) {
+					if (!this.tournamentId && this.$route.params.id) {
+						this.tournamentId = String(this.$route.params.id);
+					}
+					if (newValue === 16) {
+						this.showFinal();
+					} else if (newValue < 16) {
+						this.loadPage();
+					}
 				}
-			},
-			immediate: true
+			}
 		}
 	}
 });
