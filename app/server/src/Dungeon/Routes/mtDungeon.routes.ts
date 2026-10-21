@@ -213,6 +213,36 @@ export async function mtDungeonRoutes(app: FastifyInstance) {
 		});
 	}
 
+	/** Real MT door guardian fight; never accepts monster list or combat result from HTTP. */
+	app.post('/:leaderDinozId/guardian/fight/prepare', { preHandler: app.authenticate }, async (req, reply) => {
+		const params = leaderIdSchema.safeParse((req.params as { leaderDinozId: unknown }).leaderDinozId);
+		const body = z.object({ revision: z.number().int().nonnegative() }).strict().safeParse(req.body);
+		if (!params.success || !body.success) return reply.code(400).send({ code: 'invalid-guardian-request' });
+		try {
+			return reply.send(
+				await prepareMtGuardianTrial({ userId: req.user.id, leaderDinozId: params.data }, body.data.revision)
+			);
+		} catch (error) {
+			if (error instanceof MtDungeonGuardianTrialError)
+				return reply.code(error.code === 'not-found' ? 404 : 409).send({ code: error.code });
+			throw error;
+		}
+	});
+	app.post('/:leaderDinozId/guardian/fight/resolve', { preHandler: app.authenticate }, async (req, reply) => {
+		const params = leaderIdSchema.safeParse((req.params as { leaderDinozId: unknown }).leaderDinozId);
+		const body = z.object({ token: z.string().uuid() }).strict().safeParse(req.body);
+		if (!params.success || !body.success) return reply.code(400).send({ code: 'invalid-guardian-request' });
+		try {
+			return reply.send(
+				await resolveMtGuardianTrial({ userId: req.user.id, leaderDinozId: params.data }, body.data.token)
+			);
+		} catch (error) {
+			if (error instanceof MtDungeonGuardianTrialError)
+				return reply.code(error.code === 'not-found' ? 404 : 409).send({ code: error.code });
+			throw error;
+		}
+	});
+
 	/** Allow recovery of an already-defeated party from a pre-fix dungeon session. */
 	app.post('/:leaderDinozId/defeat/evacuate', { preHandler: app.authenticate }, async (req, reply) => {
 		const params = leaderIdSchema.safeParse((req.params as { leaderDinozId: unknown }).leaderDinozId);
