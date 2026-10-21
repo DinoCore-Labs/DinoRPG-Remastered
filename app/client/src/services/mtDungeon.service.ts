@@ -45,7 +45,24 @@ export interface MtDungeonDevCapabilities {
 	surfaceExit: boolean;
 }
 
+export interface MtDungeonJournalEntry {
+	mapId: string;
+	stage: number;
+	level: number;
+	scenarioIndex: number;
+	icon: string | null;
+	text: string;
+}
+
+export interface MtDungeonJournal {
+	languageUsed: string;
+	entries: MtDungeonJournalEntry[];
+}
+
 export const MtDungeonService = {
+	getJournal(id: number, language: string): Promise<MtDungeonJournal> {
+		return api.get(`/dungeon/mt/${id}/journal`, { params: { lang: language }, silent: true });
+	},
 	getGuardianTrialPreview(id: number): Promise<MtGuardianTrialPreview> {
 		return api.get(`/dungeon/mt/${id}/dev/guardian/fight/preview`, { silent: true });
 	},
