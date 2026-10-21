@@ -49,6 +49,13 @@ export interface MtDungeonSessionDependencies {
 	withLock<T>(userId: string, fn: () => Promise<T>): Promise<T>;
 	/** Optional entry gate executed UNDER gameplay lock, before creation. Public routes MUST supply it. */
 	beforeOpen?(identity: MtSessionIdentity, mapId: string): Promise<void>;
+	/** Transactional IHeal settlement; must commit HP and session together. */
+	settleHeal?(
+		identity: MtSessionIdentity,
+		oldRevision: number,
+		pending: MtDungeonSession,
+		cfg: MtSessionConfiguration
+	): Promise<MtDungeonSession>;
 }
 
 export class MtDungeonSessionError extends Error {
@@ -94,6 +101,11 @@ export async function submitMtDungeonCommands(
 		const cfg = deps.getConfiguration(run.mapId);
 		const result = applyMtDungeonCommandBatch(cfg, run, commands);
 		if (!result.ok) return result;
+		if (result.session.pending?.kind === 'heal') {
+			if (!deps.settleHeal) throw new MtDungeonSessionError('invalid-run');
+			const session = await deps.settleHeal(identity, run.revision, result.session, cfg);
+			return { ok: true, accepted: result.accepted, session, pending: null };
+		}
 		if (!(await deps.repository.compareAndSwap(identity, run.revision, result.session)))
 			throw new MtDungeonSessionError('conflict');
 		return result;

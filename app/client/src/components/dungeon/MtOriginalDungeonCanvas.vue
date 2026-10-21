@@ -547,6 +547,26 @@ function paintGuardians(scene: MtDungeonScene, ticket: number): void {
 	}
 }
 
+/** Temporary healing-zone stand-in: original item SWF frames 7/8 not exported. */
+function paintHealZones(scene: MtDungeonScene): void {
+	for (const zone of scene.features) {
+		if (zone.kind !== 'heal') continue;
+		const x = (zone.x - scene.viewport.ix) * 40;
+		const y = (zone.y - scene.viewport.iy) * 40;
+		const glow = new Graphics()
+			.roundRect(x + 4, y + 4, 32, 32, 7)
+			.fill({ color: zone.consumed ? 0x1b432a : 0x59ff6a, alpha: zone.consumed ? 0.3 : 0.48 });
+		if (!zone.consumed) glow.filters = [new BlurFilter({ strength: 5, quality: 2 })];
+		ground.addChild(glow);
+		const zoneMark = new Graphics()
+			.roundRect(x + 6, y + 6, 28, 28, 6)
+			.fill({ color: zone.consumed ? 0x23542a : 0x8bff85, alpha: zone.consumed ? 0.49 : 0.78 })
+			.roundRect(x + 6, y + 6, 28, 28, 6)
+			.stroke({ color: zone.consumed ? 0x2a6b36 : 0xb4ffb0, width: 2, alpha: 0.85 });
+		ground.addChild(zoneMark);
+	}
+}
+
 function paintFog(scene: MtDungeonScene): void {
 	if (!scene.fog.length) return;
 
@@ -657,6 +677,7 @@ async function repaint(): Promise<void> {
 
 	for (const sprite of plan.sprites) paintSprite(sprite, scene);
 
+	paintHealZones(scene);
 	paintFog(scene);
 
 	diagnostics.value = [...errors];
