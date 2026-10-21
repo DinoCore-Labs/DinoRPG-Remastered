@@ -229,6 +229,12 @@ export async function resolveMtDungeonFight(identity: MtSessionIdentity, token: 
 			const settled = settleMtDungeonInteraction(map, session, result.result);
 			const stored = JSON.parse(JSON.stringify(result)) as Prisma.InputJsonValue;
 			await prisma.$transaction(async tx => {
+				// Consume one daily fight action for every Dinoz in this dungeon fight.
+				const consumed = await tx.dinoz.updateMany({
+					where: { userId: identity.userId, id: { in: team.map(d => d.id) }, fight: true },
+					data: { fight: false }
+				});
+				if (consumed.count !== team.length) throw new MtDungeonFightError('conflict');
 				// The fight engine has already persisted all HP losses.
 				// A full-party wipe ends the run; resurrection is possible outside.
 				if (await isWipedMtDungeonParty(tx, identity)) {

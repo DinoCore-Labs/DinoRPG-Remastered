@@ -73,6 +73,12 @@ export const MtDungeonService = {
 	getGuardianTrialPreview(id: number): Promise<MtGuardianTrialPreview> {
 		return api.get(`/dungeon/mt/${id}/dev/guardian/fight/preview`, { silent: true });
 	},
+	prepareGuardianFight(id: number, revision: number): Promise<{ token: string }> {
+		return api.post(`/dungeon/mt/${id}/guardian/fight/prepare`, { revision });
+	},
+	resolveGuardianFight(id: number, token: string): Promise<FightResult> {
+		return api.post(`/dungeon/mt/${id}/guardian/fight/resolve`, { token });
+	},
 	prepareGuardianTrial(id: number, revision: number): Promise<{ token: string; experimental: true }> {
 		return api.post(`/dungeon/mt/${id}/dev/guardian/fight/prepare`, { revision });
 	},

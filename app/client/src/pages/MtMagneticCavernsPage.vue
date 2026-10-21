@@ -109,16 +109,15 @@
 					>
 						Combattre
 					</button>
-					<template v-if="session.pending.kind === 'guardian' && devCapabilities?.guardianFight">
+					<template v-if="session.pending.kind === 'guardian'">
 						<p v-if="guardianTrial" class="mt-test__caption">
-							Gardien de test : <strong>{{ guardianTrial.monsterKey }}</strong> — composition provisoire issue du
-							catalogue MT.
+							Gardien MT : <strong>{{ guardianTrial.monsterKey }}</strong> — apparence issue du catalogue MT.
 						</p>
 						<p class="mt-test__caption">
-							Le combat utilise le moteur Remastered ; il peut modifier la vie des Dinoz et attribuer de l'XP ou des
-							objets.
+							Le combat utilise le moteur Remastered ; il consomme l'action de combat des Dinoz et peut attribuer de
+							l'XP ou des objets.
 						</p>
-						<button type="button" :disabled="busy" @click="fightGuardian">Combattre le gardien (test)</button>
+						<button type="button" :disabled="busy" @click="fightGuardian">Combattre le gardien</button>
 					</template>
 					<button
 						v-if="session.pending.kind === 'guardian' && devCapabilities?.guardianSkip"
@@ -196,6 +195,7 @@
 import axios from 'axios';
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { mtDungeonCombatTrigger } from '../components/dungeon/mtDungeonCombatTrigger.js';
 import MtOriginalDungeonCanvas from '../components/dungeon/MtOriginalDungeonCanvas.vue';
 import { advanceMtTrail, mtFollowerPositions, type MtTrailPoint } from '../components/dungeon/dungeonPartyTrail.js';
 import { DinozService } from '../services/dinoz.service.js';
@@ -301,8 +301,7 @@ const actionAvailable = computed(() => {
 	if (!pending) return false;
 	if (pending.kind === 'boundary-exit') return true;
 	if (pending.kind === 'boundary-start') return true;
-	if (pending.kind === 'guardian')
-		return !!devCapabilities.value?.guardianSkip || !!devCapabilities.value?.guardianFight;
+	if (pending.kind === 'guardian') return true;
 	if (pending.kind !== 'scenario') return false;
 	return (
 		encounter.value?.kind === 'scenario' ||
@@ -444,6 +443,20 @@ function move(direction: 'north' | 'south' | 'west' | 'east' | 'up' | 'down') {
 			Math.max(0, visualMembers.value.length - 1)
 		);
 		await afterMutation(result.session);
+		if (mtDungeonCombatTrigger(result.session.pending, encounter.value) === 'guardian') {
+			const { token } = await MtDungeonService.prepareGuardianFight(leaderId, result.session.revision);
+			const fightResult = await MtDungeonService.resolveGuardianFight(leaderId, token);
+			sessionStore().setFightResult(fightResult);
+			await router.push({ name: 'FightPage', params: { dinozId: String(leaderId) } });
+			return;
+		}
+		if (mtDungeonCombatTrigger(result.session.pending, encounter.value) === 'scenario') {
+			const { token } = await MtDungeonService.prepareFight(leaderId, result.session.revision);
+			const fightResult = await MtDungeonService.resolveFight(leaderId, token);
+			sessionStore().setFightResult(fightResult);
+			await router.push({ name: 'FightPage', params: { dinozId: String(leaderId) } });
+			return;
+		}
 		if (typeof result.goldAwarded === 'number') {
 			if (typeof result.walletGold === 'number') userStore().setGold(result.walletGold);
 			notice.value =
@@ -485,10 +498,10 @@ async function loadGuardianTrial(run: MtDungeonSession): Promise<void> {
 	}
 }
 function fightGuardian() {
-	if (session.value?.pending?.kind !== 'guardian' || !devCapabilities.value?.guardianFight) return;
+	if (session.value?.pending?.kind !== 'guardian') return;
 	void execute(async () => {
-		const { token } = await MtDungeonService.prepareGuardianTrial(leaderId, session.value!.revision);
-		const result = await MtDungeonService.resolveGuardianTrial(leaderId, token);
+		const { token } = await MtDungeonService.prepareGuardianFight(leaderId, session.value!.revision);
+		const result = await MtDungeonService.resolveGuardianFight(leaderId, token);
 		sessionStore().setFightResult(result);
 		await router.push({ name: 'FightPage', params: { dinozId: String(leaderId) } });
 	});
