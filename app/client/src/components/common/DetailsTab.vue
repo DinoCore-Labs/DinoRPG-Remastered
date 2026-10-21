@@ -91,7 +91,7 @@
 				<Tippy tag="img" :src="getImgURL('icons', `help${getLanguage()}`)" theme="normal" class="help">
 					<template #content>
 						<h1 v-html="$t('dinozPage.details.assaults')" />
-						<p v-html="''" />
+						<p v-html="formatContent($t('dinozPage.details.assaultsHelp'))" />
 					</template>
 				</Tippy>
 			</p>
@@ -143,7 +143,7 @@
 				<Tippy tag="img" :src="getImgURL('icons', `help${getLanguage()}`)" theme="normal" class="help">
 					<template #content>
 						<h1 v-html="$t('dinozPage.details.defenses')" />
-						<p v-html="''" />
+						<p v-html="formatContent($t('dinozPage.details.defensesHelp'))" />
 					</template>
 				</Tippy>
 			</p>
