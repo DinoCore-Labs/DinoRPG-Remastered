@@ -92,6 +92,7 @@ export interface FightResult {
 		key: string;
 		text: string;
 	};
+	bothStand?: boolean;
 }
 
 export interface FighterRecap {

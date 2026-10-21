@@ -267,8 +267,8 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: Seeded
 		}
 	};
 
-	// If a timeout is present, display it.
-	if (fightData.timeout) {
+	// If a timeout is present, display it unless explicitly hidden.
+	if (fightData.timeout && config.timeoutVisible !== false) {
 		fightData.steps.push({
 			action: 'timeLimit',
 			time: fightData.timeout
