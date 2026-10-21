@@ -48,3 +48,21 @@ export async function deleteNotification(req: FastifyRequest, reply: FastifyRepl
 		return reply.code(500).send({ message: 'Internal Server Error' });
 	}
 }
+
+export async function deleteAllNotifications(req: FastifyRequest, reply: FastifyReply) {
+	try {
+		const userId = req.user.id;
+		if (!userId) {
+			return reply.code(401).send({ message: 'Authentication required' });
+		}
+
+		await prisma.notification.deleteMany({
+			where: { userId }
+		});
+
+		return reply.send({ message: 'All notifications deleted successfully' });
+	} catch (err) {
+		req.log.error(err);
+		return reply.code(500).send({ message: 'Internal Server Error' });
+	}
+}

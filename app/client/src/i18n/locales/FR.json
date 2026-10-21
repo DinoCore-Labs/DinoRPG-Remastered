@@ -38,6 +38,7 @@
 	},
 	"notifications": {
 		"title": "Notifications",
+		"clearAll": "Tout voir",
 		"newClanJoinRequest": "Le joueur {name} a demandé à rejoindre le clan.",
 		"newReward": "Vous avez reçu une récompense : {rewards}",
 		"xmasReward": "Fin de l'évènement, Joyeux Noël !<br><br>{rewards}",
