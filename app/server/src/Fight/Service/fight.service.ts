@@ -261,7 +261,11 @@ export function calculateFightVsMonsters(
 	place: PlaceEnum,
 	monsters?: MonsterFiche[],
 	seed?: string,
-	allies?: MonsterFiche[]
+	allies?: MonsterFiche[],
+	options?: {
+		timeout?: number;
+		timeoutVisible?: boolean;
+	}
 ): FightProcessResult {
 	const rng_seed = seed ?? generateString(20);
 	const rng = createXorShift32(hashStringToInt(rng_seed));
@@ -281,6 +285,8 @@ export function calculateFightVsMonsters(
 
 	const fightConfiguration: FightConfiguration = {
 		seed: rng_seed,
+		timeout: options?.timeout,
+		timeoutVisible: options?.timeoutVisible,
 
 		// Flags
 		rules: MONSTER_FIGHT_RULES,

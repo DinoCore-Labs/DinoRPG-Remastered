@@ -741,8 +741,24 @@ async function processTeamWEncounter(input: ScenarioMoveFightInput, encounter: T
 async function processFirstGroubourinEncounter(input: ScenarioMoveFightInput): Promise<FightResult> {
 	/**
 	 * 1. Calcul du combat avec Groubourin.
+	 *
+	 * Dans le jeu original (Motion Twin - Scenario.hx), ce combat utilise
+	 * r.manager.setTimeout(100, false) pour être interrompu au bout de 100 unités
+	 * de temps sans chronomètre visuel. Groubourin dort et subit 1 PV/coup (M_DISABLE),
+	 * ce qui sans timeout empêchait l'attaquant de recharger son énergie et figeait le combat.
 	 */
-	const fightProcess = calculateFightVsMonsters(input.team, input.user, input.toPlace, [FIRST_GROUBOURIN_MONSTER]);
+	const fightProcess = calculateFightVsMonsters(
+		input.team,
+		input.user,
+		input.toPlace,
+		[FIRST_GROUBOURIN_MONSTER],
+		undefined,
+		undefined,
+		{
+			timeout: 100,
+			timeoutVisible: false
+		}
+	);
 	/**
 	 * 2. Récupération de sa représentation dans
 	 * le résultat du moteur.
@@ -818,6 +834,10 @@ async function processFirstGroubourinEncounter(input: ScenarioMoveFightInput): P
 	});
 	return {
 		...result,
+		/**
+		 * Les deux côtés restent debout face à face (m.res.end = _EBStand dans l'original).
+		 */
+		bothStand: true,
 		/**
 		 * Groubourin est toujours vivant.
 		 */
