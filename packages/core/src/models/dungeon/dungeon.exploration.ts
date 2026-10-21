@@ -206,6 +206,8 @@ export function applyMtDungeonPickup(map: DungeonStructure, state: MtExplorerSta
 		const item = room.item;
 		if (!item || item.x !== p.x || item.y !== p.y) continue;
 		if (item.kind === 'IKey') {
+			// Preserve dense boolean keys for nonzero MT key IDs (Postgres + session validation).
+			while (keys.length <= item.value) keys.push(false);
 			keys[item.value] = true;
 			flags.add(getMtFlagIndex(map, p.l, p.x, p.y));
 		} else if (item.kind === 'IGold' || item.kind === 'IScenario') {
