@@ -21,11 +21,17 @@
 				:src="getImgURL('item', `item_${itemNameList[item]}`)"
 				:alt="itemNameList[item]"
 				@click="unequip(item)"
-				:class="{ locked: isLocked(item) }"
+				:class="{ locked: isLocked(item), discharged: isDischargedScale(item) }"
 			>
 				<template #content>
 					<h1 v-html="formatContent($t(`items.name.${itemNameList[item]}`))" />
 					<p v-html="formatContent($t(`items.description.${itemNameList[item]}`))" />
+					<br v-if="isDischargedScale(item)" />
+					<p
+						v-if="isDischargedScale(item)"
+						class="discharged-text"
+						v-html="formatContent($t('items.scaleDischargedNotice'))"
+					/>
 					<br v-if="isLocked(item)" />
 					<p
 						v-if="isLocked(item)"
@@ -45,6 +51,7 @@
 
 <script lang="ts">
 import { defineComponent, type PropType } from 'vue';
+import { Item } from '@dinorpg/core/models/items/itemList.js';
 import { itemNameList } from '@dinorpg/core/models/items/itemNameList.js';
 import { errorHandler } from '../../utils/errorHandler.js';
 import { InventoryService } from '../../services/inventory.service.js';
@@ -92,12 +99,29 @@ export default defineComponent({
 				this.dinozData.items?.forEach((item, index) => (this.items[index] = item));
 			},
 			immediate: true
+		},
+		dinozData: {
+			handler(newDinoz: DinozFiche | undefined) {
+				if (!newDinoz) return;
+				this.items = new Array(newDinoz.maxItems);
+				newDinoz.items?.forEach((item, index) => (this.items[index] = item));
+			},
+			deep: true
 		}
 	},
 	methods: {
+		getLockedItem(itemId: number | undefined) {
+			if (!itemId) return undefined;
+			if (itemId === Item.SCALE || itemId === Item.SCALE_DISCHARGED) {
+				return this.dinozData.lockedMagicItems?.find(
+					i => i.itemId === Item.SCALE || i.itemId === Item.SCALE_DISCHARGED
+				);
+			}
+			return this.dinozData.lockedMagicItems?.find(i => i.itemId === itemId);
+		},
 		getRemainingTimeText(itemId: number | undefined) {
 			if (!itemId) return '';
-			const lockedItem = this.dinozData.lockedMagicItems?.find(i => i.itemId === itemId);
+			const lockedItem = this.getLockedItem(itemId);
 			if (!lockedItem) return '';
 			const hoursSinceEquip = (Date.now() - new Date(lockedItem.equippedAt).getTime()) / (1000 * 60 * 60);
 			const remainingHours = Math.ceil(119 - hoursSinceEquip);
@@ -112,10 +136,13 @@ export default defineComponent({
 		},
 		isLocked(itemId: number | undefined) {
 			if (!itemId) return false;
-			const lockedItem = this.dinozData.lockedMagicItems?.find(i => i.itemId === itemId);
+			const lockedItem = this.getLockedItem(itemId);
 			if (!lockedItem) return false;
 			const hoursSinceEquip = (Date.now() - new Date(lockedItem.equippedAt).getTime()) / (1000 * 60 * 60);
 			return hoursSinceEquip < 119;
+		},
+		isDischargedScale(itemId: number | undefined) {
+			return itemId === Item.SCALE_DISCHARGED;
 		},
 		applyEquippedItems(backPack: Array<DinozItems>) {
 			if (!this.dinozData?.maxItems) return;
@@ -192,15 +219,21 @@ export default defineComponent({
 			outline: 1px solid white;
 			cursor: pointer;
 		}
-		&.locked {
+		&.locked,
+		&.discharged {
 			filter: grayscale(100%);
 			opacity: 0.95;
+		}
+		&.locked {
 			&:hover {
 				outline: 1px solid red;
 				cursor: not-allowed;
 			}
 		}
 	}
+}
+.discharged-text {
+	color: #66ccff;
 }
 .locked-text {
 	color: #ffaa00;

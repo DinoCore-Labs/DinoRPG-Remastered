@@ -144,6 +144,7 @@ export const itemNameList: Record<number, string> = {
 	129: 'gold50000',
 	130: 'christmas_egg',
 	143: 'void_sphere',
+	145: 'scale_discharged',
 	993: 'box_common',
 	994: 'box_rare',
 	995: 'box_epic',

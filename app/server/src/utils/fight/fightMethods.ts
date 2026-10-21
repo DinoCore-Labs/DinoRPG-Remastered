@@ -4818,6 +4818,13 @@ export const checkDeaths = (fightData: DetailedFight) => {
 
 						// Kill opponent
 						loseHp(fightData, opponent, opponent.hp, LifeEffect.Skull);
+
+						// Consume scale from fighter items and register in itemsUsed
+						const scaleIndex = fighter.items.findIndex(item => item.itemId === Item.SCALE);
+						if (scaleIndex !== -1) {
+							fighter.items.splice(scaleIndex, 1);
+						}
+						fighter.itemsUsed.push(Item.SCALE);
 					}
 				}
 

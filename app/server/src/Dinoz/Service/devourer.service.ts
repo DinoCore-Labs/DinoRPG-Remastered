@@ -1,12 +1,13 @@
 import { ItemType } from '@dinorpg/core/models/enums/ItemType.js';
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { FightOutcome, type FightResult } from '@dinorpg/core/models/fight/fightResult.js';
-import { itemList } from '@dinorpg/core/models/items/itemList.js';
+import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
 import { NotificationType } from '@dinorpg/core/models/notif/notifType.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import type { FastifyReply, FastifyRequest } from 'fastify';
 
 import { calculateFightBetweenPlayers } from '../../Fight/Service/fight.service.js';
+import { dischargeDinozScale } from '../../Inventory/Controller/dischargeDinozScale.controller.js';
 import { removeItemFromDinoz } from '../../Inventory/Controller/removeItemFromDinoz.controller.js';
 import { newNotif } from '../../Notification/Service/notification.service.js';
 import { prisma } from '../../prisma.js';
@@ -173,6 +174,9 @@ export async function devourerAttackHandler(req: FastifyRequest<{ Params: Devour
 			// Remove only classic items
 			if (itemRef.itemType === ItemType.CLASSIC) {
 				await removeItemFromDinoz(fighter.dinozId, itemUsed);
+			}
+			if (itemUsed === Item.SCALE && fighter.dinozId) {
+				await dischargeDinozScale(fighter.dinozId);
 			}
 		}
 	}
