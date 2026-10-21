@@ -139,15 +139,38 @@ describe('MT original archive sprite catalog (201 PNG)', () => {
 
 	it('does not fabricate absent labo / mine artwork or external monsters', () => {
 		const s = scene();
+
 		s.floor[0]!.ground = 'labo';
 		s.walls[0]!.symbol = 'mine';
-		s.features.push({ kind: 'guardian', source: 'door', x: 6, y: 7, randomSeed: 0 });
-		s.fog.push({ x: 6, y: 7, color: 0x27191c, blur: 32 });
+		s.features.push({
+			kind: 'guardian',
+			source: 'door',
+			x: 6,
+			y: 7,
+			randomSeed: 0
+		});
+		s.fog.push({
+			x: 6,
+			y: 7,
+			color: 0x27191c,
+			blur: 32
+		});
+
 		const plan = createMtSpritePlan(s);
+
+		// Les assets labo / mine ne sont toujours pas disponibles.
 		expect(plan.sprites.some(sp => sp.file.includes('labo') || sp.file.includes('mine'))).toBe(false);
+
 		expect(plan.unresolved.some(msg => msg.includes('labo'))).toBe(true);
-		expect(plan.unresolved.some(msg => msg.includes('gardien'))).toBe(false); // French capitalized label
-		expect(plan.unresolved.some(msg => msg.includes('Gardien'))).toBe(true);
+
+		// Les monstres smonster sont maintenant rendus
+		// séparément par MtOriginalDungeonCanvas.vue.
+		expect(plan.unresolved.some(msg => /gardien/i.test(msg))).toBe(false);
+
+		// Le catalogue ne doit pas créer de sprite de remplacement.
+		expect(plan.sprites.some(sp => sp.label.startsWith('item:guardian'))).toBe(false);
+
+		// Le brouillard Flash original reste partiellement non porté.
 		expect(plan.originalFogSupported).toBe(false);
 	});
 
