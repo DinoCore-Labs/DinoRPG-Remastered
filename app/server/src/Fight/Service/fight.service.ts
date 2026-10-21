@@ -799,8 +799,10 @@ export async function generateMonsterList(
 		missions?: Pick<DinozMissions, 'id' | 'missionKey' | 'progression' | 'tracking' | 'isCompleted'>[];
 	})[],
 	placeOfFight: PlaceEnum,
-	missionSourceDinozId?: number
+	missionSourceDinozId?: number,
+	dungeonMonsterKeys?: readonly string[]
 ): Promise<MonsterFiche[]> {
+	const dungeonRoster = dungeonMonsterKeys === undefined ? null : new Set(dungeonMonsterKeys);
 	let teamPowerLevel = 0;
 	let greatestFighterLevel = 0;
 	for (const dinoz of team) {
@@ -846,6 +848,8 @@ export async function generateMonsterList(
 	}
 	const activeEventNames = new Set(activeEvents.map(event => event.event));
 	const availableMonsters = Object.values(monsterList).filter(monster => {
+		// MT dungeons have their own canonical XML monster roster.
+		if (dungeonRoster !== null) return dungeonRoster.has(getMonsterKeyById(monster.id) ?? '');
 		// Febrez is inserted once per encounter using the original 30% event chance.
 		if (monster.id === Monster.FEBREZA) return false;
 		if (monster.places && !monster.places.includes(place.placeId)) {
@@ -857,19 +861,21 @@ export async function generateMonsterList(
 		return monster.zones.includes(place.map);
 	});
 	const availableMonsterHuntMonsters =
-		activeMonsterHunt?.monsters.filter(entry => {
-			if (entry.globalSpawn) {
-				return true;
-			}
-			const monster = entry.monster;
-			if (monster.places?.length && !monster.places.includes(place.placeId)) {
-				return false;
-			}
-			return monster.zones.includes(place.map);
-		}) ?? [];
+		dungeonRoster !== null
+			? []
+			: (activeMonsterHunt?.monsters.filter(entry => {
+					if (entry.globalSpawn) {
+						return true;
+					}
+					const monster = entry.monster;
+					if (monster.places?.length && !monster.places.includes(place.placeId)) {
+						return false;
+					}
+					return monster.zones.includes(place.map);
+				}) ?? []);
 	const forcedMissionMonsterPool = availableMonsters.filter(monster => isLeaderMissionMonster(monster));
 	const monsters = availableMonsters.map(monster => {
-		if (isLeaderMissionMonster(monster)) {
+		if (dungeonRoster === null && isLeaderMissionMonster(monster)) {
 			return {
 				monster,
 				p: monsterLevelProba(greatestFighterLevel, monster.odds * MISSION_MONSTER_ODDS_MULTIPLIER, monster.level)
@@ -932,6 +938,7 @@ export async function generateMonsterList(
 			odds: entry.p
 		}));
 	if (
+		dungeonRoster === null &&
 		missionKillForce &&
 		forcedMissionMonsterPool.length > 0 &&
 		!monsterArray.some(monster => isLeaderMissionMonster(monster))
@@ -949,6 +956,7 @@ export async function generateMonsterList(
 		return monsterArray;
 	}
 	while (monsterLevel < teamPowerLevel) {
+		if (dungeonRoster !== null && monsterArray.length >= 24) break;
 		const selectedMonster = weightedRandom(ml).monster;
 		let count = 1;
 		if (selectedMonster.groups) {
@@ -956,6 +964,7 @@ export async function generateMonsterList(
 			count += weightedGroup;
 		}
 		for (let i = 0; i < count; i++) {
+			if (dungeonRoster !== null && monsterArray.length >= 24) break;
 			monsterLevel += selectedMonster.level;
 			monsterArray.push(selectedMonster);
 			if (selectedMonster.groups && count > 1 && monsterLevel >= teamPowerLevel) {
@@ -979,7 +988,12 @@ export async function generateMonsterList(
 		MapZone.ILEMONSTRE,
 		MapZone.CAUSHEMESH
 	];
-	if (activeEventNames.has(GameEvent.VALENTINE) && valentineZones.includes(place.map) && Math.random() < 0.3) {
+	if (
+		dungeonRoster === null &&
+		activeEventNames.has(GameEvent.VALENTINE) &&
+		valentineZones.includes(place.map) &&
+		Math.random() < 0.3
+	) {
 		monsterArray.push(monsterList[Monster.FEBREZA]);
 	}
 	return monsterArray;

@@ -18,13 +18,17 @@ import type { MtDungeonSession } from '@dinorpg/core/models/dungeon/dungeon.sess
 import { settleMtDungeonInteraction } from '@dinorpg/core/models/dungeon/dungeon.session.js';
 import type { FightResult } from '@dinorpg/core/models/fight/fightResult.js';
 import type { MonsterFiche } from '@dinorpg/core/models/monster/monsterFiche.js';
-import { monsterByKey } from '@dinorpg/core/models/monster/monsterKeyMap.js';
+import { getMonsterKeyById, monsterByKey } from '@dinorpg/core/models/monster/monsterKeyMap.js';
 import { placeListv2 } from '@dinorpg/core/models/place/placeListv2.js';
 
 import { Prisma } from '../../../../prisma/index.js';
 import { GLOBAL } from '../../context.js';
 import { getDinozFightDataRequest } from '../../Dinoz/Controller/getDinozFight.controller.js';
-import { calculateFightVsMonsters, rewardFightVsMonsters } from '../../Fight/Service/fight.service.js';
+import {
+	calculateFightVsMonsters,
+	generateMonsterList,
+	rewardFightVsMonsters
+} from '../../Fight/Service/fight.service.js';
 import { prisma } from '../../prisma.js';
 import { isWipedMtDungeonParty } from './mtDungeonDefeat.service.js';
 import { saveMtDungeonProgress } from './mtDungeonProgress.service.js';
@@ -97,11 +101,9 @@ export async function getMtGuardianTrialPreview(identity: MtSessionIdentity) {
 }
 
 export async function prepareMtGuardianTrial(identity: MtSessionIdentity, revision: number) {
-	ensureEnabled();
 	if (!Number.isSafeInteger(revision) || revision < 0) throw new MtDungeonGuardianTrialError('stale-revision');
 	const deps = mtDungeonDependencies();
 	return deps.withLock(identity.userId, async () => {
-		ensureEnabled();
 		const run = await prisma.mtDungeonRun.findFirst({
 			where: {
 				userId: identity.userId,
@@ -114,7 +116,6 @@ export async function prepareMtGuardianTrial(identity: MtSessionIdentity, revisi
 		if (!session) throw new MtDungeonGuardianTrialError('not-found');
 		if (session.revision !== revision) throw new MtDungeonGuardianTrialError('stale-revision');
 		const intent = intentFor(session);
-		knownMonster(intent.monsterKeys[0]);
 		const old = await prisma.mtDungeonFightAttempt.findUnique({
 			where: { runId_revision: { runId: run.id, revision } }
 		});
@@ -124,11 +125,37 @@ export async function prepareMtGuardianTrial(identity: MtSessionIdentity, revisi
 				old.mapId !== intent.mapId ||
 				old.scenarioIndex !== MT_GUARDIAN_TRIAL_INDEX ||
 				old.pendingJson !== intent.pendingJson ||
-				JSON.stringify(old.monsterKeys) !== JSON.stringify(intent.monsterKeys)
+				!old.monsterKeys.length
 			)
 				throw new MtDungeonGuardianTrialError('conflict');
 			return { token: old.token, revision, monsterKeys: [...old.monsterKeys], experimental: true as const };
 		}
+		// Generate enemy party using normal Remastered level/power/group rules,
+		// limited to the exact MT dungeon XML monster keys.
+		const dungeonId = session.mapId.slice(0, session.mapId.lastIndexOf('_'));
+		const definition = getMtDungeonArchive().definition(dungeonId);
+		const entrance = Object.values(placeListv2).find(place => place.name === definition.enter.place);
+		const user = await getDinozFightDataRequest(identity.leaderDinozId, identity.userId);
+		const party = user?.dinoz ?? [];
+		const leader = party.find(d => d.id === identity.leaderDinozId);
+		if (
+			!entrance ||
+			!leader ||
+			!party.length ||
+			party.some(
+				d => d.placeId !== entrance.placeId || d.life <= 0 || !d.fight || d.state !== null || d.concentration !== null
+			)
+		)
+			throw new MtDungeonGuardianTrialError('group-unavailable');
+		const generated = await generateMonsterList(
+			[leader, ...party.filter(d => d.id !== leader.id)],
+			entrance.placeId,
+			undefined,
+			definition.monsters
+		);
+		const monsterKeys = generated.map(monster => getMonsterKeyById(monster.id));
+		if (!monsterKeys.length || monsterKeys.some(key => !key || !definition.monsters.includes(key)))
+			throw new MtDungeonGuardianTrialError('unknown-monster');
 		const token = randomUUID();
 		try {
 			await prisma.mtDungeonFightAttempt.create({
@@ -139,7 +166,7 @@ export async function prepareMtGuardianTrial(identity: MtSessionIdentity, revisi
 					revision,
 					scenarioIndex: MT_GUARDIAN_TRIAL_INDEX,
 					pendingJson: intent.pendingJson,
-					monsterKeys: [...intent.monsterKeys],
+					monsterKeys: monsterKeys as string[],
 					fightSeed: token,
 					status: 'PREPARED'
 				}
@@ -149,18 +176,16 @@ export async function prepareMtGuardianTrial(identity: MtSessionIdentity, revisi
 				throw new MtDungeonGuardianTrialError('conflict');
 			throw error;
 		}
-		return { token, revision, monsterKeys: [...intent.monsterKeys], experimental: true as const };
+		return { token, revision, monsterKeys: monsterKeys as string[], experimental: false as const };
 	});
 }
 
 /** Execute once. An uncertain reward application is never automatically retried. */
 export async function resolveMtGuardianTrial(identity: MtSessionIdentity, token: string): Promise<FightResult> {
-	ensureEnabled();
 	if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(token))
 		throw new MtDungeonGuardianTrialError('not-found');
 	const deps = mtDungeonDependencies();
 	return deps.withLock(identity.userId, async () => {
-		ensureEnabled();
 		const attempt = await prisma.mtDungeonFightAttempt.findUnique({
 			where: { token },
 			include: { run: { include: { leaderDinoz: { select: { userId: true } } } } }
@@ -193,9 +218,15 @@ export async function resolveMtGuardianTrial(identity: MtSessionIdentity, token:
 		} catch {
 			throw new MtDungeonGuardianTrialError('conflict');
 		}
-		if (JSON.stringify(intent.monsterKeys) !== JSON.stringify(attempt.monsterKeys))
-			throw new MtDungeonGuardianTrialError('conflict');
-		const monster = knownMonster(intent.monsterKeys[0]);
+		const dungeonId = session.mapId.slice(0, session.mapId.lastIndexOf('_'));
+		const allowed = new Set(getMtDungeonArchive().definition(dungeonId).monsters);
+		if (
+			!attempt.monsterKeys.length ||
+			attempt.monsterKeys.length > 24 ||
+			attempt.monsterKeys.some(key => !allowed.has(key))
+		)
+			throw new MtDungeonGuardianTrialError('unknown-monster');
+		const monsters = attempt.monsterKeys.map(knownMonster);
 		const dungeonPlace = Object.values(placeListv2).find(
 			place => place.name === getMtDungeonArchive().definition('stepp').enter.place
 		)?.placeId;
@@ -229,10 +260,10 @@ export async function resolveMtGuardianTrial(identity: MtSessionIdentity, token:
 		if (claim.count !== 1) throw new MtDungeonGuardianTrialError('already-processing');
 		try {
 			const squad = [leader, ...team.filter(d => d.id !== leader.id)];
-			const fight = calculateFightVsMonsters(squad, user, leader.placeId, [monster], attempt.fightSeed);
+			const fight = calculateFightVsMonsters(squad, user, leader.placeId, monsters, attempt.fightSeed);
 			// Trial battles have genuine effects and may award XP/loot, as in the
 			// existing engine. Disable the unsupported dungeon gold and hunt rewards.
-			const result = await rewardFightVsMonsters(squad, [monster], fight, leader.placeId, user, {
+			const result = await rewardFightVsMonsters(squad, monsters, fight, leader.placeId, user, {
 				disableGoldReward: true,
 				disableMonsterHuntReward: true
 			});
@@ -240,6 +271,12 @@ export async function resolveMtGuardianTrial(identity: MtSessionIdentity, token:
 			const settled = settleMtDungeonInteraction(cfg, session, result.result);
 			const stored = JSON.parse(JSON.stringify(result)) as Prisma.InputJsonValue;
 			await prisma.$transaction(async tx => {
+				// Exactly one fight action per party member, whether won or lost.
+				const consumed = await tx.dinoz.updateMany({
+					where: { userId: identity.userId, id: { in: squad.map(d => d.id) }, fight: true },
+					data: { fight: false }
+				});
+				if (consumed.count !== squad.length) throw new MtDungeonGuardianTrialError('conflict');
 				// The fight engine has already persisted all HP losses.
 				// A full-party wipe ends the run; resurrection is possible outside.
 				if (await isWipedMtDungeonParty(tx, identity)) {
