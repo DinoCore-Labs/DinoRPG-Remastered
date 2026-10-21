@@ -28,6 +28,7 @@
 					<span>Étage : {{ stage + 1 }} / 4</span>
 					<span>Case : {{ session.position.x }}, {{ session.position.y }}, {{ session.position.l }}</span>
 					<span>Révision : {{ session.revision }}</span>
+					<span>Clés MT récupérées : {{ session.keys.filter(Boolean).length }}</span>
 				</div>
 
 				<section v-if="partyDefeated" class="mt-test__panel" aria-live="polite">
@@ -373,6 +374,12 @@ function move(direction: 'north' | 'south' | 'west' | 'east' | 'up' | 'down') {
 		const result = await MtDungeonService.move(leaderId, previous.revision, command);
 		if (!result.ok) {
 			notice.value = 'Déplacement refusé par le serveur.';
+			return;
+		}
+		if (result.blockedDoor === 'missing-key') {
+			// Consume the revision, but do not animate a fake movement.
+			await afterMutation(result.session);
+			notice.value = 'Cette porte est verrouillée. Il faut trouver sa clé dans le donjon.';
 			return;
 		}
 		if (direction === 'west') facingRight.value = false;
