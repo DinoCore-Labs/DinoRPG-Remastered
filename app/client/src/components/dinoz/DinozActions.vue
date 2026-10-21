@@ -1030,7 +1030,9 @@ export default defineComponent({
 	border-style: hidden solid solid solid;
 	border-width: 0 1px 1px 1px;
 	border-color: #9f5841;
-	max-width: 221px;
+	width: 185px;
+	max-width: 185px;
+	box-sizing: border-box;
 	color: white;
 	display: flex;
 	flex-direction: column;
@@ -1056,6 +1058,16 @@ export default defineComponent({
 		padding: 0 5px 5px;
 		gap: 2px;
 		overflow: hidden;
+		:deep(.disclaimer) {
+			margin: 2px 0 5px;
+			padding: 5px;
+			width: 100%;
+			box-sizing: border-box;
+			.content {
+				min-width: 0;
+				flex: 1;
+			}
+		}
 		.action {
 			display: flex;
 			flex-direction: row;
