@@ -519,6 +519,16 @@ function paintGuardians(scene: MtDungeonScene, ticket: number): void {
 				if (disposed || !app || ticket !== generation || !frames.length) return;
 				const visual = new AnimatedSprite([...frames]);
 				visual.anchor.set(0.5);
+				// EternalTwin MazeRenderer limits guardians to 1.15 x 1.25 cells.
+				// Exported smonster frames may be larger than their nominal 72px canvas.
+				// Fit using the largest frame so the animation never changes size.
+				const frameWidth = Math.max(...frames.map(frame => frame.width));
+				const frameHeight = Math.max(...frames.map(frame => frame.height));
+				if (!Number.isFinite(frameWidth) || !Number.isFinite(frameHeight) || frameWidth <= 0 || frameHeight <= 0) {
+					visual.destroy();
+					return;
+				}
+				visual.scale.set(Math.min(1, (40 * 1.15) / frameWidth, (40 * 1.25) / frameHeight));
 				visual.position.set(x, y);
 				visual.zIndex = guardian.y;
 				visual.animationSpeed = 0.2;
