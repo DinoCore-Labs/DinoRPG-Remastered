@@ -150,12 +150,37 @@ describe('MT dungeon authoritative command replay (server adapter)', () => {
 			getMtFlagIndex(config.map, 0, 5, 5)
 		);
 	});
-	it('preserves the original IHeal rule: do not set a permanent flag', () => {
+
+	it('marks an IHeal zone consumed only after successful settlement', () => {
 		const config = fixture();
 		const result = accepted(config, at(config, 3, 4), [cmd(3, 4, 0, 1, 0)]);
+		const healFlag = getMtFlagIndex(config.map, 0, 4, 4);
+
+		// La zone déclenche bien une interaction de soin.
 		expect(result.pending?.kind).toBe('heal');
-		expect(settleMtDungeonInteraction(config, result.session, true).flags).toEqual([]);
+
+		// Aucun flag tant que le soin n'est pas validé.
+		expect(result.session.flags).not.toContain(healFlag);
+
+		// Échec du soin : la zone reste disponible.
+		const failed = settleMtDungeonInteraction(config, result.session, false);
+		expect(failed.flags).not.toContain(healFlag);
+		expect(failed.position).toEqual({ x: 3, y: 4, l: 0 });
+
+		// Succès du soin : la zone est consommée.
+		const healed = settleMtDungeonInteraction(config, result.session, true);
+		expect(healed.flags).toContain(healFlag);
+		expect(healed.position).toEqual({ x: 4, y: 4, l: 0 });
+		expect(healed.pending).toBeNull();
+
+		// Quitter la zone puis revenir ne redéclenche pas le soin.
+		const departure = accepted(config, healed, [cmd(4, 4, 0, -1, 0)]);
+		const returnToZone = accepted(config, departure.session, [cmd(3, 4, 0, 1, 0)]);
+
+		expect(returnToZone.pending).toBeNull();
+		expect(returnToZone.session.flags).toContain(healFlag);
 	});
+
 	it('requires original scenario icons to be present and resolves scenario via server', () => {
 		const config = fixture();
 		const result = accepted(config, at(config, 5, 3), [cmd(5, 3, 0, 0, 1)]);
