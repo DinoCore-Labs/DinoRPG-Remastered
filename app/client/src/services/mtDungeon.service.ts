@@ -85,6 +85,8 @@ export const MtDungeonService = {
 		ok: boolean;
 		session: MtDungeonSession;
 		pending: MtDungeonSession['pending'];
+		goldAwarded?: number;
+		walletGold?: number;
 		accepted?: number;
 	}> {
 		return api.post(`/dungeon/mt/${id}/commands`, { revision, commands: [command] }, { silent: true });

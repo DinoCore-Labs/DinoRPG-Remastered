@@ -143,8 +143,8 @@
 						Revenir à la carte précédente
 					</button>
 					<p v-if="!actionAvailable" class="mt-test__caption">
-						Cette interaction n'est pas encore résoluble : aucun combat, soin, or ou passage extérieur n'est simulé. Le
-						déplacement reste bloqué conformément à l'état serveur.
+						Cette interaction n'est pas encore résoluble dans cette version. Le déplacement reste bloqué conformément à
+						l'état serveur.
 					</p>
 				</section>
 
@@ -177,6 +177,7 @@ import {
 } from '../services/mtDungeon.service.js';
 import { sessionStore } from '../store/sessionStore';
 import { localStore } from '../store/localStore';
+import { userStore } from '../store/userStore.js';
 import type { MtDungeonSession } from '@dinorpg/core/models/dungeon/dungeon.session.js';
 import type { DungeonCommand } from '@dinorpg/core/models/dungeon/dungeon.types.js';
 
@@ -383,6 +384,13 @@ function move(direction: 'north' | 'south' | 'west' | 'east' | 'up' | 'down') {
 			Math.max(0, visualMembers.value.length - 1)
 		);
 		await afterMutation(result.session);
+		if (typeof result.goldAwarded === 'number') {
+			if (typeof result.walletGold === 'number') userStore().setGold(result.walletGold);
+			notice.value =
+				result.goldAwarded > 0
+					? `Trésor récupéré : +${result.goldAwarded} or.`
+					: 'Trésor récupéré (valeur MT brute : 0).';
+		}
 	});
 }
 function transition(action: 'forward' | 'backward') {

@@ -25,6 +25,7 @@ import {
 	prepareMtDungeonFight,
 	resolveMtDungeonFight
 } from '../Service/mtDungeonFight.service.js';
+import { MtDungeonGoldError } from '../Service/mtDungeonGold.service.js';
 import {
 	getMtGuardianTrialPreview,
 	mtDungeonGuardianTrialEnabled,
@@ -77,6 +78,7 @@ const moveSchema = z
 	.strict();
 
 function handleKnownError(error: unknown): { status: number; code: string } | null {
+	if (error instanceof MtDungeonGoldError) return { status: error.code === 'stale-run' ? 409 : 422, code: error.code };
 	if (error instanceof MtDungeonDefeatError)
 		return { status: error.code === 'not-found' ? 404 : 409, code: error.code };
 	if (error instanceof MtDungeonHealError) return { status: 409, code: error.code };

@@ -52,6 +52,13 @@ export interface MtDungeonSessionDependencies {
 	beforeOpen?(identity: MtSessionIdentity, mapId: string): Promise<void>;
 	/** Durable saved discoveries from earlier visits; never data supplied by HTTP. */
 	loadProgress?(identity: MtSessionIdentity, mapId: string): Promise<unknown | null>;
+	/** Transactional IGold pickup; must commit wallet + session in one transaction. */
+	settleGold?(
+		identity: MtSessionIdentity,
+		oldRevision: number,
+		pending: MtDungeonSession,
+		cfg: MtSessionConfiguration
+	): Promise<{ session: MtDungeonSession; goldAwarded: number; walletGold: number }>;
 	/** Transactional IHeal settlement; must commit HP and session together. */
 	settleHeal?(
 		identity: MtSessionIdentity,
@@ -114,6 +121,18 @@ export async function submitMtDungeonCommands(
 		const cfg = deps.getConfiguration(run.mapId);
 		const result = applyMtDungeonCommandBatch(cfg, run, commands);
 		if (!result.ok) return result;
+		if (result.session.pending?.kind === 'gold') {
+			if (!deps.settleGold) throw new MtDungeonSessionError('invalid-run');
+			const award = await deps.settleGold(identity, run.revision, result.session, cfg);
+			return {
+				ok: true,
+				accepted: result.accepted,
+				session: award.session,
+				pending: null,
+				goldAwarded: award.goldAwarded,
+				walletGold: award.walletGold
+			};
+		}
 		if (result.session.pending?.kind === 'heal') {
 			if (!deps.settleHeal) throw new MtDungeonSessionError('invalid-run');
 			const session = await deps.settleHeal(identity, run.revision, result.session, cfg);
