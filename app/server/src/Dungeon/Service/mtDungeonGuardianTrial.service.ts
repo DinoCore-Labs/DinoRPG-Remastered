@@ -27,6 +27,7 @@ import { getDinozFightDataRequest } from '../../Dinoz/Controller/getDinozFight.c
 import { calculateFightVsMonsters, rewardFightVsMonsters } from '../../Fight/Service/fight.service.js';
 import { prisma } from '../../prisma.js';
 import { isWipedMtDungeonParty } from './mtDungeonDefeat.service.js';
+import { saveMtDungeonProgress } from './mtDungeonProgress.service.js';
 import { getMtDungeonArchive, mtDungeonDependencies } from './mtDungeonRuntime.service.js';
 import type { MtSessionIdentity } from './mtDungeonSession.service.js';
 
@@ -242,6 +243,7 @@ export async function resolveMtGuardianTrial(identity: MtSessionIdentity, token:
 				// The fight engine has already persisted all HP losses.
 				// A full-party wipe ends the run; resurrection is possible outside.
 				if (await isWipedMtDungeonParty(tx, identity)) {
+					await saveMtDungeonProgress(tx, identity, settled, cfg);
 					const removed = await tx.mtDungeonRun.deleteMany({
 						where: {
 							id: attempt.runId,
