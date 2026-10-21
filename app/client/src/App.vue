@@ -38,6 +38,22 @@ export default defineComponent({
 		Toast,
 		Spinner,
 		EventAnnouncePopup
+	},
+	mounted() {
+		const authToast = sessionStorage.getItem('authToast');
+		if (authToast) {
+			sessionStorage.removeItem('authToast');
+			try {
+				const { message, type = 'success' } = JSON.parse(authToast);
+				if (type === 'success') {
+					this.$toast.success(message);
+				} else {
+					this.$toast.open({ message, type });
+				}
+			} catch {
+				// ignore
+			}
+		}
 	}
 });
 </script>
