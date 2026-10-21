@@ -35,6 +35,7 @@ import { Skill } from '@dinorpg/core/models/skills/skillList.js';
 import { getDinozForDojoFight } from '../Dojo/Service/dojoTest.service.js';
 import { calculateFightBetweenPlayers } from '../Fight/Service/fight.service.js';
 import { addItemToInventory } from '../Inventory/Controller/addItem.controller.js';
+import { dischargeDinozScale } from '../Inventory/Controller/dischargeDinozScale.controller.js';
 import { removeItemFromDinoz } from '../Inventory/Controller/removeItemFromDinoz.controller.js';
 import { newsService } from '../News/Service/news.service.js';
 import { newNotif } from '../Notification/Service/notification.service.js';
@@ -1039,6 +1040,9 @@ export class TournamentManager {
 					const isPermanentItem = itemUsed === Item.GOLDEN_NAPODINO || itemUsed === Item.BAMBOO_FRIEND;
 					if (itemRef && itemRef.itemType === ItemType.CLASSIC && !isPermanentItem) {
 						await removeItemFromDinoz(fighter.dinozId, itemUsed);
+					}
+					if (itemUsed === Item.SCALE && fighter.dinozId) {
+						await dischargeDinozScale(fighter.dinozId);
 					}
 				}
 			}

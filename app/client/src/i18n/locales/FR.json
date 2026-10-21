@@ -2139,6 +2139,7 @@
 			"battering_ram": "Bélier",
 			"ember": "Braise",
 			"scale": "Balance",
+			"scale_discharged": "Balance",
 			"beer": "Bière",
 			"encyclopedia": "Encyclopédie",
 			"antichromatic": "Antichromatique",
@@ -2280,6 +2281,7 @@
 			"battering_ram": "Le Dinoz attaque deux fois le château adverse en cas de victoire.",
 			"ember": "Augmente les **assauts** de Feu de tous les combattants de 30%.",
 			"scale": "Un Dinoz est tué si votre Dinoz meurt pendant le combat.",
+			"scale_discharged": "Un Dinoz est tué si votre Dinoz meurt pendant le combat.",
 			"beer": "Empêche tous les Dinoz de regagner des points de vie pendant le combat.",
 			"encyclopedia": "Augmente le gain d'expérience en fin de combat de 15%.",
 			"antichromatic": "Annule l'effet des Monochromatiques utilisés par l'adversaire.",
@@ -2373,6 +2375,7 @@
 			"undefined": "Cet objet est inconnu, c'est très rare et cela intéressera fortement les développeurs de connaître son existence."
 		},
 		"empty": "Cet emplacement est vide, choisissez un objet de l'inventaire à équiper.&&//Les objets équipés pourront être utilisés par votre Dinoz en combat.//",
+		"scaleDischargedNotice": "//Cet objet est actuellement déchargé. Il se rechargera automatiquement à minuit.//",
 		"magicItemHomesickTooltip": "//Cet Objet Magique souffre du mal du pays. Il doit encore s'habituer à son porteur avant de pouvoir être retiré.//&&**Temps restant : {time}**"
 	},
 	"ingredients": {

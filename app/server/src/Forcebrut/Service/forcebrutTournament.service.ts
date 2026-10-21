@@ -11,6 +11,7 @@ import type { FastifyReply, FastifyRequest } from 'fastify';
 
 import { Prisma } from '../../../../prisma/index.js';
 import { calculateFightBetweenPlayers } from '../../Fight/Service/fight.service.js';
+import { dischargeDinozScale } from '../../Inventory/Controller/dischargeDinozScale.controller.js';
 import { removeItemFromDinoz } from '../../Inventory/Controller/removeItemFromDinoz.controller.js';
 import { prisma } from '../../prisma.js';
 import { incrementUserStat } from '../../Stats/stats.service.js';
@@ -372,6 +373,10 @@ export async function fightForcebrutOpponent(req: FastifyRequest<{ Params: Force
 			const isPermanentItem = itemUsed === Item.GOLDEN_NAPODINO || itemUsed === Item.BAMBOO_FRIEND;
 			if (itemRef.itemType === ItemType.CLASSIC && !isPermanentItem) {
 				await removeItemFromDinoz(fighter.dinozId, itemUsed);
+			}
+
+			if (itemUsed === Item.SCALE && fighter.dinozId) {
+				await dischargeDinozScale(fighter.dinozId);
 			}
 
 			if (itemUsed === Item.GOBLIN_MERGUEZ) {

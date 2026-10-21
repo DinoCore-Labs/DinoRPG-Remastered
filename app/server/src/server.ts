@@ -47,6 +47,7 @@ import { expireDueMarketOffersJob } from './jobs/handlers/expireMarketOffers.js'
 import { gameLogMaintenanceJob } from './jobs/handlers/gameLogMaintenance.js';
 import { healFountainPearlDinozJob } from './jobs/handlers/healFountainPearlDinoz.js';
 import { itinerantMerchantMoveJob } from './jobs/handlers/itinerantMerchantMove.js';
+import { rechargeScalesJob } from './jobs/handlers/rechargeScales.js';
 import { refreshBankExchangeRateJob } from './jobs/handlers/refreshBankExchangeRate.js';
 import { resetDinozShopAtMidnight } from './jobs/handlers/resetDinozShop.js';
 import { resetDojoChallenge } from './jobs/handlers/resetDojoChallenge.js';
@@ -438,6 +439,10 @@ async function buildServer(options: BuildServerOptions = {}) {
 						},
 						'[jobs] heal-fountain-pearl-dinoz processed'
 					);
+				},
+				'recharge-magic-scales': async () => {
+					const result = await rechargeScalesJob();
+					server.log.info(result, '[jobs] recharge-magic-scales processed');
 				},
 				[MARKET_EXPIRATION_JOB_KEY]: () => expireDueMarketOffersJob(server.log),
 				[GAME_LOG_MAINTENANCE_JOB_KEY]: () => gameLogMaintenanceJob(server.log),

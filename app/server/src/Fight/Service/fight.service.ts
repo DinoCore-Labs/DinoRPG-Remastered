@@ -42,6 +42,7 @@ import { getActiveGameEvents } from '../../GameEvent/Service/gameEvent.service.j
 import { safeCreateGameLog } from '../../Gamelog/Controller/gamelog.controller.js';
 import { addItemToInventory } from '../../Inventory/Controller/addItem.controller.js';
 import { addItemToDinoz } from '../../Inventory/Controller/addItemToDinoz.controller.js';
+import { dischargeDinozScale } from '../../Inventory/Controller/dischargeDinozScale.controller.js';
 import { removeItem } from '../../Inventory/Controller/removeItem.controller.js';
 import { removeItemFromDinoz } from '../../Inventory/Controller/removeItemFromDinoz.controller.js';
 import { advanceDinozMissionOnFightWon, advanceDinozMissionOnMove } from '../../Mission/Controller/mission.progress.js';
@@ -618,6 +619,9 @@ export async function rewardFightVsMonsters(
 						missingReequipItems[itemUsed] = (missingReequipItems[itemUsed] || 0) + 1;
 					}
 				}
+			}
+			if (itemUsed === Item.SCALE && fighter.dinozId) {
+				await dischargeDinozScale(fighter.dinozId);
 			}
 			if (fighter.userId && itemUsed === Item.GOBLIN_MERGUEZ) {
 				if (!merguezPerPlayer[fighter.userId]) {
