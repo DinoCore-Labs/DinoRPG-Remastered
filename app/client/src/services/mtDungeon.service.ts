@@ -64,6 +64,10 @@ export const MtDungeonService = {
 	devLeaveToSurface(id: number, revision: number): Promise<{ ok: true }> {
 		return api.post(`/dungeon/mt/${id}/dev/surface/exit`, { revision });
 	},
+	/** Escape a session stranded by a pre-fix total defeat (server verifies all HP). */
+	evacuateDefeatedGroup(id: number, revision: number): Promise<{ evacuated: true }> {
+		return api.post(`/dungeon/mt/${id}/defeat/evacuate`, { revision });
+	},
 	getSession(id: number): Promise<MtDungeonSession> {
 		return api.get(`/dungeon/mt/${id}`, { silent: true });
 	},
