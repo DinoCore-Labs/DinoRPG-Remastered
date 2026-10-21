@@ -241,21 +241,7 @@
 							v-if="$te(`dinozPage.details.${stat.name}Help`)"
 							v-html="formatContent($t(`dinozPage.details.${stat.name}Help`))"
 						/>
-						<ul class="stat-details">
-							<li v-if="stat.name === SpecialStat.BUBBLE_RATE">
-								<img :src="getImgURL('icons', 'info_button')" alt="info_button" />
-								<span>
-									<span />
-									<img :src="getImgURL('elements', 'elem_water')" />
-									<img :src="getImgURL('elements', 'elem_air')" />
-									/
-									<img :src="getImgURL('elements', 'elem_water')" />
-									<img :src="getImgURL('elements', 'elem_air')" />
-									<img :src="getImgURL('elements', 'elem_wood')" />
-									<img :src="getImgURL('elements', 'elem_fire')" />
-									<img :src="getImgURL('elements', 'elem_lightning')" />
-								</span>
-							</li>
+						<ul class="stat-details" v-if="stat.details?.length">
 							<li v-for="(detail, i) in stat.details" :key="i">
 								<img :src="getImgURL('icons', 'info_button')" alt="info_button" />
 								<span v-if="detail.type === 'base'">
