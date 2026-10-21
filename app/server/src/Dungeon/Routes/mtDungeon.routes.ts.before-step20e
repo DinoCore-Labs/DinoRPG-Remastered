@@ -12,6 +12,7 @@ import { MtStageTransitionError } from '@dinorpg/core/models/dungeon/dungeon.sta
 import type { FastifyInstance } from 'fastify';
 import { z } from 'zod';
 
+import { evacuateDefeatedMtDungeon, MtDungeonDefeatError } from '../Service/mtDungeonDefeat.service.js';
 import {
 	leaveMtCavernsInDevelopment,
 	mtDungeonDevToolsEnabled,
@@ -76,6 +77,8 @@ const moveSchema = z
 	.strict();
 
 function handleKnownError(error: unknown): { status: number; code: string } | null {
+	if (error instanceof MtDungeonDefeatError)
+		return { status: error.code === 'not-found' ? 404 : 409, code: error.code };
 	if (error instanceof MtDungeonHealError) return { status: 409, code: error.code };
 	if (error instanceof MtDungeonEvidenceError) return { status: 409, code: error.code };
 	if (error instanceof MtDungeonScenarioRewardError) return { status: 409, code: error.code };
@@ -198,6 +201,22 @@ export async function mtDungeonRoutes(app: FastifyInstance) {
 			}
 		});
 	}
+
+	/** Allow recovery of an already-defeated party from a pre-fix dungeon session. */
+	app.post('/:leaderDinozId/defeat/evacuate', { preHandler: app.authenticate }, async (req, reply) => {
+		const params = leaderIdSchema.safeParse((req.params as { leaderDinozId: unknown }).leaderDinozId);
+		const body = z.object({ revision: z.number().int().nonnegative() }).strict().safeParse(req.body);
+		if (!params.success || !body.success) return reply.code(400).send({ code: 'invalid-evacuation-request' });
+		try {
+			return reply.send(
+				await evacuateDefeatedMtDungeon({ userId: req.user.id, leaderDinozId: params.data }, body.data.revision)
+			);
+		} catch (error) {
+			const known = handleKnownError(error);
+			if (known) return reply.code(known.status).send({ code: known.code });
+			throw error;
+		}
+	});
 
 	// Public-facing metadata are limited to introduction/exit strings and titles;
 	// do not leak reward contents, hidden scenario texts, or map geometry.
