@@ -149,6 +149,19 @@
 					</p>
 				</section>
 
+				<details v-if="view" class="mt-test__details mt-test__journal">
+					<summary>Journal et coffres découverts ({{ journalEntries.length }})</summary>
+					<p v-if="journalError" role="status">{{ journalError }}</p>
+					<p v-else-if="journalEntries.length === 0">Aucun texte découvert pour le moment.</p>
+					<ol v-else>
+						<li v-for="entry in journalEntries" :key="`${entry.mapId}:${entry.level}:${entry.scenarioIndex}`">
+							<strong>Carte {{ entry.stage + 1 }} — niveau {{ entry.level + 1 }}</strong>
+							<p>{{ entry.text }}</p>
+						</li>
+					</ol>
+					<button type="button" :disabled="busy" @click="loadJournal">Actualiser les découvertes</button>
+				</details>
+
 				<details v-if="view" class="mt-test__details">
 					<summary>Diagnostics de fidélité</summary>
 					<p>
@@ -172,6 +185,7 @@ import { DinozService } from '../services/dinoz.service.js';
 import {
 	MtDungeonService,
 	type MtDungeonCurrentView,
+	type MtDungeonJournalEntry,
 	type MtDungeonEncounter,
 	type MtDungeonDevCapabilities,
 	type MtGuardianTrialPreview
@@ -188,6 +202,8 @@ const leaderId = Number(route.params.id);
 const session = ref<MtDungeonSession | null>(null);
 const view = ref<MtDungeonCurrentView | null>(null);
 const encounter = ref<MtDungeonEncounter | null>(null);
+const journalEntries = ref<MtDungeonJournalEntry[]>([]);
+const journalError = ref('');
 const errorMessage = ref('');
 const notice = ref('');
 const devCapabilities = ref<MtDungeonDevCapabilities | null>(null);
@@ -284,6 +300,17 @@ function formatError(error: unknown): string {
 	return error instanceof Error ? error.message : 'Erreur inattendue.';
 }
 
+/** Read-only: an inaccessible journal must never block dungeon movement. */
+async function loadJournal(): Promise<void> {
+	try {
+		const result = await MtDungeonService.getJournal(leaderId, language.value);
+		journalEntries.value = result.entries;
+		journalError.value = '';
+	} catch {
+		journalError.value = 'Journal momentanément indisponible.';
+	}
+}
+
 async function refresh(): Promise<void> {
 	if (busy.value) return;
 	loading.value = true;
@@ -307,12 +334,15 @@ async function refresh(): Promise<void> {
 		view.value = latestView;
 		encounter.value = latestEncounter;
 		await loadGuardianTrial(current);
+		if (latestView) await loadJournal();
 	} catch (error) {
 		if (axios.isAxiosError(error) && error.response?.status === 404) {
 			session.value = null;
 			view.value = null;
 			encounter.value = null;
 			guardianTrial.value = null;
+			journalEntries.value = [];
+			journalError.value = '';
 		} else errorMessage.value = formatError(error);
 	} finally {
 		loading.value = false;
@@ -327,10 +357,15 @@ async function afterMutation(next: MtDungeonSession): Promise<void> {
 		: null;
 	// Commit both reactive values synchronously so Pixi receives a matching
 	// authoritative position and 9x9 viewport for the camera interpolation.
+	const journalChanged =
+		!session.value ||
+		session.value.mapId !== next.mapId ||
+		JSON.stringify(session.value.flags) !== JSON.stringify(next.flags);
 	session.value = next;
 	view.value = latestView;
 	encounter.value = latestEncounter;
 	await loadGuardianTrial(next);
+	if (journalChanged) await loadJournal();
 }
 async function execute(action: () => Promise<void>): Promise<void> {
 	if (busy.value) return;
@@ -643,5 +678,27 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeyDown));
 .mt-test__details {
 	font-size: 0.75rem;
 	max-width: 360px;
+}
+.mt-test__journal {
+	width: min(420px, 100%);
+	max-width: 420px;
+	padding: 0.55rem 0.7rem;
+	border: 1px solid #a38b6c;
+	background: #efdfbd;
+}
+.mt-test__journal summary {
+	cursor: pointer;
+	font-weight: 700;
+}
+.mt-test__journal ol {
+	padding-left: 1.1rem;
+}
+.mt-test__journal li {
+	margin: 0.65rem 0;
+}
+.mt-test__journal li p {
+	margin: 0.25rem 0;
+	white-space: pre-wrap;
+	overflow-wrap: anywhere;
 }
 </style>
