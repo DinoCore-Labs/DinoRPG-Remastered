@@ -74,7 +74,14 @@ export type MtSessionRejection =
 
 export type MtSessionBatchResult =
 	| { ok: false; reason: MtSessionRejection; commandIndex: number; session: MtDungeonSession }
-	| { ok: true; session: MtDungeonSession; accepted: number; pending: MtPendingInteraction | null };
+	| {
+			ok: true;
+			session: MtDungeonSession;
+			accepted: number;
+			pending: MtPendingInteraction | null;
+			goldAwarded?: number;
+			walletGold?: number;
+	  };
 
 export interface MtSessionConfiguration {
 	map: DungeonStructure;
