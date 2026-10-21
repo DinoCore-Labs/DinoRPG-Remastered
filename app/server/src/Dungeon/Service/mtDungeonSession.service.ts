@@ -10,6 +10,7 @@
  * `compareAndSwap` MUST be atomic (WHERE revision = expectedRevision).
  * No HTTP route exposes settleInteraction; only trusted server code calls it.
  */
+import { restoreMtDungeonProgress } from '@dinorpg/core/models/dungeon/dungeon.progress.js';
 import {
 	applyMtDungeonCommandBatch,
 	createMtDungeonSession,
@@ -49,6 +50,8 @@ export interface MtDungeonSessionDependencies {
 	withLock<T>(userId: string, fn: () => Promise<T>): Promise<T>;
 	/** Optional entry gate executed UNDER gameplay lock, before creation. Public routes MUST supply it. */
 	beforeOpen?(identity: MtSessionIdentity, mapId: string): Promise<void>;
+	/** Durable saved discoveries from earlier visits; never data supplied by HTTP. */
+	loadProgress?(identity: MtSessionIdentity, mapId: string): Promise<unknown | null>;
 	/** Transactional IHeal settlement; must commit HP and session together. */
 	settleHeal?(
 		identity: MtSessionIdentity,
@@ -80,7 +83,17 @@ export async function openMtDungeonSession(
 		if (deps.beforeOpen) await deps.beforeOpen(identity, mapId);
 		const cfg = deps.getConfiguration(mapId);
 		if (cfg.mapId !== mapId) throw new MtDungeonSessionError('invalid-run');
-		const run = createMtDungeonSession(cfg, fogEnabled);
+		let run = createMtDungeonSession(cfg, fogEnabled);
+		if (deps.loadProgress) {
+			const saved = await deps.loadProgress(identity, mapId);
+			if (saved !== null) {
+				try {
+					run = restoreMtDungeonProgress(run, saved, deps.getConfiguration);
+				} catch {
+					throw new MtDungeonSessionError('invalid-run');
+				}
+			}
+		}
 		if (!(await deps.repository.createIfAbsent(identity, run))) throw new MtDungeonSessionError('already-exists');
 		return run;
 	});

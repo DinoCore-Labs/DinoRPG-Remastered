@@ -7,6 +7,7 @@ import { isMtDungeonPartyWiped } from '@dinorpg/core/models/dungeon/dungeon.defe
 
 import type { Prisma } from '../../../../prisma/index.js';
 import { prisma } from '../../prisma.js';
+import { saveMtDungeonProgress } from './mtDungeonProgress.service.js';
 import { mtDungeonDependencies } from './mtDungeonRuntime.service.js';
 import type { MtSessionIdentity } from './mtDungeonSession.service.js';
 
@@ -41,7 +42,8 @@ export async function evacuateDefeatedMtDungeon(
 	expectedRevision: number
 ): Promise<{ evacuated: true }> {
 	if (!Number.isSafeInteger(expectedRevision) || expectedRevision < 0) throw new MtDungeonDefeatError('conflict');
-	return mtDungeonDependencies().withLock(identity.userId, async () =>
+	const deps = mtDungeonDependencies();
+	return deps.withLock(identity.userId, async () =>
 		prisma.$transaction(async tx => {
 			const run = await tx.mtDungeonRun.findFirst({
 				where: {
@@ -58,6 +60,9 @@ export async function evacuateDefeatedMtDungeon(
 				where: { runId: run.id, status: { in: ['PREPARED', 'PROCESSING', 'REVIEW'] } }
 			});
 			if (unsafe > 0) throw new MtDungeonDefeatError('pending-attempt');
+			const session = await deps.repository.load(identity);
+			if (!session || session.revision !== expectedRevision) throw new MtDungeonDefeatError('conflict');
+			await saveMtDungeonProgress(tx, identity, session, deps.getConfiguration(session.mapId));
 			const removed = await tx.mtDungeonRun.deleteMany({
 				where: {
 					id: run.id,
