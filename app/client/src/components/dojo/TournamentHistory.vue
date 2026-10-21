@@ -28,7 +28,7 @@
 					<img
 						:src="getImgURL('icons', 'small_follow')"
 						v-tippy="{
-							content: formatContent($t('dojo.history.seeFight')),
+							content: formatContent($t('dojo.history.seeTournament')),
 							theme: 'small'
 						}"
 					/>
