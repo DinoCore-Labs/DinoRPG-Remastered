@@ -12,6 +12,7 @@ import {
 
 import { GLOBAL } from '../../context.js';
 import { prisma } from '../../prisma.js';
+import { saveMtDungeonProgress } from './mtDungeonProgress.service.js';
 import { getMtDungeonArchive, mtDungeonDependencies } from './mtDungeonRuntime.service.js';
 import type { MtSessionIdentity } from './mtDungeonSession.service.js';
 
@@ -98,9 +99,13 @@ export async function leaveMtCavernsInDevelopment(identity: MtSessionIdentity, r
 			pending.itemValue !== null
 		)
 			throw new MtDungeonDevToolsError('wrong-interaction');
-		const removed = await prisma.mtDungeonRun.deleteMany({
-			where: { userId: identity.userId, leaderDinozId: identity.leaderDinozId, mapId: 'stepp_0', revision }
+		// A single transaction must either preserve discoveries AND delete the run, or do neither.
+		await prisma.$transaction(async tx => {
+			await saveMtDungeonProgress(tx, identity, session, cfg);
+			const removed = await tx.mtDungeonRun.deleteMany({
+				where: { userId: identity.userId, leaderDinozId: identity.leaderDinozId, mapId: 'stepp_0', revision }
+			});
+			if (removed.count !== 1) throw new MtDungeonDevToolsError('conflict');
 		});
-		if (removed.count !== 1) throw new MtDungeonDevToolsError('conflict');
 	});
 }

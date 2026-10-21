@@ -11,6 +11,7 @@ import { withUserGameplayLock } from '../../utils/database/userGameplayLock.js';
 import { prismaMtDungeonRunRepository } from '../Repository/prismaMtDungeonRun.repository.js';
 import { MtDungeonArchive } from './mtDungeonArchive.service.js';
 import { settleMtDungeonHealArrival } from './mtDungeonHeal.service.js';
+import { loadMtDungeonProgress } from './mtDungeonProgress.service.js';
 import type { MtDungeonSessionDependencies, MtSessionIdentity } from './mtDungeonSession.service.js';
 
 export class MtDungeonEntryError extends Error {
@@ -63,6 +64,7 @@ export function mtDungeonDependencies(): MtDungeonSessionDependencies {
 	const archive = getMtDungeonArchive();
 	return {
 		repository: prismaMtDungeonRunRepository,
+		loadProgress: loadMtDungeonProgress,
 		settleHeal: settleMtDungeonHealArrival,
 		getConfiguration: mapId => archive.configuration(mapId),
 		getStageCount: dungeonId => archive.definition(dungeonId).stages.length,
