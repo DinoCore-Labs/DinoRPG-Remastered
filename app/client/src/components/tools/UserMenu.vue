@@ -255,6 +255,9 @@
 					<span class="title">
 						<span>{{ $t('notifications.title') }}</span>
 					</span>
+					<button type="button" @click="cleanAllNotifs">
+						{{ $t('notifications.clearAll') }}
+					</button>
 				</div>
 				<div class="notification" v-for="notification in nStore.notifications" :key="notification.id">
 					<div class="element">
@@ -403,6 +406,13 @@ export default defineComponent({
 		async cleanNotif(id: string) {
 			try {
 				await this.nStore.deleteNotification(id);
+			} catch (e) {
+				console.error(e);
+			}
+		},
+		async cleanAllNotifs() {
+			try {
+				await this.nStore.deleteAllNotifications();
 			} catch (e) {
 				console.error(e);
 			}
@@ -720,6 +730,7 @@ export default defineComponent({
 		background-color: rgb(15, 25, 36);
 		display: flex;
 		justify-content: space-between;
+		align-items: center;
 		margin-bottom: 8px;
 		.title {
 			box-sizing: border-box;
@@ -744,7 +755,7 @@ export default defineComponent({
 			background-color: transparent;
 			outline: 0px;
 			border: 0px;
-			margin: 0px;
+			margin: 0px 12px 0px 0px;
 			cursor: pointer;
 			user-select: none;
 			vertical-align: middle;
@@ -752,11 +763,11 @@ export default defineComponent({
 			text-decoration: none;
 			font-family: arial, sans-serif;
 			font-weight: 500;
-			font-size: 1.1rem;
-			line-height: 1.75;
+			font-size: 0.75rem;
+			line-height: 1.4;
 			text-transform: uppercase;
-			min-width: 64px;
-			padding: 4px 5px;
+			min-width: auto;
+			padding: 2px 6px;
 			border-radius: 4px;
 			transition:
 				background-color 250ms cubic-bezier(0.4, 0, 0.2, 1),
@@ -766,7 +777,7 @@ export default defineComponent({
 			color: rgb(254, 125, 0);
 			&:hover {
 				text-decoration: none;
-				background-color: rgba(219, 191, 149, 0.04);
+				background-color: rgba(219, 191, 149, 0.08);
 			}
 		}
 	}
