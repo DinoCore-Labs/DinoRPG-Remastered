@@ -59,6 +59,13 @@ export interface MtDungeonJournal {
 	entries: MtDungeonJournalEntry[];
 }
 
+export interface MtDungeonWorldExitResult {
+	kind: 'return' | 'complete';
+	placeId: number;
+	text: string;
+	languageUsed: string;
+}
+
 export const MtDungeonService = {
 	getJournal(id: number, language: string): Promise<MtDungeonJournal> {
 		return api.get(`/dungeon/mt/${id}/journal`, { params: { lang: language }, silent: true });
@@ -108,6 +115,9 @@ export const MtDungeonService = {
 		accepted?: number;
 	}> {
 		return api.post(`/dungeon/mt/${id}/commands`, { revision, commands: [command] }, { silent: true });
+	},
+	worldExit(id: number, revision: number, language: string): Promise<MtDungeonWorldExitResult> {
+		return api.post(`/dungeon/mt/${id}/world/exit`, { revision, lang: language });
 	},
 	transition(id: number, revision: number, action: 'forward' | 'backward'): Promise<MtDungeonSession> {
 		return api.post(`/dungeon/mt/${id}/transition`, { revision, action });
