@@ -10,10 +10,19 @@
 		<p v-if="notice" class="mt-test__notice" role="status">{{ notice }}</p>
 		<p v-if="loading && !session">Chargement du donjon…</p>
 
-		<section v-if="!session && !loading" class="mt-test__panel">
+		<section v-if="!session && !loading && !exitOutcome" class="mt-test__panel">
 			<p>Entre dans le donjon depuis les Pylônes de Magnétite avec un groupe disponible.</p>
 			<p>Les conditions d'accès et la position des Dinoz sont vérifiées côté serveur.</p>
 			<button type="button" :disabled="busy" @click="start">Entrer dans les Cavernes Magnétiques</button>
+		</section>
+
+		<section v-if="exitOutcome" class="mt-test__panel" aria-live="polite">
+			<h3>{{ exitOutcome.kind === 'complete' ? 'Donjon terminé' : 'Retour à la surface' }}</h3>
+			<p>{{ exitOutcome.text }}</p>
+			<p class="mt-test__caption">
+				Votre progression a été sauvegardée. Aucune récompense de fin supplémentaire n'est attribuée.
+			</p>
+			<RouterLink :to="{ name: 'DinozPage', params: { id: leaderId } }">Retour à la fiche du Dinoz</RouterLink>
 		</section>
 
 		<template v-if="session">
@@ -120,12 +129,12 @@
 						Franchir le gardien (test local, sans combat)
 					</button>
 					<button
-						v-if="session.pending.kind === 'boundary-start' && stage === 0 && devCapabilities?.surfaceExit"
+						v-if="session.pending.kind === 'boundary-start' && stage === 0"
 						type="button"
 						:disabled="busy"
-						@click="leaveToSurface"
+						@click="exitDungeon"
 					>
-						Retour à la surface (terminer la session de test)
+						Quitter le donjon (retour à la surface)
 					</button>
 					<button
 						v-if="session.pending.kind === 'boundary-exit' && stage < 3"
@@ -134,6 +143,14 @@
 						@click="transition('forward')"
 					>
 						Passer à la carte suivante
+					</button>
+					<button
+						v-if="session.pending.kind === 'boundary-exit' && stage === 3"
+						type="button"
+						:disabled="busy"
+						@click="exitDungeon"
+					>
+						Sortir définitivement du donjon
 					</button>
 					<button
 						v-if="session.pending.kind === 'boundary-start' && stage > 0"
@@ -188,7 +205,8 @@ import {
 	type MtDungeonJournalEntry,
 	type MtDungeonEncounter,
 	type MtDungeonDevCapabilities,
-	type MtGuardianTrialPreview
+	type MtGuardianTrialPreview,
+	type MtDungeonWorldExitResult
 } from '../services/mtDungeon.service.js';
 import { sessionStore } from '../store/sessionStore';
 import { localStore } from '../store/localStore';
@@ -204,6 +222,7 @@ const view = ref<MtDungeonCurrentView | null>(null);
 const encounter = ref<MtDungeonEncounter | null>(null);
 const journalEntries = ref<MtDungeonJournalEntry[]>([]);
 const journalError = ref('');
+const exitOutcome = ref<MtDungeonWorldExitResult | null>(null);
 const errorMessage = ref('');
 const notice = ref('');
 const devCapabilities = ref<MtDungeonDevCapabilities | null>(null);
@@ -280,9 +299,8 @@ const stairDirections = computed(() => {
 const actionAvailable = computed(() => {
 	const pending = session.value?.pending;
 	if (!pending) return false;
-	if (pending.kind === 'boundary-exit') return stage.value < 3;
-	if (pending.kind === 'boundary-start')
-		return stage.value > 0 || (stage.value === 0 && !!devCapabilities.value?.surfaceExit);
+	if (pending.kind === 'boundary-exit') return true;
+	if (pending.kind === 'boundary-start') return true;
 	if (pending.kind === 'guardian')
 		return !!devCapabilities.value?.guardianSkip || !!devCapabilities.value?.guardianFight;
 	if (pending.kind !== 'scenario') return false;
@@ -510,24 +528,24 @@ function skipGuardian(): void {
 		notice.value = 'Gardien franchi en mode test : aucun combat, XP ou récompense.';
 	});
 }
-function leaveToSurface(): void {
+function exitDungeon(): void {
+	const current = session.value;
+	const pendingKind = current?.pending?.kind;
+	if (!current || (pendingKind !== 'boundary-start' && pendingKind !== 'boundary-exit')) return;
 	if (
-		!session.value ||
-		session.value.mapId !== 'stepp_0' ||
-		session.value.pending?.kind !== 'boundary-start' ||
-		!devCapabilities.value?.surfaceExit
+		!(current.mapId === 'stepp_0' && pendingKind === 'boundary-start') &&
+		!(current.mapId === 'stepp_3' && pendingKind === 'boundary-exit')
 	)
 		return;
-	if (!window.confirm('Terminer et supprimer cette session de test ? Les Dinoz resteront aux Pylônes.')) return;
 	void execute(async () => {
-		await MtDungeonService.devLeaveToSurface(leaderId, session.value!.revision);
+		const outcome = await MtDungeonService.worldExit(leaderId, current.revision, language.value);
 		session.value = null;
 		view.value = null;
 		encounter.value = null;
 		guardianTrial.value = null;
 		movementTrail.value = [];
-		notice.value = 'Retour aux Pylônes : session de test terminée sans récompenses.';
-		await router.push({ name: 'DinozPage', params: { id: String(leaderId) } });
+		exitOutcome.value = outcome;
+		journalEntries.value = [];
 	});
 }
 function evacuateDefeated(): void {

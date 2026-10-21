@@ -52,6 +52,11 @@ import {
 	submitMtDungeonCommands
 } from '../Service/mtDungeonSession.service.js';
 import { getMtDungeonCurrentView } from '../Service/mtDungeonView.service.js';
+import {
+	completeMtDungeonWorldExit,
+	MtDungeonWorldExitError,
+	MtDungeonWorldExitSettlementError
+} from '../Service/mtDungeonWorldExit.service.js';
 
 const leaderIdSchema = z.coerce.number().int().positive();
 const startSchema = z
@@ -80,6 +85,9 @@ const moveSchema = z
 
 function handleKnownError(error: unknown): { status: number; code: string } | null {
 	if (error instanceof MtDungeonGoldError) return { status: error.code === 'stale-run' ? 409 : 422, code: error.code };
+	if (error instanceof MtDungeonWorldExitError) return { status: 409, code: error.code };
+	if (error instanceof MtDungeonWorldExitSettlementError)
+		return { status: error.code === 'not-found' ? 404 : error.code === 'unknown-place' ? 422 : 409, code: error.code };
 	if (error instanceof MtDungeonDefeatError)
 		return { status: error.code === 'not-found' ? 404 : 409, code: error.code };
 	if (error instanceof MtDungeonHealError) return { status: 409, code: error.code };
@@ -409,6 +417,29 @@ export async function mtDungeonRoutes(app: FastifyInstance) {
 				`${body.data.dungeonId}_0`
 			);
 			return reply.code(201).send(session);
+		} catch (error) {
+			const known = handleKnownError(error);
+			if (known) return reply.code(known.status).send({ code: known.code });
+			throw error;
+		}
+	});
+
+	/** Step 20H: canonical outside exit, with atomic progress and group relocation. */
+	app.post('/:leaderDinozId/world/exit', { preHandler: app.authenticate }, async (req, reply) => {
+		const params = leaderIdSchema.safeParse((req.params as { leaderDinozId: unknown }).leaderDinozId);
+		const body = z
+			.object({ revision: z.number().int().nonnegative(), lang: z.string().max(12).optional() })
+			.strict()
+			.safeParse(req.body);
+		if (!params.success || !body.success) return reply.code(400).send({ code: 'invalid-world-exit-request' });
+		try {
+			return reply.send(
+				await completeMtDungeonWorldExit(
+					{ userId: req.user.id, leaderDinozId: params.data },
+					body.data.revision,
+					body.data.lang
+				)
+			);
 		} catch (error) {
 			const known = handleKnownError(error);
 			if (known) return reply.code(known.status).send({ code: known.code });
