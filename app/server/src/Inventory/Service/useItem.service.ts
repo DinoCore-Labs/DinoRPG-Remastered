@@ -32,6 +32,7 @@ import { removeStatusFromDinoz } from '../../Dinoz/Controller/dinozStatus.contro
 import { getActiveDinoz } from '../../Dinoz/Controller/getActiveDinoz.js';
 import { getDinozFicheItemRequest } from '../../Dinoz/Controller/getDinozFicheItem.controller.js';
 import { updateDinoz } from '../../Dinoz/Controller/updateDinoz.controller.js';
+import { assertNoMtDungeonHealing } from '../../Dungeon/mtDungeonHealingGuard.js';
 import { safeCreateGameLog } from '../../Gamelog/Controller/gamelog.controller.js';
 import { applySkillEffect } from '../../Level/Controller/applySkillEffect.controller.js';
 import { prisma } from '../../prisma.js';
@@ -80,6 +81,13 @@ export async function useItemUnlocked(
 	if (!itemData || itemData.quantity <= 0) {
 		throw new ExpectedError('notEnoughItems');
 	}
+	// Includes special Pampleboum healing; never consume an item before denying.
+	if (
+		item.effect?.category === ItemEffect.HEAL ||
+		item.effect?.category === ItemEffect.RESURRECT ||
+		(item.effect?.category === ItemEffect.SPECIAL && item.effect.value === 'pampleboum')
+	)
+		await assertNoMtDungeonHealing(authed.id, dinoz.id);
 	const effects: ItemFeedBack[] = [];
 	let createdDinoz: UseItemResult['createdDinoz'];
 	let shouldRefreshTutorial = false;
