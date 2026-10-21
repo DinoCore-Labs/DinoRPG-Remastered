@@ -85,6 +85,7 @@ export const MtDungeonService = {
 		ok: boolean;
 		session: MtDungeonSession;
 		pending: MtDungeonSession['pending'];
+		blockedDoor?: 'missing-key';
 		goldAwarded?: number;
 		walletGold?: number;
 		accepted?: number;
