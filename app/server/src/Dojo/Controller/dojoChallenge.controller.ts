@@ -30,7 +30,10 @@ export function generateRandomChallenge(): Challenge {
 }
 
 export async function getDojoChallengePreparationRequest(userId: string) {
-	const today = new Date();
+	const startOfDay = new Date();
+	startOfDay.setUTCHours(0, 0, 0, 0);
+	const endOfDay = new Date();
+	endOfDay.setUTCHours(23, 59, 59, 999);
 
 	const user = await prisma.user.findUniqueOrThrow({
 		where: {
@@ -62,7 +65,10 @@ export async function getDojoChallengePreparationRequest(userId: string) {
 					},
 					DojoChallengeHistory: {
 						where: {
-							archivedAt: today
+							archivedAt: {
+								gte: startOfDay,
+								lte: endOfDay
+							}
 						},
 						select: {
 							achieved: true

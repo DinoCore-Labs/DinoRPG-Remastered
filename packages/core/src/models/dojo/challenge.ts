@@ -70,21 +70,27 @@ export function parseChallenge(challenge: Challenge, stats: FullFightStats) {
 		case ChallengeType.TakeRawDamage:
 			return stats.attack.hpLost - challenge.goal;
 		case ChallengeType.TakePercentDamage:
-			return ((stats.attack.startingHp - stats.attack.endingHp) / stats.attack.startingHp) * 100 - challenge.goal;
+			return stats.attack.startingHp > 0
+				? ((stats.attack.startingHp - stats.attack.endingHp) / stats.attack.startingHp) * 100 - challenge.goal
+				: 0;
 		case ChallengeType.Assault:
 			return challenge.goal - stats.attack.assaults;
 		case ChallengeType.AssaultPercentage:
-			return challenge.goal - (stats.attack.assaults / stats.attack.attacks) * 100;
+			return stats.attack.attacks > 0
+				? challenge.goal - (stats.attack.assaults / stats.attack.attacks) * 100
+				: challenge.goal;
 		case ChallengeType.DealDamage:
 			return stats.defense.hpLost - challenge.goal;
 		case ChallengeType.DealPercentDamage:
-			return challenge.goal - ((stats.defense.startingHp - stats.defense.endingHp) / stats.defense.startingHp) * 100;
+			return stats.defense.startingHp > 0
+				? challenge.goal - ((stats.defense.startingHp - stats.defense.endingHp) / stats.defense.startingHp) * 100
+				: challenge.goal;
 		case ChallengeType.CounterAttack:
 			return challenge.goal - stats.attack.counters;
 		case ChallengeType.Dodge:
 			return challenge.goal - stats.attack.evasions;
 		case ChallengeType.DodgePoison:
-			return stats.defense.poisoned;
+			return stats.attack.times_poisoned;
 		case ChallengeType.PoisonOpponent:
 			return 1 - stats.attack.poisoned;
 		default:

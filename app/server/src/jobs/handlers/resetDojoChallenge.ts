@@ -1,3 +1,4 @@
+import { Prisma } from '../../../../prisma/index.js';
 import { prisma } from '../../prisma.js';
 
 export async function resetDojoChallenge() {
@@ -6,7 +7,8 @@ export async function resetDojoChallenge() {
 		await tx.dojoTeam.deleteMany();
 		await tx.dojo.updateMany({
 			data: {
-				dailyReset: 0
+				dailyReset: 0,
+				activeChallenge: Prisma.DbNull
 			}
 		});
 	});
