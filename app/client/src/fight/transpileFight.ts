@@ -755,39 +755,83 @@ export function transpileFight(
 					if (!skill) {
 						console.warn(`Cannot find skill ${step.skill}`);
 					}
-					const targetsHit = step.targets.filter(t => t.damages ?? 0 > 0).length;
-					history.push({
-						action: DinoAction.SKILL,
-						skill: resolveSkillVisualEffect(step.skill),
-						details: {
-							fid: step.fid,
-							targets: step.targets.map(t => {
-								return { id: t.tid, life: t.damages };
-							}),
-							color: skill?.color,
-							speed: skill?.speed,
-							radius: skill?.radius,
-							power: skill?.power,
-							type: skill?.fxType,
-							fx: skill?.fx,
-							anim: skill?.anim
+					const targetsHit = step.targets.filter(t => (t.damages ?? 0) > 0).length;
+					const visualEffect = resolveSkillVisualEffect(step.skill);
+					const isAttachedEffect =
+						visualEffect === SkillVisualEffect.ATTACH || visualEffect === SkillVisualEffect.ATTACHANIM;
+
+					if (isAttachedEffect) {
+						for (const target of step.targets) {
+							history.push({
+								action: DinoAction.SKILL,
+								skill: visualEffect,
+								details: {
+									fid: target.tid,
+									targets: [{ id: target.tid, life: target.damages }],
+									color: skill?.color,
+									speed: skill?.speed,
+									radius: skill?.radius,
+									power: skill?.power,
+									type: skill?.fxType,
+									fx: skill?.fx,
+									anim: skill?.anim
+								}
+							});
 						}
-					});
-					// Play a second effect if specified
-					if (skill?.visualEffectBis) {
+					} else {
 						history.push({
 							action: DinoAction.SKILL,
-							skill: skill.visualEffectBis,
+							skill: visualEffect,
 							details: {
 								fid: step.fid,
 								targets: step.targets.map(t => {
-									return { id: t.tid };
+									return { id: t.tid, life: t.damages };
 								}),
 								color: skill?.color,
+								speed: skill?.speed,
+								radius: skill?.radius,
+								power: skill?.power,
 								type: skill?.fxType,
-								fx: skill?.fx
+								fx: skill?.fx,
+								anim: skill?.anim
 							}
 						});
+					}
+					// Play a second effect if specified
+					if (skill?.visualEffectBis) {
+						const isAttachedBis =
+							skill.visualEffectBis === SkillVisualEffect.ATTACH ||
+							skill.visualEffectBis === SkillVisualEffect.ATTACHANIM;
+
+						if (isAttachedBis) {
+							for (const target of step.targets) {
+								history.push({
+									action: DinoAction.SKILL,
+									skill: skill.visualEffectBis,
+									details: {
+										fid: target.tid,
+										targets: [{ id: target.tid }],
+										color: skill?.color,
+										type: skill?.fxType,
+										fx: skill?.fx
+									}
+								});
+							}
+						} else {
+							history.push({
+								action: DinoAction.SKILL,
+								skill: skill.visualEffectBis,
+								details: {
+									fid: step.fid,
+									targets: step.targets.map(t => {
+										return { id: t.tid };
+									}),
+									color: skill?.color,
+									type: skill?.fxType,
+									fx: skill?.fx
+								}
+							});
+						}
 					}
 					// Remove energy per target hit if at least one target was hit
 					if (targetsHit > 0) {
