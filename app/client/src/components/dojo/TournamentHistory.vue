@@ -24,7 +24,7 @@
 			<td>{{ $t(`dojo.tournamentFormats.${tournament.formatName}`) }}</td>
 			<td>{{ new Date(tournament.date).toLocaleDateString() }}</td>
 			<td class="icons">
-				<RouterLink :to="`/dojo/tournament/${tournament.id}/0`">
+				<RouterLink :to="`/dojo/tournament/${tournament.id}/16`">
 					<img
 						:src="getImgURL('icons', 'small_follow')"
 						v-tippy="{
