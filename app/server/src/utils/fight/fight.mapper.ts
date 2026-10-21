@@ -79,6 +79,8 @@ export interface FightConfiguration {
 	seed: string;
 	// (Optional) Timeout, forces the fight to end after some time has elapsed
 	timeout?: number;
+	// (Optional) Whether the timeout bar is visually displayed (defaults to true)
+	timeoutVisible?: boolean;
 	// rules
 	rules: FightRules;
 	// Teams

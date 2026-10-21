@@ -236,7 +236,7 @@ export function transpileFight(
 	victory: boolean,
 	startText?: FightText,
 	endText?: FightText,
-	dojo?: boolean
+	bothStand?: boolean
 ) {
 	const history: transpiled[] = [];
 	// Basic tracking of active fighters, this may not cover all cases.
@@ -940,7 +940,7 @@ export function transpileFight(
 	if (endText && victory) {
 		pushFightText(history, endText, t);
 	}
-	if (dojo) {
+	if (bothStand) {
 		history.push({
 			action: DinoAction.FINISH,
 			right: FinishState.STAND,

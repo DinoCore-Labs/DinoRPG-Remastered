@@ -123,7 +123,8 @@ export default defineComponent({
 			this.$t,
 			fightResult.result,
 			fightResult.startText,
-			fightResult.endText
+			fightResult.endText,
+			fightResult.bothStand
 		);
 		if (!nextFight?.length) {
 			this.$toast.open({
