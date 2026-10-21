@@ -237,6 +237,10 @@
 					</span>
 					<template #content>
 						<h1 v-html="formatContent($t(`dinozPage.details.${stat.name}`))" />
+						<p
+							v-if="$te(`dinozPage.details.${stat.name}Help`)"
+							v-html="formatContent($t(`dinozPage.details.${stat.name}Help`))"
+						/>
 						<ul class="stat-details">
 							<li v-if="stat.name === SpecialStat.BUBBLE_RATE">
 								<img :src="getImgURL('icons', 'info_button')" alt="info_button" />
@@ -770,6 +774,7 @@ export default defineComponent({
 	list-style-type: none;
 	color: white;
 	font-size: 10.5pt;
+	margin-top: 4px;
 	li {
 		display: flex;
 		align-items: center;
@@ -783,7 +788,7 @@ export default defineComponent({
 		.detail-name {
 			color: #fdf1c4;
 			font-style: italic;
-			margin-left: 2px;
+			margin-left: 5px;
 			img {
 				margin: 0 2px;
 			}
