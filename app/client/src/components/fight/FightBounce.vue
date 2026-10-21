@@ -137,12 +137,14 @@
 </template>
 
 <script lang="ts">
+import axios from 'axios';
 import { defineComponent, type PropType } from 'vue';
 import DZButton from '../utils/DZButton.vue';
 import type { FightResult } from '@dinorpg/core/models/fight/fightResult.js';
 import { itemList } from '@dinorpg/core/models/items/itemList.js';
 import translateFightStep from '../../fight/translateFightStep.js';
 import { dinozStore } from '../../store/dinozStore.js';
+import { MtDungeonService } from '../../services/mtDungeon.service.js';
 import { getItemFiche } from '@dinorpg/core/models/items/getItemFiche.js';
 import type { ItemFiche } from '@dinorpg/core/models/items/itemFiche.js';
 
@@ -193,24 +195,50 @@ export default defineComponent({
 		showAnimation(): void {
 			this.$emit('showAnimation');
 		},
-		returnToDinoz() {
-			if (this.fight.result && this.fight.dialogReturn) {
-				this.$router.replace({
-					name: 'DialogPage',
-					params: {
-						id: this.dinozId.toString(),
-						dialogId: this.fight.dialogReturn.dialogId
-					},
-					query: {
-						phaseId: this.fight.dialogReturn.phaseId
+		async returnToDinoz(): Promise<void> {
+			if (this.loadingContinue) return;
+			this.loadingContinue = true;
+			try {
+				// A follower shares the dungeon session of its leader.
+				const leaderId = this.dinozStore.getDinoz(this.dinozId)?.leaderId ?? this.dinozId;
+				try {
+					const dungeon = await MtDungeonService.getSession(leaderId);
+					if (dungeon.mapId.startsWith('stepp_')) {
+						await this.$router.replace({
+							name: 'MtMagneticCavernsPage',
+							params: { id: String(leaderId) }
+						});
+						return;
 					}
+				} catch (error) {
+					// 404 = no active dungeon run; any other error is not a safe fallback.
+					if (!axios.isAxiosError(error) || error.response?.status !== 404) throw error;
+				}
+
+				// Preserve the dialogue continuation after ordinary fights.
+				if (this.fight.result && this.fight.dialogReturn) {
+					await this.$router.replace({
+						name: 'DialogPage',
+						params: {
+							id: this.dinozId.toString(),
+							dialogId: this.fight.dialogReturn.dialogId
+						},
+						query: { phaseId: this.fight.dialogReturn.phaseId }
+					});
+					return;
+				}
+				await this.$router.replace({
+					name: 'DinozPage',
+					params: { id: this.dinozId.toString() }
 				});
-				return;
+			} catch {
+				this.$toast.open({
+					message: 'Impossible de vérifier la session du donjon. Réessaie.',
+					type: 'error'
+				});
+			} finally {
+				this.loadingContinue = false;
 			}
-			this.$router.replace({
-				name: 'DinozPage',
-				params: { id: this.dinozId.toString() }
-			});
 		},
 		toggleFightHistory(): void {
 			if (this.displayFightHistory) {
