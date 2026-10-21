@@ -209,7 +209,10 @@ export async function fightChallenge(req: FastifyRequest, reply: FastifyReply) {
 		JSON.stringify({ placeId: PlaceEnum.DOJO })
 	);
 
-	const activeChallenge = user.dojo.activeChallenge as Challenge;
+	let activeChallenge = user.dojo.activeChallenge as Challenge | null;
+	if (!activeChallenge) {
+		activeChallenge = generateRandomChallenge();
+	}
 	const challengeWon = parseChallenge(activeChallenge, fightResult.stats) <= 0 && victory;
 
 	const newChallenge = generateRandomChallenge();
@@ -302,7 +305,14 @@ export async function fightChallenge(req: FastifyRequest, reply: FastifyReply) {
 
 	await Promise.all(promises);
 
-	return reply.send({ fight: fightArchive, stats: fightResult.stats, challengeWon: challengeWon, victory });
+	return reply.send({
+		fight: fightArchive,
+		stats: fightResult.stats,
+		challengeWon: challengeWon,
+		victory,
+		challenge: activeChallenge,
+		nextChallenge: newChallenge
+	});
 }
 
 export async function createMyTeam(req: FastifyRequest, reply: FastifyReply) {
@@ -367,6 +377,15 @@ export async function getMyTeam(req: FastifyRequest, reply: FastifyReply) {
 			})),
 			myDojo
 		);
+	}
+
+	if (!myDojo.activeChallenge) {
+		const newChallenge = generateRandomChallenge();
+		await prisma.dojo.update({
+			where: { id: myDojo.id },
+			data: { activeChallenge: newChallenge }
+		});
+		myDojo.activeChallenge = newChallenge;
 	}
 
 	return reply.send(myDojo);

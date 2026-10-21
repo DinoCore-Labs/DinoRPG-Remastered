@@ -1,4 +1,5 @@
 import type { DinozDojoFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
+import type { Challenge } from '@dinorpg/core/models/dojo/challenge.js';
 import type { Dojo, myTeam } from '@dinorpg/core/models/dojo/dojo.js';
 import type { DojoFightResume } from '@dinorpg/core/models/dojo/dojoFightResume.js';
 import type { PublicTournament, TournamentHistory, TournamentState } from '@dinorpg/core/models/dojo/tournament.js';
@@ -56,7 +57,14 @@ export const DojoService = {
 	async fightChallenge(
 		myDinozId: number,
 		opponentId: number
-	): Promise<{ fight: DojoFightResume; stats: FullFightStats; challengeWon: boolean; victory: boolean }> {
+	): Promise<{
+		fight: DojoFightResume;
+		stats: FullFightStats;
+		challengeWon: boolean;
+		victory: boolean;
+		challenge: Challenge;
+		nextChallenge: Challenge;
+	}> {
 		return api.put('/dojo/challenge/fight', { myDinozId, opponentId });
 	},
 	async getMyTeam(): Promise<myTeam> {

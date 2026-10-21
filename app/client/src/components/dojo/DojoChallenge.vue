@@ -22,7 +22,7 @@
 		<div class="challenge" v-if="!fightTransformed && activeChallenge">
 			<p v-html="$t(`dojo.challenge.challenge.${activeChallenge.type}`, { goal: activeChallenge.goal })" />
 		</div>
-		<div v-if="fightTransformed && activeChallenge" class="recap">
+		<div v-if="fightTransformed && currentChallenge" class="recap">
 			<div
 				class="challenge"
 				:class="[
@@ -32,14 +32,14 @@
 					}
 				]"
 			>
-				<p v-html="$t(`dojo.challenge.challenge.${activeChallenge.type}`, { goal: activeChallenge.goal })" />
+				<p v-html="$t(`dojo.challenge.challenge.${currentChallenge.type}`, { goal: currentChallenge.goal })" />
 			</div>
 			<div v-if="!challengeWon && fightAnimationEnded" class="debrief">
 				<p v-if="!victory" v-html="$t(`dojo.challenge.challengeExplanation.looseFight`)" />
 				<p
 					v-if="victory && !challengeWon"
 					v-html="
-						$t(`dojo.challenge.challengeExplanation.${activeChallenge.type}`, {
+						$t(`dojo.challenge.challengeExplanation.${currentChallenge.type}`, {
 							goal: formattedGoal
 						})
 					"
@@ -143,6 +143,8 @@ export default defineComponent({
 		return {
 			myTeam: [] as (Pick<DojoTeam, 'fighted'> & { dinoz: Pick<DinozFiche, 'id' | 'name' | 'level' | 'display'> })[],
 			activeChallenge: undefined as Challenge | undefined,
+			currentChallenge: undefined as Challenge | undefined,
+			nextChallengeItem: undefined as Challenge | undefined,
 			opponents: [] as (Pick<DojoOpponents, 'fighted' | 'achieved'> & {
 				dinoz: Pick<DinozFiche, 'id' | 'name' | 'level' | 'display'>;
 			})[],
@@ -171,6 +173,8 @@ export default defineComponent({
 				const dojo = await DojoService.createMyTeam(myTeam);
 				this.myTeam = dojo.team.sort((a, b) => b.dinoz.level - a.dinoz.level);
 				this.opponents = dojo.DojoOpponents.sort((a, b) => b.dinoz.level - a.dinoz.level);
+				if (dojo.activeChallenge) this.activeChallenge = dojo.activeChallenge;
+				await this.dojoStore.update();
 				this.composeTeam = false;
 			} catch (e) {
 				errorHandler.handle(e, this.$toast);
@@ -185,6 +189,11 @@ export default defineComponent({
 			this.fightTransformed = undefined;
 			this.opponent = {} as Pick<DinozFiche, 'id' | 'name' | 'level' | 'display'>;
 			this.myFighter = {} as Pick<DinozFiche, 'id' | 'name' | 'level' | 'display'>;
+			if (this.nextChallengeItem) {
+				this.activeChallenge = this.nextChallengeItem;
+			}
+			this.currentChallenge = undefined;
+			this.nextChallengeItem = undefined;
 			await this.refresh();
 			await this.dojoStore.update();
 		},
@@ -210,6 +219,8 @@ export default defineComponent({
 				this.fightStat = rawFight.stats;
 				this.challengeWon = rawFight.challengeWon;
 				this.victory = rawFight.victory;
+				this.currentChallenge = rawFight.challenge ?? this.activeChallenge;
+				this.nextChallengeItem = rawFight.nextChallenge;
 				const fightSteps = fightResult.history as FightStep[];
 				const fighters = fightResult.fighters as FighterRecap[];
 				if (!fightSteps || !fighters) return;
@@ -273,17 +284,19 @@ export default defineComponent({
 	},
 	computed: {
 		formattedGoal() {
-			if (!this.activeChallenge) return 0;
-			const goal = this.calculateMissedGoal(this.activeChallenge);
+			const challenge = this.currentChallenge ?? this.activeChallenge;
+			if (!challenge) return 0;
+			const goal = this.calculateMissedGoal(challenge);
+			const displayGoal = Math.max(0, goal);
 			// For percentage based challenges, show up to 2 digits after the comma.
 			if (
-				this.activeChallenge.type === ChallengeType.TakePercentDamage ||
-				this.activeChallenge.type === ChallengeType.AssaultPercentage ||
-				this.activeChallenge.type === ChallengeType.DealPercentDamage
+				challenge.type === ChallengeType.TakePercentDamage ||
+				challenge.type === ChallengeType.AssaultPercentage ||
+				challenge.type === ChallengeType.DealPercentDamage
 			) {
-				return goal.toFixed(2);
+				return displayGoal.toFixed(2);
 			} else {
-				return Math.round(goal);
+				return Math.round(displayGoal);
 			}
 		}
 	},
