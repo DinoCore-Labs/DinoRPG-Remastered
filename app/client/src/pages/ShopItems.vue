@@ -31,6 +31,10 @@
 				{{ $t('common.stock') }} : {{ napodinoStock }}
 				<img :src="getImgURL('item', 'item_golden_napodino')" alt="napodino" />
 			</p>
+			<p v-else-if="actualShop.type === 'filou'" class="ticket-stock">
+				{{ $t('common.stock') }} : {{ treasureTicketStock }}
+				<img :src="getImgURL('icons', 'ticket')" alt="ticket" />
+			</p>
 		</div>
 		<div class="shopShop">
 			<div class="background">
@@ -352,6 +356,9 @@ export default defineComponent({
 				);
 			};
 		},
+		treasureTicketStock(): number {
+			return this.userStore.treasureTicket ?? 0;
+		},
 		actualShop() {
 			const shop = Object.values(shopListV2).find(s => s.name === this.$route.params.name);
 			if (!shop) {
@@ -410,9 +417,9 @@ export default defineComponent({
 					await this.$refreshGold();
 				}
 			} else if (this.actualShop.type === ShopType.FILOU) {
-				this.selectedItem = undefined;
+				const currentItemId = this.selectedItem?.id;
 				await this.$refreshTreasureTicket();
-				await this.loadPage();
+				await this.loadPage(currentItemId);
 			}
 		},
 		async popinConfirmChoice(max: boolean): Promise<void> {
@@ -504,8 +511,10 @@ export default defineComponent({
 				this.selectedItem.itemType = this.itemList.find(i => i.itemId === itemId)?.itemType;
 			}
 		},
-		async loadPage() {
-			this.selectedItem = undefined;
+		async loadPage(keepSelectionId?: number) {
+			if (!keepSelectionId) {
+				this.selectedItem = undefined;
+			}
 			this.fullItems = [];
 			this.itemList = [];
 			this.ingredientList = [];
@@ -515,6 +524,8 @@ export default defineComponent({
 					const allItems = await InventoryService.getAllItemsData();
 					const napo = allItems.find(i => i.id === 111);
 					this.napodinoStock = napo ? (napo.quantity ?? 0) : 0;
+				} else if (this.actualShop?.type === ShopType.FILOU) {
+					await this.$refreshTreasureTicket();
 				}
 				this.fullItems = await ShopService.getItemsFromItemShop(this.actualShop?.shopId ?? 0);
 				this.itemList = this.fullItems
@@ -527,6 +538,9 @@ export default defineComponent({
 					.map(i => {
 						return this.resolveIngredient(i);
 					});
+				if (keepSelectionId !== undefined) {
+					this.selectItem(keepSelectionId);
+				}
 			} catch (err) {
 				errorHandler.handle(err, this.$toast);
 				this.$router.push({
@@ -601,11 +615,28 @@ export default defineComponent({
 			gap: 5px;
 			font-style: normal;
 			font-weight: bold;
-			color: #ffb822;
+			color: #ffee92;
 			text-shadow: 1px 1px 2px #5a1e09;
 			img {
 				vertical-align: middle;
 				height: 22px;
+			}
+		}
+		.ticket-stock {
+			grid-area: bottom;
+			align-self: end;
+			margin: 0;
+			padding-top: 8px;
+			display: flex;
+			align-items: center;
+			gap: 5px;
+			font-style: normal;
+			font-weight: bold;
+			color: #ffee92;
+			text-shadow: 1px 1px 2px #5a1e09;
+			img {
+				vertical-align: middle;
+				height: 14px;
 			}
 		}
 	}
