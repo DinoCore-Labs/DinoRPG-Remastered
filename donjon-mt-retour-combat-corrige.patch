@@ -1,0 +1,72 @@
+--- a/app/client/src/components/fight/FightBounce.vue
++++ b/app/client/src/components/fight/FightBounce.vue
+@@ -3,2 +3,3 @@
+ <script lang="ts">
++import axios from 'axios';
+ import { defineComponent, type PropType } from 'vue';
+@@ -9,2 +10,3 @@
+ import { dinozStore } from '../../store/dinozStore.js';
++import { MtDungeonService } from '../../services/mtDungeon.service.js';
+ import { getItemFiche } from '@dinorpg/core/models/items/getItemFiche.js';
+@@ -60,20 +62,46 @@
+ 		},
+-		returnToDinoz() {
+-			if (this.fight.result && this.fight.dialogReturn) {
+-				this.$router.replace({
+-					name: 'DialogPage',
+-					params: {
+-						id: this.dinozId.toString(),
+-						dialogId: this.fight.dialogReturn.dialogId
+-					},
+-					query: {
+-						phaseId: this.fight.dialogReturn.phaseId
++		async returnToDinoz(): Promise<void> {
++			if (this.loadingContinue) return;
++			this.loadingContinue = true;
++			try {
++				// A follower shares the dungeon session of its leader.
++				const leaderId = this.dinozStore.getDinoz(this.dinozId)?.leaderId ?? this.dinozId;
++				try {
++					const dungeon = await MtDungeonService.getSession(leaderId);
++					if (dungeon.mapId.startsWith('stepp_')) {
++						await this.$router.replace({
++							name: 'MtMagneticCavernsPage',
++							params: { id: String(leaderId) }
++						});
++						return;
+ 					}
++				} catch (error) {
++					// 404 = no active dungeon run; any other error is not a safe fallback.
++					if (!axios.isAxiosError(error) || error.response?.status !== 404) throw error;
++				}
++
++				// Preserve the dialogue continuation after ordinary fights.
++				if (this.fight.result && this.fight.dialogReturn) {
++					await this.$router.replace({
++						name: 'DialogPage',
++						params: {
++							id: this.dinozId.toString(),
++							dialogId: this.fight.dialogReturn.dialogId
++						},
++						query: { phaseId: this.fight.dialogReturn.phaseId }
++					});
++					return;
++				}
++				await this.$router.replace({
++					name: 'DinozPage',
++					params: { id: this.dinozId.toString() }
+ 				});
+-				return;
++			} catch {
++				this.$toast.open({
++					message: 'Impossible de vérifier la session du donjon. Réessaie.',
++					type: 'error'
++				});
++			} finally {
++				this.loadingContinue = false;
+ 			}
+-			this.$router.replace({
+-				name: 'DinozPage',
+-				params: { id: this.dinozId.toString() }
+-			});
+ 		},
