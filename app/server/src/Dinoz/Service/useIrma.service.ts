@@ -35,6 +35,7 @@ export async function useIrma(req: FastifyRequest<{ Params: UseIrmaParams }>, re
 		where: { id: dinozId },
 		select: {
 			id: true,
+			leaderId: true,
 			remaining: true,
 			fight: true,
 			gather: true,
@@ -55,6 +56,11 @@ export async function useIrma(req: FastifyRequest<{ Params: UseIrmaParams }>, re
 			}
 		});
 	}
+	const activeMtDungeon = await prisma.mtDungeonRun.findFirst({
+		where: { userId, leaderDinozId: dinoz.leaderId ?? dinozId },
+		select: { id: true }
+	});
+	if (activeMtDungeon) throw new ExpectedError('useDungeonIrma', { statusCode: 409 });
 	const team = [dinoz, ...(dinoz.followers ?? [])];
 	for (const teamDinoz of team) {
 		await assertDinozNotConcentrating(teamDinoz.id);
