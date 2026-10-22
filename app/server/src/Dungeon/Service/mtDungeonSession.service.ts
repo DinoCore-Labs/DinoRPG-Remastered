@@ -52,6 +52,8 @@ export interface MtDungeonSessionDependencies {
 	beforeOpen?(identity: MtSessionIdentity, mapId: string): Promise<void>;
 	/** Durable saved discoveries from earlier visits; never data supplied by HTTP. */
 	loadProgress?(identity: MtSessionIdentity, mapId: string): Promise<unknown | null>;
+	/** Authoritative action status (fight action required for all party members). */
+	assertPartyActions?(identity: MtSessionIdentity): Promise<void>;
 	/** Transactional IGold pickup; must commit wallet + session in one transaction. */
 	settleGold?(
 		identity: MtSessionIdentity,
@@ -69,7 +71,16 @@ export interface MtDungeonSessionDependencies {
 }
 
 export class MtDungeonSessionError extends Error {
-	constructor(public readonly code: 'not-found' | 'already-exists' | 'conflict' | 'invalid-run' | 'invalid-identity') {
+	constructor(
+		public readonly code:
+			| 'not-found'
+			| 'already-exists'
+			| 'conflict'
+			| 'invalid-run'
+			| 'invalid-identity'
+			| 'actions-exhausted'
+			| 'party-defeated'
+	) {
 		super(`MT dungeon session: ${code}`);
 	}
 }
@@ -118,6 +129,7 @@ export async function submitMtDungeonCommands(
 		if (!run) throw new MtDungeonSessionError('not-found');
 		if (expectedRevision !== undefined && run.revision !== expectedRevision)
 			throw new MtDungeonSessionError('conflict');
+		if (deps.assertPartyActions) await deps.assertPartyActions(identity);
 		const cfg = deps.getConfiguration(run.mapId);
 		const result = applyMtDungeonCommandBatch(cfg, run, commands);
 		if (!result.ok) return result;
@@ -192,6 +204,7 @@ export async function moveMtDungeonToAdjacentStage(
 		const nextIndex = currentIndex + (direction === 'forward' ? 1 : -1);
 		// No implicit overworld escape or automatic final completion.
 		if (nextIndex < 0 || nextIndex >= stageCount) throw new MtStageTransitionError('world-boundary');
+		if (deps.assertPartyActions) await deps.assertPartyActions(identity);
 		const current = deps.getConfiguration(run.mapId);
 		const next = deps.getConfiguration(`${match[1]}_${nextIndex}`);
 		const result = transitionMtDungeonStage(current, next, run, direction, stageCount);
