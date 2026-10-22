@@ -570,10 +570,7 @@ export default defineComponent({
 				case Action.SEEK:
 				case Action.HUNT:
 				case Action.XMAS:
-				case GatherType.HUNT:
-				case GatherType.SEEK:
-				case GatherType.XMAS:
-				case GatherType.TICTAC:
+				case Action.TICTAC:
 				case GatherType.LABO:
 				case Action.ANNIV:
 				case GatherType.PARTY:

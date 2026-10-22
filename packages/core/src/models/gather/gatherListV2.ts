@@ -107,7 +107,6 @@ export const gatherListV2: Record<GatherType, GatherDataV2> = {
 			)
 		]
 	},
-
 	[GatherType.CUEILLE1]: {
 		id: 'cu',
 		action: Action.CUEILLE,
@@ -137,7 +136,6 @@ export const gatherListV2: Record<GatherType, GatherDataV2> = {
 			)
 		]
 	},
-
 	[GatherType.CUEILLE2]: {
 		id: 'cu2',
 		action: Action.CUEILLE,
@@ -393,18 +391,26 @@ export const gatherListV2: Record<GatherType, GatherDataV2> = {
 	},
 	[GatherType.TICTAC]: {
 		id: 'papjar',
-		action: Action.DIG,
+		action: Action.TICTAC,
 		type: GatherType.TICTAC,
-		size: 10,
-		minimumClick: 3,
-		apparence: 'TICTAC',
-		label: 'Trésors',
-		condition: 'false()',
+		size: 6,
+		minimumClick: 6,
+		apparence: 'SEEK',
+		label: 'Trésors dans le jardin de Papy Joe',
+		object: itemKey(Item.TICTAC_TICKET),
+		condition: `pos(${placeKey(PlaceEnum.PAPY_JOE)})`,
 		cost: {
 			...itemList[Item.TICTAC_TICKET],
 			quantity: 1
 		},
-		found: []
+		found: [
+			ingredients(Ingredient.ENERGIE_FOUDRE, 2),
+			ingredients(Ingredient.TOUFFE_DE_FOURRURE, 1),
+			ingredients(Ingredient.RACINE_DE_FIGONICIA, 3),
+			ingredients(Ingredient.SILEX_TAILLE, 4),
+			gold(500, 3),
+			items(Item.MAHAMUTI_EGG, 1)
+		]
 	},
 	[GatherType.LABO]: {
 		id: 'labo',
@@ -431,7 +437,7 @@ export const gatherListV2: Record<GatherType, GatherDataV2> = {
 		label: 'Fête',
 		condition: 'false()',
 		cost: {
-			...itemList[Item.TICTAC_TICKET],
+			...itemList[Item.FIRE_CRACKER],
 			quantity: 1
 		},
 		found: []

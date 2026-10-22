@@ -84,7 +84,7 @@ export const placeListv2 = definePlaces({
 			{ target: PlaceEnum.FOUTAINE_DE_JOUVENCE },
 			{ target: PlaceEnum.FORCEBRUT }
 		],
-		gathers: [GatherType.HUNT],
+		gathers: [GatherType.HUNT, GatherType.TICTAC],
 		ground: GroundEnum.DIRT,
 		background: 's_papy',
 		top: 165,
