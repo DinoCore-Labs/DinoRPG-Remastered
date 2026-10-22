@@ -84,13 +84,10 @@ export async function getArchivedFight(req: FastifyRequest, reply: FastifyReply)
 			devourerPlaceId: true
 		}
 	});
-
 	if (!fight) {
 		throw new ExpectedError('archived fight not found');
 	}
-
 	await viewFight(userId, body.id);
-
 	let place = 996; // PlaceEnum.DOJO
 	let background: string | undefined;
 	if (fight.devourerPlaceId) {
@@ -103,7 +100,6 @@ export async function getArchivedFight(req: FastifyRequest, reply: FastifyReply)
 			if (meta.background) background = meta.background;
 		} catch {}
 	}
-
 	return reply.send({
 		fight: {
 			id: body.id,
@@ -111,8 +107,8 @@ export async function getArchivedFight(req: FastifyRequest, reply: FastifyReply)
 			result: fight.result,
 			history: JSON.parse(fight.steps) as FightStep[],
 			seed: fight.seed,
-			leftUser: fight.leftUser,
-			rightUser: fight.rightUser,
+			leftPlayer: fight.leftUser,
+			rightPlayer: fight.rightUser,
 			place,
 			background
 		}

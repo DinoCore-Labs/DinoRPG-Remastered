@@ -15,7 +15,7 @@
 <template>
 	<div id="shareFight">
 		<TitleHeader :title="$t('pageTitle.dojo')" />
-		<FightersHeader :leftPlayer="leftPlayer" :rightPlayer="rightPlayer" />
+		<FightHeader :leftPlayer="leftPlayer" :rightPlayer="rightPlayer" />
 		<template v-if="fightTransformed">
 			<div v-show="loaded" class="content">
 				<Suspense>
@@ -33,7 +33,7 @@ import TitleHeader from '../utils/TitleHeader.vue';
 import { errorHandler } from '../../utils/errorHandler.js';
 import { DojoService } from '../../services/dojo.service.js';
 import { resolveFightingPlace, transpileFight } from '../../fight/transpileFight.js';
-import FightersHeader from '../fight/FightHeader.vue';
+import FightHeader from '../fight/FightHeader.vue';
 import type { preFightLoader } from '@dinorpg/core/models/fight/transpiler.js';
 import type { FightStep } from '@dinorpg/core/models/fight/fightStep.js';
 import type { FighterRecap } from '@dinorpg/core/models/fight/fightResult.js';
@@ -44,7 +44,7 @@ export default defineComponent({
 	name: 'ShareFight',
 	components: {
 		TitleHeader,
-		FightersHeader,
+		FightHeader,
 		FullFightAnimation: defineAsyncComponent(() => import('../fight/FightAnimation.vue'))
 	},
 	data() {
@@ -58,13 +58,11 @@ export default defineComponent({
 	methods: {},
 	async mounted() {
 		const archiveId = this.$route.params.archive.toString();
-
 		try {
 			const fightResult = await DojoService.getSharedFight(archiveId);
 			const fightSteps = fightResult.fight.history as FightStep[];
 			const fighters = fightResult.fight.fighters as FighterRecap[];
 			if (!fightSteps || !fighters) return;
-
 			const nexFight = transpileFight(
 				structuredClone(toRaw(fighters)),
 				fightSteps,

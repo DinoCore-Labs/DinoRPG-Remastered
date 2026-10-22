@@ -37,7 +37,7 @@ import type { UserProfile } from '@dinorpg/core/models/user/userProfile.js';
 import DZUser from '../utils/DZUser.vue';
 
 export default defineComponent({
-	name: 'FightersHeader',
+	name: 'FightHeader',
 	components: {
 		DZUser
 	},
@@ -47,9 +47,16 @@ export default defineComponent({
 		},
 		rightPlayer: {
 			type: Object as PropType<Pick<UserProfile, 'id' | 'name'> | null>
+		},
+		rightName: {
+			type: String as PropType<string | null>,
+			default: null
+		},
+		rightTitle: {
+			type: String as PropType<string | null>,
+			default: null
 		}
-	},
-	methods: {}
+	}
 });
 </script>
 

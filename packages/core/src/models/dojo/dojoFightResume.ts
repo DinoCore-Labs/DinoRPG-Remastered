@@ -23,8 +23,8 @@ export interface DojoFightResume {
 	history: FightStep[];
 	result: boolean;
 	seed: string;
-	leftPlayer: UserToolTip;
-	rightPlayer: UserToolTip;
+	leftPlayer: UserToolTip | null;
+	rightPlayer: UserToolTip | null;
 	place: PlaceEnum;
 	background?: string;
 }

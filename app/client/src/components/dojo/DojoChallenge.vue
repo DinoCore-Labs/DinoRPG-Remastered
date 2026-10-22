@@ -84,7 +84,7 @@
 		</template>
 		<template v-if="fightTransformed && fightStat">
 			<div id="fightContent">
-				<FightersHeader :leftPlayer="leftPlayer" :rightPlayer="rightPlayer" />
+				<FightHeader :leftPlayer="leftPlayer" :rightPlayer="rightPlayer" />
 				<div v-show="loaded" class="content">
 					<Suspense>
 						<FullFightAnimation :fight="fightTransformed" @animationEnded="fightAnimationEnded = true" />
@@ -116,7 +116,7 @@ import DinozWithoutFlash from '../dinoz/DinozAnimation.vue';
 import FightRecap from './FightRecap.vue';
 import { resolveFightingPlace, transpileFight } from '../../fight/transpileFight.js';
 import DZButton from '../utils/DZButton.vue';
-import FightersHeader from '../fight/FightHeader.vue';
+import FightHeader from '../fight/FightHeader.vue';
 import type { DojoOpponents, DojoTeam } from '@dinorpg/core/models/dojo/dojoChallenge.js';
 import type { DinozDojoFiche, DinozFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
 import { ChallengeType, parseChallenge, type Challenge } from '@dinorpg/core/models/dojo/challenge.js';
@@ -136,7 +136,7 @@ export default defineComponent({
 		TitleHeader,
 		SelectDinoz,
 		CarousselDinoz,
-		FightersHeader,
+		FightHeader,
 		FullFightAnimation: defineAsyncComponent(() => import('../fight/FightAnimation.vue'))
 	},
 	data() {

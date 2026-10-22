@@ -192,8 +192,8 @@ export async function archiveFight(
 		result: archive.result,
 		history: JSON.parse(archive.steps) as FightStep[],
 		seed: archive.seed,
-		leftUser: archive.leftUser,
-		rightUser: archive.rightUser,
+		leftPlayer: archive.leftUser,
+		rightPlayer: archive.rightUser,
 		place: fight.place
 	};
 }
