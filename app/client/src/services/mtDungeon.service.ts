@@ -98,6 +98,9 @@ export const MtDungeonService = {
 	evacuateDefeatedGroup(id: number, revision: number): Promise<{ evacuated: true }> {
 		return api.post(`/dungeon/mt/${id}/defeat/evacuate`, { revision });
 	},
+	useDungeonIrma(id: number, revision: number): Promise<{ used: number; stock: number }> {
+		return api.post(`/dungeon/mt/${id}/actions/irma`, { revision });
+	},
 	getSession(id: number): Promise<MtDungeonSession> {
 		return api.get(`/dungeon/mt/${id}`, { silent: true });
 	},

@@ -34,6 +34,7 @@ import {
 	resolveMtGuardianTrial
 } from '../Service/mtDungeonGuardianTrial.service.js';
 import { MtDungeonHealError } from '../Service/mtDungeonHeal.service.js';
+import { MtDungeonIrmaError, useMtDungeonIrma } from '../Service/mtDungeonIrma.service.js';
 import { getMtDungeonJournal } from '../Service/mtDungeonJournal.service.js';
 import { getMtDungeonOriginalPendingEvidence } from '../Service/mtDungeonOriginalEvidence.service.js';
 import {
@@ -112,7 +113,14 @@ function handleKnownError(error: unknown): { status: number; code: string } | nu
 	if (error instanceof MtStageTransitionError) return { status: 409, code: error.code };
 	if (error instanceof MtDungeonSessionError) {
 		const status =
-			error.code === 'not-found' ? 404 : error.code === 'conflict' || error.code === 'already-exists' ? 409 : 400;
+			error.code === 'not-found'
+				? 404
+				: error.code === 'conflict' ||
+					  error.code === 'already-exists' ||
+					  error.code === 'actions-exhausted' ||
+					  error.code === 'party-defeated'
+					? 409
+					: 400;
 		return { status, code: error.code };
 	}
 	return null;
@@ -238,6 +246,22 @@ export async function mtDungeonRoutes(app: FastifyInstance) {
 			);
 		} catch (error) {
 			if (error instanceof MtDungeonGuardianTrialError)
+				return reply.code(error.code === 'not-found' ? 404 : 409).send({ code: error.code });
+			throw error;
+		}
+	});
+
+	/** Restore exactly one MT dungeon fight action per exhausted member, consuming physical Irma items. */
+	app.post('/:leaderDinozId/actions/irma', { preHandler: app.authenticate }, async (req, reply) => {
+		const params = leaderIdSchema.safeParse((req.params as { leaderDinozId: unknown }).leaderDinozId);
+		const body = z.object({ revision: z.number().int().nonnegative() }).strict().safeParse(req.body);
+		if (!params.success || !body.success) return reply.code(400).send({ code: 'invalid-irma-request' });
+		try {
+			return reply.send(
+				await useMtDungeonIrma({ userId: req.user.id, leaderDinozId: params.data }, body.data.revision)
+			);
+		} catch (error) {
+			if (error instanceof MtDungeonIrmaError)
 				return reply.code(error.code === 'not-found' ? 404 : 409).send({ code: error.code });
 			throw error;
 		}

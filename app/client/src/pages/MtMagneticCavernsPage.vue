@@ -30,7 +30,8 @@
 				Ce Dinoz possède déjà une session {{ session.mapId }}. Cette page de test est réservée aux Cavernes Magnétiques.
 			</p>
 			<template v-else>
-				<div class="mt-test__status">
+				<details class="mt-test__status">
+					<summary>Informations sur l'exploration</summary>
 					<span
 						>Carte : <strong>{{ session.mapId }}</strong></span
 					>
@@ -38,7 +39,7 @@
 					<span>Case : {{ session.position.x }}, {{ session.position.y }}, {{ session.position.l }}</span>
 					<span>Révision : {{ session.revision }}</span>
 					<span>Clés MT récupérées : {{ session.keys.filter(Boolean).length }}</span>
-				</div>
+				</details>
 
 				<section v-if="partyDefeated" class="mt-test__panel" aria-live="polite">
 					<p>Tous les Dinoz sont KO. Le groupe doit quitter le donjon pour pouvoir être ressuscité.</p>
@@ -56,31 +57,92 @@
 						:show-unverified-same-name-overlays="true"
 					/>
 					<div v-else class="mt-test__placeholder">Chargement de la vue…</div>
+					<div
+						v-if="view && !partyDefeated"
+						class="mt-test__original-controls"
+						aria-label="Commandes originales du donjon"
+					>
+						<button
+							v-if="partyNeedsIrma"
+							class="mt-test__original-irma"
+							type="button"
+							:disabled="busy || !partyActionsLoaded"
+							aria-label="Utiliser Irma pour restaurer les actions du groupe"
+							title="Restaurer les actions du groupe"
+							@click="restoreDungeonActions"
+						>
+							<img src="/dungeon/mt/interf_irma.png" alt="Potion d'Irma" />
+						</button>
+						<template v-else>
+							<button
+								class="mt-test__original-dir mt-test__original-up"
+								type="button"
+								:disabled="cannotMove"
+								aria-label="Nord"
+								@click="move('north')"
+							>
+								<img src="/dungeon/mt/interf_arrow.png" alt="" />
+							</button>
+							<button
+								class="mt-test__original-dir mt-test__original-left"
+								type="button"
+								:disabled="cannotMove"
+								aria-label="Ouest"
+								@click="move('west')"
+							>
+								<img src="/dungeon/mt/interf_arrow.png" alt="" />
+							</button>
+							<button
+								class="mt-test__original-dir mt-test__original-right"
+								type="button"
+								:disabled="cannotMove"
+								aria-label="Est"
+								@click="move('east')"
+							>
+								<img src="/dungeon/mt/interf_arrow.png" alt="" />
+							</button>
+							<button
+								class="mt-test__original-dir mt-test__original-down"
+								type="button"
+								:disabled="cannotMove"
+								aria-label="Sud"
+								@click="move('south')"
+							>
+								<img src="/dungeon/mt/interf_arrow.png" alt="" />
+							</button>
+							<button
+								v-if="stairDirections.includes('up')"
+								class="mt-test__original-stair mt-test__original-stair-up"
+								type="button"
+								:disabled="cannotMove"
+								aria-label="Escalier vers le haut"
+								@click="move('up')"
+							>
+								<img src="/dungeon/mt/interf_stair_up.png" alt="" />
+							</button>
+							<button
+								v-if="stairDirections.includes('down')"
+								class="mt-test__original-stair mt-test__original-stair-down"
+								type="button"
+								:disabled="cannotMove"
+								aria-label="Escalier vers le bas"
+								@click="move('down')"
+							>
+								<img src="/dungeon/mt/interf_stair_down.png" alt="" />
+							</button>
+						</template>
+					</div>
+					<div v-if="view && partyNeedsIrma && !partyDefeated" class="mt-test__irma-hint" role="status">
+						Actions épuisées : utilisez Irma pour continuer.
+					</div>
+					<div v-if="view" class="mt-test__original-level">Niveau -{{ session.position.l + 1 }}</div>
 				</div>
 				<p class="mt-test__caption">
 					PixiJS : caméra amortie selon View.hx, murs en profondeur et Dinoz intégrés à la scène. Le flou du brouillard
 					et certains ancrages PNG restent à comparer au SWF original.
 				</p>
 
-				<div class="mt-test__controls" aria-label="Déplacements dans le donjon">
-					<div class="mt-test__arrows">
-						<button type="button" aria-label="Nord" :disabled="cannotMove" @click="move('north')">↑</button>
-						<div>
-							<button type="button" aria-label="Ouest" :disabled="cannotMove" @click="move('west')">←</button>
-							<button type="button" aria-label="Sud" :disabled="cannotMove" @click="move('south')">↓</button>
-							<button type="button" aria-label="Est" :disabled="cannotMove" @click="move('east')">→</button>
-						</div>
-					</div>
-					<div class="mt-test__stair-controls">
-						<button type="button" :disabled="cannotMove || !stairDirections.includes('up')" @click="move('up')">
-							Escalier ↑
-						</button>
-						<button type="button" :disabled="cannotMove || !stairDirections.includes('down')" @click="move('down')">
-							Escalier ↓
-						</button>
-						<button type="button" :disabled="busy" @click="refresh">Actualiser</button>
-					</div>
-				</div>
+				<button class="mt-test__refresh" type="button" :disabled="busy" @click="refresh">Actualiser la vue</button>
 				<p class="mt-test__caption">
 					Clavier : flèches, ZQSD ou WASD. Un déplacement = une commande validée par le serveur.
 				</p>
@@ -229,7 +291,8 @@ const devCapabilities = ref<MtDungeonDevCapabilities | null>(null);
 const guardianTrial = ref<MtGuardianTrialPreview | null>(null);
 const loading = ref(true);
 const busy = ref(false);
-const visualMembers = ref<{ id: number; display: string; life: number }[]>([]);
+const visualMembers = ref<{ id: number; display: string; life: number; fight: boolean; remaining: number }[]>([]);
+const partyActionsLoaded = ref(false);
 const movementTrail = ref<MtTrailPoint[]>([]);
 const facingRight = ref(true);
 function asTrailPoint(run: MtDungeonSession): MtTrailPoint {
@@ -261,12 +324,20 @@ async function loadVisualParty(): Promise<void> {
 			leader.followers.map(follower => DinozService.getDinozFiche(follower.id, { silent: true }))
 		);
 		visualMembers.value = [
-			{ id: leader.id, display: leader.display, life: leader.life },
-			...followers.map(follower => ({ id: follower.id, display: follower.display, life: follower.life }))
+			{ id: leader.id, display: leader.display, life: leader.life, fight: leader.fight, remaining: leader.remaining },
+			...followers.map(follower => ({
+				id: follower.id,
+				display: follower.display,
+				life: follower.life,
+				fight: follower.fight,
+				remaining: follower.remaining
+			}))
 		];
+		partyActionsLoaded.value = true;
 	} catch {
-		// Actor data is decorative; never block authoritative exploration.
+		// Navigation fails closed when the server-side party action state is unknown.
 		visualMembers.value = [];
+		partyActionsLoaded.value = false;
 	}
 }
 const stage = computed(() => Number(session.value?.mapId.split('_')[1] ?? 0));
@@ -274,9 +345,14 @@ const isMagnetic = computed(() => session.value?.mapId.startsWith('stepp_') ?? f
 const partyDefeated = computed(
 	() => visualMembers.value.length > 0 && visualMembers.value.every(dinoz => dinoz.life <= 0)
 );
+const partyNeedsIrma = computed(
+	() => partyActionsLoaded.value && visualMembers.value.some(dinoz => dinoz.life > 0 && !dinoz.fight)
+);
 const cannotMove = computed(
 	() =>
 		partyDefeated.value ||
+		partyNeedsIrma.value ||
+		!partyActionsLoaded.value ||
 		busy.value ||
 		loading.value ||
 		!session.value ||
@@ -351,6 +427,7 @@ async function refresh(): Promise<void> {
 		view.value = latestView;
 		encounter.value = latestEncounter;
 		await loadGuardianTrial(current);
+		await loadVisualParty();
 		if (latestView) await loadJournal();
 	} catch (error) {
 		if (axios.isAxiosError(error) && error.response?.status === 404) {
@@ -382,6 +459,7 @@ async function afterMutation(next: MtDungeonSession): Promise<void> {
 	view.value = latestView;
 	encounter.value = latestEncounter;
 	await loadGuardianTrial(next);
+	await loadVisualParty();
 	if (journalChanged) await loadJournal();
 }
 async function execute(action: () => Promise<void>): Promise<void> {
@@ -401,6 +479,17 @@ async function execute(action: () => Promise<void>): Promise<void> {
 	} finally {
 		busy.value = false;
 	}
+}
+function restoreDungeonActions(): void {
+	if (!session.value || !partyNeedsIrma.value || partyDefeated.value) return;
+	void execute(async () => {
+		const paid = await MtDungeonService.useDungeonIrma(leaderId, session.value!.revision);
+		await loadVisualParty();
+		if (!partyActionsLoaded.value || partyNeedsIrma.value) {
+			throw new Error('Une action reste indisponible : vérifiez les Dinoz du groupe.');
+		}
+		notice.value = `${paid.used} Potion(s) d'Irma consommée(s). Exploration reprise.`;
+	});
 }
 function start() {
 	void execute(async () => {
@@ -631,6 +720,117 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeyDown));
 	justify-content: center;
 	gap: 0.4rem 0.85rem;
 	font-size: 0.75rem;
+}
+.mt-test__original-controls {
+	position: absolute;
+	z-index: 20;
+	left: 5px;
+	top: 5px;
+	width: 90px;
+	height: 92px;
+	pointer-events: none;
+}
+.mt-test__original-controls button {
+	position: absolute;
+	border: 0;
+	padding: 0;
+	background: transparent;
+	line-height: 0;
+	pointer-events: auto;
+	filter: drop-shadow(0 1px 2px #241c0a);
+}
+.mt-test__original-controls button:disabled {
+	opacity: 0.35;
+	cursor: not-allowed;
+}
+.mt-test__original-controls button:not(:disabled):hover {
+	filter: drop-shadow(0 0 5px #eee883);
+}
+.mt-test__original-dir {
+	width: 24px;
+	height: 24px;
+}
+.mt-test__original-dir img {
+	width: 24px;
+	height: 20px;
+}
+.mt-test__original-up {
+	top: 0;
+	left: 31px;
+}
+.mt-test__original-left {
+	top: 30px;
+	left: 0;
+}
+.mt-test__original-right {
+	top: 30px;
+	left: 62px;
+}
+.mt-test__original-down {
+	top: 58px;
+	left: 31px;
+}
+.mt-test__original-up img {
+	transform: rotate(-90deg);
+}
+.mt-test__original-left img {
+	transform: rotate(180deg);
+}
+.mt-test__original-right img {
+	transform: rotate(0deg);
+}
+.mt-test__original-down img {
+	transform: rotate(90deg);
+}
+.mt-test__original-stair {
+	top: 29px;
+}
+.mt-test__original-stair-up {
+	left: 33px;
+}
+.mt-test__original-stair-down {
+	left: 56px;
+}
+.mt-test__original-stair img {
+	width: 24px;
+	height: 28px;
+}
+.mt-test__original-irma {
+	top: 17px;
+	left: 27px;
+}
+.mt-test__original-irma img {
+	width: 24px;
+	height: 31px;
+	image-rendering: auto;
+}
+.mt-test__irma-hint {
+	position: absolute;
+	top: 84px;
+	left: 7px;
+	z-index: 20;
+	max-width: 170px;
+	padding: 3px 5px;
+	font-size: 11px;
+	background: #261f11df;
+	color: #fff0b3;
+	border-radius: 3px;
+}
+.mt-test__original-level {
+	position: absolute;
+	right: 8px;
+	bottom: 5px;
+	z-index: 20;
+	color: #f5eccb;
+	font-size: 17px;
+	font-weight: 600;
+	text-shadow:
+		1px 2px 2px #000,
+		-1px -1px 2px #000;
+	pointer-events: none;
+}
+.mt-test__refresh {
+	font-size: 0.72rem;
 }
 .mt-test__viewport {
 	position: relative;
