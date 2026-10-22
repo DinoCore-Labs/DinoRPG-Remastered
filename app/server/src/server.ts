@@ -492,7 +492,10 @@ async function buildServer(options: BuildServerOptions = {}) {
 		// 2) Erreurs Fastify / validation
 		if (hasZodFastifySchemaValidationErrors(err)) {
 			const firstValidation = err.validation[0];
-			const code = typeof firstValidation?.message === 'string' ? firstValidation.message : 'request.invalid';
+			const isCustomCode =
+				typeof firstValidation?.message === 'string' &&
+				/^[a-zA-Z0-9_-]+(?:\.[a-zA-Z0-9_-]+)+$/.test(firstValidation.message);
+			const code = isCustomCode ? firstValidation.message : 'request.invalid';
 			return reply.code(400).send({
 				code,
 				message: firstValidation?.message ?? err.message,
