@@ -204,17 +204,11 @@ export default defineComponent({
 	justify-content: center;
 	align-items: center;
 	.modal-box {
-		background-image: url('../../assets/background/bg_mission.webp');
+		background-image: url('../../assets/background/bg_mission_transparent.webp');
 		background-repeat: no-repeat;
 		width: 394px;
 		min-height: 296px;
 		position: absolute;
-		background-color: #fff0d1;
-		border-radius: 3px;
-		border: 1px solid #efbf86;
-		box-shadow:
-			0 0 0 1px #aa885f,
-			0 0 5px 1px #aa885f;
 		animation: blowUpModal 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
 		.result {
 			font-size: 10pt;

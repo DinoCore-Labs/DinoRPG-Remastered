@@ -15,7 +15,7 @@
 	<Transition>
 		<div v-if="enabled && mission" class="modal-background">
 			<div class="modal-box">
-				<button class="modal-close" @click="$emit('close')">X</button>
+				<img class="modal-close" :src="getImgURL('icons', 'small_delete')" @click="$emit('close')" />
 				<p v-if="loading">
 					{{ $t('common.loading') }}
 				</p>
@@ -179,16 +179,10 @@ export default defineComponent({
 	align-items: center;
 	.modal-box {
 		background-repeat: no-repeat;
-		background-image: url('../../assets/background/bg_mission.webp');
+		background-image: url('../../assets/background/bg_mission_transparent.webp');
 		width: 394px;
 		height: 296px;
 		position: absolute;
-		background-color: #fff0d1;
-		border-radius: 3px;
-		border: 1px solid #efbf86;
-		box-shadow:
-			0 0 0 1px #aa885f,
-			0 0 5px 1px #aa885f;
 		animation: blowUpModal 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
 		p {
 			margin-bottom: 5px;
@@ -241,25 +235,13 @@ export default defineComponent({
 	opacity: 0;
 }
 .modal-close {
-	min-width: 31px;
 	cursor: pointer;
 	position: absolute;
 	text-align: center;
-	right: 0;
-	top: 0;
+	right: 30px;
+	top: 12px;
 	padding: 5px;
-	background-color: #fadcb0;
-	color: color.adjust(brown, $alpha: -0.4);
-	font-size: 0.85em;
-	letter-spacing: 0.03em;
-	text-decoration: none;
-	font-variant: small-caps;
 	transition: all 0.15s;
-	&:hover,
-	&:focus,
-	&:active {
-		color: black;
-	}
 }
 @keyframes blowUpModal {
 	0% {
