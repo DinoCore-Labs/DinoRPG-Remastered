@@ -9,6 +9,7 @@ import { getDinozFightDataRequest } from '../../Dinoz/Controller/getDinozFight.c
 import { buildConditionContext } from '../../utils/conditions/buildConditionContext.js';
 import { withUserGameplayLock } from '../../utils/database/userGameplayLock.js';
 import { prismaMtDungeonRunRepository } from '../Repository/prismaMtDungeonRun.repository.js';
+import { assertMtDungeonPartyActions } from './mtDungeonActionGate.service.js';
 import { MtDungeonArchive } from './mtDungeonArchive.service.js';
 import { settleMtDungeonGoldArrival } from './mtDungeonGold.service.js';
 import { settleMtDungeonHealArrival } from './mtDungeonHeal.service.js';
@@ -66,6 +67,7 @@ export function mtDungeonDependencies(): MtDungeonSessionDependencies {
 	return {
 		repository: prismaMtDungeonRunRepository,
 		loadProgress: loadMtDungeonProgress,
+		assertPartyActions: assertMtDungeonPartyActions,
 		settleHeal: settleMtDungeonHealArrival,
 		settleGold: settleMtDungeonGoldArrival,
 		getConfiguration: mapId => archive.configuration(mapId),
