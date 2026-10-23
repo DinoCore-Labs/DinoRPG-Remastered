@@ -143,19 +143,23 @@ describe('MT stage-9 encounters are read-only and anchored to original pending e
 		expect(JSON.stringify(result)).not.toContain('secret-object');
 		expect(JSON.stringify(result)).not.toContain('42');
 	});
-	it('keeps gold/heal rewards disabled and private', () => {
-		expect(view(step(config(), 2, 2, 1, 0))).toEqual({
+	it('keeps gold pending private but treats IHeal entry as a normal movement', () => {
+		const cfg = config();
+		expect(view(step(cfg, 2, 2, 1, 0))).toEqual({
 			kind: 'gold',
 			status: 'awaiting-gameplay-integration',
 			mapId: 'katak_0',
 			revision: 1
 		});
-		expect(view(step(config(), 2, 3, 1, 0))).toEqual({
-			kind: 'heal',
-			status: 'awaiting-gameplay-integration',
-			mapId: 'katak_0',
-			revision: 1
-		});
+
+		// 20K: entering IHeal no longer creates a pending event or heals the party.
+		const arrived = step(cfg, 2, 3, 1, 0);
+		const healFlag = getMtFlagIndex(cfg.map, 0, 3, 3);
+		expect(arrived.position).toEqual({ x: 3, y: 3, l: 0 });
+		expect(arrived.pending).toBeNull();
+		expect(arrived.locked).toBe(false);
+		expect(arrived.flags).not.toContain(healFlag);
+		expect(view(arrived, cfg)).toBeNull();
 	});
 	it('fails closed for a forged scenario index, moved position or consumed flag', () => {
 		const cfg = config();

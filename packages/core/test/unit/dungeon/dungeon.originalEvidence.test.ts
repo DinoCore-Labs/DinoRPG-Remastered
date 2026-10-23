@@ -101,18 +101,25 @@ describe('Original MT guardian appearance and unclaimed pickups (read-only)', ()
 		});
 		expect(session.flags).toEqual([]);
 	});
-	it('keeps IHeal distinct from IGold: View.getItem does not set an IHeal flag', () => {
+	it('does not create pending heal evidence and consumes IHeal only on departure', () => {
 		const cfg = fixture();
 		const session = enter(cfg, 2, 3, 1, 0);
-		expect(mtDungeonOriginalPendingEvidence({ configuration: cfg, session, definition: original })).toEqual({
-			kind: 'heal',
-			mapId: 'katak_0',
-			revision: 1,
-			rawMapValue: 0,
-			oneTimeClientFlag: false,
-			healingFormulaKnown: false
-		});
-		expect(session.pending?.flag).toBeNull();
+		const flag = getMtFlagIndex(cfg.map, 0, 3, 3);
+
+		// MT View.getItem does not mark IHeal. In 20K, entry stays unlocked.
+		expect(session.pending).toBeNull();
+		expect(session.position).toEqual({ x: 3, y: 3, l: 0 });
+		expect(session.flags).not.toContain(flag);
+		expect(() => mtDungeonOriginalPendingEvidence({ configuration: cfg, session, definition: original })).toThrow(
+			MtDungeonEvidenceError
+		);
+
+		// Remastered's one-use policy persists its flag on a successful departure.
+		const departure = applyMtDungeonCommandBatch(cfg, session, [{ x: 3, y: 3, l: 0, dx: -1, dy: 0, dl: 0 }]);
+		expect(departure.ok).toBe(true);
+		if (!departure.ok) return;
+		expect(departure.session.position).toEqual({ x: 2, y: 3, l: 0 });
+		expect(departure.session.flags).toContain(flag);
 	});
 	it('refuses stale, already-claimed or forged pending values', () => {
 		const cfg = fixture();

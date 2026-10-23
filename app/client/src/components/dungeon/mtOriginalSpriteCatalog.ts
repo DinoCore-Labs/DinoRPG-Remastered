@@ -12,7 +12,9 @@ import originalPngList from './mtOriginalGfxManifest.json';
 
 export const MT_ORIGINAL_PNG: readonly string[] = Object.freeze([...originalPngList]);
 
-const originals = new Set(MT_ORIGINAL_PNG);
+// The additional 40×29 sprite was recovered later by the project.
+// Keep the historical 201-PNG manifest and its tests unchanged.
+const originals = new Set([...MT_ORIGINAL_PNG, 'item_heal.png']);
 
 /** Kept only for compatibility with the step-3 test/consumers. */
 
@@ -318,9 +320,7 @@ function itemArt(feature: MtSceneFeature, unresolved: Set<string>): string | nul
 			return feature.frame === 6 ? 'item_stair_up.png' : 'item_stair_down.png';
 
 		case 'heal':
-			unresolved.add('Objet de soin (frames 7/8) : correspondance à confirmer dans gfx.swf');
-
-			return null;
+			return 'item_heal.png';
 
 		case 'scenario-icon': {
 			// The canonical MT definitions use exactly chest, scroll and skel.
