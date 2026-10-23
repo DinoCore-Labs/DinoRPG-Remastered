@@ -85,7 +85,8 @@ const moveSchema = z
 	.strict();
 
 function handleKnownError(error: unknown): { status: number; code: string } | null {
-	if (error instanceof MtDungeonGoldError) return { status: error.code === 'stale-run' ? 409 : 422, code: error.code };
+	if (error instanceof MtDungeonGoldError)
+		return { status: error.code === 'stale-run' || error.code === 'pool-conflict' ? 409 : 422, code: error.code };
 	if (error instanceof MtDungeonWorldExitError) return { status: 409, code: error.code };
 	if (error instanceof MtDungeonWorldExitSettlementError)
 		return { status: error.code === 'not-found' ? 404 : error.code === 'unknown-place' ? 422 : 409, code: error.code };
