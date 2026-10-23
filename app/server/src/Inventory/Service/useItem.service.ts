@@ -87,7 +87,13 @@ export async function useItemUnlocked(
 		item.effect?.category === ItemEffect.RESURRECT ||
 		(item.effect?.category === ItemEffect.SPECIAL && item.effect.value === 'pampleboum')
 	)
-		await assertNoMtDungeonHealing(authed.id, dinoz.id);
+		await assertNoMtDungeonHealing(
+			authed.id,
+			dinoz.id,
+			prisma,
+			item.effect?.category === ItemEffect.HEAL ||
+				(item.effect?.category === ItemEffect.SPECIAL && item.effect.value === 'pampleboum')
+		);
 	const effects: ItemFeedBack[] = [];
 	let createdDinoz: UseItemResult['createdDinoz'];
 	let shouldRefreshTutorial = false;

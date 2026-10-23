@@ -491,6 +491,16 @@ function paintSprite(sprite: ReturnType<typeof createMtSpritePlan>['sprites'][nu
 			// No fabricated artwork for unsupported original Flash frames.
 			visual.position.set(sprite.x - originX, sprite.y - originY);
 		}
+		if (sprite.file === 'item_heal.png') {
+			const zone = scene.features.find(
+				feature => feature.kind === 'heal' && feature.x * 40 === sprite.x && feature.y * 40 === sprite.y
+			);
+			if (zone?.kind === 'heal' && zone.consumed) {
+				// Inactive zone: the original recovered texture, now darkened.
+				visual.tint = 0x53644b;
+				visual.alpha = 0.64;
+			}
+		}
 		items.addChild(visual);
 	} else {
 		// Ground and overground remain at their original top-left coordinates.
@@ -544,26 +554,6 @@ function paintGuardians(scene: MtDungeonScene, ticket: number): void {
 					`Monstre MT ${guardian.gfx} : chargement impossible (${String(error)})`
 				];
 			});
-	}
-}
-
-/** Temporary healing-zone stand-in: original item SWF frames 7/8 not exported. */
-function paintHealZones(scene: MtDungeonScene): void {
-	for (const zone of scene.features) {
-		if (zone.kind !== 'heal') continue;
-		const x = (zone.x - scene.viewport.ix) * 40;
-		const y = (zone.y - scene.viewport.iy) * 40;
-		const glow = new Graphics()
-			.roundRect(x + 4, y + 4, 32, 32, 7)
-			.fill({ color: zone.consumed ? 0x1b432a : 0x59ff6a, alpha: zone.consumed ? 0.3 : 0.48 });
-		if (!zone.consumed) glow.filters = [new BlurFilter({ strength: 5, quality: 2 })];
-		ground.addChild(glow);
-		const zoneMark = new Graphics()
-			.roundRect(x + 6, y + 6, 28, 28, 6)
-			.fill({ color: zone.consumed ? 0x23542a : 0x8bff85, alpha: zone.consumed ? 0.49 : 0.78 })
-			.roundRect(x + 6, y + 6, 28, 28, 6)
-			.stroke({ color: zone.consumed ? 0x2a6b36 : 0xb4ffb0, width: 2, alpha: 0.85 });
-		ground.addChild(zoneMark);
 	}
 }
 
@@ -677,7 +667,6 @@ async function repaint(): Promise<void> {
 
 	for (const sprite of plan.sprites) paintSprite(sprite, scene);
 
-	paintHealZones(scene);
 	paintFog(scene);
 
 	diagnostics.value = [...errors];
