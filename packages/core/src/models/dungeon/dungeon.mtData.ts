@@ -16,7 +16,7 @@ export const MT_DUNGEON_DEFINITIONS: Readonly<Record<MtDungeonLanguage, readonly
 		{
 			id: 'stepp',
 			name: 'Les Cavernes Magnétiques',
-			gold: 150000,
+			gold: 1500000,
 			condition: 'active(cavmagnet)',
 			monsters: ['worm2', 'worm', 'scorp', 'cactus', 'brig1', 'brig2', 'brig3'],
 			tower: false,
@@ -176,7 +176,7 @@ export const MT_DUNGEON_DEFINITIONS: Readonly<Record<MtDungeonLanguage, readonly
 		{
 			id: 'katak',
 			name: 'Les Katatombes',
-			gold: 20000,
+			gold: 200000,
 			condition: 'active(katatombs)',
 			monsters: ['goupi', 'wolf', 'gluon', 'gvert', 'coq', 'piraos'],
 			tower: false,
@@ -244,7 +244,7 @@ export const MT_DUNGEON_DEFINITIONS: Readonly<Record<MtDungeonLanguage, readonly
 		{
 			id: 'mbegin',
 			name: 'Les égouts du Port Monstreux',
-			gold: 8000,
+			gold: 80000,
 			condition: 'mission(mbegin)',
 			monsters: ['minimo', 'mosqui'],
 			tower: false,
@@ -277,7 +277,7 @@ export const MT_DUNGEON_DEFINITIONS: Readonly<Record<MtDungeonLanguage, readonly
 		{
 			id: 'mquetz',
 			name: 'Le Temple de Quetzaco',
-			gold: 40000,
+			gold: 400000,
 			condition: 'scenario(monisl,4+)',
 			monsters: ['minimo', 'mosqui', 'mantoo', 'ffrutx'],
 			tower: false,
@@ -454,7 +454,7 @@ export const MT_DUNGEON_DEFINITIONS: Readonly<Record<MtDungeonLanguage, readonly
 		{
 			id: 'mcuzco',
 			name: 'Ruines de Cuzcous',
-			gold: 120000,
+			gold: 1200000,
 			condition: 'scenario(monisl,5+)',
 			monsters: ['minimo', 'mosqui', 'mantoo', 'ffrutx', 'singmu'],
 			tower: false,
@@ -593,7 +593,7 @@ export const MT_DUNGEON_DEFINITIONS: Readonly<Record<MtDungeonLanguage, readonly
 		{
 			id: 'labo',
 			name: 'Laboratoire corrompu',
-			gold: 10000,
+			gold: 100000,
 			condition: 'scenario(smog,26+)',
 			monsters: ['darkii', 'stroa', 'sangsa', 'sangs2'],
 			tower: false,
@@ -642,7 +642,7 @@ export const MT_DUNGEON_DEFINITIONS: Readonly<Record<MtDungeonLanguage, readonly
 		{
 			id: 'stepp',
 			name: 'The Magnetic Caverns',
-			gold: 150000,
+			gold: 1500000,
 			condition: 'active(cavmagnet)',
 			monsters: ['worm2', 'worm', 'scorp', 'cactus', 'brig1', 'brig2', 'brig3'],
 			tower: false,
@@ -802,7 +802,7 @@ export const MT_DUNGEON_DEFINITIONS: Readonly<Record<MtDungeonLanguage, readonly
 		{
 			id: 'katak',
 			name: 'The Katacombs',
-			gold: 20000,
+			gold: 200000,
 			condition: 'active(katatombs)',
 			monsters: ['goupi', 'wolf', 'gluon', 'gvert', 'coq', 'piraos'],
 			tower: false,
@@ -870,7 +870,7 @@ export const MT_DUNGEON_DEFINITIONS: Readonly<Record<MtDungeonLanguage, readonly
 		{
 			id: 'mbegin',
 			name: 'The Sewers of Monster Port',
-			gold: 8000,
+			gold: 80000,
 			condition: 'mission(mbegin)',
 			monsters: ['minimo', 'mosqui'],
 			tower: false,
@@ -903,7 +903,7 @@ export const MT_DUNGEON_DEFINITIONS: Readonly<Record<MtDungeonLanguage, readonly
 		{
 			id: 'mquetz',
 			name: 'The Temple of Quetzaco',
-			gold: 40000,
+			gold: 400000,
 			condition: 'scenario(monisl,4+)',
 			monsters: ['minimo', 'mosqui', 'mantoo', 'ffrutx'],
 			tower: false,
@@ -1080,7 +1080,7 @@ export const MT_DUNGEON_DEFINITIONS: Readonly<Record<MtDungeonLanguage, readonly
 		{
 			id: 'mcuzco',
 			name: 'Cuzcous Ruins',
-			gold: 120000,
+			gold: 1200000,
 			condition: 'scenario(monisl,5+)',
 			monsters: ['minimo', 'mosqui', 'mantoo', 'ffrutx', 'singmu'],
 			tower: false,
@@ -1219,7 +1219,7 @@ export const MT_DUNGEON_DEFINITIONS: Readonly<Record<MtDungeonLanguage, readonly
 		{
 			id: 'labo',
 			name: 'The Corrupted Laboratory',
-			gold: 10000,
+			gold: 100000,
 			condition: 'scenario(smog,26+)',
 			monsters: ['darkii', 'stroa', 'sangsa', 'sangs2'],
 			tower: false,
@@ -1268,7 +1268,7 @@ export const MT_DUNGEON_DEFINITIONS: Readonly<Record<MtDungeonLanguage, readonly
 		{
 			id: 'stepp',
 			name: 'Las Cavernas Magnéticas',
-			gold: 150000,
+			gold: 1500000,
 			condition: 'active(cavmagnet)',
 			monsters: ['worm2', 'worm', 'scorp', 'cactus', 'brig1', 'brig2', 'brig3'],
 			tower: false,
@@ -1428,7 +1428,7 @@ export const MT_DUNGEON_DEFINITIONS: Readonly<Record<MtDungeonLanguage, readonly
 		{
 			id: 'katak',
 			name: 'Las Katatumbas',
-			gold: 20000,
+			gold: 200000,
 			condition: 'active(katatombs)',
 			monsters: ['goupi', 'wolf', 'gluon', 'gvert', 'coq', 'piraos'],
 			tower: false,
@@ -1496,7 +1496,7 @@ export const MT_DUNGEON_DEFINITIONS: Readonly<Record<MtDungeonLanguage, readonly
 		{
 			id: 'mbegin',
 			name: 'Las cloacas del Puerto Monstruoso',
-			gold: 8000,
+			gold: 80000,
 			condition: 'mission(mbegin)',
 			monsters: ['minimo', 'mosqui'],
 			tower: false,
@@ -1529,7 +1529,7 @@ export const MT_DUNGEON_DEFINITIONS: Readonly<Record<MtDungeonLanguage, readonly
 		{
 			id: 'mquetz',
 			name: 'El Templo de Quetzaco',
-			gold: 40000,
+			gold: 400000,
 			condition: 'scenario(monisl,4+)',
 			monsters: ['minimo', 'mosqui', 'mantoo', 'ffrutx'],
 			tower: false,
@@ -1706,7 +1706,7 @@ export const MT_DUNGEON_DEFINITIONS: Readonly<Record<MtDungeonLanguage, readonly
 		{
 			id: 'mcuzco',
 			name: 'Ruinas de Cuzcús',
-			gold: 120000,
+			gold: 1200000,
 			condition: 'scenario(monisl,5+)',
 			monsters: ['minimo', 'mosqui', 'mantoo', 'ffrutx', 'singmu'],
 			tower: false,
@@ -1845,7 +1845,7 @@ export const MT_DUNGEON_DEFINITIONS: Readonly<Record<MtDungeonLanguage, readonly
 		{
 			id: 'labo',
 			name: 'The Corrupted Laboratory',
-			gold: 10000,
+			gold: 100000,
 			condition: 'scenario(smog,26+)',
 			monsters: ['darkii', 'stroa', 'sangsa', 'sangs2'],
 			tower: false,
@@ -1894,7 +1894,7 @@ export const MT_DUNGEON_DEFINITIONS: Readonly<Record<MtDungeonLanguage, readonly
 		{
 			id: 'stepp',
 			name: 'Die Magnetischen Höhlen',
-			gold: 150000,
+			gold: 1500000,
 			condition: 'active(cavmagnet)',
 			monsters: ['worm2', 'worm', 'scorp', 'cactus', 'brig1', 'brig2', 'brig3'],
 			tower: false,
@@ -2054,7 +2054,7 @@ export const MT_DUNGEON_DEFINITIONS: Readonly<Record<MtDungeonLanguage, readonly
 		{
 			id: 'katak',
 			name: 'Die Katakomben',
-			gold: 20000,
+			gold: 200000,
 			condition: 'active(katatombs)',
 			monsters: ['goupi', 'wolf', 'gluon', 'gvert', 'coq', 'piraos'],
 			tower: false,
@@ -2122,7 +2122,7 @@ export const MT_DUNGEON_DEFINITIONS: Readonly<Record<MtDungeonLanguage, readonly
 		{
 			id: 'mbegin',
 			name: 'Die Kanalisation des Monsterhafens',
-			gold: 8000,
+			gold: 80000,
 			condition: 'mission(mbegin)',
 			monsters: ['minimo', 'mosqui'],
 			tower: false,
@@ -2155,7 +2155,7 @@ export const MT_DUNGEON_DEFINITIONS: Readonly<Record<MtDungeonLanguage, readonly
 		{
 			id: 'mquetz',
 			name: 'Der Tempel von Quetzaco',
-			gold: 40000,
+			gold: 400000,
 			condition: 'scenario(monisl,4+)',
 			monsters: ['minimo', 'mosqui', 'mantoo', 'ffrutx'],
 			tower: false,
@@ -2332,7 +2332,7 @@ export const MT_DUNGEON_DEFINITIONS: Readonly<Record<MtDungeonLanguage, readonly
 		{
 			id: 'mcuzco',
 			name: 'Cuzcous-Ruinen',
-			gold: 120000,
+			gold: 1200000,
 			condition: 'scenario(monisl,5+)',
 			monsters: ['minimo', 'mosqui', 'mantoo', 'ffrutx', 'singmu'],
 			tower: false,
