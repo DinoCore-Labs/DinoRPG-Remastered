@@ -1,1781 +1,1789 @@
-// This file contains code derived from or adapted from:
-// Eternaltwin DinoRPG
-// Upstream file: https://gitlab.com/eternaltwin/dinorpg/dinorpg/-/blob/3a73bbc6d751e4916cc5fd2e5f23bc2cfd42fc6d/ed-be/prisma/schema.prisma
-//
-// Copyright in the original contributions remains with the respective
-// authors and contributors.
-//
-// Modified by DinoRPG Remastered contributors.
-// Modifications include substantial expansion and restructuring of the
-// database schema, models, relations, identifiers, indexes, constraints,
-// and game systems.
-//
-// See NOTICE.md and the Git history for provenance and modification details.
-//
-// SPDX-License-Identifier: AGPL-3.0-or-later
-
-generator client {
-  provider        = "prisma-client-js"
-  output          = "../../prisma"
-  previewFeatures = ["nativeDistinct", "relationJoins"]
-  binaryTargets   = ["native", "debian-openssl-3.0.x", "debian-openssl-1.1.x"]
-}
-
-datasource db {
-  provider = "postgresql"
-}
-
-model BankSaving {
-  id String @id @default(uuid()) @db.Uuid
-
-  amount          Int
-  durationDays    Int
-  interestRateBps Int
-  unlockAt        DateTime  @db.Timestamptz(3)
-  claimedAt       DateTime? @db.Timestamptz(3)
-
-  userId String @db.Uuid
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  createdAt DateTime @default(now()) @db.Timestamptz(3)
-  updatedAt DateTime @updatedAt @db.Timestamptz(3)
-
-  @@index([userId])
-  @@index([userId, claimedAt])
-  @@index([unlockAt])
-  @@map("bank_saving")
-}
-
-model Dinoz {
-  id                 Int         @id @default(autoincrement())
-  name               String      @db.VarChar(32)
-  canRename          Boolean     @default(false)
-  raceId             Int
-  display            String      @db.VarChar
-  level              Int         @default(1)
-  life               Int
-  maxLife            Int
-  experience         Int
-  nbrUpFire          Int
-  nbrUpWood          Int
-  nbrUpWater         Int
-  nbrUpLightning     Int
-  nbrUpAir           Int
-  nextUpElementId    Int
-  nextUpAltElementId Int
-  placeId            Int
-  remaining          Int         @default(3)
-  order              Int?
-  createdDate        DateTime    @default(now()) @db.Timestamptz(3)
-  updatedDate        DateTime    @updatedAt @db.Timestamptz(3)
-  seed               String      @db.Uuid
-  state              DinozState?
-  stateTimer         DateTime?   @db.Timestamptz(3)
-
-  catches          DinozCatch[]
-  concentration    DinozConcentration?
-  fight            Boolean                 @default(true)
-  gather           Boolean                 @default(true)
-  leaderId         Int?                    @map("following")
-  leader           Dinoz?                  @relation("DinozFollowers", fields: [leaderId], references: [id])
-  followers        Dinoz[]                 @relation("DinozFollowers")
-  items            DinozItems[]
-  skills           DinozSkills[]
-  unlockableSkills DinozSkillsUnlockable[]
-  status           DinozStatus[]
-  missions         DinozMissions[]
-  marketOffers     Offer[]                 @relation("OfferDinoz")
-  FBTournamentStep Int                     @default(0)
-
-  DojoOpponents  DojoOpponents[]
-  DojoTeam       DojoTeam[]
-  TournamentTeam TournamentTeam[]
-
-  userId String @db.Uuid
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  devourerDefendedId Int?
-  devourerDefended   DevourerControl? @relation("DevourerDinoz", fields: [devourerDefendedId], references: [id], onDelete: SetNull)
-
-  logs    GameLog[] @relation("GameLogDinoz")
-  reports Report[]  @relation("ReportReportedDinoz")
-
-  @@index([userId])
-  @@index([leaderId])
-  mtDungeonRuns MtDungeonRun[]
-  mtDungeonProgress MtDungeonProgress[]
-}
-
-model DinozCatch {
-  id        Int    @id @default(autoincrement())
-  dinozId   Int
-  hp        Int
-  monsterId String
-  dinoz     Dinoz  @relation(fields: [dinozId], references: [id], onDelete: Cascade)
-}
-
-model DinozItems {
-  id         Int      @id() @default(autoincrement())
-  itemId     Int
-  equippedAt DateTime @default(now()) @db.Timestamptz(3)
-  dinozId    Int?
-  dinoz      Dinoz?   @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@index([dinozId])
-  @@map("dinoz_item")
-}
-
-model DinozConcentration {
-  dinozId   Int @id
-  sessionId Int
-
-  startedAt DateTime @default(now()) @db.Timestamptz(3)
-
-  dinoz   Dinoz                     @relation(fields: [dinozId], references: [id], onDelete: Cascade)
-  session DinozConcentrationSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
-
-  @@index([sessionId])
-  @@map("dinoz_concentration")
-}
-
-model DinozConcentrationSession {
-  id       Int                     @id @default(autoincrement())
-  scopeKey String                  @db.VarChar(64)
-  state    DinozConcentrationState @default(GATHERING)
-
-  createdAt DateTime  @default(now()) @db.Timestamptz(3)
-  updatedAt DateTime  @updatedAt @db.Timestamptz(3)
-  openedAt  DateTime? @db.Timestamptz(3)
-
-  participants DinozConcentration[]
-
-  @@index([state])
-  @@map("dinoz_concentration_session")
-}
-
-model DinozMissions {
-  id          Int    @id @default(autoincrement())
-  missionKey  String
-  progression Int    @default(0)
-  tracking    Int    @default(0)
-  state       Json?
-
-  isCompleted Boolean @default(false)
-
-  startedAt DateTime @default(now())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  dinozId Int
-  dinoz   Dinoz @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@unique([missionKey, dinozId])
-  @@index([dinozId])
-  @@index([missionKey])
-  @@index([isCompleted])
-  @@map("dinoz_mission")
-}
-
-model DinozSkills {
-  id      Int     @id @default(autoincrement())
-  skillId Int
-  state   Boolean @default(true)
-  dinozId Int?
-  dinoz   Dinoz?  @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@unique([skillId, dinozId])
-  @@index([dinozId])
-  @@map("dinoz_skill")
-}
-
-model DinozSkillsUnlockable {
-  id      Int    @id @default(autoincrement())
-  skillId Int
-  dinozId Int?
-  dinoz   Dinoz? @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@map("dinoz_skill_unlockable")
-}
-
-model DinozStatus {
-  id       Int    @id @default(autoincrement())
-  statusId Int
-  dinozId  Int?
-  dinoz    Dinoz? @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@unique([statusId, dinozId])
-  @@index([dinozId])
-  @@map("dinoz_status")
-}
-
-model ForcebrutTournamentOpponent {
-  id Int @id @default(autoincrement())
-
-  step Int @unique
-
-  name    String @db.VarChar()
-  raceId  Int
-  display String @db.VarChar
-
-  level   Int
-  life    Int @default(100)
-  maxLife Int @default(100)
-
-  nbrUpFire      Int @default(0)
-  nbrUpWood      Int @default(0)
-  nbrUpWater     Int @default(0)
-  nbrUpLightning Int @default(0)
-  nbrUpAir       Int @default(0)
-
-  skillIds Int[] @default([])
-
-  enabled Boolean @default(true)
-
-  createdAt DateTime @default(now()) @db.Timestamptz(3)
-  updatedAt DateTime @updatedAt @db.Timestamptz(3)
-
-  @@index([enabled, step])
-  @@map("forcebrut_tournament_opponent")
-}
-
-model ForumTopic {
-  id       Int           @id @default(autoincrement())
-  category ForumCategory
-  title    String        @db.VarChar(120)
-
-  isPinned Boolean @default(false)
-  isClosed Boolean @default(false)
-
-  messageCount Int @default(1)
-
-  authorId   String? @db.Uuid
-  author     User?   @relation("ForumTopicAuthor", fields: [authorId], references: [id], onDelete: SetNull)
-  authorName String
-
-  createdAt      DateTime @default(now()) @db.Timestamptz(3)
-  updatedAt      DateTime @default(now()) @updatedAt @db.Timestamptz(3)
-  lastActivityAt DateTime @default(now()) @db.Timestamptz(3)
-
-  messages      ForumMessage[]
-  favorites     ForumFavorite[]
-  subscriptions ForumSubscription[]
-  reads         ForumTopicRead[]
-
-  @@index([category, isPinned, lastActivityAt])
-  @@index([lastActivityAt])
-  @@map("forum_topic")
-}
-
-model ForumTopicRead {
-  userId  String @db.Uuid
-  topicId Int
-
-  lastReadMessageId Int
-
-  readAt DateTime @default(now()) @updatedAt @db.Timestamptz(3)
-
-  user  User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-  topic ForumTopic @relation(fields: [topicId], references: [id], onDelete: Cascade)
-
-  @@id([userId, topicId])
-  @@index([topicId])
-  @@map("forum_topic_read")
-}
-
-model ForumMessage {
-  id Int @id @default(autoincrement())
-
-  topicId Int
-  topic   ForumTopic @relation(fields: [topicId], references: [id], onDelete: Cascade)
-
-  authorId   String? @db.Uuid
-  author     User?   @relation("ForumMessageAuthor", fields: [authorId], references: [id], onDelete: SetNull)
-  authorName String
-
-  content String @db.Text
-
-  reports Report[] @relation("ReportReportedForumMessage")
-
-  deletedAt      DateTime?                 @db.Timestamptz(3)
-  deletedById    String?                   @db.Uuid
-  deletedByName  String?
-  deletionKind   ForumMessageDeletionKind?
-  deletionReason String?                   @db.VarChar(500)
-
-  createdAt DateTime @default(now()) @db.Timestamptz(3)
-  updatedAt DateTime @default(now()) @updatedAt @db.Timestamptz(3)
-
-  @@index([topicId, createdAt, id])
-  @@index([authorId])
-  @@index([topicId, deletedAt])
-  @@map("forum_message")
-}
-
-model ForumFavorite {
-  userId  String @db.Uuid
-  topicId Int
-
-  createdAt DateTime @default(now()) @db.Timestamptz(3)
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  topic ForumTopic @relation(fields: [topicId], references: [id], onDelete: Cascade)
-
-  @@id([userId, topicId])
-  @@index([topicId])
-  @@map("forum_favorite")
-}
-
-model ForumSubscription {
-  userId  String @db.Uuid
-  topicId Int
-
-  createdAt DateTime @default(now()) @db.Timestamptz(3)
-
-  user  User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-  topic ForumTopic @relation(fields: [topicId], references: [id], onDelete: Cascade)
-
-  @@id([userId, topicId])
-  @@index([topicId])
-  @@map("forum_subscription")
-}
-
-model ForumModerationAction {
-  id Int @id @default(autoincrement())
-
-  topicId   Int
-  messageId Int?
-
-  actorId   String? @db.Uuid
-  actorName String
-
-  action ForumModerationActionType
-
-  reason String? @db.VarChar(500)
-
-  createdAt DateTime @default(now()) @db.Timestamptz(3)
-
-  @@index([topicId, createdAt])
-  @@index([messageId])
-  @@index([actorId, createdAt])
-  @@index([action, createdAt])
-  @@map("forum_moderation_action")
-}
-
-model GameLog {
-  id        BigInt           @id @default(autoincrement())
-  type      GameLogType
-  retention GameLogRetention @default(TEMPORARY)
-
-  values   String[] @default([])
-  metadata Json?
-
-  userId String? @db.Uuid
-  user   User?   @relation("GameLogUser", fields: [userId], references: [id], onDelete: SetNull)
-
-  dinozId Int?
-  dinoz   Dinoz? @relation("GameLogDinoz", fields: [dinozId], references: [id], onDelete: SetNull)
-
-  actorUserId String? @db.Uuid
-  actorUser   User?   @relation("GameLogActor", fields: [actorUserId], references: [id], onDelete: SetNull)
-
-  userNameSnapshot  String?
-  dinozNameSnapshot String?
-  actorNameSnapshot String?
-
-  createdAt DateTime @default(now()) @db.Timestamptz(3)
-
-  @@index([userId, dinozId, type])
-  @@index([type, createdAt])
-  @@index([retention, createdAt])
-  @@index([createdAt])
-  @@index([userId, createdAt])
-  @@index([dinozId, createdAt])
-  @@index([actorUserId, createdAt])
-  @@map("game_log")
-}
-
-model GameLogHourly {
-  id        BigInt      @id @default(autoincrement())
-  type      GameLogType
-  bucketAt  DateTime    @db.Timestamptz(3)
-  total     Int         @default(0)
-  createdAt DateTime    @default(now()) @db.Timestamptz(3)
-  updatedAt DateTime    @updatedAt @db.Timestamptz(3)
-
-  @@unique([type, bucketAt])
-  @@index([bucketAt])
-  @@index([type, bucketAt])
-  @@map("game_log_hourly")
-}
-
-model GameLogDaily {
-  id        BigInt      @id @default(autoincrement())
-  type      GameLogType
-  day       DateTime    @db.Date
-  total     Int         @default(0)
-  createdAt DateTime    @default(now()) @db.Timestamptz(3)
-  updatedAt DateTime    @updatedAt @db.Timestamptz(3)
-
-  @@unique([type, day])
-  @@index([day])
-  @@index([type, day])
-  @@map("game_log_daily")
-}
-
-model JobDefinition {
-  id      String  @id @default(cuid())
-  key     String  @unique // ex: "reset-dinoz-shop"
-  name    String
-  type    JobType
-  enabled Boolean @default(true)
-
-  // Scheduling
-  timezone    String @default("UTC")
-  dailyHour   Int?
-  dailyMinute Int?
-  intervalMs  Int?
-
-  // State
-  status    JobStatus @default(IDLE)
-  lastRunAt DateTime? @db.Timestamptz(3)
-  nextRunAt DateTime? @db.Timestamptz(3)
-  lastError String?
-
-  // Locking (multi-instance safe)
-  lockedAt     DateTime? @db.Timestamptz(3)
-  lockedBy     String?
-  lockTimeoutS Int       @default(300)
-
-  runs JobRun[]
-
-  createdAt DateTime @default(now()) @db.Timestamptz(3)
-  updatedAt DateTime @updatedAt @db.Timestamptz(3)
-
-  @@index([enabled, nextRunAt])
-  @@map("job_definition")
-}
-
-model JobRun {
-  id    String        @id @default(cuid())
-  jobId String
-  job   JobDefinition @relation(fields: [jobId], references: [id], onDelete: Cascade)
-
-  startedAt   DateTime  @default(now()) @db.Timestamptz(3)
-  endedAt     DateTime? @db.Timestamptz(3)
-  success     Boolean?
-  error       String?
-  triggeredBy String?
-
-  @@index([jobId, startedAt])
-  @@map("job_run")
-}
-
-model News {
-  id   Int      @id @default(autoincrement())
-  slug String   @unique @db.VarChar
-  type NewsType @default(update)
-
-  image         Bytes?
-  imageMimeType String? @db.VarChar
-
-  isPublished Boolean   @default(false)
-  publishedAt DateTime?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  translations NewsTranslation[]
-  poll         Poll?
-  likedBy      NewsLike[]
-
-  @@index([type])
-  @@index([isPublished, publishedAt])
-  @@index([createdAt])
-  @@map("news")
-}
-
-model NewsTranslation {
-  id      Int      @id @default(autoincrement())
-  newsId  Int
-  lang    Language
-  title   String   @db.VarChar
-  excerpt String?  @db.VarChar
-  content String   @db.Text
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  news News @relation(fields: [newsId], references: [id], onDelete: Cascade)
-
-  @@unique([newsId, lang])
-  @@index([lang])
-  @@map("news_translations")
-}
-
-model Offer {
-  id           Int         @id @default(autoincrement())
-  sellerId     String?     @db.Uuid
-  sellerName   String
-  endDate      DateTime    @db.Timestamptz(3)
-  dinozId      Int?
-  dinozDetails String?
-  total        Int
-  status       OfferStatus @default(ONGOING)
-
-  seller User?  @relation("OfferSeller", fields: [sellerId], references: [id], onDelete: SetNull)
-  dinoz  Dinoz? @relation("OfferDinoz", fields: [dinozId], references: [id], onDelete: SetNull)
-
-  items OfferItem[]
-  bids  OfferBid[]
-
-  @@index([status, endDate])
-  @@index([sellerId])
-  @@index([dinozId])
-}
-
-model OfferItem {
-  id           Int     @id @default(autoincrement())
-  offerId      Int
-  itemId       Int
-  quantity     Int
-  isIngredient Boolean
-
-  offer Offer @relation(fields: [offerId], references: [id], onDelete: Cascade)
-
-  @@index([offerId])
-}
-
-model OfferBid {
-  id       Int     @id @default(autoincrement())
-  offerId  Int
-  userId   String? @db.Uuid
-  userName String
-  value    Int
-
-  offer Offer @relation(fields: [offerId], references: [id], onDelete: Cascade)
-  user  User? @relation(fields: [userId], references: [id], onDelete: SetNull)
-
-  @@index([offerId])
-  @@index([userId])
-}
-
-model Poll {
-  id       Int      @id @default(autoincrement())
-  newsId   Int      @unique
-  isActive Boolean  @default(true)
-  endAt    DateTime
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  news    News         @relation(fields: [newsId], references: [id], onDelete: Cascade)
-  options PollOption[]
-  votes   PollVote[]
-
-  @@index([isActive, endAt])
-  @@map("polls")
-}
-
-model PollOption {
-  id        Int @id @default(autoincrement())
-  pollId    Int
-  sortOrder Int @default(0)
-
-  createdAt DateTime @default(now())
-
-  poll         Poll                    @relation(fields: [pollId], references: [id], onDelete: Cascade)
-  translations PollOptionTranslation[]
-  votes        PollVote[]
-
-  @@unique([pollId, sortOrder])
-  @@index([pollId])
-  @@map("poll_options")
-}
-
-model PollOptionTranslation {
-  id           Int      @id @default(autoincrement())
-  pollOptionId Int
-  lang         Language
-  label        String   @db.VarChar
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  pollOption PollOption @relation(fields: [pollOptionId], references: [id], onDelete: Cascade)
-
-  @@unique([pollOptionId, lang])
-  @@index([lang])
-  @@map("poll_option_translations")
-}
-
-model PollVote {
-  id           Int      @id @default(autoincrement())
-  pollId       Int
-  pollOptionId Int
-  userId       String   @db.Uuid
-  votedAt      DateTime @default(now())
-
-  poll       Poll       @relation(fields: [pollId], references: [id], onDelete: Cascade)
-  pollOption PollOption @relation(fields: [pollOptionId], references: [id], onDelete: Cascade)
-  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([pollId, userId], name: "unique_user_vote_per_poll")
-  @@index([pollId])
-  @@index([pollOptionId])
-  @@index([userId])
-  @@map("poll_votes")
-}
-
-model NewsLike {
-  newsId    Int
-  userId    String   @db.Uuid
-  createdAt DateTime @default(now())
-
-  news News @relation(fields: [newsId], references: [id], onDelete: Cascade)
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@id([newsId, userId])
-  @@index([userId])
-  @@map("news_likes")
-}
-
-model Ranking {
-  id         Int   @id @default(autoincrement())
-  dinozCount Int   @default(0)
-  points     Int   @default(0)
-  average    Int   @default(0)
-  completion Float @default(0)
-  dojo       Int   @default(0)
-
-  userId String @unique @db.Uuid
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@index([userId])
-}
-
-model Roadmap {
-  position Int @id
-
-  titleFr String @db.VarChar
-  titleEn String @db.VarChar
-  titleEs String @db.VarChar
-  titleDe String @db.VarChar
-
-  items RoadmapItem[]
-
-  @@map("roadmap")
-}
-
-model RoadmapItem {
-  id              Int @id @default(autoincrement())
-  roadmapPosition Int
-  position        Int
-
-  icon String? @db.VarChar
-
-  textFr String @db.Text
-  textEn String @db.Text
-  textEs String @db.Text
-  textDe String @db.Text
-
-  roadmap Roadmap @relation(fields: [roadmapPosition], references: [position], onDelete: Cascade)
-
-  @@unique([roadmapPosition, position])
-  @@index([roadmapPosition])
-  @@map("roadmap_item")
-}
-
-model Secret {
-  key   String @id @db.VarChar
-  value String @db.VarChar
-
-  @@map("secret")
-}
-
-model SignupDeviceMonthCounter {
-  id          Int      @id @default(autoincrement())
-  monthKey    String
-  deviceToken String
-  count       Int      @default(0)
-  expiresAt   DateTime @db.Timestamptz(3)
-  createdAt   DateTime @default(now()) @db.Timestamptz(3)
-  updatedAt   DateTime @updatedAt @db.Timestamptz(3)
-
-  @@unique([monthKey, deviceToken])
-  @@index([monthKey])
-  @@index([expiresAt])
-}
-
-model SignupIpMonthCounter {
-  id        Int      @id @default(autoincrement())
-  monthKey  String
-  ipToken   String
-  count     Int      @default(0)
-  expiresAt DateTime @db.Timestamptz(3)
-  createdAt DateTime @default(now()) @db.Timestamptz(3)
-  updatedAt DateTime @updatedAt @db.Timestamptz(3)
-
-  @@unique([monthKey, ipToken])
-  @@index([monthKey])
-  @@index([expiresAt])
-}
-
-model User {
-  id          String    @id @default(uuid()) @db.Uuid
-  name        String    @unique
-  password    String
-  role        Role      @default(PLAYER)
-  createdDate DateTime  @default(now()) @db.Timestamptz(3)
-  updatedAt   DateTime? @updatedAt @db.Timestamptz(3)
-  lastLogin   DateTime  @default(now()) @db.Timestamptz(3)
-
-  gameRulesAcceptedVersion String?
-  gameRulesAcceptedAt      DateTime?
-
-  clanId          Int?
-  clan            Clan?            @relation(fields: [clanId], references: [id], onDelete: SetNull)
-  leaderOf        Clan?            @relation("leader")
-  ClanHistory     ClanHistory[]
-  ClanJoinRequest ClanJoinRequest? @relation("clanRequest")
-  ClanMember      ClanMember?
-  ClanMessage     ClanMessage[]
-
-  devourerAttacksLeft Int               @default(3)
-  devourerControls    DevourerControl[]
-
-  gathers       UserGather[]
-  ingredients   UserIngredients[]
-  items         UserItems[]
-  profile       UserProfile?
-  ranking       Ranking?
-  rewards       UserRewards[]
-  scenarios     UserScenario[]
-  statsTracking UserTracking[]
-  tags          UserTag[]
-  wallets       UserWallet[]
-
-  marketOffers Offer[]    @relation("OfferSeller")
-  marketBids   OfferBid[]
-
-  dinoz     Dinoz[]
-  dinozShop UserDinozShop[]
-
-  leader      Boolean @default(false)
-  engineer    Boolean @default(false)
-  cooker      Boolean @default(false)
-  shopKeeper  Boolean @default(false)
-  merchant    Boolean @default(false)
-  priest      Boolean @default(false)
-  teacher     Boolean @default(false)
-  matelasseur Boolean @default(false)
-  messie      Boolean @default(false)
-
-  keepSeedReincarnationCount Int @default(0)
-
-  newsLikes NewsLike[]
-  pollVotes PollVote[]
-
-  createdConversations Conversation[] @relation("CreatedConversations")
-  conversationLinks    Participant[]
-  sentMessages         Message[]
-
-  logs      GameLog[] @relation("GameLogUser")
-  actedLogs GameLog[] @relation("GameLogActor")
-
-  discoveredSkills Int[] @default([])
-
-  bankSavings BankSaving[]
-
-  bannedUntil DateTime? @db.Timestamptz(3)
-  mutedUntil  DateTime? @db.Timestamptz(3)
-  banReason   String?
-  muteReason  String?
-
-  reportsMade Report[] @relation("ReportReporter")
-  reports     Report[] @relation("ReportReportedUser")
-
-  notifications Notification[]
-
-  forumTopics        ForumTopic[]        @relation("ForumTopicAuthor")
-  forumMessages      ForumMessage[]      @relation("ForumMessageAuthor")
-  forumFavorites     ForumFavorite[]
-  forumTopicReads    ForumTopicRead[]
-  forumSubscriptions ForumSubscription[]
-
-  dojo               Dojo?
-  FightArchive       FightArchive[]      @relation("UserRelation")
-  LeftFightArchives  FightArchive[]      @relation("LeftUserRelation")
-  RightFightArchives FightArchive[]      @relation("RightUserRelation")
-  FightWatched       FightWatched[]
-
-  userEventTrackings UserEventTracking[]
-
-  monsterHuntParticipants MonsterHuntParticipant[]
-  mtDungeonRuns MtDungeonRun[]
-  mtDungeonProgress MtDungeonProgress[]
-}
-
-model Notification {
-  id      String @id @default(uuid()) @db.Uuid
-  userId  String @db.Uuid
-  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  type    String
-  content Json?
-
-  @@index([userId])
-  @@map("notification")
-}
-
-model UserDinozShop {
-  id      Int     @id @default(autoincrement())
-  raceId  Int
-  display String  @db.VarChar
-  userId  String? @db.Uuid
-  user    User?   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@map("user_dinoz_shop")
-}
-
-model UserGather {
-  id     Int     @id @default(autoincrement())
-  place  Int
-  type   Int
-  grid   Int[]
-  userId String? @db.Uuid
-  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@index([userId])
-  @@map("user_gather")
-}
-
-model UserIngredients {
-  id           Int    @default(autoincrement())
-  ingredientId Int
-  quantity     Int
-  userId       String @db.Uuid
-  user         User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@unique([ingredientId, userId])
-  @@index([userId])
-  @@map("user_ingredients")
-}
-
-model UserItems {
-  id       Int    @default(autoincrement())
-  itemId   Int
-  quantity Int
-  userId   String @db.Uuid
-  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@unique([itemId, userId])
-  @@index([userId])
-  @@map("user_items")
-}
-
-model UserProfile {
-  id     String @id @default(cuid())
-  userId String @unique @db.Uuid
-  user   User   @relation(fields: [userId], references: [id])
-
-  avatar      Bytes?
-  avatarType  String?
-  language    Language? @default(FR)
-  gender      Gender?
-  age         Int?
-  description String?
-  customText  String?
-}
-
-model UserRewards {
-  id       Int     @id @default(autoincrement())
-  rewardId Int
-  userId   String? @db.Uuid
-  user     User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([rewardId, userId])
-  @@index([userId])
-}
-
-model UserScenario {
-  id Int @id @default(autoincrement())
-
-  scenarioKey String
-  progression Int    @default(0)
-  tracking    Int    @default(0)
-  state       Json?
-
-  startedAt DateTime @default(now())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  userId String @db.Uuid
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@unique([scenarioKey, userId])
-  @@index([userId])
-  @@index([scenarioKey])
-  @@map("user_scenario")
-}
-
-model UserTag {
-  id     Int    @id @default(autoincrement())
-  tag    String
-  userId String @db.Uuid
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  createdAt DateTime @default(now()) @db.Timestamptz(3)
-
-  @@unique([tag, userId])
-  @@index([userId])
-  @@index([tag])
-  @@map("user_tag")
-}
-
-model UserTracking {
-  id       Int    @id @default(autoincrement())
-  stat     String
-  quantity Int    @default(0)
-  userId   String @db.Uuid
-  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([stat, userId])
-  @@index([userId])
-  @@index([stat])
-  @@map("statsTracking")
-}
-
-model UserWallet {
-  id     String    @id @default(uuid()) @db.Uuid
-  type   MoneyType
-  amount Int       @default(0)
-  userId String    @db.Uuid
-  user   User      @relation(fields: [userId], references: [id])
-
-  @@unique([userId, type])
-}
-
-enum ConversationType {
-  DIRECT
-  GROUP
-  SYSTEM
-}
-
-model Conversation {
-  id              String           @id @default(uuid()) @db.Uuid
-  createdAt       DateTime         @default(now())
-  updatedAt       DateTime         @updatedAt
-  type            ConversationType @default(DIRECT)
-  title           String?
-  createdById     String?          @db.Uuid
-  pinnedMessageId Int?             @unique
-
-  createdBy     User?         @relation("CreatedConversations", fields: [createdById], references: [id], onDelete: SetNull)
-  pinnedMessage Message?      @relation("PinnedMessage", fields: [pinnedMessageId], references: [id], onDelete: SetNull)
-  participants  Participant[]
-  messages      Message[]
-
-  @@index([createdAt])
-  @@index([updatedAt])
-  @@map("conversation")
-}
-
-model Participant {
-  id               Int       @id @default(autoincrement())
-  conversationId   String    @db.Uuid
-  userId           String?   @db.Uuid
-  joinedAt         DateTime  @default(now())
-  leftAt           DateTime?
-  userNameSnapshot String
-  lastReadAt       DateTime?
-  isArchived       Boolean   @default(false)
-  isMuted          Boolean   @default(false)
-
-  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
-  user         User?        @relation(fields: [userId], references: [id], onDelete: SetNull)
-
-  @@unique([conversationId, userId])
-  @@index([userId])
-  @@index([conversationId])
-  @@map("conversation_participant")
-}
-
-model Message {
-  id                 Int       @id @default(autoincrement())
-  conversationId     String    @db.Uuid
-  senderId           String?   @db.Uuid
-  content            String
-  createdAt          DateTime  @default(now())
-  updatedAt          DateTime  @updatedAt
-  deletedAt          DateTime?
-  senderNameSnapshot String
-
-  conversation Conversation  @relation(fields: [conversationId], references: [id], onDelete: Cascade)
-  sender       User?         @relation(fields: [senderId], references: [id], onDelete: SetNull)
-  pinnedIn     Conversation? @relation("PinnedMessage")
-
-  @@index([conversationId, createdAt])
-  @@index([senderId])
-  @@map("message")
-}
-
-model Clan {
-  id            Int               @id @default(autoincrement())
-  name          String            @unique
-  treasureValue Int               @default(0)
-  creationDate  DateTime          @default(now()) @db.Timestamp(6)
-  banner        Bytes?
-  leaderId      String            @unique @db.Uuid
-  langs         Language[]
-  leader        User              @relation("leader", fields: [leaderId], references: [id])
-  history       ClanHistory[]
-  joinRequests  ClanJoinRequest[]
-  members       ClanMember[]      @relation("member")
-  pages         ClanPage[]
-  ingredients   ClanIngredient[]
-  discussion    ClanMessage[]
-  users         User[]
-
-  reports            Report[]            @relation("ReportReportedClan")
-}
-
-model ClanJoinRequest {
-  id     Int      @id @default(autoincrement())
-  clanId Int
-  date   DateTime @default(now()) @db.Timestamp(6)
-  userId String   @unique @db.Uuid
-  clan   Clan     @relation(fields: [clanId], references: [id])
-  user   User     @relation("clanRequest", fields: [userId], references: [id], onDelete: Cascade)
-}
-
-model ClanIngredient {
-  id           Int  @id @default(autoincrement())
-  ingredientId Int
-  quantity     Int
-  clanId       Int
-  clan         Clan @relation(fields: [clanId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@unique([ingredientId, clanId])
-  @@map("clan_ingredient")
-}
-
-model ClanMessage {
-  id         Int      @id @default(autoincrement())
-  clanId     Int
-  date       DateTime @default(now()) @db.Timestamp(6)
-  content    String
-  authorId   String?  @db.Uuid
-  authorName String
-  author     User?    @relation(fields: [authorId], references: [id])
-  clan       Clan     @relation(fields: [clanId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-  @@unique([id, clanId])
-  @@index([clanId])
-  @@map("clan_messages")
-}
-
-enum ReportStatus {
-  PENDING
-  RESOLVED
-  REJECTED
-}
-
-model Report {
-  id                      Int           @id @default(autoincrement())
-  reporterId              String        @db.Uuid
-  reporter                User          @relation("ReportReporter", fields: [reporterId], references: [id], onDelete: Cascade)
-  reportedUserId          String?       @db.Uuid
-  reportedUser            User?         @relation("ReportReportedUser", fields: [reportedUserId], references: [id], onDelete: Cascade)
-  reportedDinozId         Int?
-  reportedDinoz           Dinoz?        @relation("ReportReportedDinoz", fields: [reportedDinozId], references: [id], onDelete: Cascade)
-  reportedClanId          Int?
-  reportedClan            Clan?         @relation("ReportReportedClan", fields: [reportedClanId], references: [id], onDelete: Cascade)
-  reportedForumMessageId  Int?
-  reportedForumMessage    ForumMessage? @relation("ReportReportedForumMessage", fields: [reportedForumMessageId], references: [id], onDelete: SetNull)
-  reportedForumAuthorId   String?       @db.Uuid
-  reportedForumAuthorName String?
-  reportedForumContent    String?       @db.Text
-  reportedForumTopicId    Int?
-  reportedForumTopicTitle String?
-  reason                  String
-  comment                 String?
-  status                  ReportStatus  @default(PENDING)
-  createdAt               DateTime      @default(now()) @db.Timestamptz(3)
-  updatedAt               DateTime      @updatedAt @db.Timestamptz(3)
-
-  @@index([reporterId])
-  @@index([reportedUserId])
-  @@index([reportedDinozId])
-  @@index([reportedClanId])
-  @@index([status])
-}
-
-model ClanHistory {
-  id            Int      @id @default(autoincrement())
-  clanId        Int
-  date          DateTime @default(now()) @db.Timestamp(6)
-  type          String   @default("CLAN_CREATED")
-  authorId      String?  @db.Uuid
-  authorMessage String
-  author        User?    @relation(fields: [authorId], references: [id])
-  clan          Clan     @relation(fields: [clanId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-}
-
-model ClanMember {
-  id       Int      @id @default(autoincrement())
-  clanId   Int
-  dateJoin DateTime @default(now()) @db.Timestamp(6)
-  nickname String?
-  rights   String[] @default([])
-  donation Int      @default(0)
-  userId   String   @unique @db.Uuid
-  clan     Clan     @relation("member", fields: [clanId], references: [id])
-  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@index([clanId])
-}
-
-model ClanPage {
-  id      Int     @id @default(autoincrement())
-  home    Boolean
-  public  Boolean
-  name    String
-  content String  @default("")
-  clanId  Int
-  Clan    Clan    @relation(fields: [clanId], references: [id])
-
-  @@index([clanId])
-}
-
-enum DinozConcentrationState {
-  GATHERING
-  OPEN
-}
-
-model Dojo {
-  id                   String                 @id @default(uuid()) @db.Uuid
-  userId               String                 @unique @db.Uuid
-  user                 User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  team                 DojoTeam[]
-  activeChallenge      Json?                  @db.JsonB
-  DojoChallengeHistory DojoChallengeHistory[]
-  reputation           Int                    @default(0)
-  DojoOpponents        DojoOpponents[]
-  teamUpdate           DateTime?
-  dailyReset           Int                    @default(0)
-  TournamentTeam       TournamentTeam?        @relation(fields: [tournamentTeamId], references: [id])
-  tournamentTeamId     String?                @unique @db.Uuid
-
-  @@index([userId])
-  @@map("dojo")
-}
-
-model DojoTeam {
-  id      String  @id @default(uuid()) @db.Uuid
-  dojoId  String  @db.Uuid
-  dojo    Dojo    @relation(fields: [dojoId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  dinozId Int
-  dinoz   Dinoz   @relation(fields: [dinozId], references: [id], onDelete: Cascade)
-  fighted Boolean @default(false)
-
-  @@unique([dojoId, dinozId])
-  @@index([dojoId])
-}
-
-model DojoOpponents {
-  id       String  @id @default(uuid()) @db.Uuid
-  dojoId   String  @db.Uuid
-  dojo     Dojo    @relation(fields: [dojoId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  dinozId  Int
-  dinoz    Dinoz   @relation(fields: [dinozId], references: [id], onDelete: Cascade)
-  fighted  Boolean @default(false)
-  achieved Boolean @default(false)
-
-  @@unique([dojoId, dinozId])
-  @@index([dojoId])
-}
-
-model DojoChallengeHistory {
-  id         String   @id @default(uuid()) @db.Uuid
-  dojoId     String   @db.Uuid
-  dojo       Dojo     @relation(fields: [dojoId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-  myDinozId  Int
-  opponentId Int
-  challenge  String
-  victory    Boolean
-  achieved   Boolean
-  archivedAt DateTime @default(now()) @db.Date
-
-  @@index([dojoId])
-}
-
-model FightArchive {
-  id                    String          @id @default(uuid()) @db.Uuid
-  fighters              String          @db.Text
-  steps                 String          @db.Text
-  seed                  String          @db.VarChar(255)
-  result                Boolean         @db.Boolean
-  userId                String?         @db.Uuid
-  user                  User?           @relation("UserRelation", fields: [userId], references: [id])
-  leftUserId            String?         @db.Uuid
-  leftUser              User?           @relation("LeftUserRelation", fields: [leftUserId], references: [id])
-  rightUserId           String?         @db.Uuid
-  rightUser             User?           @relation("RightUserRelation", fields: [rightUserId], references: [id])
-  tournamentStep        Int             @default(0)
-  slot                  Int             @default(0)
-  createdDate           DateTime        @default(now()) @db.Timestamp(6)
-  Tournament            Tournament?     @relation(fields: [tournamentId], references: [id])
-  tournamentTeamLeftId  String?         @db.Uuid
-  tournamentTeamLeft    TournamentTeam? @relation("LeftTeamRelation", fields: [tournamentTeamLeftId], references: [id])
-  tournamentTeamRightId String?         @db.Uuid
-  tournamentTeamRight   TournamentTeam? @relation("RightTeamRelation", fields: [tournamentTeamRightId], references: [id])
-  tournamentId          String?         @db.Uuid
-  devourerPlaceId       Int?
-  metadata              String?         @db.Text
-  FightWatched          FightWatched[]
-
-  @@index([tournamentId, tournamentStep])
-  @@index([devourerPlaceId, createdDate])
-}
-
-model FightWatched {
-  id             String       @id @default(uuid()) @db.Uuid
-  fight          FightArchive @relation(fields: [fightArchiveId], references: [id])
-  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId         String       @db.Uuid
-  favorite       Boolean
-  fightArchiveId String       @db.Uuid
-
-  @@unique([userId, fightArchiveId])
-  @@index([userId, fightArchiveId])
-}
-
-model Tournament {
-  id           String           @id @unique @default(uuid()) @db.Uuid
-  date         DateTime         @default(now()) @db.Timestamp(6)
-  formatName   String           @default("ffa") @db.Text
-  teamSize     Int              @default(1)
-  raceMinimum  Int              @default(1)
-  poison       Boolean          @default(true)
-  itemsAllowed Boolean          @default(true)
-  teamRace     String           @db.Text
-  levelLimit   Int              @default(50)
-  participants TournamentTeam[]
-  fights       FightArchive[]
-  cashPrice    Int              @default(0)
-  nextRound    DateTime         @default(now())
-
-  @@index([id, date])
-}
-
-model TournamentTeam {
-  id                String         @id @default(uuid()) @db.Uuid
-  dojoId            String?        @db.Uuid
-  dojo              Dojo?
-  dinoz             Dinoz[]
-  teamCount         Int            @default(1)
-  Tournament        Tournament?    @relation(fields: [tournamentId], references: [id])
-  tournamentId      String?        @db.Uuid
-  FightArchiveLeft  FightArchive[] @relation("LeftTeamRelation")
-  FightArchiveRight FightArchive[] @relation("RightTeamRelation")
-
-  // --- Inter-dojo tournament pool phase state ---
-  poolNumber     Int? // 0-15, assigned once qualification ends
-  poolWins       Int     @default(0)
-  poolLosses     Int     @default(0)
-  poolQualified  Boolean @default(false) // true once poolWins reaches POOL_WIN_COUNT
-  poolEliminated Boolean @default(false) // true once poolLosses reaches POOL_LOSS_COUNT
-  finalSeed      Int? // 1..32, computed from pool performance for the final bracket
-
-  @@unique([dojoId, tournamentId])
-  @@index([dojoId])
-  @@index([tournamentId, poolNumber])
-}
-
-enum DinozState {
-  frozen
-  sacrificed
-  selling
-  superdom
-  resting
-  unfreezing
-}
-
-enum ForumCategory {
-  QUESTIONS
-  GAME
-  CLANS
-  CHAOS
-}
-
-enum ForumMessageDeletionKind {
-  AUTHOR
-  MODERATION
-}
-
-enum ForumModerationActionType {
-  MESSAGE_DELETE
-  MESSAGE_RESTORE
-  TOPIC_PIN
-  TOPIC_UNPIN
-  TOPIC_CLOSE
-  TOPIC_REOPEN
-}
-
-enum GameLogRetention {
-  TEMPORARY
-  AUDIT
-}
-
-enum GameLogType {
-  PlayerCreated
-  PlayerConnected
-  PlayerReset
-  PlayerDeleted
-  PlayerBanned
-  PlayerUnbanned
-
-  CreateDinoz
-  Move
-  LevelUp
-  XPEarned
-  HPLost
-  Death
-  Revive
-
-  Fight
-  FightWon
-  FightLost
-
-  ItemUsed
-  ItemBought
-  ItemFound
-  IngredientSold
-  GoldWon
-  GoldLost
-
-  MissionFinished
-  MissionCanceled
-
-  Gather
-  GridFinished
-
-  OfferNew
-  OfferBid
-  OfferCancelled
-  OfferExpired
-  OfferWon
-
-  AdminUpdateDinoz
-  AdminAddStatus
-  AdminRemoveStatus
-  AdminAddSkill
-  AdminRemoveSkill
-  AdminAddUnlockableSkill
-  AdminRemoveUnlockableSkill
-  AdminAddMoney
-  AdminRemoveMoney
-  AdminAddReward
-  AdminRemoveReward
-  AdminAddItem
-  AdminRemoveItem
-  AdminAddIngredient
-  AdminRemoveIngredient
-  AdminUpdateMission
-  AdminUpdateScenario
-  AdminUpdateUser
-  AdminUpdateSecret
-  AdminUpdateClan
-}
-
-enum Gender {
-  MALE
-  FEMALE
-  OTHER
-}
-
-enum JobType {
-  DAILY_AT
-  INTERVAL
-}
-
-enum JobStatus {
-  IDLE
-  RUNNING
-  SUCCESS
-  FAILED
-}
-
-enum Language {
-  FR
-  EN
-  ES
-  DE
-}
-
-enum MoneyType {
-  GOLD
-  TREASURE_TICKET
-}
-
-enum MonsterHuntStatus {
-  DRAFT
-  SCHEDULED
-  ACTIVE
-  ENDED
-  REWARDED
-}
-
-enum NewsType {
-  update
-  information
-  war
-  war_mana
-  championship
-  tid_start
-  tid_end
-  event_birthday
-  event_christmas
-  event_easter
-  monster_hunt_start
-  monster_hunt_end
-  story
-  announce
-}
-
-enum OfferStatus {
-  ONGOING
-  ENDED
-  CLAIMED
-}
-
-enum Role {
-  PLAYER
-  MODERATOR
-  ADMIN
-  SUPER_ADMIN
-}
-
-model DevourerControl {
-  id        Int      @id @default(autoincrement())
-  placeId   Int      @unique
-  userId    String   @db.Uuid
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  dinozs    Dinoz[]  @relation("DevourerDinoz")
-  createdAt DateTime @default(now()) @db.Timestamptz(3)
-
-  @@index([userId])
-}
-
-model UserEventTracking {
-  id        Int      @id @default(autoincrement())
-  eventId   String
-  edition   Int
-
-  userId    String   @db.Uuid
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  daily     Int      @default(0)
-  total     Int      @default(0)
-
-  createdAt DateTime @default(now()) @db.Timestamptz(3)
-  updatedAt DateTime @updatedAt @db.Timestamptz(3)
-
-  @@unique([eventId, edition, userId])
-  @@index([userId])
-  @@index([eventId, edition])
-  @@map("user_event_tracking")
-}
-
-model ClanEventTracking {
-  id        Int      @id @default(autoincrement())
-
-  eventId   String
-  edition   Int
-
-  clanId    Int
-  clanName  String   @db.VarChar
-  clanLangs String[] @default([])
-
-  total     Int      @default(0)
-
-  createdAt DateTime @default(now()) @db.Timestamptz(3)
-  updatedAt DateTime @updatedAt @db.Timestamptz(3)
-
-  @@unique([eventId, edition, clanId])
-  @@index([eventId, edition])
-  @@index([clanId])
-  @@map("clan_event_tracking")
-}
-
-model MonsterHunt {
-  id     String @id @default(uuid()) @db.Uuid
-  name   String @db.VarChar(120)
-  slug   String @unique @db.VarChar(120)
-  status MonsterHuntStatus @default(DRAFT)
-
-  startAt DateTime @db.Timestamptz(3)
-  endAt   DateTime @db.Timestamptz(3)
-
-  // Number of event monsters a player can kill each day before
-  // the progressive spawn-rate reduction starts applying.
-  softCap Int @default(100)
-
-  participants   MonsterHuntParticipant[]
-  lootDefinitions MonsterHuntLootDefinition[]
-  rewardTiers    MonsterHuntRewardTier[]
-  rankingRewards MonsterHuntRankingReward[]
-  rankingRewardClaims MonsterHuntRankingRewardClaim[]
-
-  createdAt DateTime @default(now()) @db.Timestamptz(3)
-  updatedAt DateTime @updatedAt @db.Timestamptz(3)
-
-  @@index([status])
-  @@index([startAt])
-  @@index([endAt])
-  @@index([status, startAt, endAt])
-  @@map("monster_hunt")
-}
-
-model MonsterHuntParticipant {
-  id String @id @default(uuid()) @db.Uuid
-
-  huntId String @db.Uuid
-  hunt   MonsterHunt @relation(fields: [huntId], references: [id], onDelete: Cascade)
-
-  userId String @db.Uuid
-  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  // Main ranking value.
-  points Int @default(0)
-
-  // Number of hunt objects successfully found.
-  objects Int @default(0)
-
-  // Event monsters defeated, whether they dropped an object or not.
-  kills Int @default(0)
-
-  // Used by the soft-cap system.
-  dailyKills Int @default(0)
-
-  dailyResetAt DateTime @default(now()) @db.Timestamptz(3)
-
-  loot            MonsterHuntParticipantLoot[]
-  claimedRewards  MonsterHuntClaimedReward[]
-  rankingRewardClaims MonsterHuntRankingRewardClaim[]
-
-  createdAt DateTime @default(now()) @db.Timestamptz(3)
-  updatedAt DateTime @updatedAt @db.Timestamptz(3)
-
-  @@unique([huntId, userId])
-  @@index([huntId, points])
-  @@index([huntId, objects])
-  @@index([userId])
-  @@map("monster_hunt_participant")
-}
-
-model MonsterHuntLootDefinition {
-  id String @id @default(uuid()) @db.Uuid
-
-  huntId String @db.Uuid
-  hunt   MonsterHunt @relation(fields: [huntId], references: [id], onDelete: Cascade)
-
-  // Stable internal identifier for this hunt object.
-  lootKey String @db.VarChar(80)
-
-  // Monster enum/key used by the game.
-  monsterKey String @db.VarChar(80)
-
-  // Translation / display key.
-  nameKey String @db.VarChar(120)
-
-  // Asset name, without forcing the object into the player's normal inventory.
-  icon String? @db.VarChar(120)
-
-  points Int
-
-  rarity String @db.VarChar(20)
-
-  // Basis points: 10000 = 100%, 2500 = 25%, etc.
-  dropRateBps Int
-
-  // Optional per-edition encounter weighting.
-  spawnWeight Int @default(100)
-
-  // When true the monster can invade all eligible Dinoland maps.
-  globalSpawn Boolean @default(false)
-
-  participantLoot MonsterHuntParticipantLoot[]
-
-  createdAt DateTime @default(now()) @db.Timestamptz(3)
-  updatedAt DateTime @updatedAt @db.Timestamptz(3)
-
-  @@unique([huntId, lootKey])
-  @@index([huntId])
-  @@index([huntId, monsterKey])
-  @@map("monster_hunt_loot_definition")
-}
-
-model MonsterHuntParticipantLoot {
-  id String @id @default(uuid()) @db.Uuid
-
-  participantId String @db.Uuid
-  participant   MonsterHuntParticipant @relation(fields: [participantId], references: [id], onDelete: Cascade)
-
-  lootDefinitionId String @db.Uuid
-  lootDefinition   MonsterHuntLootDefinition @relation(fields: [lootDefinitionId], references: [id], onDelete: Cascade)
-
-  count        Int @default(0)
-  pointsEarned Int @default(0)
-
-  createdAt DateTime @default(now()) @db.Timestamptz(3)
-  updatedAt DateTime @updatedAt @db.Timestamptz(3)
-
-  @@unique([participantId, lootDefinitionId])
-  @@index([participantId])
-  @@index([lootDefinitionId])
-  @@map("monster_hunt_participant_loot")
-}
-
-model MonsterHuntRewardTier {
-  id String @id @default(uuid()) @db.Uuid
-
-  huntId String @db.Uuid
-  hunt   MonsterHunt @relation(fields: [huntId], references: [id], onDelete: Cascade)
-
-  points Int
-
-  // Reward structure will use the normal DinoRPG reward system.
-  reward Json
-
-  claimedBy MonsterHuntClaimedReward[]
-
-  createdAt DateTime @default(now()) @db.Timestamptz(3)
-  updatedAt DateTime @updatedAt @db.Timestamptz(3)
-
-  @@unique([huntId, points])
-  @@index([huntId, points])
-  @@map("monster_hunt_reward_tier")
-}
-
-model MonsterHuntClaimedReward {
-  id String @id @default(uuid()) @db.Uuid
-
-  participantId String @db.Uuid
-  participant   MonsterHuntParticipant @relation(fields: [participantId], references: [id], onDelete: Cascade)
-
-  rewardTierId String @db.Uuid
-  rewardTier   MonsterHuntRewardTier @relation(fields: [rewardTierId], references: [id], onDelete: Cascade)
-
-  claimedAt DateTime @default(now()) @db.Timestamptz(3)
-
-  @@unique([participantId, rewardTierId])
-  @@index([participantId])
-  @@index([rewardTierId])
-  @@map("monster_hunt_claimed_reward")
-}
-
-model MonsterHuntRankingReward {
-  id String @id @default(uuid()) @db.Uuid
-
-  huntId String @db.Uuid
-  hunt   MonsterHunt @relation(fields: [huntId], references: [id], onDelete: Cascade)
-
-  rankStart Int
-  rankEnd   Int
-
-  reward Json
-
-  claims MonsterHuntRankingRewardClaim[]
-
-  createdAt DateTime @default(now()) @db.Timestamptz(3)
-  updatedAt DateTime @updatedAt @db.Timestamptz(3)
-
-  @@unique([huntId, rankStart, rankEnd])
-  @@index([huntId, rankStart])
-  @@map("monster_hunt_ranking_reward")
-}
-
-model MonsterHuntRankingRewardClaim {
-  id String @id @default(uuid()) @db.Uuid
-
-  huntId String @db.Uuid
-  hunt   MonsterHunt @relation(fields: [huntId], references: [id], onDelete: Cascade)
-
-  participantId String @db.Uuid
-  participant   MonsterHuntParticipant @relation(fields: [participantId], references: [id], onDelete: Cascade)
-
-  rankingRewardId String @db.Uuid
-  rankingReward   MonsterHuntRankingReward @relation(fields: [rankingRewardId], references: [id], onDelete: Cascade)
-
-  rank Int
-
-  claimedAt DateTime @default(now()) @db.Timestamptz(3)
-
-  @@unique([participantId, rankingRewardId])
-  @@index([huntId])
-  @@index([participantId])
-  @@index([rankingRewardId])
-  @@map("monster_hunt_ranking_reward_claim")
-}
-
-/** Discoveries retained after MtDungeonRun is removed. One owner + group leader + dungeon. */
-model MtDungeonProgress {
-  userId        String   @db.Uuid
-  leaderDinozId Int
-  dungeonId     String   @db.VarChar(64)
-  stageStates   Json     @default("{}")
-  updatedAt     DateTime @updatedAt @db.Timestamptz(3)
-
-  user        User  @relation(fields: [userId], references: [id], onDelete: Cascade)
-  leaderDinoz Dinoz @relation(fields: [leaderDinozId], references: [id], onDelete: Cascade)
-
-  @@id([userId, leaderDinozId, dungeonId])
-  @@index([leaderDinozId])
-}
-
-model MtDungeonRun {
-  id            String   @id @default(uuid()) @db.Uuid
-  userId        String   @db.Uuid
-  leaderDinozId Int
-  mapId         String   @db.VarChar(64)
-  revision      Int      @default(0)
-  x             Int
-  y             Int
-  l             Int
-  keys          Boolean[] @default([])
-  flags         Int[]    @default([])
-  fog           Bytes?
-  locked        Boolean  @default(false)
-  pending       Json?
-  stageStates   Json     @default("{}")
+// This file contains code derived from or adapted from:
+// Eternaltwin DinoRPG
+// Upstream file: https://gitlab.com/eternaltwin/dinorpg/dinorpg/-/blob/3a73bbc6d751e4916cc5fd2e5f23bc2cfd42fc6d/ed-be/prisma/schema.prisma
+//
+// Copyright in the original contributions remains with the respective
+// authors and contributors.
+//
+// Modified by DinoRPG Remastered contributors.
+// Modifications include substantial expansion and restructuring of the
+// database schema, models, relations, identifiers, indexes, constraints,
+// and game systems.
+//
+// See NOTICE.md and the Git history for provenance and modification details.
+//
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
+generator client {
+  provider        = "prisma-client-js"
+  output          = "../../prisma"
+  previewFeatures = ["nativeDistinct", "relationJoins"]
+  binaryTargets   = ["native", "debian-openssl-3.0.x", "debian-openssl-1.1.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model BankSaving {
+  id String @id @default(uuid()) @db.Uuid
+
+  amount          Int
+  durationDays    Int
+  interestRateBps Int
+  unlockAt        DateTime  @db.Timestamptz(3)
+  claimedAt       DateTime? @db.Timestamptz(3)
+
+  userId String @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
+
+  @@index([userId])
+  @@index([userId, claimedAt])
+  @@index([unlockAt])
+  @@map("bank_saving")
+}
+
+model Dinoz {
+  id                 Int         @id @default(autoincrement())
+  name               String      @db.VarChar(32)
+  canRename          Boolean     @default(false)
+  raceId             Int
+  display            String      @db.VarChar
+  level              Int         @default(1)
+  life               Int
+  maxLife            Int
+  experience         Int
+  nbrUpFire          Int
+  nbrUpWood          Int
+  nbrUpWater         Int
+  nbrUpLightning     Int
+  nbrUpAir           Int
+  nextUpElementId    Int
+  nextUpAltElementId Int
+  placeId            Int
+  remaining          Int         @default(3)
+  order              Int?
+  createdDate        DateTime    @default(now()) @db.Timestamptz(3)
+  updatedDate        DateTime    @updatedAt @db.Timestamptz(3)
+  seed               String      @db.Uuid
+  state              DinozState?
+  stateTimer         DateTime?   @db.Timestamptz(3)
+
+  catches          DinozCatch[]
+  concentration    DinozConcentration?
+  fight            Boolean                 @default(true)
+  gather           Boolean                 @default(true)
+  leaderId         Int?                    @map("following")
+  leader           Dinoz?                  @relation("DinozFollowers", fields: [leaderId], references: [id])
+  followers        Dinoz[]                 @relation("DinozFollowers")
+  items            DinozItems[]
+  skills           DinozSkills[]
+  unlockableSkills DinozSkillsUnlockable[]
+  status           DinozStatus[]
+  missions         DinozMissions[]
+  marketOffers     Offer[]                 @relation("OfferDinoz")
+  FBTournamentStep Int                     @default(0)
+
+  DojoOpponents  DojoOpponents[]
+  DojoTeam       DojoTeam[]
+  TournamentTeam TournamentTeam[]
+
+  userId String @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  devourerDefendedId Int?
+  devourerDefended   DevourerControl? @relation("DevourerDinoz", fields: [devourerDefendedId], references: [id], onDelete: SetNull)
+
+  logs    GameLog[] @relation("GameLogDinoz")
+  reports Report[]  @relation("ReportReportedDinoz")
+
+  @@index([userId])
+  @@index([leaderId])
+  mtDungeonRuns MtDungeonRun[]
+  mtDungeonProgress MtDungeonProgress[]
+}
+
+model DinozCatch {
+  id        Int    @id @default(autoincrement())
+  dinozId   Int
+  hp        Int
+  monsterId String
+  dinoz     Dinoz  @relation(fields: [dinozId], references: [id], onDelete: Cascade)
+}
+
+model DinozItems {
+  id         Int      @id() @default(autoincrement())
+  itemId     Int
+  equippedAt DateTime @default(now()) @db.Timestamptz(3)
+  dinozId    Int?
+  dinoz      Dinoz?   @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([dinozId])
+  @@map("dinoz_item")
+}
+
+model DinozConcentration {
+  dinozId   Int @id
+  sessionId Int
+
+  startedAt DateTime @default(now()) @db.Timestamptz(3)
+
+  dinoz   Dinoz                     @relation(fields: [dinozId], references: [id], onDelete: Cascade)
+  session DinozConcentrationSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  @@index([sessionId])
+  @@map("dinoz_concentration")
+}
+
+model DinozConcentrationSession {
+  id       Int                     @id @default(autoincrement())
+  scopeKey String                  @db.VarChar(64)
+  state    DinozConcentrationState @default(GATHERING)
+
+  createdAt DateTime  @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime  @updatedAt @db.Timestamptz(3)
+  openedAt  DateTime? @db.Timestamptz(3)
+
+  participants DinozConcentration[]
+
+  @@index([state])
+  @@map("dinoz_concentration_session")
+}
+
+model DinozMissions {
+  id          Int    @id @default(autoincrement())
+  missionKey  String
+  progression Int    @default(0)
+  tracking    Int    @default(0)
+  state       Json?
+
+  isCompleted Boolean @default(false)
+
+  startedAt DateTime @default(now())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  dinozId Int
+  dinoz   Dinoz @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([missionKey, dinozId])
+  @@index([dinozId])
+  @@index([missionKey])
+  @@index([isCompleted])
+  @@map("dinoz_mission")
+}
+
+model DinozSkills {
+  id      Int     @id @default(autoincrement())
+  skillId Int
+  state   Boolean @default(true)
+  dinozId Int?
+  dinoz   Dinoz?  @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([skillId, dinozId])
+  @@index([dinozId])
+  @@map("dinoz_skill")
+}
+
+model DinozSkillsUnlockable {
+  id      Int    @id @default(autoincrement())
+  skillId Int
+  dinozId Int?
+  dinoz   Dinoz? @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@map("dinoz_skill_unlockable")
+}
+
+model DinozStatus {
+  id       Int    @id @default(autoincrement())
+  statusId Int
+  dinozId  Int?
+  dinoz    Dinoz? @relation(fields: [dinozId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([statusId, dinozId])
+  @@index([dinozId])
+  @@map("dinoz_status")
+}
+
+model ForcebrutTournamentOpponent {
+  id Int @id @default(autoincrement())
+
+  step Int @unique
+
+  name    String @db.VarChar()
+  raceId  Int
+  display String @db.VarChar
+
+  level   Int
+  life    Int @default(100)
+  maxLife Int @default(100)
+
+  nbrUpFire      Int @default(0)
+  nbrUpWood      Int @default(0)
+  nbrUpWater     Int @default(0)
+  nbrUpLightning Int @default(0)
+  nbrUpAir       Int @default(0)
+
+  skillIds Int[] @default([])
+
+  enabled Boolean @default(true)
+
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
+
+  @@index([enabled, step])
+  @@map("forcebrut_tournament_opponent")
+}
+
+model ForumTopic {
+  id       Int           @id @default(autoincrement())
+  category ForumCategory
+  title    String        @db.VarChar(120)
+
+  isPinned Boolean @default(false)
+  isClosed Boolean @default(false)
+
+  messageCount Int @default(1)
+
+  authorId   String? @db.Uuid
+  author     User?   @relation("ForumTopicAuthor", fields: [authorId], references: [id], onDelete: SetNull)
+  authorName String
+
+  createdAt      DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt      DateTime @default(now()) @updatedAt @db.Timestamptz(3)
+  lastActivityAt DateTime @default(now()) @db.Timestamptz(3)
+
+  messages      ForumMessage[]
+  favorites     ForumFavorite[]
+  subscriptions ForumSubscription[]
+  reads         ForumTopicRead[]
+
+  @@index([category, isPinned, lastActivityAt])
+  @@index([lastActivityAt])
+  @@map("forum_topic")
+}
+
+model ForumTopicRead {
+  userId  String @db.Uuid
+  topicId Int
+
+  lastReadMessageId Int
+
+  readAt DateTime @default(now()) @updatedAt @db.Timestamptz(3)
+
+  user  User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  topic ForumTopic @relation(fields: [topicId], references: [id], onDelete: Cascade)
+
+  @@id([userId, topicId])
+  @@index([topicId])
+  @@map("forum_topic_read")
+}
+
+model ForumMessage {
+  id Int @id @default(autoincrement())
+
+  topicId Int
+  topic   ForumTopic @relation(fields: [topicId], references: [id], onDelete: Cascade)
+
+  authorId   String? @db.Uuid
+  author     User?   @relation("ForumMessageAuthor", fields: [authorId], references: [id], onDelete: SetNull)
+  authorName String
+
+  content String @db.Text
+
+  reports Report[] @relation("ReportReportedForumMessage")
+
+  deletedAt      DateTime?                 @db.Timestamptz(3)
+  deletedById    String?                   @db.Uuid
+  deletedByName  String?
+  deletionKind   ForumMessageDeletionKind?
+  deletionReason String?                   @db.VarChar(500)
+
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @default(now()) @updatedAt @db.Timestamptz(3)
+
+  @@index([topicId, createdAt, id])
+  @@index([authorId])
+  @@index([topicId, deletedAt])
+  @@map("forum_message")
+}
+
+model ForumFavorite {
+  userId  String @db.Uuid
+  topicId Int
+
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  topic ForumTopic @relation(fields: [topicId], references: [id], onDelete: Cascade)
+
+  @@id([userId, topicId])
+  @@index([topicId])
+  @@map("forum_favorite")
+}
+
+model ForumSubscription {
+  userId  String @db.Uuid
+  topicId Int
+
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+
+  user  User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  topic ForumTopic @relation(fields: [topicId], references: [id], onDelete: Cascade)
+
+  @@id([userId, topicId])
+  @@index([topicId])
+  @@map("forum_subscription")
+}
+
+model ForumModerationAction {
+  id Int @id @default(autoincrement())
+
+  topicId   Int
+  messageId Int?
+
+  actorId   String? @db.Uuid
+  actorName String
+
+  action ForumModerationActionType
+
+  reason String? @db.VarChar(500)
+
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+
+  @@index([topicId, createdAt])
+  @@index([messageId])
+  @@index([actorId, createdAt])
+  @@index([action, createdAt])
+  @@map("forum_moderation_action")
+}
+
+model GameLog {
+  id        BigInt           @id @default(autoincrement())
+  type      GameLogType
+  retention GameLogRetention @default(TEMPORARY)
+
+  values   String[] @default([])
+  metadata Json?
+
+  userId String? @db.Uuid
+  user   User?   @relation("GameLogUser", fields: [userId], references: [id], onDelete: SetNull)
+
+  dinozId Int?
+  dinoz   Dinoz? @relation("GameLogDinoz", fields: [dinozId], references: [id], onDelete: SetNull)
+
+  actorUserId String? @db.Uuid
+  actorUser   User?   @relation("GameLogActor", fields: [actorUserId], references: [id], onDelete: SetNull)
+
+  userNameSnapshot  String?
+  dinozNameSnapshot String?
+  actorNameSnapshot String?
+
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+
+  @@index([userId, dinozId, type])
+  @@index([type, createdAt])
+  @@index([retention, createdAt])
+  @@index([createdAt])
+  @@index([userId, createdAt])
+  @@index([dinozId, createdAt])
+  @@index([actorUserId, createdAt])
+  @@map("game_log")
+}
+
+model GameLogHourly {
+  id        BigInt      @id @default(autoincrement())
+  type      GameLogType
+  bucketAt  DateTime    @db.Timestamptz(3)
+  total     Int         @default(0)
+  createdAt DateTime    @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime    @updatedAt @db.Timestamptz(3)
+
+  @@unique([type, bucketAt])
+  @@index([bucketAt])
+  @@index([type, bucketAt])
+  @@map("game_log_hourly")
+}
+
+model GameLogDaily {
+  id        BigInt      @id @default(autoincrement())
+  type      GameLogType
+  day       DateTime    @db.Date
+  total     Int         @default(0)
+  createdAt DateTime    @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime    @updatedAt @db.Timestamptz(3)
+
+  @@unique([type, day])
+  @@index([day])
+  @@index([type, day])
+  @@map("game_log_daily")
+}
+
+model JobDefinition {
+  id      String  @id @default(cuid())
+  key     String  @unique // ex: "reset-dinoz-shop"
+  name    String
+  type    JobType
+  enabled Boolean @default(true)
+
+  // Scheduling
+  timezone    String @default("UTC")
+  dailyHour   Int?
+  dailyMinute Int?
+  intervalMs  Int?
+
+  // State
+  status    JobStatus @default(IDLE)
+  lastRunAt DateTime? @db.Timestamptz(3)
+  nextRunAt DateTime? @db.Timestamptz(3)
+  lastError String?
+
+  // Locking (multi-instance safe)
+  lockedAt     DateTime? @db.Timestamptz(3)
+  lockedBy     String?
+  lockTimeoutS Int       @default(300)
+
+  runs JobRun[]
+
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
+
+  @@index([enabled, nextRunAt])
+  @@map("job_definition")
+}
+
+model JobRun {
+  id    String        @id @default(cuid())
+  jobId String
+  job   JobDefinition @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  startedAt   DateTime  @default(now()) @db.Timestamptz(3)
+  endedAt     DateTime? @db.Timestamptz(3)
+  success     Boolean?
+  error       String?
+  triggeredBy String?
+
+  @@index([jobId, startedAt])
+  @@map("job_run")
+}
+
+model News {
+  id   Int      @id @default(autoincrement())
+  slug String   @unique @db.VarChar
+  type NewsType @default(update)
+
+  image         Bytes?
+  imageMimeType String? @db.VarChar
+
+  isPublished Boolean   @default(false)
+  publishedAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  translations NewsTranslation[]
+  poll         Poll?
+  likedBy      NewsLike[]
+
+  @@index([type])
+  @@index([isPublished, publishedAt])
+  @@index([createdAt])
+  @@map("news")
+}
+
+model NewsTranslation {
+  id      Int      @id @default(autoincrement())
+  newsId  Int
+  lang    Language
+  title   String   @db.VarChar
+  excerpt String?  @db.VarChar
+  content String   @db.Text
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  news News @relation(fields: [newsId], references: [id], onDelete: Cascade)
+
+  @@unique([newsId, lang])
+  @@index([lang])
+  @@map("news_translations")
+}
+
+model Offer {
+  id           Int         @id @default(autoincrement())
+  sellerId     String?     @db.Uuid
+  sellerName   String
+  endDate      DateTime    @db.Timestamptz(3)
+  dinozId      Int?
+  dinozDetails String?
+  total        Int
+  status       OfferStatus @default(ONGOING)
+
+  seller User?  @relation("OfferSeller", fields: [sellerId], references: [id], onDelete: SetNull)
+  dinoz  Dinoz? @relation("OfferDinoz", fields: [dinozId], references: [id], onDelete: SetNull)
+
+  items OfferItem[]
+  bids  OfferBid[]
+
+  @@index([status, endDate])
+  @@index([sellerId])
+  @@index([dinozId])
+}
+
+model OfferItem {
+  id           Int     @id @default(autoincrement())
+  offerId      Int
+  itemId       Int
+  quantity     Int
+  isIngredient Boolean
+
+  offer Offer @relation(fields: [offerId], references: [id], onDelete: Cascade)
+
+  @@index([offerId])
+}
+
+model OfferBid {
+  id       Int     @id @default(autoincrement())
+  offerId  Int
+  userId   String? @db.Uuid
+  userName String
+  value    Int
+
+  offer Offer @relation(fields: [offerId], references: [id], onDelete: Cascade)
+  user  User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([offerId])
+  @@index([userId])
+}
+
+model Poll {
+  id       Int      @id @default(autoincrement())
+  newsId   Int      @unique
+  isActive Boolean  @default(true)
+  endAt    DateTime
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  news    News         @relation(fields: [newsId], references: [id], onDelete: Cascade)
+  options PollOption[]
+  votes   PollVote[]
+
+  @@index([isActive, endAt])
+  @@map("polls")
+}
+
+model PollOption {
+  id        Int @id @default(autoincrement())
+  pollId    Int
+  sortOrder Int @default(0)
+
+  createdAt DateTime @default(now())
+
+  poll         Poll                    @relation(fields: [pollId], references: [id], onDelete: Cascade)
+  translations PollOptionTranslation[]
+  votes        PollVote[]
+
+  @@unique([pollId, sortOrder])
+  @@index([pollId])
+  @@map("poll_options")
+}
+
+model PollOptionTranslation {
+  id           Int      @id @default(autoincrement())
+  pollOptionId Int
+  lang         Language
+  label        String   @db.VarChar
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  pollOption PollOption @relation(fields: [pollOptionId], references: [id], onDelete: Cascade)
+
+  @@unique([pollOptionId, lang])
+  @@index([lang])
+  @@map("poll_option_translations")
+}
+
+model PollVote {
+  id           Int      @id @default(autoincrement())
+  pollId       Int
+  pollOptionId Int
+  userId       String   @db.Uuid
+  votedAt      DateTime @default(now())
+
+  poll       Poll       @relation(fields: [pollId], references: [id], onDelete: Cascade)
+  pollOption PollOption @relation(fields: [pollOptionId], references: [id], onDelete: Cascade)
+  user       User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([pollId, userId], name: "unique_user_vote_per_poll")
+  @@index([pollId])
+  @@index([pollOptionId])
+  @@index([userId])
+  @@map("poll_votes")
+}
+
+model NewsLike {
+  newsId    Int
+  userId    String   @db.Uuid
+  createdAt DateTime @default(now())
+
+  news News @relation(fields: [newsId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([newsId, userId])
+  @@index([userId])
+  @@map("news_likes")
+}
+
+model Ranking {
+  id         Int   @id @default(autoincrement())
+  dinozCount Int   @default(0)
+  points     Int   @default(0)
+  average    Int   @default(0)
+  completion Float @default(0)
+  dojo       Int   @default(0)
+
+  userId String @unique @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model Roadmap {
+  position Int @id
+
+  titleFr String @db.VarChar
+  titleEn String @db.VarChar
+  titleEs String @db.VarChar
+  titleDe String @db.VarChar
+
+  items RoadmapItem[]
+
+  @@map("roadmap")
+}
+
+model RoadmapItem {
+  id              Int @id @default(autoincrement())
+  roadmapPosition Int
+  position        Int
+
+  icon String? @db.VarChar
+
+  textFr String @db.Text
+  textEn String @db.Text
+  textEs String @db.Text
+  textDe String @db.Text
+
+  roadmap Roadmap @relation(fields: [roadmapPosition], references: [position], onDelete: Cascade)
+
+  @@unique([roadmapPosition, position])
+  @@index([roadmapPosition])
+  @@map("roadmap_item")
+}
+
+model Secret {
+  key   String @id @db.VarChar
+  value String @db.VarChar
+
+  @@map("secret")
+}
+
+model SignupDeviceMonthCounter {
+  id          Int      @id @default(autoincrement())
+  monthKey    String
+  deviceToken String
+  count       Int      @default(0)
+  expiresAt   DateTime @db.Timestamptz(3)
+  createdAt   DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt   DateTime @updatedAt @db.Timestamptz(3)
+
+  @@unique([monthKey, deviceToken])
+  @@index([monthKey])
+  @@index([expiresAt])
+}
+
+model SignupIpMonthCounter {
+  id        Int      @id @default(autoincrement())
+  monthKey  String
+  ipToken   String
+  count     Int      @default(0)
+  expiresAt DateTime @db.Timestamptz(3)
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
+
+  @@unique([monthKey, ipToken])
+  @@index([monthKey])
+  @@index([expiresAt])
+}
+
+model User {
+  id          String    @id @default(uuid()) @db.Uuid
+  name        String    @unique
+  password    String
+  role        Role      @default(PLAYER)
+  createdDate DateTime  @default(now()) @db.Timestamptz(3)
+  updatedAt   DateTime? @updatedAt @db.Timestamptz(3)
+  lastLogin   DateTime  @default(now()) @db.Timestamptz(3)
+
+  gameRulesAcceptedVersion String?
+  gameRulesAcceptedAt      DateTime?
+
+  clanId          Int?
+  clan            Clan?            @relation(fields: [clanId], references: [id], onDelete: SetNull)
+  leaderOf        Clan?            @relation("leader")
+  ClanHistory     ClanHistory[]
+  ClanJoinRequest ClanJoinRequest? @relation("clanRequest")
+  ClanMember      ClanMember?
+  ClanMessage     ClanMessage[]
+
+  devourerAttacksLeft Int               @default(3)
+  devourerControls    DevourerControl[]
+
+  gathers       UserGather[]
+  ingredients   UserIngredients[]
+  items         UserItems[]
+  profile       UserProfile?
+  ranking       Ranking?
+  rewards       UserRewards[]
+  scenarios     UserScenario[]
+  statsTracking UserTracking[]
+  tags          UserTag[]
+  wallets       UserWallet[]
+
+  marketOffers Offer[]    @relation("OfferSeller")
+  marketBids   OfferBid[]
+
+  dinoz     Dinoz[]
+  dinozShop UserDinozShop[]
+
+  leader      Boolean @default(false)
+  engineer    Boolean @default(false)
+  cooker      Boolean @default(false)
+  shopKeeper  Boolean @default(false)
+  merchant    Boolean @default(false)
+  priest      Boolean @default(false)
+  teacher     Boolean @default(false)
+  matelasseur Boolean @default(false)
+  messie      Boolean @default(false)
+
+  keepSeedReincarnationCount Int @default(0)
+
+  newsLikes NewsLike[]
+  pollVotes PollVote[]
+
+  createdConversations Conversation[] @relation("CreatedConversations")
+  conversationLinks    Participant[]
+  sentMessages         Message[]
+
+  logs      GameLog[] @relation("GameLogUser")
+  actedLogs GameLog[] @relation("GameLogActor")
+
+  discoveredSkills Int[] @default([])
+
+  bankSavings BankSaving[]
+
+  bannedUntil DateTime? @db.Timestamptz(3)
+  mutedUntil  DateTime? @db.Timestamptz(3)
+  banReason   String?
+  muteReason  String?
+
+  reportsMade Report[] @relation("ReportReporter")
+  reports     Report[] @relation("ReportReportedUser")
+
+  notifications Notification[]
+
+  forumTopics        ForumTopic[]        @relation("ForumTopicAuthor")
+  forumMessages      ForumMessage[]      @relation("ForumMessageAuthor")
+  forumFavorites     ForumFavorite[]
+  forumTopicReads    ForumTopicRead[]
+  forumSubscriptions ForumSubscription[]
+
+  dojo               Dojo?
+  FightArchive       FightArchive[]      @relation("UserRelation")
+  LeftFightArchives  FightArchive[]      @relation("LeftUserRelation")
+  RightFightArchives FightArchive[]      @relation("RightUserRelation")
+  FightWatched       FightWatched[]
+
+  userEventTrackings UserEventTracking[]
+
+  monsterHuntParticipants MonsterHuntParticipant[]
+  mtDungeonRuns MtDungeonRun[]
+  mtDungeonProgress MtDungeonProgress[]
+}
+
+model Notification {
+  id      String @id @default(uuid()) @db.Uuid
+  userId  String @db.Uuid
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type    String
+  content Json?
+
+  @@index([userId])
+  @@map("notification")
+}
+
+model UserDinozShop {
+  id      Int     @id @default(autoincrement())
+  raceId  Int
+  display String  @db.VarChar
+  userId  String? @db.Uuid
+  user    User?   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@map("user_dinoz_shop")
+}
+
+model UserGather {
+  id     Int     @id @default(autoincrement())
+  place  Int
+  type   Int
+  grid   Int[]
+  userId String? @db.Uuid
+  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@index([userId])
+  @@map("user_gather")
+}
+
+model UserIngredients {
+  id           Int    @default(autoincrement())
+  ingredientId Int
+  quantity     Int
+  userId       String @db.Uuid
+  user         User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([ingredientId, userId])
+  @@index([userId])
+  @@map("user_ingredients")
+}
+
+model UserItems {
+  id       Int    @default(autoincrement())
+  itemId   Int
+  quantity Int
+  userId   String @db.Uuid
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([itemId, userId])
+  @@index([userId])
+  @@map("user_items")
+}
+
+model UserProfile {
+  id     String @id @default(cuid())
+  userId String @unique @db.Uuid
+  user   User   @relation(fields: [userId], references: [id])
+
+  avatar      Bytes?
+  avatarType  String?
+  language    Language? @default(FR)
+  gender      Gender?
+  age         Int?
+  description String?
+  customText  String?
+}
+
+model UserRewards {
+  id       Int     @id @default(autoincrement())
+  rewardId Int
+  userId   String? @db.Uuid
+  user     User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([rewardId, userId])
+  @@index([userId])
+}
+
+model UserScenario {
+  id Int @id @default(autoincrement())
+
+  scenarioKey String
+  progression Int    @default(0)
+  tracking    Int    @default(0)
+  state       Json?
+
+  startedAt DateTime @default(now())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId String @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([scenarioKey, userId])
+  @@index([userId])
+  @@index([scenarioKey])
+  @@map("user_scenario")
+}
+
+model UserTag {
+  id     Int    @id @default(autoincrement())
+  tag    String
+  userId String @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+
+  @@unique([tag, userId])
+  @@index([userId])
+  @@index([tag])
+  @@map("user_tag")
+}
+
+model UserTracking {
+  id       Int    @id @default(autoincrement())
+  stat     String
+  quantity Int    @default(0)
+  userId   String @db.Uuid
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([stat, userId])
+  @@index([userId])
+  @@index([stat])
+  @@map("statsTracking")
+}
+
+model UserWallet {
+  id     String    @id @default(uuid()) @db.Uuid
+  type   MoneyType
+  amount Int       @default(0)
+  userId String    @db.Uuid
+  user   User      @relation(fields: [userId], references: [id])
+
+  @@unique([userId, type])
+}
+
+enum ConversationType {
+  DIRECT
+  GROUP
+  SYSTEM
+}
+
+model Conversation {
+  id              String           @id @default(uuid()) @db.Uuid
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  type            ConversationType @default(DIRECT)
+  title           String?
+  createdById     String?          @db.Uuid
+  pinnedMessageId Int?             @unique
+
+  createdBy     User?         @relation("CreatedConversations", fields: [createdById], references: [id], onDelete: SetNull)
+  pinnedMessage Message?      @relation("PinnedMessage", fields: [pinnedMessageId], references: [id], onDelete: SetNull)
+  participants  Participant[]
+  messages      Message[]
+
+  @@index([createdAt])
+  @@index([updatedAt])
+  @@map("conversation")
+}
+
+model Participant {
+  id               Int       @id @default(autoincrement())
+  conversationId   String    @db.Uuid
+  userId           String?   @db.Uuid
+  joinedAt         DateTime  @default(now())
+  leftAt           DateTime?
+  userNameSnapshot String
+  lastReadAt       DateTime?
+  isArchived       Boolean   @default(false)
+  isMuted          Boolean   @default(false)
+
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  user         User?        @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@unique([conversationId, userId])
+  @@index([userId])
+  @@index([conversationId])
+  @@map("conversation_participant")
+}
+
+model Message {
+  id                 Int       @id @default(autoincrement())
+  conversationId     String    @db.Uuid
+  senderId           String?   @db.Uuid
+  content            String
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+  deletedAt          DateTime?
+  senderNameSnapshot String
+
+  conversation Conversation  @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  sender       User?         @relation(fields: [senderId], references: [id], onDelete: SetNull)
+  pinnedIn     Conversation? @relation("PinnedMessage")
+
+  @@index([conversationId, createdAt])
+  @@index([senderId])
+  @@map("message")
+}
+
+model Clan {
+  id            Int               @id @default(autoincrement())
+  name          String            @unique
+  treasureValue Int               @default(0)
+  creationDate  DateTime          @default(now()) @db.Timestamp(6)
+  banner        Bytes?
+  leaderId      String            @unique @db.Uuid
+  langs         Language[]
+  leader        User              @relation("leader", fields: [leaderId], references: [id])
+  history       ClanHistory[]
+  joinRequests  ClanJoinRequest[]
+  members       ClanMember[]      @relation("member")
+  pages         ClanPage[]
+  ingredients   ClanIngredient[]
+  discussion    ClanMessage[]
+  users         User[]
+
+  reports            Report[]            @relation("ReportReportedClan")
+}
+
+model ClanJoinRequest {
+  id     Int      @id @default(autoincrement())
+  clanId Int
+  date   DateTime @default(now()) @db.Timestamp(6)
+  userId String   @unique @db.Uuid
+  clan   Clan     @relation(fields: [clanId], references: [id])
+  user   User     @relation("clanRequest", fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model ClanIngredient {
+  id           Int  @id @default(autoincrement())
+  ingredientId Int
+  quantity     Int
+  clanId       Int
+  clan         Clan @relation(fields: [clanId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([ingredientId, clanId])
+  @@map("clan_ingredient")
+}
+
+model ClanMessage {
+  id         Int      @id @default(autoincrement())
+  clanId     Int
+  date       DateTime @default(now()) @db.Timestamp(6)
+  content    String
+  authorId   String?  @db.Uuid
+  authorName String
+  author     User?    @relation(fields: [authorId], references: [id])
+  clan       Clan     @relation(fields: [clanId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([id, clanId])
+  @@index([clanId])
+  @@map("clan_messages")
+}
+
+enum ReportStatus {
+  PENDING
+  RESOLVED
+  REJECTED
+}
+
+model Report {
+  id                      Int           @id @default(autoincrement())
+  reporterId              String        @db.Uuid
+  reporter                User          @relation("ReportReporter", fields: [reporterId], references: [id], onDelete: Cascade)
+  reportedUserId          String?       @db.Uuid
+  reportedUser            User?         @relation("ReportReportedUser", fields: [reportedUserId], references: [id], onDelete: Cascade)
+  reportedDinozId         Int?
+  reportedDinoz           Dinoz?        @relation("ReportReportedDinoz", fields: [reportedDinozId], references: [id], onDelete: Cascade)
+  reportedClanId          Int?
+  reportedClan            Clan?         @relation("ReportReportedClan", fields: [reportedClanId], references: [id], onDelete: Cascade)
+  reportedForumMessageId  Int?
+  reportedForumMessage    ForumMessage? @relation("ReportReportedForumMessage", fields: [reportedForumMessageId], references: [id], onDelete: SetNull)
+  reportedForumAuthorId   String?       @db.Uuid
+  reportedForumAuthorName String?
+  reportedForumContent    String?       @db.Text
+  reportedForumTopicId    Int?
+  reportedForumTopicTitle String?
+  reason                  String
+  comment                 String?
+  status                  ReportStatus  @default(PENDING)
+  createdAt               DateTime      @default(now()) @db.Timestamptz(3)
+  updatedAt               DateTime      @updatedAt @db.Timestamptz(3)
+
+  @@index([reporterId])
+  @@index([reportedUserId])
+  @@index([reportedDinozId])
+  @@index([reportedClanId])
+  @@index([status])
+}
+
+model ClanHistory {
+  id            Int      @id @default(autoincrement())
+  clanId        Int
+  date          DateTime @default(now()) @db.Timestamp(6)
+  type          String   @default("CLAN_CREATED")
+  authorId      String?  @db.Uuid
+  authorMessage String
+  author        User?    @relation(fields: [authorId], references: [id])
+  clan          Clan     @relation(fields: [clanId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model ClanMember {
+  id       Int      @id @default(autoincrement())
+  clanId   Int
+  dateJoin DateTime @default(now()) @db.Timestamp(6)
+  nickname String?
+  rights   String[] @default([])
+  donation Int      @default(0)
+  userId   String   @unique @db.Uuid
+  clan     Clan     @relation("member", fields: [clanId], references: [id])
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([clanId])
+}
+
+model ClanPage {
+  id      Int     @id @default(autoincrement())
+  home    Boolean
+  public  Boolean
+  name    String
+  content String  @default("")
+  clanId  Int
+  Clan    Clan    @relation(fields: [clanId], references: [id])
+
+  @@index([clanId])
+}
+
+enum DinozConcentrationState {
+  GATHERING
+  OPEN
+}
+
+model Dojo {
+  id                   String                 @id @default(uuid()) @db.Uuid
+  userId               String                 @unique @db.Uuid
+  user                 User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  team                 DojoTeam[]
+  activeChallenge      Json?                  @db.JsonB
+  DojoChallengeHistory DojoChallengeHistory[]
+  reputation           Int                    @default(0)
+  DojoOpponents        DojoOpponents[]
+  teamUpdate           DateTime?
+  dailyReset           Int                    @default(0)
+  TournamentTeam       TournamentTeam?        @relation(fields: [tournamentTeamId], references: [id])
+  tournamentTeamId     String?                @unique @db.Uuid
+
+  @@index([userId])
+  @@map("dojo")
+}
+
+model DojoTeam {
+  id      String  @id @default(uuid()) @db.Uuid
+  dojoId  String  @db.Uuid
+  dojo    Dojo    @relation(fields: [dojoId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  dinozId Int
+  dinoz   Dinoz   @relation(fields: [dinozId], references: [id], onDelete: Cascade)
+  fighted Boolean @default(false)
+
+  @@unique([dojoId, dinozId])
+  @@index([dojoId])
+}
+
+model DojoOpponents {
+  id       String  @id @default(uuid()) @db.Uuid
+  dojoId   String  @db.Uuid
+  dojo     Dojo    @relation(fields: [dojoId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  dinozId  Int
+  dinoz    Dinoz   @relation(fields: [dinozId], references: [id], onDelete: Cascade)
+  fighted  Boolean @default(false)
+  achieved Boolean @default(false)
+
+  @@unique([dojoId, dinozId])
+  @@index([dojoId])
+}
+
+model DojoChallengeHistory {
+  id         String   @id @default(uuid()) @db.Uuid
+  dojoId     String   @db.Uuid
+  dojo       Dojo     @relation(fields: [dojoId], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  myDinozId  Int
+  opponentId Int
+  challenge  String
+  victory    Boolean
+  achieved   Boolean
+  archivedAt DateTime @default(now()) @db.Date
+
+  @@index([dojoId])
+}
+
+model FightArchive {
+  id                    String          @id @default(uuid()) @db.Uuid
+  fighters              String          @db.Text
+  steps                 String          @db.Text
+  seed                  String          @db.VarChar(255)
+  result                Boolean         @db.Boolean
+  userId                String?         @db.Uuid
+  user                  User?           @relation("UserRelation", fields: [userId], references: [id])
+  leftUserId            String?         @db.Uuid
+  leftUser              User?           @relation("LeftUserRelation", fields: [leftUserId], references: [id])
+  rightUserId           String?         @db.Uuid
+  rightUser             User?           @relation("RightUserRelation", fields: [rightUserId], references: [id])
+  tournamentStep        Int             @default(0)
+  slot                  Int             @default(0)
+  createdDate           DateTime        @default(now()) @db.Timestamp(6)
+  Tournament            Tournament?     @relation(fields: [tournamentId], references: [id])
+  tournamentTeamLeftId  String?         @db.Uuid
+  tournamentTeamLeft    TournamentTeam? @relation("LeftTeamRelation", fields: [tournamentTeamLeftId], references: [id])
+  tournamentTeamRightId String?         @db.Uuid
+  tournamentTeamRight   TournamentTeam? @relation("RightTeamRelation", fields: [tournamentTeamRightId], references: [id])
+  tournamentId          String?         @db.Uuid
+  devourerPlaceId       Int?
+  metadata              String?         @db.Text
+  FightWatched          FightWatched[]
+
+  @@index([tournamentId, tournamentStep])
+  @@index([devourerPlaceId, createdDate])
+}
+
+model FightWatched {
+  id             String       @id @default(uuid()) @db.Uuid
+  fight          FightArchive @relation(fields: [fightArchiveId], references: [id])
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId         String       @db.Uuid
+  favorite       Boolean
+  fightArchiveId String       @db.Uuid
+
+  @@unique([userId, fightArchiveId])
+  @@index([userId, fightArchiveId])
+}
+
+model Tournament {
+  id           String           @id @unique @default(uuid()) @db.Uuid
+  date         DateTime         @default(now()) @db.Timestamp(6)
+  formatName   String           @default("ffa") @db.Text
+  teamSize     Int              @default(1)
+  raceMinimum  Int              @default(1)
+  poison       Boolean          @default(true)
+  itemsAllowed Boolean          @default(true)
+  teamRace     String           @db.Text
+  levelLimit   Int              @default(50)
+  participants TournamentTeam[]
+  fights       FightArchive[]
+  cashPrice    Int              @default(0)
+  nextRound    DateTime         @default(now())
+
+  @@index([id, date])
+}
+
+model TournamentTeam {
+  id                String         @id @default(uuid()) @db.Uuid
+  dojoId            String?        @db.Uuid
+  dojo              Dojo?
+  dinoz             Dinoz[]
+  teamCount         Int            @default(1)
+  Tournament        Tournament?    @relation(fields: [tournamentId], references: [id])
+  tournamentId      String?        @db.Uuid
+  FightArchiveLeft  FightArchive[] @relation("LeftTeamRelation")
+  FightArchiveRight FightArchive[] @relation("RightTeamRelation")
+
+  // --- Inter-dojo tournament pool phase state ---
+  poolNumber     Int? // 0-15, assigned once qualification ends
+  poolWins       Int     @default(0)
+  poolLosses     Int     @default(0)
+  poolQualified  Boolean @default(false) // true once poolWins reaches POOL_WIN_COUNT
+  poolEliminated Boolean @default(false) // true once poolLosses reaches POOL_LOSS_COUNT
+  finalSeed      Int? // 1..32, computed from pool performance for the final bracket
+
+  @@unique([dojoId, tournamentId])
+  @@index([dojoId])
+  @@index([tournamentId, poolNumber])
+}
+
+enum DinozState {
+  frozen
+  sacrificed
+  selling
+  superdom
+  resting
+  unfreezing
+}
+
+enum ForumCategory {
+  QUESTIONS
+  GAME
+  CLANS
+  CHAOS
+}
+
+enum ForumMessageDeletionKind {
+  AUTHOR
+  MODERATION
+}
+
+enum ForumModerationActionType {
+  MESSAGE_DELETE
+  MESSAGE_RESTORE
+  TOPIC_PIN
+  TOPIC_UNPIN
+  TOPIC_CLOSE
+  TOPIC_REOPEN
+}
+
+enum GameLogRetention {
+  TEMPORARY
+  AUDIT
+}
+
+enum GameLogType {
+  PlayerCreated
+  PlayerConnected
+  PlayerReset
+  PlayerDeleted
+  PlayerBanned
+  PlayerUnbanned
+
+  CreateDinoz
+  Move
+  LevelUp
+  XPEarned
+  HPLost
+  Death
+  Revive
+
+  Fight
+  FightWon
+  FightLost
+
+  ItemUsed
+  ItemBought
+  ItemFound
+  IngredientSold
+  GoldWon
+  GoldLost
+
+  MissionFinished
+  MissionCanceled
+
+  Gather
+  GridFinished
+
+  OfferNew
+  OfferBid
+  OfferCancelled
+  OfferExpired
+  OfferWon
+
+  AdminUpdateDinoz
+  AdminAddStatus
+  AdminRemoveStatus
+  AdminAddSkill
+  AdminRemoveSkill
+  AdminAddUnlockableSkill
+  AdminRemoveUnlockableSkill
+  AdminAddMoney
+  AdminRemoveMoney
+  AdminAddReward
+  AdminRemoveReward
+  AdminAddItem
+  AdminRemoveItem
+  AdminAddIngredient
+  AdminRemoveIngredient
+  AdminUpdateMission
+  AdminUpdateScenario
+  AdminUpdateUser
+  AdminUpdateSecret
+  AdminUpdateClan
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+enum JobType {
+  DAILY_AT
+  INTERVAL
+}
+
+enum JobStatus {
+  IDLE
+  RUNNING
+  SUCCESS
+  FAILED
+}
+
+enum Language {
+  FR
+  EN
+  ES
+  DE
+}
+
+enum MoneyType {
+  GOLD
+  TREASURE_TICKET
+}
+
+enum MonsterHuntStatus {
+  DRAFT
+  SCHEDULED
+  ACTIVE
+  ENDED
+  REWARDED
+}
+
+enum NewsType {
+  update
+  information
+  war
+  war_mana
+  championship
+  tid_start
+  tid_end
+  event_birthday
+  event_christmas
+  event_easter
+  monster_hunt_start
+  monster_hunt_end
+  story
+  announce
+}
+
+enum OfferStatus {
+  ONGOING
+  ENDED
+  CLAIMED
+}
+
+enum Role {
+  PLAYER
+  MODERATOR
+  ADMIN
+  SUPER_ADMIN
+}
+
+model DevourerControl {
+  id        Int      @id @default(autoincrement())
+  placeId   Int      @unique
+  userId    String   @db.Uuid
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  dinozs    Dinoz[]  @relation("DevourerDinoz")
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+
+  @@index([userId])
+}
+
+model UserEventTracking {
+  id        Int      @id @default(autoincrement())
+  eventId   String
+  edition   Int
+
+  userId    String   @db.Uuid
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  daily     Int      @default(0)
+  total     Int      @default(0)
+
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
+
+  @@unique([eventId, edition, userId])
+  @@index([userId])
+  @@index([eventId, edition])
+  @@map("user_event_tracking")
+}
+
+model ClanEventTracking {
+  id        Int      @id @default(autoincrement())
+
+  eventId   String
+  edition   Int
+
+  clanId    Int
+  clanName  String   @db.VarChar
+  clanLangs String[] @default([])
+
+  total     Int      @default(0)
+
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
+
+  @@unique([eventId, edition, clanId])
+  @@index([eventId, edition])
+  @@index([clanId])
+  @@map("clan_event_tracking")
+}
+
+model MonsterHunt {
+  id     String @id @default(uuid()) @db.Uuid
+  name   String @db.VarChar(120)
+  slug   String @unique @db.VarChar(120)
+  status MonsterHuntStatus @default(DRAFT)
+
+  startAt DateTime @db.Timestamptz(3)
+  endAt   DateTime @db.Timestamptz(3)
+
+  // Number of event monsters a player can kill each day before
+  // the progressive spawn-rate reduction starts applying.
+  softCap Int @default(100)
+
+  participants   MonsterHuntParticipant[]
+  lootDefinitions MonsterHuntLootDefinition[]
+  rewardTiers    MonsterHuntRewardTier[]
+  rankingRewards MonsterHuntRankingReward[]
+  rankingRewardClaims MonsterHuntRankingRewardClaim[]
+
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
+
+  @@index([status])
+  @@index([startAt])
+  @@index([endAt])
+  @@index([status, startAt, endAt])
+  @@map("monster_hunt")
+}
+
+model MonsterHuntParticipant {
+  id String @id @default(uuid()) @db.Uuid
+
+  huntId String @db.Uuid
+  hunt   MonsterHunt @relation(fields: [huntId], references: [id], onDelete: Cascade)
+
+  userId String @db.Uuid
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Main ranking value.
+  points Int @default(0)
+
+  // Number of hunt objects successfully found.
+  objects Int @default(0)
+
+  // Event monsters defeated, whether they dropped an object or not.
+  kills Int @default(0)
+
+  // Used by the soft-cap system.
+  dailyKills Int @default(0)
+
+  dailyResetAt DateTime @default(now()) @db.Timestamptz(3)
+
+  loot            MonsterHuntParticipantLoot[]
+  claimedRewards  MonsterHuntClaimedReward[]
+  rankingRewardClaims MonsterHuntRankingRewardClaim[]
+
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
+
+  @@unique([huntId, userId])
+  @@index([huntId, points])
+  @@index([huntId, objects])
+  @@index([userId])
+  @@map("monster_hunt_participant")
+}
+
+model MonsterHuntLootDefinition {
+  id String @id @default(uuid()) @db.Uuid
+
+  huntId String @db.Uuid
+  hunt   MonsterHunt @relation(fields: [huntId], references: [id], onDelete: Cascade)
+
+  // Stable internal identifier for this hunt object.
+  lootKey String @db.VarChar(80)
+
+  // Monster enum/key used by the game.
+  monsterKey String @db.VarChar(80)
+
+  // Translation / display key.
+  nameKey String @db.VarChar(120)
+
+  // Asset name, without forcing the object into the player's normal inventory.
+  icon String? @db.VarChar(120)
+
+  points Int
+
+  rarity String @db.VarChar(20)
+
+  // Basis points: 10000 = 100%, 2500 = 25%, etc.
+  dropRateBps Int
+
+  // Optional per-edition encounter weighting.
+  spawnWeight Int @default(100)
+
+  // When true the monster can invade all eligible Dinoland maps.
+  globalSpawn Boolean @default(false)
+
+  participantLoot MonsterHuntParticipantLoot[]
+
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
+
+  @@unique([huntId, lootKey])
+  @@index([huntId])
+  @@index([huntId, monsterKey])
+  @@map("monster_hunt_loot_definition")
+}
+
+model MonsterHuntParticipantLoot {
+  id String @id @default(uuid()) @db.Uuid
+
+  participantId String @db.Uuid
+  participant   MonsterHuntParticipant @relation(fields: [participantId], references: [id], onDelete: Cascade)
+
+  lootDefinitionId String @db.Uuid
+  lootDefinition   MonsterHuntLootDefinition @relation(fields: [lootDefinitionId], references: [id], onDelete: Cascade)
+
+  count        Int @default(0)
+  pointsEarned Int @default(0)
+
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
+
+  @@unique([participantId, lootDefinitionId])
+  @@index([participantId])
+  @@index([lootDefinitionId])
+  @@map("monster_hunt_participant_loot")
+}
+
+model MonsterHuntRewardTier {
+  id String @id @default(uuid()) @db.Uuid
+
+  huntId String @db.Uuid
+  hunt   MonsterHunt @relation(fields: [huntId], references: [id], onDelete: Cascade)
+
+  points Int
+
+  // Reward structure will use the normal DinoRPG reward system.
+  reward Json
+
+  claimedBy MonsterHuntClaimedReward[]
+
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
+
+  @@unique([huntId, points])
+  @@index([huntId, points])
+  @@map("monster_hunt_reward_tier")
+}
+
+model MonsterHuntClaimedReward {
+  id String @id @default(uuid()) @db.Uuid
+
+  participantId String @db.Uuid
+  participant   MonsterHuntParticipant @relation(fields: [participantId], references: [id], onDelete: Cascade)
+
+  rewardTierId String @db.Uuid
+  rewardTier   MonsterHuntRewardTier @relation(fields: [rewardTierId], references: [id], onDelete: Cascade)
+
+  claimedAt DateTime @default(now()) @db.Timestamptz(3)
+
+  @@unique([participantId, rewardTierId])
+  @@index([participantId])
+  @@index([rewardTierId])
+  @@map("monster_hunt_claimed_reward")
+}
+
+model MonsterHuntRankingReward {
+  id String @id @default(uuid()) @db.Uuid
+
+  huntId String @db.Uuid
+  hunt   MonsterHunt @relation(fields: [huntId], references: [id], onDelete: Cascade)
+
+  rankStart Int
+  rankEnd   Int
+
+  reward Json
+
+  claims MonsterHuntRankingRewardClaim[]
+
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
+
+  @@unique([huntId, rankStart, rankEnd])
+  @@index([huntId, rankStart])
+  @@map("monster_hunt_ranking_reward")
+}
+
+model MonsterHuntRankingRewardClaim {
+  id String @id @default(uuid()) @db.Uuid
+
+  huntId String @db.Uuid
+  hunt   MonsterHunt @relation(fields: [huntId], references: [id], onDelete: Cascade)
+
+  participantId String @db.Uuid
+  participant   MonsterHuntParticipant @relation(fields: [participantId], references: [id], onDelete: Cascade)
+
+  rankingRewardId String @db.Uuid
+  rankingReward   MonsterHuntRankingReward @relation(fields: [rankingRewardId], references: [id], onDelete: Cascade)
+
+  rank Int
+
+  claimedAt DateTime @default(now()) @db.Timestamptz(3)
+
+  @@unique([participantId, rankingRewardId])
+  @@index([huntId])
+  @@index([participantId])
+  @@index([rankingRewardId])
+  @@map("monster_hunt_ranking_reward_claim")
+}
+
+/** Discoveries retained after MtDungeonRun is removed. One owner + group leader + dungeon. */
+model MtDungeonProgress {
+  userId        String   @db.Uuid
+  leaderDinozId Int
+  dungeonId     String   @db.VarChar(64)
+  stageStates   Json     @default("{}")
+  updatedAt     DateTime @updatedAt @db.Timestamptz(3)
+
+  user        User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  leaderDinoz Dinoz @relation(fields: [leaderDinozId], references: [id], onDelete: Cascade)
+
+  @@id([userId, leaderDinozId, dungeonId])
+  @@index([leaderDinozId])
+}
+
+model MtDungeonRun {
+  id            String   @id @default(uuid()) @db.Uuid
+  userId        String   @db.Uuid
+  leaderDinozId Int
+  mapId         String   @db.VarChar(64)
+  revision      Int      @default(0)
+  x             Int
+  y             Int
+  l             Int
+  keys          Boolean[] @default([])
+  flags         Int[]    @default([])
+  fog           Bytes?
+  locked        Boolean  @default(false)
+  pending       Json?
+  stageStates   Json     @default("{}")
+  createdAt     DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt     DateTime @updatedAt @db.Timestamptz(3)
+
+  user        User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  leaderDinoz Dinoz @relation(fields: [leaderDinozId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, leaderDinozId])
+  @@index([userId])
+  mtFightAttempts MtDungeonFightAttempt[]
+}
+
+model MtDungeonFightAttempt {
+  id            String       @id @default(uuid()) @db.Uuid
+  runId         String       @db.Uuid
+  token         String       @unique @default(uuid()) @db.Uuid
+  mapId         String       @db.VarChar(64)
+  revision      Int
+  scenarioIndex Int
+  pendingJson   String       @db.Text
+  monsterKeys   String[]
+  fightSeed     String       @db.Text
+  status        String       @default("PREPARED") @db.VarChar(16)
+  result        Json?
+  createdAt     DateTime     @default(now()) @db.Timestamptz(3)
+  updatedAt     DateTime     @updatedAt @db.Timestamptz(3)
+  run           MtDungeonRun @relation(fields: [runId], references: [id], onDelete: Cascade)
+
+  @@unique([runId, revision])
+  @@index([runId])
+}
+
+model MtDungeonGoldPool {
+  dungeonId     String   @id @db.VarChar(64)
+  initialGold   Int
+  remainingGold Int
   createdAt     DateTime @default(now()) @db.Timestamptz(3)
   updatedAt     DateTime @updatedAt @db.Timestamptz(3)
-
-  user        User  @relation(fields: [userId], references: [id], onDelete: Cascade)
-  leaderDinoz Dinoz @relation(fields: [leaderDinozId], references: [id], onDelete: Cascade)
-
-  @@unique([userId, leaderDinozId])
-  @@index([userId])
-  mtFightAttempts MtDungeonFightAttempt[]
-}
-
-model MtDungeonFightAttempt {
-  id            String       @id @default(uuid()) @db.Uuid
-  runId         String       @db.Uuid
-  token         String       @unique @default(uuid()) @db.Uuid
-  mapId         String       @db.VarChar(64)
-  revision      Int
-  scenarioIndex Int
-  pendingJson   String       @db.Text
-  monsterKeys   String[]
-  fightSeed     String       @db.Text
-  status        String       @default("PREPARED") @db.VarChar(16)
-  result        Json?
-  createdAt     DateTime     @default(now()) @db.Timestamptz(3)
-  updatedAt     DateTime     @updatedAt @db.Timestamptz(3)
-  run           MtDungeonRun @relation(fields: [runId], references: [id], onDelete: Cascade)
-
-  @@unique([runId, revision])
-  @@index([runId])
 }
