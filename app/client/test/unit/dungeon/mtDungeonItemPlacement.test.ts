@@ -7,8 +7,8 @@ describe('MT dungeon item placement based on MazeRenderer', () => {
 
 	it('centers the original gold, key, and chest on their own map cell', () => {
 		for (const [file, factor] of [
-			['item_gold.png', 0.8],
-			['item_chest.png', 0.8],
+			['item_gold.png', 1],
+			['item_chest.png', 1],
 			['item_key_01.png', 0.7],
 			['item_scroll.png', 0.7],
 			['item_skel.png', 0.8]
@@ -27,7 +27,7 @@ describe('MT dungeon item placement based on MazeRenderer', () => {
 		expect(at('item_stair_up.png')).toMatchObject({ x: 260, y: 284, scale: 1.2 });
 		expect(at('item_stair_down.png')).toMatchObject({ x: 260, y: 284, scale: 0.9 });
 		expect(at('ground_sand_01.png')).toBeNull();
-		expect(at('item_heal.png')).toBeNull(); // archived exported texture absent
+		expect(at('item_heal.png')).toMatchObject({ scale: 0.9 }); // recovered in step 20K
 	});
 
 	it('fails closed for invalid dimensions', () => {
