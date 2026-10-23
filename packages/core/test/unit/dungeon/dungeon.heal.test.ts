@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
+import { isActiveMtHealZone } from '../../../src/models/dungeon/dungeon.healZone.js';
 import { getMtFlagIndex } from '../../../src/models/dungeon/dungeon.scene.js';
 import {
 	applyMtDungeonCommandBatch,
@@ -21,36 +22,53 @@ const map = (): DungeonStructure => ({
 	exit: { x: 3, y: 3, l: 0 }
 });
 const cfg = () => ({ map: map(), mapId: 'stepp_0', scenarioIcons: [] });
+const accepted = (cfg: ReturnType<typeof makeCfg>, state: ReturnType<typeof createMtDungeonSession>, dx: number) => {
+	const { x, y, l } = state.position;
+	const result = applyMtDungeonCommandBatch(cfg, state, [{ x, y, l, dx, dy: 0, dl: 0 }]);
+	if (!result.ok) throw new Error(result.reason);
+	return result.session;
+};
+function makeCfg() {
+	return cfg();
+}
 
-describe('IHeal server-owned arrival', () => {
-	it('stops movement at a genuine zone, then persists its consumed flag on trusted settlement', () => {
-		const c = cfg();
-		const run = createMtDungeonSession(c);
-		const start = applyMtDungeonCommandBatch(c, run, [{ x: 1, y: 1, l: 0, dx: 1, dy: 0, dl: 0 }]);
-		expect(start.ok).toBe(true);
-		if (!start.ok) return;
-		expect(start.pending?.kind).toBe('heal');
-		expect(start.session.position).toEqual({ x: 1, y: 1, l: 0 });
-		const arrived = settleMtDungeonInteraction(c, start.session, true);
-		const flag = getMtFlagIndex(c.map, 0, 2, 1);
-		expect(arrived.flags).toContain(flag);
-		expect(arrived.position).toEqual({ x: 2, y: 1, l: 0 });
-		expect(arrived.pending).toBeNull();
-		const leave = applyMtDungeonCommandBatch(c, arrived, [{ x: 2, y: 1, l: 0, dx: -1, dy: 0, dl: 0 }]);
-		expect(leave.ok).toBe(true);
-		if (!leave.ok) return;
-		const returnToUsedZone = applyMtDungeonCommandBatch(c, leave.session, [{ x: 1, y: 1, l: 0, dx: 1, dy: 0, dl: 0 }]);
-		expect(returnToUsedZone.ok).toBe(true);
-		if (!returnToUsedZone.ok) return;
-		expect(returnToUsedZone.pending).toBeNull();
-		expect(returnToUsedZone.session.position).toEqual({ x: 2, y: 1, l: 0 });
+describe('IHeal: no automatic HP restoration, flag on departure', () => {
+	it('allows walking onto the zone without a pending interaction or consumed flag', () => {
+		const c = cfg(),
+			flag = getMtFlagIndex(c.map, 0, 2, 1);
+		const start = createMtDungeonSession(c);
+		const standing = accepted(c, start, 1);
+		expect(standing.position).toEqual({ x: 2, y: 1, l: 0 });
+		expect(standing.pending).toBeNull();
+		expect(standing.locked).toBe(false);
+		expect(standing.flags).not.toContain(flag);
+		expect(isActiveMtHealZone(c.map, standing.position, standing.flags)).toBe(true);
+		const departed = accepted(c, standing, -1);
+		expect(departed.flags).toContain(flag);
+		const revisited = accepted(c, departed, 1);
+		expect(revisited.pending).toBeNull();
+		expect(isActiveMtHealZone(c.map, revisited.position, revisited.flags)).toBe(false);
 	});
-	it('does not consume a zone when settlement fails', () => {
+	it('consumes only if departure through a guardian is actually settled', () => {
 		const c = cfg();
-		const start = applyMtDungeonCommandBatch(c, createMtDungeonSession(c), [{ x: 1, y: 1, l: 0, dx: 1, dy: 0, dl: 0 }]);
-		if (!start.ok) throw new Error('Expected legal move');
-		const denied = settleMtDungeonInteraction(c, start.session, false);
-		expect(denied.flags).not.toContain(getMtFlagIndex(c.map, 0, 2, 1));
-		expect(denied.position).toEqual({ x: 1, y: 1, l: 0 });
+		c.map.levels[0]!.rooms[0]!.doors.push({ x: 3, y: 1, up: null, key: null });
+		const standing = accepted(c, createMtDungeonSession(c), 1);
+		const attempt = applyMtDungeonCommandBatch(c, standing, [{ x: 2, y: 1, l: 0, dx: 1, dy: 0, dl: 0 }]);
+		expect(attempt.ok).toBe(true);
+		if (!attempt.ok) return;
+		expect(attempt.pending?.kind).toBe('guardian');
+		const healFlag = getMtFlagIndex(c.map, 0, 2, 1);
+		expect(attempt.session.flags).not.toContain(healFlag);
+		expect(settleMtDungeonInteraction(c, attempt.session, false).flags).not.toContain(healFlag);
+		const settled = settleMtDungeonInteraction(c, attempt.session, true);
+		expect(settled.position).toEqual({ x: 3, y: 1, l: 0 });
+		expect(settled.flags).toContain(healFlag);
+	});
+	it('never consumes when a move is rejected by topology', () => {
+		const c = cfg(),
+			standing = accepted(c, createMtDungeonSession(c), 1);
+		const result = applyMtDungeonCommandBatch(c, standing, [{ x: 2, y: 1, l: 0, dx: 0, dy: -1, dl: 0 }]);
+		expect(result.ok).toBe(false);
+		expect(result.session.flags).not.toContain(getMtFlagIndex(c.map, 0, 2, 1));
 	});
 });

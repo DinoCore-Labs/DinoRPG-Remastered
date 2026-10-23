@@ -151,34 +151,18 @@ describe('MT dungeon authoritative command replay (server adapter)', () => {
 		);
 	});
 
-	it('marks an IHeal zone consumed only after successful settlement', () => {
+	it('allows manual healing on an active IHeal until departing', () => {
 		const config = fixture();
-		const result = accepted(config, at(config, 3, 4), [cmd(3, 4, 0, 1, 0)]);
-		const healFlag = getMtFlagIndex(config.map, 0, 4, 4);
-
-		// La zone déclenche bien une interaction de soin.
-		expect(result.pending?.kind).toBe('heal');
-
-		// Aucun flag tant que le soin n'est pas validé.
-		expect(result.session.flags).not.toContain(healFlag);
-
-		// Échec du soin : la zone reste disponible.
-		const failed = settleMtDungeonInteraction(config, result.session, false);
-		expect(failed.flags).not.toContain(healFlag);
-		expect(failed.position).toEqual({ x: 3, y: 4, l: 0 });
-
-		// Succès du soin : la zone est consommée.
-		const healed = settleMtDungeonInteraction(config, result.session, true);
-		expect(healed.flags).toContain(healFlag);
-		expect(healed.position).toEqual({ x: 4, y: 4, l: 0 });
-		expect(healed.pending).toBeNull();
-
-		// Quitter la zone puis revenir ne redéclenche pas le soin.
-		const departure = accepted(config, healed, [cmd(4, 4, 0, -1, 0)]);
-		const returnToZone = accepted(config, departure.session, [cmd(3, 4, 0, 1, 0)]);
-
-		expect(returnToZone.pending).toBeNull();
-		expect(returnToZone.session.flags).toContain(healFlag);
+		const entered = accepted(config, at(config, 3, 4), [cmd(3, 4, 0, 1, 0)]);
+		const flag = getMtFlagIndex(config.map, 0, 4, 4);
+		expect(entered.pending).toBeNull();
+		expect(entered.session.position).toEqual({ x: 4, y: 4, l: 0 });
+		expect(entered.session.flags).not.toContain(flag);
+		const departed = accepted(config, entered.session, [cmd(4, 4, 0, -1, 0)]);
+		expect(departed.session.flags).toContain(flag);
+		const returned = accepted(config, departed.session, [cmd(3, 4, 0, 1, 0)]);
+		expect(returned.pending).toBeNull();
+		expect(returned.session.flags).toContain(flag);
 	});
 
 	it('requires original scenario icons to be present and resolves scenario via server', () => {

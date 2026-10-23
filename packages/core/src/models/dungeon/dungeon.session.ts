@@ -22,6 +22,7 @@ import {
 	decideMtDungeonMove,
 	revealMtDungeonFog
 } from './dungeon.exploration.js';
+import { consumeMtHealOnDeparture } from './dungeon.healZone.js';
 import { getMtFlagIndex } from './dungeon.scene.js';
 import type { DungeonCommand, DungeonIcon, DungeonPoint, DungeonStructure } from './dungeon.types.js';
 
@@ -197,8 +198,7 @@ function makePending(
 	from: DungeonPoint,
 	to: DungeonPoint,
 	events: readonly MtCellEvent[],
-	command: DungeonCommand,
-	consumedFlags: ReadonlySet<number>
+	command: DungeonCommand
 ): MtPendingInteraction | null {
 	if (command.dl !== 0 && samePoint(from, map.start))
 		return { kind: 'boundary-start', from, to, flag: null, itemValue: null };
@@ -212,13 +212,12 @@ function makePending(
 	for (const event of events) {
 		if (event.kind !== 'pickup') continue;
 		const item = event.item;
-		if (item.kind === 'IHeal' && consumedFlags.has(getMtFlagIndex(map, from.l, item.x, item.y))) continue;
-		if (item.kind === 'IGold' || item.kind === 'IHeal' || item.kind === 'IScenario')
+		if (item.kind === 'IGold' || item.kind === 'IScenario')
 			return {
-				kind: item.kind === 'IGold' ? 'gold' : item.kind === 'IHeal' ? 'heal' : 'scenario',
+				kind: item.kind === 'IGold' ? 'gold' : 'scenario',
 				from,
 				to,
-				flag: item.kind === 'IHeal' ? null : getMtFlagIndex(map, from.l, item.x, item.y),
+				flag: getMtFlagIndex(map, from.l, item.x, item.y),
 				itemValue: item.value
 			};
 	}
@@ -308,14 +307,7 @@ export function applyMtDungeonCommandBatch(
 				...(missingKey ? { blockedDoor: 'missing-key' as const } : {})
 			};
 		}
-		const pending = makePending(
-			cfg.map,
-			result.position,
-			decision.position,
-			decision.events,
-			command,
-			new Set(result.flags)
-		);
+		const pending = makePending(cfg.map, result.position, decision.position, decision.events, command);
 		if (pending) {
 			if (index !== commands.length - 1) return fail('invalid-batch', index + 1);
 			result.pending = pending;
@@ -323,6 +315,7 @@ export function applyMtDungeonCommandBatch(
 			result.revision++;
 			return { ok: true, session: result, accepted: index + 1, pending };
 		}
+		result.flags = consumeMtHealOnDeparture(cfg.map, result.position, decision.position, result.flags);
 		result.position = { ...decision.position };
 		const accepted = applyMtDungeonArrival(cfg.map, asExplorer(result));
 		result.keys = [...accepted.keys];
@@ -354,18 +347,10 @@ export function settleMtDungeonInteraction(
 	result.pending = null;
 	result.locked = false;
 	if (succeeded) {
+		result.flags = consumeMtHealOnDeparture(cfg.map, event.from, event.to, result.flags);
 		result.position = { ...event.to };
 		if (event.flag !== null) result.flags = [...new Set([...result.flags, event.flag])].sort((a, b) => a - b);
-		if (event.kind === 'heal') {
-			// Remastered one-use policy; original View.hx does not set IHeal's flag.
-			const actual = cfg.map.levels[event.to.l]?.rooms.some(
-				room => room.item?.kind === 'IHeal' && room.item.x === event.to.x && room.item.y === event.to.y
-			);
-			if (!actual) throw new Error('Invalid original MT healing zone.');
-			result.flags = [...new Set([...result.flags, getMtFlagIndex(cfg.map, event.to.l, event.to.x, event.to.y)])].sort(
-				(a, b) => a - b
-			);
-		}
+
 		const arrived = applyMtDungeonArrival(cfg.map, asExplorer(result));
 		result.keys = [...arrived.keys];
 		result.flags = [...arrived.flags].sort((a, b) => a - b);

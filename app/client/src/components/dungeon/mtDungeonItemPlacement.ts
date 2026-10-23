@@ -44,6 +44,8 @@ export function placeMtDungeonItem(
 		relativeSize = 0.7;
 	} else if (file === 'item_scroll.png') {
 		relativeSize = 0.7;
+	} else if (file === 'item_heal.png') {
+		relativeSize = 0.9;
 	} else if (file === 'item_gold.png' || file === 'item_chest.png' || file === 'item_skel.png') {
 		relativeSize = 0.8;
 	} else {
