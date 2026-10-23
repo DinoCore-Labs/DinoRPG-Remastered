@@ -227,6 +227,18 @@
 					</p>
 				</section>
 
+				<section v-if="activeHealZone" class="mt-test__panel" aria-live="polite">
+					<p>Zone de soin active : utilise des objets de soin sur la fiche de tes Dinoz, puis reviens ici.</p>
+					<p>La zone sera définitivement désactivée dès que le groupe quittera cette case.</p>
+					<RouterLink :to="{ name: 'DinozPage', params: { id: leaderId } }">Soigner le chef de groupe</RouterLink>
+					<RouterLink
+						v-for="member in visualMembers.filter(m => m.id !== leaderId)"
+						:key="member.id"
+						:to="{ name: 'DinozPage', params: { id: member.id } }"
+						>Soigner le Dinoz {{ member.id }}</RouterLink
+					>
+				</section>
+
 				<details v-if="view" class="mt-test__details mt-test__journal">
 					<summary>Journal et coffres découverts ({{ journalEntries.length }})</summary>
 					<p v-if="journalError" role="status">{{ journalError }}</p>
@@ -359,6 +371,15 @@ const cannotMove = computed(
 		!!session.value.pending ||
 		session.value.locked
 );
+const activeHealZone = computed(() => {
+	const run = session.value;
+	const current = view.value;
+	if (!run || !current || run.locked || run.pending) return false;
+	return current.scene.features.some(
+		feature =>
+			feature.kind === 'heal' && !feature.consumed && feature.x === run.position.x && feature.y === run.position.y
+	);
+});
 const language = computed(() =>
 	String(localStore().getLanguage ?? 'fr')
 		.toLowerCase()
