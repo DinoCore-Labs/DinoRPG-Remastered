@@ -6,6 +6,7 @@ import type {
 	MtWallTile
 } from '@dinorpg/core/models/dungeon/dungeon.scene.js';
 
+import { resolveMtDungeonOverlayArt } from './mtDungeonOverlayAtlas.js';
 import originalPngList from './mtOriginalGfxManifest.json';
 
 /** All 201 PNG filenames present in the archived gfx/dungeon/gfx directory. */
@@ -394,27 +395,20 @@ export function createMtSpritePlan(scene: MtDungeonScene, options: MtSpriteOptio
 	}
 
 	for (const tile of scene.overlays) {
-		// Only identical named families are candidates. Even here, timeline
-
-		// frame index is not proven, hence must be explicitly enabled.
-
-		if (options.showUnverifiedSameNameOverlays && (tile.symbol === 'grass' || tile.symbol === 'creep')) {
-			unresolved.add('Recouvrement exploratoire : numérotation des 16 frames non vérifiée dans gfx.swf');
-
-			push(
-				frameName('overground', tile.symbol, tile.mask),
-
-				tile.x * TILE,
-
-				tile.y * TILE,
-
-				0,
-
-				`overground:${tile.symbol}:${tile.layer}`
-			);
-		} else {
+		// These are the ORIGINAL MT scene masks, generated before this point.
+		// The archived Flash labels do not all match PNG family names.
+		// Mappings stay opt-in, visibly documented as unverified.
+		if (!options.showUnverifiedSameNameOverlays) {
 			unresolved.add(`Recouvrement Flash « ${tile.symbol} » : correspondance PNG/timeline non vérifiée`);
+			continue;
 		}
+		const visual = resolveMtDungeonOverlayArt(tile.symbol, tile.mask);
+		if (!visual) {
+			unresolved.add(`Recouvrement Flash « ${tile.symbol} » sans texture de prévisualisation`);
+			continue;
+		}
+		unresolved.add(`Correspondance Flash ${tile.symbol} → PNG ${visual.family} non vérifiée (20L)`);
+		push(visual.file, tile.x * TILE, tile.y * TILE, 0, `overground:${tile.symbol}:${tile.layer}`);
 	}
 
 	for (const tile of scene.walls) {
