@@ -32,6 +32,10 @@ export function placeMtDungeonItem(
 	let relativeSize: number;
 	let offsetY = 0;
 
+	// Step 20L: native-size original treasure artwork.
+	if (file === 'item_gold.png' || file === 'item_chest.png') {
+		return { x: x + cell / 2, y: y + cell / 2, anchorX: 0.5, anchorY: 0.5, scale: 1 };
+	}
 	if (file === 'item_stair_up.png') {
 		relativeSize = 1.2;
 		offsetY = -0.4;
@@ -46,7 +50,7 @@ export function placeMtDungeonItem(
 		relativeSize = 0.7;
 	} else if (file === 'item_heal.png') {
 		relativeSize = 0.9;
-	} else if (file === 'item_gold.png' || file === 'item_chest.png' || file === 'item_skel.png') {
+	} else if (file === 'item_skel.png') {
 		relativeSize = 0.8;
 	} else {
 		return null;
