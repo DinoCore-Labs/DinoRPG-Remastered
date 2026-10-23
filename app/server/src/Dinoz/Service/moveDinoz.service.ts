@@ -47,6 +47,11 @@ export async function moveDinozUnlocked(req: Req, _reply: FastifyReply) {
 		}
 		team = team.filter(d => d.life > 0 && d.state === null);
 	}
+
+	// Ordre de priorité pour les kills de mission :
+	// chef de groupe, puis Dinoz suiveurs disponibles.
+	const missionKillDinozIds = [dinozId, ...team.filter(member => member.id !== dinozId).map(member => member.id)];
+
 	// Concentration
 	const concentratingMember = team.find(member => member.concentration !== null);
 	if (concentratingMember) {
@@ -175,7 +180,10 @@ export async function moveDinozUnlocked(req: Req, _reply: FastifyReply) {
 		if (!fight) {
 			fight = await fightMonstersAtPlace(team, finalPlace, user, {
 				missionMoveDinozIds: team.map(member => member.id),
-				missionKillDinozIds: [dinozId],
+
+				missionKillDinozIds,
+				missionSourceDinozId: dinozId,
+
 				autoReequip
 			});
 
@@ -198,7 +206,10 @@ export async function moveDinozUnlocked(req: Req, _reply: FastifyReply) {
 	if (!fight) {
 		fight = await fightMonstersAtPlace(team, finalPlace, user, {
 			missionMoveDinozIds: team.map(member => member.id),
-			missionKillDinozIds: [dinozId],
+
+			missionKillDinozIds,
+			missionSourceDinozId: dinozId,
+
 			autoReequip
 		});
 		if (fight.result) {

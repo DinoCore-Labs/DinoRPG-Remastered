@@ -1,3 +1,4 @@
+import { MapZone } from '@dinorpg/core/models/enums/MapZone.js';
 import type { MissionDefinition } from '@dinorpg/core/models/missions/mission.js';
 import type { MissionGoal, MissionKillGoal } from '@dinorpg/core/models/missions/missionGoal.js';
 import type { MonsterKey } from '@dinorpg/core/models/monster/monsterKey.js';
@@ -219,7 +220,7 @@ export async function advanceDinozMissionOnFightWon(
 		dinozId: number;
 		defeatedMonsterKeys: MonsterKey[];
 		place?: number | null;
-		zone?: number | null;
+		zone?: MapZone | null;
 	}
 ): Promise<MissionProgressResult> {
 	const activeMission = await getActiveMissionState(tx, params.dinozId);
@@ -257,6 +258,94 @@ export async function advanceDinozMissionOnFightWon(
 		nextTracking: 0,
 		definition: activeMission.definition
 	});
+}
+
+/**
+ * Répartit les monstres vaincus entre les Dinoz du groupe.
+ *
+ * Priorité : chef de groupe, puis suiveurs.
+ * Un monstre ne peut faire progresser qu'un seul Dinoz.
+ * Le passage au Dinoz suivant se fait dès que le précédent
+ * a atteint son objectif KILL.
+ */
+export async function advanceGroupDinozMissionsOnFightWon(
+	tx: MissionTransaction,
+	params: {
+		dinozIds: number[];
+		defeatedMonsterKeys: MonsterKey[];
+		place?: number | null;
+		zone?: MapZone | null;
+	}
+): Promise<NonNullable<MissionProgressResult>[]> {
+	if (params.defeatedMonsterKeys.length === 0) {
+		return [];
+	}
+	const candidates: {
+		dinozId: number;
+		activeMission: ActiveMissionState;
+		goal: MissionKillGoal;
+		tracking: number;
+	}[] = [];
+	// Les identifiants arrivent dans l'ordre de priorité du groupe.
+	for (const dinozId of new Set(params.dinozIds)) {
+		const activeMission = await getActiveMissionState(tx, dinozId);
+		if (!activeMission || activeMission.currentGoal?.type !== 'KILL') {
+			continue;
+		}
+		const goal = activeMission.currentGoal;
+		if (goal.kill.place != null && goal.kill.place !== params.place) {
+			continue;
+		}
+		if (goal.kill.zone != null && goal.kill.zone !== params.zone) {
+			continue;
+		}
+		if (activeMission.savedMission.tracking >= goal.kill.count) {
+			continue;
+		}
+		candidates.push({
+			dinozId,
+			activeMission,
+			goal,
+			tracking: activeMission.savedMission.tracking
+		});
+	}
+	let currentCandidateIndex = 0;
+	// Chaque monstre est traité une seule fois.
+	for (const monsterKey of params.defeatedMonsterKeys) {
+		const candidate = candidates[currentCandidateIndex];
+		if (!candidate) {
+			break;
+		}
+		const expectedMonsterKeys = candidate.goal.kill.monsterKeys;
+		if (expectedMonsterKeys?.length && !expectedMonsterKeys.includes(monsterKey)) {
+			continue;
+		}
+		candidate.tracking += 1;
+		// La mission KILL est terminée : priorité au Dinoz suivant.
+		if (candidate.tracking >= candidate.goal.kill.count) {
+			currentCandidateIndex += 1;
+		}
+	}
+	const results: NonNullable<MissionProgressResult>[] = [];
+	// Chaque Dinoz est enregistré une seule fois par combat.
+	for (const candidate of candidates) {
+		const previousTracking = candidate.activeMission.savedMission.tracking;
+		if (candidate.tracking === previousTracking) {
+			continue;
+		}
+		const goalCompleted = candidate.tracking >= candidate.goal.kill.count;
+		const result = await finalizeMissionProgress(tx, {
+			dinozId: candidate.dinozId,
+			missionKey: candidate.activeMission.savedMission.missionKey,
+			nextProgression: candidate.activeMission.savedMission.progression + (goalCompleted ? 1 : 0),
+			nextTracking: goalCompleted ? 0 : candidate.tracking,
+			definition: candidate.activeMission.definition
+		});
+		if (result) {
+			results.push(result);
+		}
+	}
+	return results;
 }
 
 export async function advanceDinozMissionOnWait(

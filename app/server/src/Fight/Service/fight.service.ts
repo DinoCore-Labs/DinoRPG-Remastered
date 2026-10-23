@@ -22,6 +22,7 @@ import { FightOutcome, FightProcessResult } from '@dinorpg/core/models/fight/fig
 import { FightRewardOptions } from '@dinorpg/core/models/fight/fightReward.js';
 import { ActiveGameEvent, GameEvent } from '@dinorpg/core/models/game/gameEvents.js';
 import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
+import { MissionKillGoal } from '@dinorpg/core/models/missions/missionGoal.js';
 import { MonsterFiche } from '@dinorpg/core/models/monster/monsterFiche.js';
 import { getMonsterKeyById } from '@dinorpg/core/models/monster/monsterKeyMap.js';
 import { Monster, monsterList } from '@dinorpg/core/models/monster/monsterList.js';
@@ -45,7 +46,11 @@ import { addItemToDinoz } from '../../Inventory/Controller/addItemToDinoz.contro
 import { dischargeDinozScale } from '../../Inventory/Controller/dischargeDinozScale.controller.js';
 import { removeItem } from '../../Inventory/Controller/removeItem.controller.js';
 import { removeItemFromDinoz } from '../../Inventory/Controller/removeItemFromDinoz.controller.js';
-import { advanceDinozMissionOnFightWon, advanceDinozMissionOnMove } from '../../Mission/Controller/mission.progress.js';
+import {
+	advanceDinozMissionOnFightWon,
+	advanceDinozMissionOnMove,
+	advanceGroupDinozMissionsOnFightWon
+} from '../../Mission/Controller/mission.progress.js';
 import { resolveCurrentMission } from '../../Mission/Service/missionCurrent.service.js';
 import {
 	ActiveMonsterHunt,
@@ -211,32 +216,35 @@ export async function fightMonstersAtPlace(
 	}
 	const fightResult = calculateFightVsMonsters(team, user, placeId, monsters);
 	const result = await rewardFightVsMonsters(team, monsters, fightResult, placeId, user, options);
-	// If any dinoz is on a mission, check if the fight result progresses the mission.
-	const missionSourceDinoz =
-		options.missionSourceDinozId != null ? team.find(dinoz => dinoz.id === options.missionSourceDinozId) : team[0];
+	// Progression des missions après une victoire.
 	const winner = fightResult.outcome === FightOutcome.AttackerWin;
-	if (winner && missionSourceDinoz) {
+	if (winner) {
 		const defeatedMonsterKeys = monsters
 			.map(monster => getMonsterKeyById(monster.id))
 			.filter((key): key is NonNullable<typeof key> => key !== null);
+
 		const missionMoveDinozIds = options.missionMoveDinozIds ?? [];
-		const missionKillDinozIds = options.missionKillDinozIds ?? [missionSourceDinoz.id];
+		// Par défaut, tous les membres du groupe participent
+		// à la répartition des objectifs KILL.
+		const missionKillDinozIds = options.missionKillDinozIds ?? team.map(dinoz => dinoz.id);
 		if (missionMoveDinozIds.length > 0 || (defeatedMonsterKeys.length > 0 && missionKillDinozIds.length > 0)) {
 			await prisma.$transaction(async tx => {
+				// Les objectifs AT restent individuels.
 				for (const dinozId of missionMoveDinozIds) {
 					await advanceDinozMissionOnMove(tx, {
 						dinozId,
 						place: placeId
 					});
 				}
-				if (defeatedMonsterKeys.length > 0) {
-					for (const dinozId of missionKillDinozIds) {
-						await advanceDinozMissionOnFightWon(tx, {
-							dinozId,
-							defeatedMonsterKeys,
-							place: placeId
-						});
-					}
+				// Les objectifs KILL sont maintenant répartis
+				// entre les membres du groupe.
+				if (defeatedMonsterKeys.length > 0 && missionKillDinozIds.length > 0) {
+					await advanceGroupDinozMissionsOnFightWon(tx, {
+						dinozIds: missionKillDinozIds,
+						defeatedMonsterKeys,
+						place: placeId,
+						zone: placeListv2[placeId]?.map
+					});
 				}
 			});
 		}
@@ -838,16 +846,46 @@ export async function generateMonsterList(
 	if (activeMonsterHunt && team[0].userId) {
 		monsterHuntDailyKills = await getMonsterHuntDailyKills(activeMonsterHunt.id, team[0].userId);
 	}
-	const missionSourceDinoz =
-		missionSourceDinozId != null ? team.find(dinoz => dinoz.id === missionSourceDinozId) : team[0];
-	const missionSourceMission =
-		missionSourceDinoz?.missions && missionSourceDinoz.missions.length > 0
-			? resolveCurrentMission(missionSourceDinoz.missions, missionSourceDinoz.placeId)
-			: null;
-	const missionKillGoal = missionSourceMission?.currentGoal?.type === 'KILL' ? missionSourceMission.currentGoal : null;
-	const missionKillAppliesHere = !missionKillGoal?.kill.place || missionKillGoal.kill.place === placeOfFight;
-	const missionKillMonsterKeys = new Set(missionKillAppliesHere ? (missionKillGoal?.kill.monsterKeys ?? []) : []);
-	const missionKillForce = missionKillAppliesHere && Boolean(missionKillGoal?.kill.force);
+
+	// Donner la priorité au Dinoz actif, puis à ses suiveurs.
+	const orderedMissionTeam =
+		missionSourceDinozId == null
+			? team
+			: [
+					...team.filter(dinoz => dinoz.id === missionSourceDinozId),
+					...team.filter(dinoz => dinoz.id !== missionSourceDinozId)
+				];
+
+	let missionKillGoal: MissionKillGoal | null = null;
+	for (const member of orderedMissionTeam) {
+		if (!member.missions?.length) {
+			continue;
+		}
+
+		const mission = resolveCurrentMission(member.missions, placeOfFight);
+
+		if (!mission || mission.currentGoal?.type !== 'KILL') {
+			continue;
+		}
+
+		const goal = mission.currentGoal;
+		if (goal?.type !== 'KILL') {
+			continue;
+		}
+		if (goal.kill.place != null && goal.kill.place !== placeOfFight) {
+			continue;
+		}
+		if (goal.kill.zone != null && goal.kill.zone !== place.map) {
+			continue;
+		}
+		if (mission.state.tracking >= goal.kill.count) {
+			continue;
+		}
+		missionKillGoal = goal;
+		break;
+	}
+	const missionKillMonsterKeys = new Set(missionKillGoal?.kill.monsterKeys ?? []);
+	const missionKillForce = Boolean(missionKillGoal?.kill.force);
 	const MISSION_MONSTER_ODDS_MULTIPLIER = 1.5;
 	function isLeaderMissionMonster(monster: MonsterFiche): boolean {
 		const monsterKey = getMonsterKeyById(monster.id);

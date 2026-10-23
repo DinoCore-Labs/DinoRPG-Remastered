@@ -10,6 +10,7 @@ import {
 	advanceDinozMissionOnMove,
 	advanceDinozMissionOnTalk,
 	advanceDinozMissionOnWait,
+	advanceGroupDinozMissionsOnFightWon,
 	unlockDinozMission
 } from '../../src/Mission/Controller/mission.progress.js';
 import { completeMissionInteraction } from '../../src/Mission/Controller/missionInteract.controller.js';
@@ -606,5 +607,156 @@ describe('mission resource consumption', () => {
 			}
 		});
 		expect(wallet.amount).toBe(2);
+	});
+});
+
+describe('group mission KILL distribution', () => {
+	it('distributes kills sequentially between leader and followers', async () => {
+		const user = await createTestUser({
+			withTutorial: false
+		});
+		const leader = await createTestDinoz({ userId: user.id });
+		const follower1 = await createTestDinoz({ userId: user.id });
+		const follower2 = await createTestDinoz({ userId: user.id });
+		for (const [dinozId, tracking] of [
+			[leader.id, 4],
+			[follower1.id, 0],
+			[follower2.id, 0]
+		]) {
+			await createMission({
+				dinozId,
+				missionKey: 'kilgou',
+				progression: 1,
+				tracking
+			});
+		}
+		const dinozIds = [leader.id, follower1.id, follower2.id];
+		// Premier combat : 3 monstres.
+		await prisma.$transaction(tx =>
+			advanceGroupDinozMissionsOnFightWon(tx, {
+				dinozIds,
+				defeatedMonsterKeys: ['goupi', 'goupi2', 'goupi3'],
+				place: PlaceEnum.COLLINES_ESCARPEES
+			})
+		);
+		expect(await getMission(leader.id, 'kilgou')).toMatchObject({
+			progression: 2,
+			tracking: 0
+		});
+		expect(await getMission(follower1.id, 'kilgou')).toMatchObject({
+			progression: 1,
+			tracking: 1
+		});
+		expect(await getMission(follower2.id, 'kilgou')).toMatchObject({
+			progression: 1,
+			tracking: 0
+		});
+		// Deuxième combat : 5 monstres.
+		await prisma.$transaction(tx =>
+			advanceGroupDinozMissionsOnFightWon(tx, {
+				dinozIds,
+				defeatedMonsterKeys: ['goupi', 'goupi', 'goupi', 'goupi2', 'goupi3'],
+				place: PlaceEnum.COLLINES_ESCARPEES
+			})
+		);
+		expect(await getMission(follower1.id, 'kilgou')).toMatchObject({
+			progression: 2,
+			tracking: 0
+		});
+		expect(await getMission(follower2.id, 'kilgou')).toMatchObject({
+			progression: 1,
+			tracking: 0
+		});
+		// Troisième combat : le dernier suiveur progresse.
+		await prisma.$transaction(tx =>
+			advanceGroupDinozMissionsOnFightWon(tx, {
+				dinozIds,
+				defeatedMonsterKeys: ['goupi', 'wolf'],
+				place: PlaceEnum.COLLINES_ESCARPEES
+			})
+		);
+		expect(await getMission(follower2.id, 'kilgou')).toMatchObject({
+			progression: 1,
+			tracking: 2
+		});
+	});
+
+	it('does not duplicate kills while the leader is incomplete', async () => {
+		const user = await createTestUser({ withTutorial: false });
+		const leader = await createTestDinoz({ userId: user.id });
+		const follower = await createTestDinoz({ userId: user.id });
+		for (const dinozId of [leader.id, follower.id]) {
+			await createMission({
+				dinozId,
+				missionKey: 'kilgou',
+				progression: 1
+			});
+		}
+		await prisma.$transaction(tx =>
+			advanceGroupDinozMissionsOnFightWon(tx, {
+				dinozIds: [leader.id, follower.id],
+				defeatedMonsterKeys: ['goupi', 'goupi2'],
+				place: PlaceEnum.COLLINES_ESCARPEES
+			})
+		);
+		expect((await getMission(leader.id, 'kilgou')).tracking).toBe(2);
+		expect((await getMission(follower.id, 'kilgou')).tracking).toBe(0);
+	});
+
+	it('ignores monsters that do not match the current target', async () => {
+		const user = await createTestUser({ withTutorial: false });
+		const leader = await createTestDinoz({ userId: user.id });
+		const follower = await createTestDinoz({ userId: user.id });
+		await createMission({
+			dinozId: leader.id,
+			missionKey: 'kilgou',
+			progression: 1,
+			tracking: 5
+		});
+		await createMission({
+			dinozId: follower.id,
+			missionKey: 'kilgou',
+			progression: 1
+		});
+		await prisma.$transaction(tx =>
+			advanceGroupDinozMissionsOnFightWon(tx, {
+				dinozIds: [leader.id, follower.id],
+				defeatedMonsterKeys: ['gluon', 'goupi', 'gluon', 'goupi2'],
+				place: PlaceEnum.COLLINES_ESCARPEES
+			})
+		);
+		expect(await getMission(leader.id, 'kilgou')).toMatchObject({
+			progression: 2,
+			tracking: 0
+		});
+		expect(await getMission(follower.id, 'kilgou')).toMatchObject({
+			progression: 1,
+			tracking: 1
+		});
+	});
+
+	it('skips a Dinoz whose KILL objective belongs to another place', async () => {
+		const user = await createTestUser({ withTutorial: false });
+		const leader = await createTestDinoz({ userId: user.id });
+		const follower = await createTestDinoz({ userId: user.id });
+		await createMission({
+			dinozId: leader.id,
+			missionKey: 'kilwlf',
+			progression: 1
+		});
+		await createMission({
+			dinozId: follower.id,
+			missionKey: 'kilgou',
+			progression: 1
+		});
+		await prisma.$transaction(tx =>
+			advanceGroupDinozMissionsOnFightWon(tx, {
+				dinozIds: [leader.id, follower.id],
+				defeatedMonsterKeys: ['goupi'],
+				place: PlaceEnum.COLLINES_ESCARPEES
+			})
+		);
+		expect((await getMission(leader.id, 'kilwlf')).tracking).toBe(0);
+		expect((await getMission(follower.id, 'kilgou')).tracking).toBe(1);
 	});
 });

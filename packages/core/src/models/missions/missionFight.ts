@@ -1,3 +1,4 @@
+import { MapZone } from '../enums/MapZone.js';
 import { PlaceEnum } from '../enums/PlaceEnum.js';
 import { MissionActionKey, MissionBackgroundKey, MissionMonsterKey } from './missionKey.js';
 
@@ -21,6 +22,6 @@ export type MissionKillInfos = {
 	count: number;
 	force: boolean;
 	place?: PlaceEnum | null;
-	zone?: number | null;
+	zone?: MapZone | null;
 	displayNameKey?: string | null;
 };
