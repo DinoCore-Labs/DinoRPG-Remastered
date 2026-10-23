@@ -707,7 +707,10 @@ router.beforeEach(async to => {
 	// Helper: hydrate une fois si pas loggé
 	const tryHydrate = async (force = false): Promise<boolean> => {
 		if (!force && sessionHydrated && user.isLogged) return true;
-		const data: UserData | null = await UserService.me({ silent: true }).catch(() => null);
+		const data: UserData | null = await UserService.me({
+			silent: true,
+			skipAuthRedirect: to.meta.public === true
+		}).catch(() => null);
 		if (!data || isLogoutSessionInProgress()) {
 			clearClientSession();
 			return false;

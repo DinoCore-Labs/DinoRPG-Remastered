@@ -8,11 +8,13 @@ import axios, {
 } from 'axios';
 
 import { useLoadingStore } from '../store/loadingStore';
-import { clearClientSession } from './clearSession';
+import { userStore } from '../store/userStore';
+import { clearClientSession, isLogoutSessionInProgress } from './clearSession';
 
 declare module 'axios' {
 	export interface AxiosRequestConfig {
 		silent?: boolean;
+		skipAuthRedirect?: boolean;
 	}
 }
 
@@ -75,8 +77,16 @@ apiClient.interceptors.response.use(
 		const status = error.response?.status;
 		const errorCode = error.response?.data?.code;
 		const isLoginRequest = error.config?.url?.includes('/login');
-		// Session expirée / token invalide
-		if (status === 401 && !isLoginRequest) {
+		// Ne déclencher une expiration de session que si le client
+		// connaît un utilisateur connecté et qu'il ne s'agit pas
+		// d'une vérification silencieuse ou d'une déconnexion.
+		if (
+			status === 401 &&
+			!isLoginRequest &&
+			!error.config?.skipAuthRedirect &&
+			!isLogoutSessionInProgress() &&
+			userStore().isLogged
+		) {
 			clearClientSession();
 			sessionStorage.setItem('sessionExpired', 'true');
 			if (window.location.pathname !== '/') {
