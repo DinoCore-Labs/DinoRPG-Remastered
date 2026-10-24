@@ -38,6 +38,7 @@
 	},
 	"notifications": {
 		"title": "Notifications",
+		"clearAll": "View all",
 		"newClanJoinRequest": "Player {name} requested to join the clan.",
 		"newReward": "You received a reward: {rewards}",
 		"xmasReward": "End of the event, Merry Christmas!<br><br>{rewards}",
@@ -186,7 +187,9 @@
 			},
 			"statistics": "Characteristics",
 			"assaults": "Assaults",
+			"assaultsHelp": "**Assaults** represent the power of a Dinoz's melee attacks in each element.&&In combat, the Dinoz cycles through its elements when attacking, from strongest to weakest.&&Each elemental point grants **5 base assault points** (+ skill bonuses).&&&&**Damage formula:**&&• Standard PvE: (Assault − Defense)&&• PvP & Bosses: (Assault − Defense)^0.6",
 			"defenses": "Defenses",
+			"defensesHelp": "**Defenses** reduce the power of incoming enemy assaults and skills before damage is calculated.&&Each defense depends on the elemental cycle: your stronger elements provide more protection than your weaker ones.&&**Neutral defense** :neutre: is the average of your defenses, used against Void-element attacks.&&&&**Damage formula:**&&• Standard PvE: (Assault − Defense)&&• PvP & Bosses: (Assault − Defense)^0.6",
 			"specials": "Specials",
 			"base": "Base",
 			"skill": "Skill",
@@ -208,6 +211,7 @@
 			"energyRecovery": "Energy recovery",
 			"maxFollowers": "Maximum followers",
 			"armor": "Armor",
+			"armorHelp": "**Armor** protects the Dinoz by reducing the power of incoming attacks before defense is applied (capped at 90%).&&&&**Damage formula:**&&• (Attack × (1 − Armor)) − Defense&&",
 			"armorBreak": "Perforation",
 			"multihit": "Multi-hit",
 			"evasion": "Evasion",
@@ -220,6 +224,7 @@
 			"lightningSpeed": ":lightning: Turn Duration",
 			"airSpeed": ":air: Turn Duration",
 			"bubbleRate": "Bubble rate",
+			"bubbleRateHelp": "The **Bubble** skill protects against most spells and ranged attacks (except :bois: and :neutre:).&&&&**Bubble Rate:**&&• (:eau:+:air:) / (:feu:+:bois:+:eau:+:foudre:+:air:)&&&&**Damage Taken:**&&• Damage × (1 − Rate)",
 			"torchDamage": "Torch damage",
 			"acidBloodDamage": "Acid blood damage",
 			"baseValue": "Base value",
@@ -384,7 +389,11 @@
 				"leave": "Leave the clan"
 			},
 			"stat": {
-				"last_login": "Last connection the {date}."
+				"last_login": "Last connection the {date}.",
+				"last_login_today": "Last login: today",
+				"last_login_one_day": "Last login: 1 day ago",
+				"last_login_days": "Last login: {count} days ago",
+				"last_login_never": "Last login: unknown"
 			}
 		},
 		"ingredients": {
@@ -435,6 +444,7 @@
 		"disclaimer": {
 			"text": "Clans are groups of players who fight together in the Dinoland universe."
 		},
+		"cannot_create_info": "To create your own Clan, you must have at least 15 ranking points and {money} :gold:.",
 		"button": {
 			"create": "Create clan"
 		},
@@ -506,6 +516,7 @@
 			"myDinoz": "My fighters",
 			"ennemis": "Opponents",
 			"seeFight": "See the fight",
+			"seeTournament": "View tournament",
 			"link": "Link",
 			"copyLink": "Copy link",
 			"tournamentType": "Type of Tournament",
@@ -974,6 +985,41 @@
 		"errorFetchingRankings": "An error occurred when fetching the ranking data.",
 		"maxDinozSelected": "You have selected the maximum number of Dinoz allowed",
 		"noDinozSelected": "No Dinoz selected",
+		"notEnoughDinozSelected": "You must select at least {min} Dinoz (you have selected {count}).",
+		"dojo": {
+			"tournament": {
+				"qualificationOver": "Qualifiers for the Inter-Dojo Tournament are over.",
+				"wrongNumberOfDinoz": "Your team must have exactly {expected} Dinoz (you have selected {count}).",
+				"dojoNotFound": "You must own a Dojo to register a team for the tournament.",
+				"teamAlreadyRegistered": "You have already registered a team for this tournament.",
+				"dinozNotFound": "One or more selected Dinoz could not be found, are unavailable, or do not belong to you.",
+				"wrongRaceSelected": "One or more selected Dinoz do not belong to the races allowed in this tournament.",
+				"dinozTooHighLevel": "All Dinoz on your team must be level {maxLevel} or lower.",
+				"notEnoughDiversity": "Your team must include at least {required} different races (currently {count}).",
+				"noTeamToDelete": "You have no registered team to remove."
+			}
+		},
+		"clan": {
+			"create": {
+				"alreadyInClan": "You are already a member of a clan.",
+				"hasPendingJoinRequest": "You already have a pending join request. You must cancel it before creating a clan.",
+				"notEnoughPoints": "You need at least {required} ranking points to create a clan (you currently have {current}).",
+				"notEnoughMoney": "You need at least {required} :gold: to create a clan (you currently have {current}).",
+				"nameTaken": "The clan name \"{name}\" is already taken.",
+				"nameRequired": "Please enter a name for your clan.",
+				"nameTooShort": "The clan name must be at least {min} characters long.",
+				"nameTooLong": "The clan name must not exceed {max} characters.",
+				"nameInvalidCharacters": "The clan name can only contain letters, numbers, spaces, hyphens, and underscores.",
+				"descriptionTooLong": "The clan description must not exceed {max} characters.",
+				"success": "The clan \"{name}\" has been successfully created!"
+			},
+			"join": {
+				"alreadyInClan": "You are already a member of a clan.",
+				"hasPendingRequest": "You already have a pending request to join a clan.",
+				"clanIsFull": "This clan has reached its maximum number of members.",
+				"requestNotFound": "This join request no longer exists."
+			}
+		},
 		"basicError": "An error occurred",
 		"special": {
 			"box_common": "The common box contained {qty} {value} !",
@@ -2095,6 +2141,7 @@
 			"battering_ram": "Battering Ram",
 			"ember": "Firebrand",
 			"scale": "Scale",
+			"scale_discharged": "Scale",
 			"beer": "Beer",
 			"encyclopedia": "Encyclopedia",
 			"antichromatic": "Antichromatic",
@@ -2236,6 +2283,7 @@
 			"battering_ram": "Dinoz attacks your opponent's castle twice if you are victorious.",
 			"ember": "Increases the fire **assaults** of all Dinoz by 30%.",
 			"scale": "An enemy Dinoz will be killed if your Dinoz dies during the fight.",
+			"scale_discharged": "An enemy Dinoz will be killed if your Dinoz dies during the fight.",
 			"beer": "Prevents all Dinoz from recovering health points during the fight.",
 			"encyclopedia": "Increases experience points received at the end of the fight by 15%.",
 			"antichromatic": "Cancels the effect of the Monochromatics used by the enemy.",
@@ -2329,6 +2377,7 @@
 			"undefined": "This object is unknown, it is rare and it will strongly make developers curious about its existence."
 		},
 		"empty": "This slot is empty, choose an item from the inventory to equip.&&//The equipped items can be used by your Dinoz in combat.//",
+		"scaleDischargedNotice": "//This item is currently discharged. It will automatically recharge at midnight.//",
 		"magicItemHomesickTooltip": "//This Magic Item is feeling homesick. It still needs time to get used to its wearer before it can be removed.//&&**Time remaining: {time}**"
 	},
 	"ingredients": {
@@ -6710,6 +6759,7 @@
 			}
 		},
 		"monsterHunt": {
+			"name": "Monster Hunt",
 			"edition": {
 				"darkWorldInvasion": {
 					"name": "The Dark World Invasion"
