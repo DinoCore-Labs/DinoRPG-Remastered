@@ -1,3 +1,5 @@
+import { mtDungeonGoldAward } from '@dinorpg/core/models/dungeon/dungeon.gold.js';
+import { MT_DUNGEON_DEFINITIONS } from '@dinorpg/core/models/dungeon/dungeon.mtData.js';
 import { getMtFlagIndex } from '@dinorpg/core/models/dungeon/dungeon.scene.js';
 import {
 	applyMtDungeonCommandBatch,
@@ -19,6 +21,14 @@ vi.mock('../../../src/prisma.js', () => ({
 }));
 
 const identity = { userId: 'test-user', leaderDinozId: 13 };
+
+// Remastered intentionally increases the original MT dungeon gold budgets.
+// Keep tests tied to the active game configuration, not to a historical literal.
+const magneticCaverns = MT_DUNGEON_DEFINITIONS.fr.find(dungeon => dungeon.id === 'stepp');
+if (!magneticCaverns) throw new Error('Définition des Cavernes Magnétiques introuvable');
+const CONFIGURED_MT_GOLD = magneticCaverns.gold;
+const FIRST_AWARD = mtDungeonGoldAward(17, CONFIGURED_MT_GOLD, CONFIGURED_MT_GOLD);
+const SECOND_AWARD = mtDungeonGoldAward(17, CONFIGURED_MT_GOLD - FIRST_AWARD, CONFIGURED_MT_GOLD);
 const cfg: MtSessionConfiguration = {
 	mapId: 'stepp_0',
 	map: {
@@ -45,10 +55,13 @@ let remaining: number;
 describe('MT dungeon finite shared gold (one DB transaction)', () => {
 	beforeEach(() => {
 		vi.clearAllMocks();
-		remaining = 150_000;
+		remaining = CONFIGURED_MT_GOLD;
 		transact.mockImplementation((fn: (client: typeof tx) => Promise<unknown>) => fn(tx));
 		tx.mtDungeonRun.updateMany.mockResolvedValue({ count: 1 });
-		tx.mtDungeonGoldPool.upsert.mockImplementation(async () => ({ initialGold: 150_000, remainingGold: remaining }));
+		tx.mtDungeonGoldPool.upsert.mockImplementation(async () => ({
+			initialGold: CONFIGURED_MT_GOLD,
+			remainingGold: remaining
+		}));
 		tx.mtDungeonGoldPool.updateMany.mockImplementation(async ({ where, data }) => {
 			if (remaining !== where.remainingGold) return { count: 0 };
 			remaining -= data.remainingGold.decrement;
@@ -59,23 +72,23 @@ describe('MT dungeon finite shared gold (one DB transaction)', () => {
 	});
 	it('initializes with MT XML gold and settles wallet, shared reserve and player flag atomically', async () => {
 		const result = await settleMtDungeonGoldArrival(identity, 0, pending(), cfg);
-		expect(result).toMatchObject({ goldAwarded: 2550, walletGold: 2950 });
+		expect(result).toMatchObject({ goldAwarded: FIRST_AWARD, walletGold: 400 + FIRST_AWARD });
 		expect(result.session.flags).toContain(getMtFlagIndex(cfg.map, 0, 2, 1));
 		expect(tx.mtDungeonGoldPool.upsert).toHaveBeenCalledWith(
 			expect.objectContaining({
 				where: { dungeonId: 'stepp' },
-				create: { dungeonId: 'stepp', initialGold: 150_000, remainingGold: 150_000 }
+				create: { dungeonId: 'stepp', initialGold: CONFIGURED_MT_GOLD, remainingGold: CONFIGURED_MT_GOLD }
 			})
 		);
 		expect(tx.mtDungeonGoldPool.updateMany).toHaveBeenCalledWith({
-			where: { dungeonId: 'stepp', remainingGold: 150_000 },
-			data: { remainingGold: { decrement: 2550 } }
+			where: { dungeonId: 'stepp', remainingGold: CONFIGURED_MT_GOLD },
+			data: { remainingGold: { decrement: FIRST_AWARD } }
 		});
-		expect(remaining).toBe(147_450);
+		expect(remaining).toBe(CONFIGURED_MT_GOLD - FIRST_AWARD);
 		expect(tx.userWallet.updateMany).toHaveBeenCalledWith(
 			expect.objectContaining({
 				where: expect.objectContaining({ userId: identity.userId, type: 'GOLD' }),
-				data: { amount: { increment: 2550 } }
+				data: { amount: { increment: FIRST_AWARD } }
 			})
 		);
 		expect(transact).toHaveBeenCalledWith(
@@ -86,9 +99,10 @@ describe('MT dungeon finite shared gold (one DB transaction)', () => {
 	it('shares the balance across two different players and decreases equal-weight pickups', async () => {
 		const first = await settleMtDungeonGoldArrival(identity, 0, pending(), cfg);
 		const second = await settleMtDungeonGoldArrival({ userId: 'other-user', leaderDinozId: 91 }, 0, pending(), cfg);
-		expect(first.goldAwarded).toBe(2550);
-		expect(second.goldAwarded).toBe(2507);
-		expect(remaining).toBe(144_943);
+		expect(first.goldAwarded).toBe(FIRST_AWARD);
+		expect(second.goldAwarded).toBe(SECOND_AWARD);
+		expect(second.goldAwarded).toBeLessThan(first.goldAwarded);
+		expect(remaining).toBe(CONFIGURED_MT_GOLD - FIRST_AWARD - SECOND_AWARD);
 	});
 	it('depleted pool pays zero but marks the one-time pile consumed', async () => {
 		remaining = 0;
@@ -140,8 +154,8 @@ describe('MT dungeon finite shared gold (one DB transaction)', () => {
 			return original(input);
 		});
 		const result = await settleMtDungeonGoldArrival(identity, 0, pending(), cfg);
-		expect(result.goldAwarded).toBe(1700);
+		expect(result.goldAwarded).toBe(mtDungeonGoldAward(17, 100_000, CONFIGURED_MT_GOLD));
 		expect(transact).toHaveBeenCalledTimes(2);
-		expect(remaining).toBe(98_300);
+		expect(remaining).toBe(100_000 - mtDungeonGoldAward(17, 100_000, CONFIGURED_MT_GOLD));
 	});
 });
