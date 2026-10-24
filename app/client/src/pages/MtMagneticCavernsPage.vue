@@ -41,8 +41,11 @@
 					<span>Clés MT récupérées : {{ session.keys.filter(Boolean).length }}</span>
 				</details>
 
-				<section v-if="partyDefeated" class="mt-test__panel" aria-live="polite">
-					<p>Tous les Dinoz sont KO. Le groupe doit quitter le donjon pour pouvoir être ressuscité.</p>
+				<section v-if="partyDefeated || partyLeaderDead" class="mt-test__panel" aria-live="polite">
+					<p v-if="partyDefeated">
+						Tous les Dinoz sont KO. Le groupe doit quitter le donjon pour pouvoir être ressuscité.
+					</p>
+					<p v-else>Le chef du groupe est KO : évacuation nécessaire avant de reprendre l’exploration.</p>
 					<button type="button" :disabled="busy" @click="evacuateDefeated">Évacuer le groupe KO</button>
 				</section>
 
@@ -354,6 +357,7 @@ async function loadVisualParty(): Promise<void> {
 }
 const stage = computed(() => Number(session.value?.mapId.split('_')[1] ?? 0));
 const isMagnetic = computed(() => session.value?.mapId.startsWith('stepp_') ?? false);
+const partyLeaderDead = computed(() => visualMembers.value.some(member => member.id === leaderId && member.life <= 0));
 const partyDefeated = computed(
 	() => visualMembers.value.length > 0 && visualMembers.value.every(dinoz => dinoz.life <= 0)
 );
@@ -363,6 +367,7 @@ const partyNeedsIrma = computed(
 const cannotMove = computed(
 	() =>
 		partyDefeated.value ||
+		partyLeaderDead.value ||
 		partyNeedsIrma.value ||
 		!partyActionsLoaded.value ||
 		busy.value ||
@@ -672,7 +677,7 @@ function exitDungeon(): void {
 	});
 }
 function evacuateDefeated(): void {
-	if (!session.value || !partyDefeated.value) return;
+	if (!session.value || (!partyDefeated.value && !partyLeaderDead.value)) return;
 	void execute(async () => {
 		await MtDungeonService.evacuateDefeatedGroup(leaderId, session.value!.revision);
 		session.value = null;

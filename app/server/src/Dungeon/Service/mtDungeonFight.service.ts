@@ -23,6 +23,7 @@ import { Prisma } from '../../../../prisma/index.js';
 import { getDinozFightDataRequest } from '../../Dinoz/Controller/getDinozFight.controller.js';
 import { calculateFightVsMonsters, rewardFightVsMonsters } from '../../Fight/Service/fight.service.js';
 import { prisma } from '../../prisma.js';
+import { detachDeadMtDungeonFollowers, mtDungeonLeaderIsDead } from './mtDungeonCasualties.service.js';
 import { isWipedMtDungeonParty } from './mtDungeonDefeat.service.js';
 import { saveMtDungeonProgress } from './mtDungeonProgress.service.js';
 import { getMtDungeonArchive, mtDungeonDependencies } from './mtDungeonRuntime.service.js';
@@ -176,6 +177,8 @@ export async function resolveMtDungeonFight(identity: MtSessionIdentity, token: 
 		if (JSON.stringify(intent.monsterKeys) !== JSON.stringify(attempt.monsterKeys))
 			throw new MtDungeonFightError('conflict');
 		const dungeonPlace = Object.values(placeListv2).find(place => place.name === canonical.enter.place)?.placeId;
+		/* MT20N RESOLVE SCENARIO: remove deceased followers */
+		await prisma.$transaction(tx => detachDeadMtDungeonFollowers(tx, identity));
 		const user = await getDinozFightDataRequest(identity.leaderDinozId, identity.userId);
 		const team = user?.dinoz;
 		const leader = team?.find(d => d.id === identity.leaderDinozId);
@@ -237,7 +240,7 @@ export async function resolveMtDungeonFight(identity: MtSessionIdentity, token: 
 				if (consumed.count !== team.length) throw new MtDungeonFightError('conflict');
 				// The fight engine has already persisted all HP losses.
 				// A full-party wipe ends the run; resurrection is possible outside.
-				if (await isWipedMtDungeonParty(tx, identity)) {
+				if ((await isWipedMtDungeonParty(tx, identity)) || (await mtDungeonLeaderIsDead(tx, identity))) {
 					await saveMtDungeonProgress(tx, identity, settled, map);
 					const removed = await tx.mtDungeonRun.deleteMany({
 						where: {
@@ -251,6 +254,8 @@ export async function resolveMtDungeonFight(identity: MtSessionIdentity, token: 
 					// FK cascade deletes the fight attempt; a replay cannot award rewards again.
 					return;
 				}
+				// MT20N: persist the group reduction together with run settlement.
+				await detachDeadMtDungeonFollowers(tx, identity);
 				const updated = await tx.mtDungeonRun.updateMany({
 					where: {
 						id: attempt.runId,

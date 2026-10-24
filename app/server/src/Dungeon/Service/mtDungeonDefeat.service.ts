@@ -7,6 +7,7 @@ import { isMtDungeonPartyWiped } from '@dinorpg/core/models/dungeon/dungeon.defe
 
 import type { Prisma } from '../../../../prisma/index.js';
 import { prisma } from '../../prisma.js';
+import { mtDungeonLeaderIsDead } from './mtDungeonCasualties.service.js';
 import { saveMtDungeonProgress } from './mtDungeonProgress.service.js';
 import { mtDungeonDependencies } from './mtDungeonRuntime.service.js';
 import type { MtSessionIdentity } from './mtDungeonSession.service.js';
@@ -55,7 +56,8 @@ export async function evacuateDefeatedMtDungeon(
 			});
 			if (!run) throw new MtDungeonDefeatError('not-found');
 			if (run.revision !== expectedRevision) throw new MtDungeonDefeatError('conflict');
-			if (!(await isWipedMtDungeonParty(tx, identity))) throw new MtDungeonDefeatError('party-not-wiped');
+			if (!(await isWipedMtDungeonParty(tx, identity)) && !(await mtDungeonLeaderIsDead(tx, identity)))
+				throw new MtDungeonDefeatError('party-not-wiped');
 			const unsafe = await tx.mtDungeonFightAttempt.count({
 				where: { runId: run.id, status: { in: ['PREPARED', 'PROCESSING', 'REVIEW'] } }
 			});
