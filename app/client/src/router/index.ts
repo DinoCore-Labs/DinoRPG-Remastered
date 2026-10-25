@@ -25,6 +25,7 @@ import createClan from '../pages/Clan/CreateClan.vue';
 import DialogPage from '../pages/DialogPage.vue';
 import DinozPage from '../pages/DinozPage.vue';
 import DojoPage from '../pages/DojoPage.vue';
+import DungeonPage from '../pages/DungeonPage.vue';
 import FAQPage from '../pages/FAQPage.vue';
 import FightPage from '../pages/FightPage.vue';
 import ForcebrutPage from '../pages/ForcebrutPage.vue';
@@ -41,7 +42,6 @@ import ManageDinoz from '../pages/ManageDinoz.vue';
 import MarketPage from '../pages/MarketPage.vue';
 import MissionsPage from '../pages/MissionsPage.vue';
 import ModerationPage from '../pages/Moderation/ModerationPage.vue';
-import MtMagneticCavernsPage from '../pages/MtMagneticCavernsPage.vue';
 import NewsPage from '../pages/NewsPage.vue';
 import RankingPage from '../pages/RankingPage.vue';
 import RulesPage from '../pages/RulesPage.vue';
@@ -129,9 +129,9 @@ const routes: RouteRecord[] = [
 				meta: { auth: true }
 			},
 			{
-				path: '/dinoz/:id/dungeon/stepp',
-				name: 'MtMagneticCavernsPage',
-				component: MtMagneticCavernsPage,
+				path: '/dinoz/:id/dungeon',
+				name: 'DungeonPage',
+				component: DungeonPage,
 				meta: { auth: true },
 				beforeEnter: requireOwnedDinozByParam('id')
 			},

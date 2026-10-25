@@ -6790,5 +6790,28 @@
 			"title": "Les Piglous sont de retour dans Dinoville !",
 			"viewEvent": "Voir l'Event"
 		}
+	},
+	"dungeon": {
+		"title": "Donjon",
+		"exploration": "Exploration du donjon",
+		"disclaimer": "**{dinoz}** explore actuellement **{dungeonName}**. Ce Dinoz sera capable d’en sortir seulement s’il retrouve l’entrée, la sortie ou s’il meurt.",
+		"backToDinozShort": "Retour à la fiche du Dinoz",
+		"loading": "Chargement du donjon…",
+		"enterFromWorld": "Entre dans le donjon depuis son lieu d’accès avec un groupe disponible.",
+		"entryValidated": "Les conditions d’accès et la position des Dinoz sont vérifiées côté serveur.",
+		"enterReturn": "Retour aux actions du Dinoz pour entrer",
+		"completed": "Donjon terminé",
+		"returnSurface": "Retour à la surface",
+		"progressSaved": "Votre progression a été sauvegardée. Aucune récompense de fin supplémentaire n’est attribuée.",
+		"explorationInfo": "Informations sur l’exploration",
+		"allKo": "Tous les Dinoz sont KO. Le groupe doit quitter le donjon pour pouvoir être ressuscité.",
+		"leaderKo": "Le chef du groupe est KO : évacuation nécessaire avant de reprendre l’exploration.",
+		"evacuate": "Évacuer le groupe KO",
+		"loadingView": "Chargement de la vue…",
+		"refreshView": "Actualiser la vue",
+		"noDiscoveries": "Aucun texte découvert pour le moment.",
+		"refreshDiscoveries": "Actualiser les découvertes",
+		"diagnostics": "Diagnostics de fidélité",
+		"journalUnavailable": "Journal momentanément indisponible."
 	}
 }
