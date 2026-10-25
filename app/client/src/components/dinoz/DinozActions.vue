@@ -14,7 +14,9 @@
 <template>
 	<div class="actions">
 		<!-- STEP_20R_MT_ENTRY_DIALOG : texte MT après création, sur la fiche Dinoz. -->
+		<!-- STEP_20X_ENTRY -->
 		<MtDungeonMessageBox
+			variant="notice"
 			v-if="dungeonEntryMessage"
 			:title="dungeonEntryMessage.title"
 			:text="dungeonEntryMessage.text"

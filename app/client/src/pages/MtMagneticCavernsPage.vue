@@ -2,7 +2,8 @@
 	<section class="mt-test" aria-label="Exploration des Cavernes Magnétiques">
 		<!-- STEP_20O_MT_DUNGEON: original eight-piece Motion Twin message box. -->
 		<MtDungeonMessageBox
-			v-if="activeMessage"
+			v-if="activeMessage && !session"
+			:variant="activeMessage.kind === 'entry' || activeMessage.kind === 'irma' ? 'notice' : 'dialog'"
 			:title="activeMessage.title"
 			:text="activeMessage.text"
 			:confirm-label="activeMessage.confirmLabel"
@@ -74,6 +75,19 @@
 						:show-unverified-same-name-overlays="true"
 					/>
 					<div v-else class="mt-test__placeholder">Chargement de la vue…</div>
+					<!-- STEP_20X_VIEWPORT — dialogue visible directement sur le donjon. -->
+					<MtDungeonMessageBox
+						v-if="activeMessage"
+						placement="viewport"
+						:variant="activeMessage.kind === 'entry' || activeMessage.kind === 'irma' ? 'notice' : 'dialog'"
+						:title="activeMessage.title"
+						:text="activeMessage.text"
+						:confirm-label="activeMessage.confirmLabel"
+						:cancel-label="activeMessage.cancelLabel"
+						:busy="busy"
+						@confirm="confirmMessage"
+						@close="closeMessage"
+					/>
 					<div
 						v-if="view && !partyDefeated"
 						class="mt-test__original-controls"
@@ -287,6 +301,7 @@ const journalError = ref('');
 const exitOutcome = ref<MtDungeonWorldExitResult | null>(null);
 const errorMessage = ref('');
 const notice = ref('');
+const irmaMessage = ref<string | null>(null);
 const originalEntryText = ref<string | null>(null); // STEP_20O_MT_DUNGEON
 const entryDismissed = ref(false);
 const exitDismissed = ref(false);
@@ -400,7 +415,7 @@ const actionAvailable = computed(() => {
 	);
 });
 
-type MtNarrativeKind = 'entry' | 'exit' | 'scenario' | 'scenario-combat'; // STEP_20O_MT_DUNGEON
+type MtNarrativeKind = 'entry' | 'exit' | 'scenario' | 'scenario-combat' | 'irma'; // STEP_20O_MT_DUNGEON
 type MtNarrative = { kind: MtNarrativeKind; title: string; text: string; confirmLabel: string; cancelLabel?: string };
 const activeMessage = computed((): MtNarrative | null => {
 	if (exitOutcome.value && !exitDismissed.value) {
@@ -414,6 +429,8 @@ const activeMessage = computed((): MtNarrative | null => {
 			confirmLabel: 'Continuer'
 		};
 	}
+	if (session.value && irmaMessage.value)
+		return { kind: 'irma', title: '', text: irmaMessage.value, confirmLabel: 'Continuer' };
 	const run = session.value;
 	const current = encounter.value;
 	if (run?.pending?.kind === 'scenario' && current?.text) {
@@ -442,6 +459,7 @@ const activeMessage = computed((): MtNarrative | null => {
 });
 function closeMessage(): void {
 	const kind = activeMessage.value?.kind;
+	if (kind === 'irma') irmaMessage.value = null;
 	if (kind === 'entry') entryDismissed.value = true;
 	if (kind === 'exit') exitDismissed.value = true;
 	if ((kind === 'scenario' || kind === 'scenario-combat') && session.value)
@@ -449,6 +467,7 @@ function closeMessage(): void {
 }
 function confirmMessage(): void {
 	const kind = activeMessage.value?.kind;
+	if (kind === 'irma') irmaMessage.value = null;
 	if (kind === 'entry') entryDismissed.value = true;
 	if (kind === 'exit') {
 		exitDismissed.value = true;
@@ -581,7 +600,16 @@ function restoreDungeonActions(): void {
 		if (!partyActionsLoaded.value || partyNeedsIrma.value) {
 			throw new Error('Une action reste indisponible : vérifiez les Dinoz du groupe.');
 		}
-		notice.value = `${paid.used} Potion(s) d'Irma consommée(s). Exploration reprise.`;
+		// Confirmed server action: the MT notice only acknowledges its result.
+		const n = paid.used;
+		const messages: Record<string, string> = {
+			fr: `Vous avez utilisé ${n} potion${n > 1 ? 's' : ''} d'Irma pour votre groupe de Dinoz. Ils peuvent à nouveau se déplacer aujourd'hui.`,
+			en: `You have used ${n} Madam Irma's Potion${n > 1 ? 's' : ''} for your Dinoz group. They can move again today.`,
+			es: `Has usado ${n} poción${n > 1 ? 'es' : ''} de Irma para tu grupo de Dinoz. Hoy pueden volver a moverse.`,
+			de: `Du hast ${n} Irma-Trank${n > 1 ? 'tränke' : ''} für deine Dinoz-Gruppe benutzt. Sie kann sich heute wieder bewegen.`
+		};
+		irmaMessage.value = messages[language.value.slice(0, 2)] ?? messages.fr ?? '';
+		notice.value = '';
 	});
 }
 function move(direction: 'north' | 'south' | 'west' | 'east' | 'up' | 'down') {
@@ -923,6 +951,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeyDown));
 }
 .mt-test__viewport {
 	position: relative;
+	container-type: inline-size;
 	width: 100%;
 	overflow: hidden;
 	background: #3d3325;
