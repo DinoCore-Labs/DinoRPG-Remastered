@@ -611,14 +611,22 @@ function move(direction: 'north' | 'south' | 'west' | 'east' | 'up' | 'down') {
 			const { token } = await MtDungeonService.prepareGuardianFight(leaderId, result.session.revision);
 			const fightResult = await MtDungeonService.resolveGuardianFight(leaderId, token);
 			sessionStore().setFightResult(fightResult);
-			await router.push({ name: 'FightPage', params: { dinozId: String(leaderId) } });
+			await router.push({
+				name: 'FightPage',
+				params: { dinozId: String(leaderId) },
+				query: { mtDungeonLeader: String(leaderId) }
+			});
 			return;
 		}
 		if (mtDungeonCombatTrigger(result.session.pending, encounter.value) === 'scenario') {
 			const { token } = await MtDungeonService.prepareFight(leaderId, result.session.revision);
 			const fightResult = await MtDungeonService.resolveFight(leaderId, token);
 			sessionStore().setFightResult(fightResult);
-			await router.push({ name: 'FightPage', params: { dinozId: String(leaderId) } });
+			await router.push({
+				name: 'FightPage',
+				params: { dinozId: String(leaderId) },
+				query: { mtDungeonLeader: String(leaderId) }
+			});
 			return;
 		}
 		if (typeof result.goldAwarded === 'number') {
@@ -671,7 +679,11 @@ function fightGuardian() {
 		const { token } = await MtDungeonService.prepareGuardianFight(leaderId, session.value!.revision);
 		const result = await MtDungeonService.resolveGuardianFight(leaderId, token);
 		sessionStore().setFightResult(result);
-		await router.push({ name: 'FightPage', params: { dinozId: String(leaderId) } });
+		await router.push({
+			name: 'FightPage',
+			params: { dinozId: String(leaderId) },
+			query: { mtDungeonLeader: String(leaderId) }
+		});
 	});
 }
 function fight() {
@@ -681,7 +693,11 @@ function fight() {
 		const { token } = await MtDungeonService.prepareFight(leaderId, session.value!.revision);
 		const result = await MtDungeonService.resolveFight(leaderId, token);
 		sessionStore().setFightResult(result);
-		await router.push({ name: 'FightPage', params: { dinozId: String(leaderId) } });
+		await router.push({
+			name: 'FightPage',
+			params: { dinozId: String(leaderId) },
+			query: { mtDungeonLeader: String(leaderId) }
+		});
 	});
 }
 function evacuateDefeated(): void {
