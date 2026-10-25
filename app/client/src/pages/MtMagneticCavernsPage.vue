@@ -163,7 +163,7 @@
 					Clavier : flèches, ZQSD ou WASD. Un déplacement = une commande validée par le serveur.
 				</p>
 
-				<section v-if="session.pending" class="mt-test__panel" aria-live="polite">
+				<section v-if="session.pending && !mtDungeonBoundaryAction(session)" class="mt-test__panel" aria-live="polite">
 					<h3>Interaction en attente : {{ session.pending.kind }}</h3>
 					<p v-if="encounter?.text">{{ encounter.text }}</p>
 					<p v-if="encounter?.status" class="mt-test__caption">État serveur : {{ encounter.status }}</p>
@@ -204,38 +204,6 @@
 						@click="skipGuardian"
 					>
 						Franchir le gardien (test local, sans combat)
-					</button>
-					<button
-						v-if="session.pending.kind === 'boundary-start' && stage === 0"
-						type="button"
-						:disabled="busy"
-						@click="exitDungeon"
-					>
-						Quitter le donjon (retour à la surface)
-					</button>
-					<button
-						v-if="session.pending.kind === 'boundary-exit' && stage < 3"
-						type="button"
-						:disabled="busy"
-						@click="transition('forward')"
-					>
-						Passer à la carte suivante
-					</button>
-					<button
-						v-if="session.pending.kind === 'boundary-exit' && stage === 3"
-						type="button"
-						:disabled="busy"
-						@click="exitDungeon"
-					>
-						Sortir définitivement du donjon
-					</button>
-					<button
-						v-if="session.pending.kind === 'boundary-start' && stage > 0"
-						type="button"
-						:disabled="busy"
-						@click="transition('backward')"
-					>
-						Revenir à la carte précédente
 					</button>
 					<p v-if="!actionAvailable" class="mt-test__caption">
 						Cette interaction n'est pas encore résoluble dans cette version. Le déplacement reste bloqué conformément à
@@ -288,6 +256,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { mtDungeonCombatTrigger } from '../components/dungeon/mtDungeonCombatTrigger.js';
 import MtOriginalDungeonCanvas from '../components/dungeon/MtOriginalDungeonCanvas.vue';
 import MtDungeonMessageBox from '../components/dungeon/MtDungeonMessageBox.vue';
+import { mtDungeonBoundaryAction } from '../components/dungeon/mtDungeonBoundaryAction.js'; // STEP_20R_MT_BOUNDARIES
 import { advanceMtTrail, mtFollowerPositions, type MtTrailPoint } from '../components/dungeon/dungeonPartyTrail.js';
 import { DinozService } from '../services/dinoz.service.js';
 import {
@@ -549,6 +518,8 @@ async function refresh(): Promise<void> {
 		await loadGuardianTrial(current);
 		await loadVisualParty();
 		if (latestView) await loadJournal();
+		// Recover a boundary from a previous refresh/browser tab without a second button.
+		if (mtDungeonBoundaryAction(current)) await settleMtBoundary(current);
 	} catch (error) {
 		if (axios.isAxiosError(error) && error.response?.status === 404) {
 			session.value = null;
@@ -646,6 +617,7 @@ function move(direction: 'north' | 'south' | 'west' | 'east' | 'up' | 'down') {
 			Math.max(0, visualMembers.value.length - 1)
 		);
 		await afterMutation(result.session);
+		if (await settleMtBoundary(result.session)) return;
 		if (mtDungeonCombatTrigger(result.session.pending, encounter.value) === 'guardian') {
 			const { token } = await MtDungeonService.prepareGuardianFight(leaderId, result.session.revision);
 			const fightResult = await MtDungeonService.resolveGuardianFight(leaderId, token);
@@ -669,12 +641,25 @@ function move(direction: 'north' | 'south' | 'west' | 'east' | 'up' | 'down') {
 		}
 	});
 }
-function transition(action: 'forward' | 'backward') {
-	if (!session.value?.pending) return;
-	void execute(async () => {
-		await afterMutation(await MtDungeonService.transition(leaderId, session.value!.revision, action));
+/** The server validates the pending boundary, revision and allowed next stage. */
+async function settleMtBoundary(current: MtDungeonSession): Promise<boolean> {
+	const action = mtDungeonBoundaryAction(current);
+	if (!action) return false;
+	if (action === 'forward' || action === 'backward') {
+		const next = await MtDungeonService.transition(leaderId, current.revision, action);
 		movementTrail.value = [];
-	});
+		await afterMutation(next);
+		return true;
+	}
+	const outcome = await MtDungeonService.worldExit(leaderId, current.revision, language.value);
+	session.value = null;
+	view.value = null;
+	encounter.value = null;
+	guardianTrial.value = null;
+	movementTrail.value = [];
+	exitOutcome.value = outcome;
+	journalEntries.value = [];
+	return true;
 }
 function resolveScenario() {
 	if (encounter.value?.kind !== 'scenario' || !session.value) return;
@@ -742,26 +727,6 @@ function skipGuardian(): void {
 		);
 		await afterMutation(next);
 		notice.value = 'Gardien franchi en mode test : aucun combat, XP ou récompense.';
-	});
-}
-function exitDungeon(): void {
-	const current = session.value;
-	const pendingKind = current?.pending?.kind;
-	if (!current || (pendingKind !== 'boundary-start' && pendingKind !== 'boundary-exit')) return;
-	if (
-		!(current.mapId === 'stepp_0' && pendingKind === 'boundary-start') &&
-		!(current.mapId === 'stepp_3' && pendingKind === 'boundary-exit')
-	)
-		return;
-	void execute(async () => {
-		const outcome = await MtDungeonService.worldExit(leaderId, current.revision, language.value);
-		session.value = null;
-		view.value = null;
-		encounter.value = null;
-		guardianTrial.value = null;
-		movementTrail.value = [];
-		exitOutcome.value = outcome;
-		journalEntries.value = [];
 	});
 }
 function evacuateDefeated(): void {
