@@ -432,7 +432,7 @@ export default defineComponent({
 				if (!res) return;
 			}
 			switch (action.name) {
-				case Action.DUNGEON_ENTER: // STEP_20R_MT_ENTRY_DIALOG
+				case Action.DUNGEON_ENTER:
 					try {
 						// Charger la phrase d'origine AVANT la création : une réponse vide ne doit pas créer une session silencieuse.
 						const definitions = await MtDungeonService.getCatalog(String(this.localStore.getLanguage ?? 'fr'));
@@ -448,7 +448,7 @@ export default defineComponent({
 					break;
 				case Action.DUNGEON:
 					await this.$router.push({
-						name: 'MtMagneticCavernsPage',
+						name: 'DungeonPage',
 						params: {
 							id: String(typeof action.prop === 'number' ? action.prop : (this.dinoz.leaderId ?? this.dinozId))
 						}
