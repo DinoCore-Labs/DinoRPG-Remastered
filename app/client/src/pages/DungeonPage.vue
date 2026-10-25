@@ -2,7 +2,7 @@
 	<TitleHeader :title="dungeonName" :header="dungeonName" />
 	<DZDisclaimer v-if="session" :content="'dungeon.disclaimer'" :params="{ dinoz: dinozName, dungeonName }" help />
 	<section class="mt-test" :aria-label="$t('dungeon.exploration')">
-		<!-- STEP_20O_MT_DUNGEON: original eight-piece Motion Twin message box. -->
+		<!-- original eight-piece Motion Twin message box. -->
 		<MtDungeonMessageBox
 			v-if="activeMessage && !session"
 			:variant="
@@ -153,20 +153,11 @@
 				</div>
 				<div v-if="view" class="mt-test__original-level">Niveau -{{ session.position.l + 1 }}</div>
 			</div>
-			<p class="mt-test__caption">
-				PixiJS : caméra amortie selon View.hx, murs en profondeur et Dinoz intégrés à la scène. Le flou du brouillard et
-				certains ancrages PNG restent à comparer au SWF original.
-			</p>
 			<button class="mt-test__refresh" type="button" :disabled="busy" @click="refresh">
 				{{ $t('dungeon.refreshView') }}
 			</button>
-			<p class="mt-test__caption">
-				Clavier : flèches, ZQSD ou WASD. Un déplacement = une commande validée par le serveur.
-			</p>
 			<section v-if="session.pending && !mtDungeonBoundaryAction(session)" class="mt-test__panel" aria-live="polite">
-				<h3>Interaction en attente : {{ session.pending.kind }}</h3>
 				<p v-if="encounter?.text">{{ encounter.text }}</p>
-				<p v-if="encounter?.status" class="mt-test__caption">État serveur : {{ encounter.status }}</p>
 				<button
 					v-if="session.pending.kind === 'scenario' && encounter?.kind === 'scenario'"
 					type="button"
@@ -233,14 +224,6 @@
 				</ol>
 				<button type="button" :disabled="busy" @click="loadJournal">{{ $t('dungeon.refreshDiscoveries') }}</button>
 			</details>
-			<details v-if="view" class="mt-test__details">
-				<summary>{{ $t('dungeon.diagnostics') }}</summary>
-				<p>
-					Sol et murs : PNG originaux, mais ancrages et sous-clips Flash non entièrement rétablis. Le bruit Perlin Flash
-					est toujours absent. Les Dinoz affichés viennent de l'animation actuelle de Remastered.
-				</p>
-				<p>Les régions inconnues et les événements cachés ne sont pas transmis par l'API de vue.</p>
-			</details>
 		</template>
 	</section>
 </template>
@@ -255,6 +238,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { mtDungeonCombatTrigger } from '../components/dungeon/mtDungeonCombatTrigger.js';
 import MtOriginalDungeonCanvas from '../components/dungeon/MtOriginalDungeonCanvas.vue';
 import { getDungeonSkin } from '@dinorpg/core/models/dungeon/dungeon.skins.js';
+import { MT_DUNGEON_DEFINITIONS } from '@dinorpg/core/models/dungeon/dungeon.mtData.js';
 import MtDungeonMessageBox from '../components/dungeon/MtDungeonMessageBox.vue';
 import { mtDungeonKeyPickupMessage, mtDungeonLockedDoorMessage } from '../components/dungeon/mtDungeonKeyNames.js';
 import { mtDungeonBoundaryAction } from '../components/dungeon/mtDungeonBoundaryAction.js'; // STEP_20R_MT_BOUNDARIES
@@ -387,13 +371,14 @@ const language = computed(() =>
 		.toLowerCase()
 		.slice(0, 2)
 );
+const isTowerDungeon = computed(() => MT_DUNGEON_DEFINITIONS.fr.find(d => d.id === dungeonId.value)?.tower ?? false);
 const stairDirections = computed(() => {
 	if (!view.value || !session.value) return [] as string[];
 	const here = session.value.position;
 	// stepp is not a tower: View.updateArrows() maps door.up=false to UP, true to DOWN.
 	return view.value.scene.features
 		.filter(f => f.kind === 'stair' && f.x === here.x && f.y === here.y)
-		.map(f => (f.kind === 'stair' ? (f.up ? 'down' : 'up') : ''));
+		.map(f => (f.kind === 'stair' ? (isTowerDungeon.value ? (f.up ? 'up' : 'down') : f.up ? 'down' : 'up') : ''));
 });
 const actionAvailable = computed(() => {
 	const pending = session.value?.pending;
@@ -615,7 +600,8 @@ function move(direction: 'north' | 'south' | 'west' | 'east' | 'up' | 'down') {
 			up: [0, 0, -1],
 			down: [0, 0, 1]
 		} as const;
-		const [dx, dy, dl] = offsets[direction];
+		const [dx, dy, baseDl] = offsets[direction];
+		const dl = isTowerDungeon.value ? -baseDl : baseDl;
 		const command: DungeonCommand = { ...previous.position, dx, dy, dl };
 		const result = await MtDungeonService.move(leaderId, previous.revision, command);
 		if (!result.ok) {
