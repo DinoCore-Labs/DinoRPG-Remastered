@@ -78,7 +78,6 @@ export interface MtDungeonWorldExitResult {
 
 export const MtDungeonService = {
 	getCatalog(language: string): Promise<MtDungeonCatalogEntry[]> {
-		// STEP_20O_MT_DUNGEON
 		return api.get('/dungeon/mt/catalog', { params: { lang: language }, silent: true });
 	},
 	getJournal(id: number, language: string): Promise<MtDungeonJournal> {
@@ -121,8 +120,11 @@ export const MtDungeonService = {
 	getView(id: number): Promise<MtDungeonCurrentView> {
 		return api.get(`/dungeon/mt/${id}/view`, { silent: true });
 	},
+	startDungeon(id: number, dungeonId: string): Promise<MtDungeonSession> {
+		return api.post('/dungeon/mt/start', { leaderDinozId: id, dungeonId });
+	},
 	startMagneticCaverns(id: number): Promise<MtDungeonSession> {
-		return api.post('/dungeon/mt/start', { leaderDinozId: id, dungeonId: 'stepp' });
+		return this.startDungeon(id, 'stepp');
 	},
 	move(
 		id: number,

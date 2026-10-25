@@ -1,5 +1,7 @@
 <template>
-	<section class="mt-test" aria-label="Exploration des Cavernes Magnétiques">
+	<TitleHeader :title="dungeonName" :header="dungeonName" />
+	<DZDisclaimer v-if="session" :content="'dungeon.disclaimer'" :params="{ dinoz: dinozName, dungeonName }" help />
+	<section class="mt-test" :aria-label="$t('dungeon.exploration')">
 		<!-- STEP_20O_MT_DUNGEON: original eight-piece Motion Twin message box. -->
 		<MtDungeonMessageBox
 			v-if="activeMessage && !session"
@@ -16,258 +18,239 @@
 			@confirm="confirmMessage"
 			@close="closeMessage"
 		/>
-		<header class="mt-test__header">
-			<h2>Les Cavernes Magnétiques</h2>
-			<p>Exploration des cartes et graphismes d'origine Motion Twin</p>
-			<RouterLink :to="{ name: 'DinozPage', params: { id: leaderId } }">← Revenir à la fiche du Dinoz</RouterLink>
-		</header>
-
 		<p v-if="errorMessage" class="mt-test__error" role="alert">{{ errorMessage }}</p>
 		<p v-if="notice" class="mt-test__notice" role="status">{{ notice }}</p>
-		<p v-if="loading && !session">Chargement du donjon…</p>
-
+		<p v-if="loading && !session">{{ $t('dungeon.loading') }}</p>
 		<section v-if="!session && !loading && !exitOutcome" class="mt-test__panel">
-			<p>Entre dans le donjon depuis les Pylônes de Magnétite avec un groupe disponible.</p>
-			<p>Les conditions d'accès et la position des Dinoz sont vérifiées côté serveur.</p>
-			<RouterLink :to="{ name: 'DinozPage', params: { id: leaderId } }"
-				>Retour aux actions du Dinoz pour entrer</RouterLink
-			>
+			<p>{{ $t('dungeon.enterFromWorld') }}</p>
+			<p>{{ $t('dungeon.entryValidated') }}</p>
+			<RouterLink :to="{ name: 'DinozPage', params: { id: leaderId } }">{{ $t('dungeon.enterReturn') }}</RouterLink>
 		</section>
-
 		<section v-if="exitOutcome" class="mt-test__panel" aria-live="polite">
-			<h3>{{ exitOutcome.kind === 'complete' ? 'Donjon terminé' : 'Retour à la surface' }}</h3>
+			<h3>{{ $t(exitOutcome.kind === 'complete' ? 'dungeon.completed' : 'dungeon.returnSurface') }}</h3>
 			<p>{{ exitOutcome.text }}</p>
 			<p class="mt-test__caption">
 				Votre progression a été sauvegardée. Aucune récompense de fin supplémentaire n'est attribuée.
 			</p>
-			<RouterLink :to="{ name: 'DinozPage', params: { id: leaderId } }">Retour à la fiche du Dinoz</RouterLink>
+			<RouterLink :to="{ name: 'DinozPage', params: { id: leaderId } }">{{
+				$t('dungeon.backToDinozShort')
+			}}</RouterLink>
 		</section>
-
 		<template v-if="session">
-			<p v-if="!isMagnetic" class="mt-test__notice">
-				Ce Dinoz possède déjà une session {{ session.mapId }}. Cette page de test est réservée aux Cavernes Magnétiques.
-			</p>
-			<template v-else>
-				<details class="mt-test__status">
-					<summary>Informations sur l'exploration</summary>
-					<span
-						>Carte : <strong>{{ session.mapId }}</strong></span
+			<details class="mt-test__status">
+				<summary>{{ $t('dungeon.explorationInfo') }}</summary>
+				<span
+					>Carte : <strong>{{ session.mapId }}</strong></span
+				>
+				<span>Étage : {{ stage + 1 }} / 4</span>
+				<span>Case : {{ session.position.x }}, {{ session.position.y }}, {{ session.position.l }}</span>
+				<span>Révision : {{ session.revision }}</span>
+				<span>Clés MT récupérées : {{ session.keys.filter(Boolean).length }}</span>
+			</details>
+			<section v-if="partyDefeated || partyLeaderDead" class="mt-test__panel" aria-live="polite">
+				<p v-if="partyDefeated">
+					Tous les Dinoz sont KO. Le groupe doit quitter le donjon pour pouvoir être ressuscité.
+				</p>
+				<p v-else>{{ $t('dungeon.leaderKo') }}</p>
+				<button type="button" :disabled="busy" @click="evacuateDefeated">{{ $t('dungeon.evacuate') }}</button>
+			</section>
+			<div class="mt-test__viewport">
+				<MtOriginalDungeonCanvas
+					v-if="view"
+					:scene="view.scene"
+					:mask-strength="getDungeonSkin(view.skin)?.mask ?? 0"
+					:guardians="view.guardianSprites ?? []"
+					:stage-key="session.mapId"
+					:actors="visualParty"
+					:facing-right="facingRight"
+					:show-unverified-same-name-overlays="true"
+				/>
+				<div v-else class="mt-test__placeholder">{{ $t('dungeon.loadingView') }}</div>
+				<!-- STEP_20X_VIEWPORT — dialogue visible directement sur le donjon. -->
+				<MtDungeonMessageBox
+					v-if="activeMessage"
+					placement="viewport"
+					:variant="
+						activeMessage.kind === 'entry' || activeMessage.kind === 'irma' || activeMessage.kind === 'pickup'
+							? 'notice'
+							: 'dialog'
+					"
+					:title="activeMessage.title"
+					:text="activeMessage.text"
+					:confirm-label="activeMessage.confirmLabel"
+					:cancel-label="activeMessage.cancelLabel"
+					:busy="busy"
+					@confirm="confirmMessage"
+					@close="closeMessage"
+				/>
+				<div
+					v-if="view && !partyDefeated"
+					class="mt-test__original-controls"
+					aria-label="Commandes originales du donjon"
+				>
+					<button
+						v-if="partyNeedsIrma"
+						class="mt-test__original-irma"
+						type="button"
+						:disabled="busy || !partyActionsLoaded"
+						aria-label="Utiliser Irma pour restaurer les actions du groupe"
+						title="Restaurer les actions du groupe"
+						@click="restoreDungeonActions"
 					>
-					<span>Étage : {{ stage + 1 }} / 4</span>
-					<span>Case : {{ session.position.x }}, {{ session.position.y }}, {{ session.position.l }}</span>
-					<span>Révision : {{ session.revision }}</span>
-					<span>Clés MT récupérées : {{ session.keys.filter(Boolean).length }}</span>
-				</details>
-
-				<section v-if="partyDefeated || partyLeaderDead" class="mt-test__panel" aria-live="polite">
-					<p v-if="partyDefeated">
-						Tous les Dinoz sont KO. Le groupe doit quitter le donjon pour pouvoir être ressuscité.
-					</p>
-					<p v-else>Le chef du groupe est KO : évacuation nécessaire avant de reprendre l’exploration.</p>
-					<button type="button" :disabled="busy" @click="evacuateDefeated">Évacuer le groupe KO</button>
-				</section>
-
-				<div class="mt-test__viewport">
-					<MtOriginalDungeonCanvas
-						v-if="view"
-						:scene="view.scene"
-						:mask-strength="getDungeonSkin(view.skin)?.mask ?? 0"
-						:guardians="view.guardianSprites ?? []"
-						:stage-key="session.mapId"
-						:actors="visualParty"
-						:facing-right="facingRight"
-						:show-unverified-same-name-overlays="true"
-					/>
-					<div v-else class="mt-test__placeholder">Chargement de la vue…</div>
-					<!-- STEP_20X_VIEWPORT — dialogue visible directement sur le donjon. -->
-					<MtDungeonMessageBox
-						v-if="activeMessage"
-						placement="viewport"
-						:variant="
-							activeMessage.kind === 'entry' || activeMessage.kind === 'irma' || activeMessage.kind === 'pickup'
-								? 'notice'
-								: 'dialog'
-						"
-						:title="activeMessage.title"
-						:text="activeMessage.text"
-						:confirm-label="activeMessage.confirmLabel"
-						:cancel-label="activeMessage.cancelLabel"
-						:busy="busy"
-						@confirm="confirmMessage"
-						@close="closeMessage"
-					/>
-					<div
-						v-if="view && !partyDefeated"
-						class="mt-test__original-controls"
-						aria-label="Commandes originales du donjon"
-					>
+						<img src="/dungeon/mt/interf_irma.png" alt="Potion d'Irma" />
+					</button>
+					<template v-else>
 						<button
-							v-if="partyNeedsIrma"
-							class="mt-test__original-irma"
+							class="mt-test__original-dir mt-test__original-up"
 							type="button"
-							:disabled="busy || !partyActionsLoaded"
-							aria-label="Utiliser Irma pour restaurer les actions du groupe"
-							title="Restaurer les actions du groupe"
-							@click="restoreDungeonActions"
+							:disabled="cannotMove"
+							aria-label="Nord"
+							@click="move('north')"
 						>
-							<img src="/dungeon/mt/interf_irma.png" alt="Potion d'Irma" />
+							<img src="/dungeon/mt/interf_arrow.png" alt="" />
 						</button>
-						<template v-else>
-							<button
-								class="mt-test__original-dir mt-test__original-up"
-								type="button"
-								:disabled="cannotMove"
-								aria-label="Nord"
-								@click="move('north')"
-							>
-								<img src="/dungeon/mt/interf_arrow.png" alt="" />
-							</button>
-							<button
-								class="mt-test__original-dir mt-test__original-left"
-								type="button"
-								:disabled="cannotMove"
-								aria-label="Ouest"
-								@click="move('west')"
-							>
-								<img src="/dungeon/mt/interf_arrow.png" alt="" />
-							</button>
-							<button
-								class="mt-test__original-dir mt-test__original-right"
-								type="button"
-								:disabled="cannotMove"
-								aria-label="Est"
-								@click="move('east')"
-							>
-								<img src="/dungeon/mt/interf_arrow.png" alt="" />
-							</button>
-							<button
-								class="mt-test__original-dir mt-test__original-down"
-								type="button"
-								:disabled="cannotMove"
-								aria-label="Sud"
-								@click="move('south')"
-							>
-								<img src="/dungeon/mt/interf_arrow.png" alt="" />
-							</button>
-							<button
-								v-if="stairDirections.includes('up')"
-								class="mt-test__original-stair mt-test__original-stair-up"
-								type="button"
-								:disabled="cannotMove"
-								aria-label="Escalier vers le haut"
-								@click="move('up')"
-							>
-								<img src="/dungeon/mt/interf_stair_up.png" alt="" />
-							</button>
-							<button
-								v-if="stairDirections.includes('down')"
-								class="mt-test__original-stair mt-test__original-stair-down"
-								type="button"
-								:disabled="cannotMove"
-								aria-label="Escalier vers le bas"
-								@click="move('down')"
-							>
-								<img src="/dungeon/mt/interf_stair_down.png" alt="" />
-							</button>
-						</template>
-					</div>
-					<div v-if="view && partyNeedsIrma && !partyDefeated" class="mt-test__irma-hint" role="status">
-						Actions épuisées : utilisez Irma pour continuer.
-					</div>
-					<div v-if="view" class="mt-test__original-level">Niveau -{{ session.position.l + 1 }}</div>
-				</div>
-				<p class="mt-test__caption">
-					PixiJS : caméra amortie selon View.hx, murs en profondeur et Dinoz intégrés à la scène. Le flou du brouillard
-					et certains ancrages PNG restent à comparer au SWF original.
-				</p>
-
-				<button class="mt-test__refresh" type="button" :disabled="busy" @click="refresh">Actualiser la vue</button>
-				<p class="mt-test__caption">
-					Clavier : flèches, ZQSD ou WASD. Un déplacement = une commande validée par le serveur.
-				</p>
-
-				<section v-if="session.pending && !mtDungeonBoundaryAction(session)" class="mt-test__panel" aria-live="polite">
-					<h3>Interaction en attente : {{ session.pending.kind }}</h3>
-					<p v-if="encounter?.text">{{ encounter.text }}</p>
-					<p v-if="encounter?.status" class="mt-test__caption">État serveur : {{ encounter.status }}</p>
-					<button
-						v-if="session.pending.kind === 'scenario' && encounter?.kind === 'scenario'"
-						type="button"
-						:disabled="busy"
-						@click="resolveScenario"
-					>
-						Lire / récupérer le coffre
-					</button>
-					<button
-						v-if="
-							session.pending.kind === 'scenario' &&
-							encounter?.kind === 'scenario-combat' &&
-							encounter.status === 'ready-for-combat'
-						"
-						type="button"
-						:disabled="busy"
-						@click="fight"
-					>
-						Combattre
-					</button>
-					<template v-if="session.pending.kind === 'guardian'">
-						<p v-if="guardianTrial" class="mt-test__caption">
-							Gardien MT : <strong>{{ guardianTrial.monsterKey }}</strong> — apparence issue du catalogue MT.
-						</p>
-						<p class="mt-test__caption">
-							Le combat utilise le moteur Remastered ; il consomme l'action de combat des Dinoz et peut attribuer de
-							l'XP ou des objets.
-						</p>
-						<button type="button" :disabled="busy" @click="fightGuardian">Combattre le gardien</button>
+						<button
+							class="mt-test__original-dir mt-test__original-left"
+							type="button"
+							:disabled="cannotMove"
+							aria-label="Ouest"
+							@click="move('west')"
+						>
+							<img src="/dungeon/mt/interf_arrow.png" alt="" />
+						</button>
+						<button
+							class="mt-test__original-dir mt-test__original-right"
+							type="button"
+							:disabled="cannotMove"
+							aria-label="Est"
+							@click="move('east')"
+						>
+							<img src="/dungeon/mt/interf_arrow.png" alt="" />
+						</button>
+						<button
+							class="mt-test__original-dir mt-test__original-down"
+							type="button"
+							:disabled="cannotMove"
+							aria-label="Sud"
+							@click="move('south')"
+						>
+							<img src="/dungeon/mt/interf_arrow.png" alt="" />
+						</button>
+						<button
+							v-if="stairDirections.includes('up')"
+							class="mt-test__original-stair mt-test__original-stair-up"
+							type="button"
+							:disabled="cannotMove"
+							aria-label="Escalier vers le haut"
+							@click="move('up')"
+						>
+							<img src="/dungeon/mt/interf_stair_up.png" alt="" />
+						</button>
+						<button
+							v-if="stairDirections.includes('down')"
+							class="mt-test__original-stair mt-test__original-stair-down"
+							type="button"
+							:disabled="cannotMove"
+							aria-label="Escalier vers le bas"
+							@click="move('down')"
+						>
+							<img src="/dungeon/mt/interf_stair_down.png" alt="" />
+						</button>
 					</template>
-					<button
-						v-if="session.pending.kind === 'guardian' && devCapabilities?.guardianSkip"
-						type="button"
-						:disabled="busy"
-						@click="skipGuardian"
-					>
-						Franchir le gardien (test local, sans combat)
-					</button>
-					<p v-if="!actionAvailable" class="mt-test__caption">
-						Cette interaction n'est pas encore résoluble dans cette version. Le déplacement reste bloqué conformément à
-						l'état serveur.
+				</div>
+				<div v-if="view && partyNeedsIrma && !partyDefeated" class="mt-test__irma-hint" role="status">
+					Actions épuisées : utilisez Irma pour continuer.
+				</div>
+				<div v-if="view" class="mt-test__original-level">Niveau -{{ session.position.l + 1 }}</div>
+			</div>
+			<p class="mt-test__caption">
+				PixiJS : caméra amortie selon View.hx, murs en profondeur et Dinoz intégrés à la scène. Le flou du brouillard et
+				certains ancrages PNG restent à comparer au SWF original.
+			</p>
+			<button class="mt-test__refresh" type="button" :disabled="busy" @click="refresh">
+				{{ $t('dungeon.refreshView') }}
+			</button>
+			<p class="mt-test__caption">
+				Clavier : flèches, ZQSD ou WASD. Un déplacement = une commande validée par le serveur.
+			</p>
+			<section v-if="session.pending && !mtDungeonBoundaryAction(session)" class="mt-test__panel" aria-live="polite">
+				<h3>Interaction en attente : {{ session.pending.kind }}</h3>
+				<p v-if="encounter?.text">{{ encounter.text }}</p>
+				<p v-if="encounter?.status" class="mt-test__caption">État serveur : {{ encounter.status }}</p>
+				<button
+					v-if="session.pending.kind === 'scenario' && encounter?.kind === 'scenario'"
+					type="button"
+					:disabled="busy"
+					@click="resolveScenario"
+				>
+					Lire / récupérer le coffre
+				</button>
+				<button
+					v-if="
+						session.pending.kind === 'scenario' &&
+						encounter?.kind === 'scenario-combat' &&
+						encounter.status === 'ready-for-combat'
+					"
+					type="button"
+					:disabled="busy"
+					@click="fight"
+				>
+					Combattre
+				</button>
+				<template v-if="session.pending.kind === 'guardian'">
+					<p v-if="guardianTrial" class="mt-test__caption">
+						Gardien MT : <strong>{{ guardianTrial.monsterKey }}</strong> — apparence issue du catalogue MT.
 					</p>
-				</section>
-
-				<section v-if="activeHealZone" class="mt-test__panel" aria-live="polite">
-					<p>Zone de soin active : utilise des objets de soin sur la fiche de tes Dinoz, puis reviens ici.</p>
-					<p>La zone sera définitivement désactivée dès que le groupe quittera cette case.</p>
-					<RouterLink :to="{ name: 'DinozPage', params: { id: leaderId } }">Soigner le chef de groupe</RouterLink>
-					<RouterLink
-						v-for="member in visualMembers.filter(m => m.id !== leaderId)"
-						:key="member.id"
-						:to="{ name: 'DinozPage', params: { id: member.id } }"
-						>Soigner le Dinoz {{ member.id }}</RouterLink
-					>
-				</section>
-
-				<details v-if="view" class="mt-test__details mt-test__journal">
-					<summary>Journal et coffres découverts ({{ journalEntries.length }})</summary>
-					<p v-if="journalError" role="status">{{ journalError }}</p>
-					<p v-else-if="journalEntries.length === 0">Aucun texte découvert pour le moment.</p>
-					<ol v-else>
-						<li v-for="entry in journalEntries" :key="`${entry.mapId}:${entry.level}:${entry.scenarioIndex}`">
-							<strong>Carte {{ entry.stage + 1 }} — niveau {{ entry.level + 1 }}</strong>
-							<p>{{ entry.text }}</p>
-						</li>
-					</ol>
-					<button type="button" :disabled="busy" @click="loadJournal">Actualiser les découvertes</button>
-				</details>
-
-				<details v-if="view" class="mt-test__details">
-					<summary>Diagnostics de fidélité</summary>
-					<p>
-						Sol et murs : PNG originaux, mais ancrages et sous-clips Flash non entièrement rétablis. Le bruit Perlin
-						Flash est toujours absent. Les Dinoz affichés viennent de l'animation actuelle de Remastered.
+					<p class="mt-test__caption">
+						Le combat utilise le moteur Remastered ; il consomme l'action de combat des Dinoz et peut attribuer de l'XP
+						ou des objets.
 					</p>
-					<p>Les régions inconnues et les événements cachés ne sont pas transmis par l'API de vue.</p>
-				</details>
-			</template>
+					<button type="button" :disabled="busy" @click="fightGuardian">Combattre le gardien</button>
+				</template>
+				<button
+					v-if="session.pending.kind === 'guardian' && devCapabilities?.guardianSkip"
+					type="button"
+					:disabled="busy"
+					@click="skipGuardian"
+				>
+					Franchir le gardien (test local, sans combat)
+				</button>
+				<p v-if="!actionAvailable" class="mt-test__caption">
+					Cette interaction n'est pas encore résoluble dans cette version. Le déplacement reste bloqué conformément à
+					l'état serveur.
+				</p>
+			</section>
+			<section v-if="activeHealZone" class="mt-test__panel" aria-live="polite">
+				<p>Zone de soin active : utilise des objets de soin sur la fiche de tes Dinoz, puis reviens ici.</p>
+				<p>La zone sera définitivement désactivée dès que le groupe quittera cette case.</p>
+				<RouterLink :to="{ name: 'DinozPage', params: { id: leaderId } }">Soigner le chef de groupe</RouterLink>
+				<RouterLink
+					v-for="member in visualMembers.filter(m => m.id !== leaderId)"
+					:key="member.id"
+					:to="{ name: 'DinozPage', params: { id: member.id } }"
+					>Soigner le Dinoz {{ member.id }}</RouterLink
+				>
+			</section>
+			<details v-if="view" class="mt-test__details mt-test__journal">
+				<summary>Journal et coffres découverts ({{ journalEntries.length }})</summary>
+				<p v-if="journalError" role="status">{{ journalError }}</p>
+				<p v-else-if="journalEntries.length === 0">{{ $t('dungeon.noDiscoveries') }}</p>
+				<ol v-else>
+					<li v-for="entry in journalEntries" :key="`${entry.mapId}:${entry.level}:${entry.scenarioIndex}`">
+						<strong>Carte {{ entry.stage + 1 }} — niveau {{ entry.level + 1 }}</strong>
+						<p>{{ entry.text }}</p>
+					</li>
+				</ol>
+				<button type="button" :disabled="busy" @click="loadJournal">{{ $t('dungeon.refreshDiscoveries') }}</button>
+			</details>
+			<details v-if="view" class="mt-test__details">
+				<summary>{{ $t('dungeon.diagnostics') }}</summary>
+				<p>
+					Sol et murs : PNG originaux, mais ancrages et sous-clips Flash non entièrement rétablis. Le bruit Perlin Flash
+					est toujours absent. Les Dinoz affichés viennent de l'animation actuelle de Remastered.
+				</p>
+				<p>Les régions inconnues et les événements cachés ne sont pas transmis par l'API de vue.</p>
+			</details>
 		</template>
 	</section>
 </template>
@@ -275,6 +258,9 @@
 <script setup lang="ts">
 import axios from 'axios';
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
+import TitleHeader from '../components/utils/TitleHeader.vue';
+import DZDisclaimer from '../components/utils/DZDisclaimer.vue';
 import { useRoute, useRouter } from 'vue-router';
 import { mtDungeonCombatTrigger } from '../components/dungeon/mtDungeonCombatTrigger.js';
 import MtOriginalDungeonCanvas from '../components/dungeon/MtOriginalDungeonCanvas.vue';
@@ -287,6 +273,7 @@ import { DinozService } from '../services/dinoz.service.js';
 import {
 	MtDungeonService,
 	type MtDungeonCurrentView,
+	type MtDungeonCatalogEntry,
 	type MtDungeonJournalEntry,
 	type MtDungeonEncounter,
 	type MtDungeonDevCapabilities,
@@ -299,9 +286,11 @@ import { userStore } from '../store/userStore.js';
 import type { MtDungeonSession } from '@dinorpg/core/models/dungeon/dungeon.session.js';
 import type { DungeonCommand } from '@dinorpg/core/models/dungeon/dungeon.types.js';
 
+const { t } = useI18n();
 const route = useRoute();
 const router = useRouter();
 const leaderId = Number(route.params.id);
+// Always use the authoritative active session; route parameters never select map content.
 const session = ref<MtDungeonSession | null>(null);
 const view = ref<MtDungeonCurrentView | null>(null);
 const encounter = ref<MtDungeonEncounter | null>(null);
@@ -349,6 +338,7 @@ const visualParty = computed(() => {
 async function loadVisualParty(): Promise<void> {
 	try {
 		const leader = await DinozService.getDinozFiche(leaderId, { silent: true });
+		dinozName.value = String(leader.name || leader.display || leaderId);
 		const followers = await Promise.all(
 			leader.followers.map(follower => DinozService.getDinozFiche(follower.id, { silent: true }))
 		);
@@ -369,8 +359,13 @@ async function loadVisualParty(): Promise<void> {
 		partyActionsLoaded.value = false;
 	}
 }
-const stage = computed(() => Number(session.value?.mapId.split('_')[1] ?? 0));
-const isMagnetic = computed(() => session.value?.mapId.startsWith('stepp_') ?? false);
+const stage = computed(() => Number(session.value?.mapId.match(/_([0-9]+)$/)?.[1] ?? 0));
+const dungeonId = computed(() => session.value?.mapId.replace(/_[0-9]+$/, '') ?? '');
+const dungeonName = computed(
+	() => catalog.value.find(entry => entry.id === dungeonId.value)?.name || dungeonId.value || t('dungeon.title')
+);
+const dinozName = ref('');
+const catalog = ref<MtDungeonCatalogEntry[]>([]);
 const partyLeaderDead = computed(() => visualMembers.value.some(member => member.id === leaderId && member.life <= 0));
 const partyDefeated = computed(
 	() => visualMembers.value.length > 0 && visualMembers.value.every(dinoz => dinoz.life <= 0)
@@ -435,7 +430,7 @@ const activeMessage = computed((): MtNarrative | null => {
 	if (session.value && originalEntryText.value && !entryDismissed.value) {
 		return {
 			kind: 'entry',
-			title: 'Les Cavernes Magnétiques',
+			title: dungeonName.value,
 			text: originalEntryText.value,
 			confirmLabel: 'Continuer'
 		};
@@ -500,7 +495,7 @@ function confirmMessage(): void {
 async function showOriginalEntryText(): Promise<void> {
 	try {
 		// Public metadata contain introduction and exit only; no hidden scenario leaks.
-		const definition = (await MtDungeonService.getCatalog(language.value)).find(value => value.id === 'stepp');
+		const definition = catalog.value.find(value => value.id === dungeonId.value);
 		if (definition?.enter.text) {
 			originalEntryText.value = definition.enter.text;
 			entryDismissed.value = false;
@@ -537,7 +532,7 @@ async function refresh(): Promise<void> {
 		const current = await MtDungeonService.getSession(leaderId);
 		// Do not render actors from the new session on a view from the old revision.
 		// A rejected move or a browser-tab resync must not produce a fake walk.
-		const latestView = current.mapId.startsWith('stepp_') ? await MtDungeonService.getView(leaderId) : null;
+		const latestView = await MtDungeonService.getView(leaderId);
 		if (latestView && (latestView.revision !== current.revision || latestView.mapId !== current.mapId))
 			throw new Error('La vue du donjon a changé pendant le chargement : actualise pour synchroniser.');
 		const latestEncounter =
@@ -821,8 +816,13 @@ onMounted(() => {
 	window.addEventListener('keydown', onKeyDown);
 	void (async () => {
 		await refresh();
+		try {
+			catalog.value = await MtDungeonService.getCatalog(language.value);
+		} catch {
+			/* API indisponible : afficher l'identifiant sans inventer de nom */
+		}
 		await loadDevCapabilities();
-		if (route.query.mtEntry === '1' && session.value?.mapId.startsWith('stepp_')) {
+		if (route.query.mtEntry === '1' && session.value) {
 			await showOriginalEntryText();
 			const query = { ...route.query };
 			delete query.mtEntry;
