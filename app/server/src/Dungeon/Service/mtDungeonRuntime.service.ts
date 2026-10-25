@@ -22,6 +22,27 @@ export class MtDungeonEntryError extends Error {
 	}
 }
 
+/** Resolve the only historical dungeon whose entrance matches the leader's actual place.
+ * This discovery is a convenience; assertMtDungeonEntry remains the authority under gameplay lock.
+ */
+export async function resolveMtDungeonAtLeaderPlace(
+	archive: MtDungeonArchive,
+	identity: MtSessionIdentity
+): Promise<string> {
+	const user = await getDinozFightDataRequest(identity.leaderDinozId, identity.userId);
+	if (!user) throw new MtDungeonEntryError('user-not-found');
+	const leader = user.dinoz.find(d => d.id === identity.leaderDinozId);
+	if (!leader || leader.userId !== identity.userId || leader.leaderId !== null)
+		throw new MtDungeonEntryError('not-owned-leader');
+	const matches = archive.definitions('fr').filter(def => {
+		const place = Object.values(placeListv2).find(p => p.name === def.enter.place);
+		return place?.placeId === leader.placeId;
+	});
+	if (!matches.length) throw new MtDungeonEntryError('no-dungeon-at-place');
+	if (matches.length !== 1) throw new MtDungeonEntryError('ambiguous-dungeon-at-place');
+	return matches[0]!.id;
+}
+
 /** Check exact original entrance condition using Remastered's condition engine. */
 export async function assertMtDungeonEntry(
 	archive: MtDungeonArchive,
