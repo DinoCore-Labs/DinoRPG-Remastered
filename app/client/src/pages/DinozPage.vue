@@ -12,6 +12,14 @@
   SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 <template>
+	<!-- STEP_27_EXIT_ON_DINOZ: visible only on the destination Dinoz page. -->
+	<MtDungeonMessageBox
+		v-if="dungeonExitMessage"
+		variant="notice"
+		:text="dungeonExitMessage"
+		:confirm-label="'Continuer'"
+		@confirm="dungeonExitMessage = null"
+	/>
 	<template v-if="nameChoosen === false">
 		<DinozName :dinozData="dinozData" @setNameChoosen="setNameChoosen" />
 	</template>
@@ -42,6 +50,7 @@ import { Action } from '@dinorpg/core/models/dinoz/dinozActions.js'; // STEP_20P
 import DinozName from '../components/dinoz/DinozName.vue';
 import DinozActions from '../components/dinoz/DinozActions.vue';
 import TabPanels from '../components/common/TabPanels.vue';
+import MtDungeonMessageBox from '../components/dungeon/MtDungeonMessageBox.vue';
 
 function isRenderableDinozFiche(dinoz: DinozFiche | undefined): dinoz is DinozFiche {
 	return !!dinoz && !!dinoz.race && Array.isArray(dinoz.borderPlace) && Array.isArray(dinoz.followers);
@@ -55,13 +64,15 @@ export default defineComponent({
 			userStore: userStore(),
 			nameChoosen: undefined as boolean | undefined,
 			dinozData: {} as DinozFiche,
-			isReady: false as boolean
+			isReady: false as boolean,
+			dungeonExitMessage: null as string | null
 		};
 	},
 	components: {
 		DinozName,
 		DinozActions,
 		TabPanels,
+		MtDungeonMessageBox,
 		DinozDisplay: defineAsyncComponent(() => import('../components/dinoz/DinozDisplay.vue'))
 	},
 	methods: {
@@ -138,6 +149,14 @@ export default defineComponent({
 	},
 	// Get dinoz data
 	async mounted(): Promise<void> {
+		// Read once from the new navigation entry; do not show it after refresh/back.
+		const exitText = window.history.state?.mtDungeonExitMessage;
+		if (typeof exitText === 'string' && exitText.trim()) {
+			this.dungeonExitMessage = exitText;
+			const { mtDungeonExitMessage: _consumed, ...remainingState } = window.history.state ?? {};
+			window.history.replaceState(remainingState, '');
+		}
+
 		eventBus.on('refreshDinoz', async e => {
 			if (e) {
 				await this.refreshDinoz();

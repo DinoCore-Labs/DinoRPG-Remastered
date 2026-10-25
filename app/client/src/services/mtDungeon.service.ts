@@ -55,7 +55,6 @@ export interface MtDungeonJournalEntry {
 }
 
 export interface MtDungeonCatalogEntry {
-	// STEP_20O_MT_DUNGEON
 	id: string;
 	name: string;
 	enter: { place: string; text: string };

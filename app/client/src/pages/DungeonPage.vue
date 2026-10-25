@@ -21,20 +21,10 @@
 		<p v-if="errorMessage" class="mt-test__error" role="alert">{{ errorMessage }}</p>
 		<p v-if="notice" class="mt-test__notice" role="status">{{ notice }}</p>
 		<p v-if="loading && !session">{{ $t('dungeon.loading') }}</p>
-		<section v-if="!session && !loading && !exitOutcome" class="mt-test__panel">
+		<section v-if="!session && !loading" class="mt-test__panel">
 			<p>{{ $t('dungeon.enterFromWorld') }}</p>
 			<p>{{ $t('dungeon.entryValidated') }}</p>
 			<RouterLink :to="{ name: 'DinozPage', params: { id: leaderId } }">{{ $t('dungeon.enterReturn') }}</RouterLink>
-		</section>
-		<section v-if="exitOutcome" class="mt-test__panel" aria-live="polite">
-			<h3>{{ $t(exitOutcome.kind === 'complete' ? 'dungeon.completed' : 'dungeon.returnSurface') }}</h3>
-			<p>{{ exitOutcome.text }}</p>
-			<p class="mt-test__caption">
-				Votre progression a été sauvegardée. Aucune récompense de fin supplémentaire n'est attribuée.
-			</p>
-			<RouterLink :to="{ name: 'DinozPage', params: { id: leaderId } }">{{
-				$t('dungeon.backToDinozShort')
-			}}</RouterLink>
 		</section>
 		<template v-if="session">
 			<details class="mt-test__status">
@@ -71,7 +61,10 @@
 					v-if="activeMessage"
 					placement="viewport"
 					:variant="
-						activeMessage.kind === 'entry' || activeMessage.kind === 'irma' || activeMessage.kind === 'pickup'
+						activeMessage.kind === 'entry' ||
+						activeMessage.kind === 'irma' ||
+						activeMessage.kind === 'pickup' ||
+						activeMessage.kind === 'exit'
 							? 'notice'
 							: 'dialog'
 					"
@@ -277,8 +270,7 @@ import {
 	type MtDungeonJournalEntry,
 	type MtDungeonEncounter,
 	type MtDungeonDevCapabilities,
-	type MtGuardianTrialPreview,
-	type MtDungeonWorldExitResult
+	type MtGuardianTrialPreview
 } from '../services/mtDungeon.service.js';
 import { sessionStore } from '../store/sessionStore';
 import { localStore } from '../store/localStore';
@@ -296,14 +288,12 @@ const view = ref<MtDungeonCurrentView | null>(null);
 const encounter = ref<MtDungeonEncounter | null>(null);
 const journalEntries = ref<MtDungeonJournalEntry[]>([]);
 const journalError = ref('');
-const exitOutcome = ref<MtDungeonWorldExitResult | null>(null);
 const errorMessage = ref('');
 const notice = ref('');
 const irmaMessage = ref<string | null>(null);
 const pickupMessage = ref<string | null>(null);
 const originalEntryText = ref<string | null>(null); // STEP_20O_MT_DUNGEON
 const entryDismissed = ref(false);
-const exitDismissed = ref(false);
 const scenarioDismissedRevision = ref('');
 const devCapabilities = ref<MtDungeonDevCapabilities | null>(null);
 const guardianTrial = ref<MtGuardianTrialPreview | null>(null);
@@ -421,12 +411,9 @@ const actionAvailable = computed(() => {
 	);
 });
 
-type MtNarrativeKind = 'entry' | 'exit' | 'scenario' | 'scenario-combat' | 'irma' | 'pickup'; // STEP_20O_MT_DUNGEON
+type MtNarrativeKind = 'entry' | 'scenario' | 'scenario-combat' | 'irma' | 'pickup'; // STEP_20O_MT_DUNGEON
 type MtNarrative = { kind: MtNarrativeKind; title: string; text: string; confirmLabel: string; cancelLabel?: string };
 const activeMessage = computed((): MtNarrative | null => {
-	if (exitOutcome.value && !exitDismissed.value) {
-		return { kind: 'exit', title: 'Sortie du donjon', text: exitOutcome.value.text, confirmLabel: 'Retour à la fiche' };
-	}
 	if (session.value && originalEntryText.value && !entryDismissed.value) {
 		return {
 			kind: 'entry',
@@ -470,7 +457,7 @@ function closeMessage(): void {
 	if (kind === 'pickup') pickupMessage.value = null;
 	if (kind === 'irma') irmaMessage.value = null;
 	if (kind === 'entry') entryDismissed.value = true;
-	if (kind === 'exit') exitDismissed.value = true;
+
 	if ((kind === 'scenario' || kind === 'scenario-combat') && session.value)
 		scenarioDismissedRevision.value = session.value.mapId + ':' + session.value.revision;
 }
@@ -479,10 +466,6 @@ function confirmMessage(): void {
 	if (kind === 'pickup') pickupMessage.value = null;
 	if (kind === 'irma') irmaMessage.value = null;
 	if (kind === 'entry') entryDismissed.value = true;
-	if (kind === 'exit') {
-		exitDismissed.value = true;
-		void router.push({ name: 'DinozPage', params: { id: String(leaderId) } });
-	}
 	if (kind === 'scenario') {
 		closeMessage();
 		resolveScenario();
@@ -700,13 +683,13 @@ async function settleMtBoundary(current: MtDungeonSession): Promise<boolean> {
 		return true;
 	}
 	const outcome = await MtDungeonService.worldExit(leaderId, current.revision, language.value);
-	session.value = null;
-	view.value = null;
-	encounter.value = null;
-	guardianTrial.value = null;
-	movementTrail.value = [];
-	exitOutcome.value = outcome;
-	journalEntries.value = [];
+	// STEP_27_EXIT_ON_DINOZ: the server exit is committed before navigation.
+	// Carry the original MT message in Vue Router history state, never a URL parameter.
+	await router.replace({
+		name: 'DinozPage',
+		params: { id: String(leaderId) },
+		state: { mtDungeonExitMessage: outcome.text }
+	});
 	return true;
 }
 function resolveScenario() {
