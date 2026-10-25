@@ -13,7 +13,7 @@
 			:aria-modal="variant === 'dialog' ? 'true' : 'false'"
 			:aria-label="title || text"
 		>
-			<span class="mt-msgbox__tab" aria-hidden="true" />
+			<img class="mt-msgbox__tab" src="/dungeon/mt/item_scroll.png" aria-hidden="true" />
 			<span
 				v-for="piece in pieces"
 				:key="piece"
@@ -179,28 +179,17 @@ function dismissOutside(): void {
 /* A small raised tab, as seen on the 2000s Flash dungeon message frame. */
 .mt-msgbox__tab {
 	position: absolute;
-	z-index: 3;
-	top: -13px;
+	z-index: 2501;
+	top: -17px;
 	left: 50%;
-	width: 27px;
-	height: 19px;
-	box-sizing: border-box;
+	width: 40px;
+	height: auto;
 	transform: translateX(-50%);
-	border: 2px solid #b75b1d;
-	border-bottom: 0;
-	border-radius: 4px 4px 0 0;
-	background: linear-gradient(#d37c39 0 20%, #974219 40%, #b9632d 72%, #873315);
-	box-shadow:
-		inset 2px 1px #f5a04c,
-		inset -2px 0 #71300e;
-	pointer-events: none;
 }
 .mt-msgbox__content {
 	position: relative;
 	z-index: 2;
 	max-height: calc(min(80vh, 330px) - 28px);
-	overflow: auto;
-	overscroll-behavior: contain;
 }
 .mt-msgbox__text {
 	margin: 0;

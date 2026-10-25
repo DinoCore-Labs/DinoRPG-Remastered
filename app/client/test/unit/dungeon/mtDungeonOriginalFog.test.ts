@@ -7,14 +7,17 @@ import {
 	MT_ORIGINAL_FOG_TILE_PX,
 	MT_ORIGINAL_FOG_URLS,
 	mtOriginalFogFrame,
+	mtOriginalFogIndex,
 	mtOriginalFogSprites
 } from '../../../src/components/dungeon/mtDungeonOriginalFog.js';
 
-function scene(viewX = 12, viewY = 10, level = 1): MtDungeonScene {
+function scene(ix = 12, iy = 10, level = 1): MtDungeonScene {
 	return {
 		level,
-		viewport: { ix: viewX, iy: viewY },
-		roomIds: Array.from({ length: 20 }, () => Array<number | null>(18).fill(null)),
+		viewport: { ix, iy },
+		mapWidth: 20,
+		mapHeight: 18,
+		roomIds: [], // the actual API redacts this field
 		fog: [
 			{ x: 12, y: 11 },
 			{ x: 13, y: 11 },
@@ -23,34 +26,40 @@ function scene(viewX = 12, viewY = 10, level = 1): MtDungeonScene {
 	} as MtDungeonScene;
 }
 
-describe('Original Motion Twin fog frames (gfx.swf fog / 404)', () => {
-	it('uses all four extracted PNG frames at 40px with the actual -14px registration', () => {
+describe('SWF 404 Motion Twin fog for any dungeon map', () => {
+	it('preserves native dimensions, 4 exact frames and 32px Flash blur metadata', () => {
 		expect(MT_ORIGINAL_FOG_TILE_PX).toBe(40);
 		expect(MT_ORIGINAL_FOG_MARGIN_PX).toBe(14);
 		expect(MT_ORIGINAL_FOG_BLUR_PX).toBe(32);
 		expect(MT_ORIGINAL_FOG_URLS).toHaveLength(4);
 		expect(mtOriginalFogSprites(scene())[0]).toMatchObject({ x: -14, y: 26 });
 	});
-	it('uses the original X-major position for deterministic frame choices', () => {
-		const f = mtOriginalFogFrame(1, 20, 18, 12, 11);
-		expect(f).toBe((360 + 12 * 18 + 11) % 4);
-		for (let v = 0; v < 4; v++) expect(mtOriginalFogFrame(0, 20, 18, 0, v)).toBe(v);
+	it('uses exact X-major index, not a viewport or roomIds index', () => {
+		expect(mtOriginalFogIndex(1, 20, 18, 12, 11)).toBe(587);
+		expect(mtOriginalFogFrame(1, 20, 18, 12, 11)).toBe(587 % 4);
+		expect(mtOriginalFogFrame(0, 20, 18, 0, 3)).toBe(3);
+		expect(mtOriginalFogFrame(0, 17, 13, 2, 1)).toBe((2 * 13 + 1) % 4);
 	});
-	it('keeps world-frame choice stable while the camera pans', () => {
+	it('keeps the same frames after camera movements', () => {
 		const before = mtOriginalFogSprites(scene());
 		const after = mtOriginalFogSprites(scene(13, 11));
 		expect(after.map(f => f.frame)).toEqual(before.map(f => f.frame));
 		expect(after.map(f => [f.x, f.y])).toEqual(before.map(f => [f.x - 40, f.y - 40]));
 	});
-	it('does not mutate the server visibility data or reveal new tiles', () => {
-		const input = scene();
-		const original = structuredClone(input.fog);
-		expect(mtOriginalFogSprites({ ...input, fog: [] })).toEqual([]);
-		expect(mtOriginalFogSprites(input)).toHaveLength(3);
-		expect(input.fog).toEqual(original);
+	it('fails closed on missing map dimensions rather than silently using 0', () => {
+		const s = { ...scene(), mapHeight: 0 };
+		expect(() => mtOriginalFogSprites(s)).toThrow('Invalid Motion Twin fog');
 	});
-	it('preserves a valid frame for negative overscan coordinates', () => {
-		expect(mtOriginalFogFrame(0, 20, 18, -2, -1)).toBeGreaterThanOrEqual(0);
-		expect(mtOriginalFogFrame(0, 20, 18, -2, -1)).toBeLessThan(4);
+	it('does not discover any cells on its own', () => {
+		const s = scene();
+		const old = structuredClone(s.fog);
+		expect(mtOriginalFogSprites({ ...s, fog: [] })).toEqual([]);
+		expect(mtOriginalFogSprites(s)).toHaveLength(3);
+		expect(s.fog).toEqual(old);
+	});
+	it('handles negative overscan coordinates deterministically', () => {
+		const f = mtOriginalFogFrame(0, 20, 18, -2, -1);
+		expect(f).toBeGreaterThanOrEqual(0);
+		expect(f).toBeLessThan(4);
 	});
 });
