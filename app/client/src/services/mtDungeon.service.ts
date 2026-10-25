@@ -122,9 +122,6 @@ export const MtDungeonService = {
 	startDungeon(id: number): Promise<MtDungeonSession> {
 		return api.post('/dungeon/mt/start', { leaderDinozId: id });
 	},
-	startMagneticCaverns(id: number): Promise<MtDungeonSession> {
-		return this.startDungeon(id, 'stepp');
-	},
 	move(
 		id: number,
 		revision: number,

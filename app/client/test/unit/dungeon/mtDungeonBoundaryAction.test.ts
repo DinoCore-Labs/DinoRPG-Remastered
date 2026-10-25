@@ -1,31 +1,26 @@
+import { MT_DUNGEON_MAPS } from '@dinorpg/core/models/dungeon/dungeon.catalog.js';
 import type { MtDungeonSession } from '@dinorpg/core/models/dungeon/dungeon.session.js';
 import { describe, expect, it } from 'vitest';
 
 import { mtDungeonBoundaryAction } from '../../../src/components/dungeon/mtDungeonBoundaryAction.js';
 
-function boundary(mapId: string, kind: 'boundary-start' | 'boundary-exit' | null) {
-	return {
-		mapId,
-		pending: kind ? { kind } : null
-	} as Pick<MtDungeonSession, 'mapId' | 'pending'>;
-}
+const run = (mapId: string, kind: 'boundary-start' | 'boundary-exit' | null) =>
+	({ mapId, pending: kind ? { kind } : null }) as Pick<MtDungeonSession, 'mapId' | 'pending'>;
 
-describe('automatic original Magnetic Caverns boundary navigation', () => {
-	it('returns to the surface immediately from the first entrance', () => {
-		expect(mtDungeonBoundaryAction(boundary('stepp_0', 'boundary-start'))).toBe('surface-exit');
-	});
-	it('completes the dungeon on the last exit', () => {
-		expect(mtDungeonBoundaryAction(boundary('stepp_3', 'boundary-exit'))).toBe('surface-exit');
-	});
-	it('moves through intermediate stage doors automatically', () => {
-		for (const mapId of ['stepp_0', 'stepp_1', 'stepp_2'])
-			expect(mtDungeonBoundaryAction(boundary(mapId, 'boundary-exit'))).toBe('forward');
-		for (const mapId of ['stepp_1', 'stepp_2', 'stepp_3'])
-			expect(mtDungeonBoundaryAction(boundary(mapId, 'boundary-start'))).toBe('backward');
-	});
-	it('does not consume other interactions or unknown dungeon sessions', () => {
-		expect(mtDungeonBoundaryAction(boundary('stepp_0', null))).toBeNull();
-		expect(mtDungeonBoundaryAction(boundary('katak_0', 'boundary-exit'))).toBeNull();
-		expect(mtDungeonBoundaryAction(boundary('stepp_4', 'boundary-exit'))).toBeNull();
+describe('MT dungeon boundary routing for every archived dungeon', () => {
+	for (const [id, maps] of Object.entries(MT_DUNGEON_MAPS)) {
+		it(id + ' returns from its entry and exits its final map', () => {
+			expect(mtDungeonBoundaryAction(run(id + '_0', 'boundary-start'))).toBe('surface-exit');
+			expect(mtDungeonBoundaryAction(run(id + '_' + (maps.length - 1), 'boundary-exit'))).toBe('surface-exit');
+			for (let stage = 0; stage < maps.length - 1; stage++)
+				expect(mtDungeonBoundaryAction(run(id + '_' + stage, 'boundary-exit'))).toBe('forward');
+			for (let stage = 1; stage < maps.length; stage++)
+				expect(mtDungeonBoundaryAction(run(id + '_' + stage, 'boundary-start'))).toBe('backward');
+		});
+	}
+	it('does not process absent or invalid boundaries', () => {
+		expect(mtDungeonBoundaryAction(run('katak_0', null))).toBeNull();
+		expect(mtDungeonBoundaryAction(run('madeup_0', 'boundary-start'))).toBeNull();
+		expect(mtDungeonBoundaryAction(run('stepp_999', 'boundary-exit'))).toBeNull();
 	});
 });
