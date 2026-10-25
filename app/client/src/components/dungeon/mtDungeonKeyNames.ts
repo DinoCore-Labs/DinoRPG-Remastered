@@ -19,7 +19,7 @@ const SUFFIXES = [
 	'Enchantés',
 	'Morts',
 	'en Plastique',
-	'Étincellants',
+	'Étincelants',
 	'Rouges',
 	'Maquillés',
 	'en Carton'

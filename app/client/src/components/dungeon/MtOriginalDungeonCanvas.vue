@@ -181,6 +181,16 @@ interface ActorState {
 
 const actorNodes = new Map<number, ActorState>();
 const guardianNodes = new Set<AnimatedSprite>();
+/** STEP36_MT_DEPTH_SORT: Walls in the foreground share one Y-sorted container with actors. */
+const sortedWallNodes = new Set<Sprite>();
+
+function clearSortedWalls(): void {
+	for (const wall of sortedWallNodes) {
+		wall.parent?.removeChild(wall);
+		wall.destroy();
+	}
+	sortedWallNodes.clear();
+}
 
 function clear(layer: Container): void {
 	for (const child of layer.removeChildren()) child.destroy({ children: true });
@@ -338,7 +348,13 @@ function paintSprite(sprite: ReturnType<typeof createMtSpritePlan>['sprites'][nu
 		visual.anchor.set(position.anchorX, position.anchorY);
 		visual.scale.x = position.flipX ? -1 : 1;
 		visual.position.set(position.x - originX, position.y - originY);
-		(position.plane === 'behind-actors' ? northernWalls : nearWalls).addChild(visual);
+		if (position.plane === 'behind-actors') {
+			northernWalls.addChild(visual);
+		} else {
+			visual.zIndex = wall.part === 'back' ? wall.y - 0.25 : wall.y + 0.5;
+			actorsLayer.addChild(visual);
+			sortedWallNodes.add(visual);
+		}
 		if (debugWalls.value) {
 			const bounds = mtWallBounds(position, texture.width, texture.height);
 			const color = position.plane === 'behind-actors' ? 0x65bafe : 0xffac57;
@@ -393,12 +409,12 @@ function paintGuardians(scene: MtDungeonScene, ticket: number): void {
 	for (const guardian of props.guardians ?? []) {
 		if (!Number.isInteger(guardian.x) || !Number.isInteger(guardian.y)) continue;
 		const x = (guardian.x - scene.viewport.ix + 0.5) * 40;
-		const y = (guardian.y - scene.viewport.iy + 0.75) * 40;
+		const y = (guardian.y - scene.viewport.iy + 0.8) * 40;
 		void loadMtDungeonGuardianFrames(guardian.gfx)
 			.then(frames => {
 				if (disposed || !app || ticket !== generation || !frames.length) return;
 				const visual = new AnimatedSprite([...frames]);
-				visual.anchor.set(0.5);
+				visual.anchor.set(0.5, 1);
 				// Exported smonster frames may be larger than their nominal 72px canvas.
 				// Fit using the largest frame so the animation never changes size.
 				const frameWidth = Math.max(...frames.map(frame => frame.width));
@@ -407,7 +423,14 @@ function paintGuardians(scene: MtDungeonScene, ticket: number): void {
 					visual.destroy();
 					return;
 				}
-				visual.scale.set(Math.min(1, (40 * 1.05) / frameWidth, (40 * 1.15) / frameHeight));
+				console.log('Gardien MT :', {
+					gfx: guardian.gfx,
+					x: guardian.x,
+					y: guardian.y,
+					frameWidth,
+					frameHeight
+				});
+				visual.scale.set(Math.min(1, (40 * 1.05) / frameWidth, (40 * 1.25) / frameHeight));
 				visual.position.set(x, y);
 				visual.zIndex = guardian.y;
 				visual.animationSpeed = 0.2;
@@ -551,6 +574,7 @@ async function repaint(): Promise<void> {
 		}
 	}
 	clearGuardianNodes();
+	clearSortedWalls();
 	for (const layer of [ground, northernWalls, items, nearWalls, fogLayer, diagnosticsLayer]) clear(layer);
 	mtTerrainTexture?.destroy(true);
 	mtTerrainTexture = nextTerrainTexture;
