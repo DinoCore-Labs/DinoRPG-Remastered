@@ -54,6 +54,16 @@ export interface MtDungeonJournalEntry {
 	text: string;
 }
 
+export interface MtDungeonCatalogEntry {
+	// STEP_20O_MT_DUNGEON
+	id: string;
+	name: string;
+	enter: { place: string; text: string };
+	exit: { place: string; text: string };
+	stageCount: number;
+	languageUsed: string;
+}
+
 export interface MtDungeonJournal {
 	languageUsed: string;
 	entries: MtDungeonJournalEntry[];
@@ -67,6 +77,10 @@ export interface MtDungeonWorldExitResult {
 }
 
 export const MtDungeonService = {
+	getCatalog(language: string): Promise<MtDungeonCatalogEntry[]> {
+		// STEP_20O_MT_DUNGEON
+		return api.get('/dungeon/mt/catalog', { params: { lang: language }, silent: true });
+	},
 	getJournal(id: number, language: string): Promise<MtDungeonJournal> {
 		return api.get(`/dungeon/mt/${id}/journal`, { params: { lang: language }, silent: true });
 	},

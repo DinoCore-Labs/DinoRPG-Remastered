@@ -1,8 +1,19 @@
 <template>
 	<section class="mt-test" aria-label="Exploration des Cavernes Magnétiques">
+		<!-- STEP_20O_MT_DUNGEON: original eight-piece Motion Twin message box. -->
+		<MtDungeonMessageBox
+			v-if="activeMessage"
+			:title="activeMessage.title"
+			:text="activeMessage.text"
+			:confirm-label="activeMessage.confirmLabel"
+			:cancel-label="activeMessage.cancelLabel"
+			:busy="busy"
+			@confirm="confirmMessage"
+			@close="closeMessage"
+		/>
 		<header class="mt-test__header">
 			<h2>Les Cavernes Magnétiques</h2>
-			<p>Exploration expérimentale — cartes et graphismes d'origine Motion Twin</p>
+			<p>Exploration des cartes et graphismes d'origine Motion Twin</p>
 			<RouterLink :to="{ name: 'DinozPage', params: { id: leaderId } }">← Revenir à la fiche du Dinoz</RouterLink>
 		</header>
 
@@ -274,6 +285,7 @@ import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { mtDungeonCombatTrigger } from '../components/dungeon/mtDungeonCombatTrigger.js';
 import MtOriginalDungeonCanvas from '../components/dungeon/MtOriginalDungeonCanvas.vue';
+import MtDungeonMessageBox from '../components/dungeon/MtDungeonMessageBox.vue';
 import { advanceMtTrail, mtFollowerPositions, type MtTrailPoint } from '../components/dungeon/dungeonPartyTrail.js';
 import { DinozService } from '../services/dinoz.service.js';
 import {
@@ -302,6 +314,10 @@ const journalError = ref('');
 const exitOutcome = ref<MtDungeonWorldExitResult | null>(null);
 const errorMessage = ref('');
 const notice = ref('');
+const originalEntryText = ref<string | null>(null); // STEP_20O_MT_DUNGEON
+const entryDismissed = ref(false);
+const exitDismissed = ref(false);
+const scenarioDismissedRevision = ref('');
 const devCapabilities = ref<MtDungeonDevCapabilities | null>(null);
 const guardianTrial = ref<MtGuardianTrialPreview | null>(null);
 const loading = ref(true);
@@ -410,6 +426,82 @@ const actionAvailable = computed(() => {
 		(encounter.value?.kind === 'scenario-combat' && encounter.value.status === 'ready-for-combat')
 	);
 });
+
+type MtNarrativeKind = 'entry' | 'exit' | 'scenario' | 'scenario-combat'; // STEP_20O_MT_DUNGEON
+type MtNarrative = { kind: MtNarrativeKind; title: string; text: string; confirmLabel: string; cancelLabel?: string };
+const activeMessage = computed((): MtNarrative | null => {
+	if (exitOutcome.value && !exitDismissed.value) {
+		return { kind: 'exit', title: 'Sortie du donjon', text: exitOutcome.value.text, confirmLabel: 'Retour à la fiche' };
+	}
+	if (session.value && originalEntryText.value && !entryDismissed.value) {
+		return {
+			kind: 'entry',
+			title: 'Les Cavernes Magnétiques',
+			text: originalEntryText.value,
+			confirmLabel: 'Continuer'
+		};
+	}
+	const run = session.value;
+	const current = encounter.value;
+	if (run?.pending?.kind === 'scenario' && current?.text) {
+		const key = run.mapId + ':' + run.revision;
+		if (scenarioDismissedRevision.value === key) return null;
+		if (current.kind === 'scenario') {
+			return {
+				kind: 'scenario',
+				title: 'Découverte',
+				text: current.text,
+				confirmLabel: 'Lire / récupérer',
+				cancelLabel: 'Plus tard'
+			};
+		}
+		if (current.kind === 'scenario-combat' && current.status === 'ready-for-combat') {
+			return {
+				kind: 'scenario-combat',
+				title: 'Rencontre',
+				text: current.text,
+				confirmLabel: 'Combattre',
+				cancelLabel: 'Plus tard'
+			};
+		}
+	}
+	return null;
+});
+function closeMessage(): void {
+	const kind = activeMessage.value?.kind;
+	if (kind === 'entry') entryDismissed.value = true;
+	if (kind === 'exit') exitDismissed.value = true;
+	if ((kind === 'scenario' || kind === 'scenario-combat') && session.value)
+		scenarioDismissedRevision.value = session.value.mapId + ':' + session.value.revision;
+}
+function confirmMessage(): void {
+	const kind = activeMessage.value?.kind;
+	if (kind === 'entry') entryDismissed.value = true;
+	if (kind === 'exit') {
+		exitDismissed.value = true;
+		void router.push({ name: 'DinozPage', params: { id: String(leaderId) } });
+	}
+	if (kind === 'scenario') {
+		closeMessage();
+		resolveScenario();
+	}
+	if (kind === 'scenario-combat') {
+		closeMessage();
+		fight();
+	}
+}
+async function showOriginalEntryText(): Promise<void> {
+	try {
+		// Public metadata contain introduction and exit only; no hidden scenario leaks.
+		const definition = (await MtDungeonService.getCatalog(language.value)).find(value => value.id === 'stepp');
+		if (definition?.enter.text) {
+			originalEntryText.value = definition.enter.text;
+			entryDismissed.value = false;
+		}
+	} catch (error) {
+		errorMessage.value = formatError(error);
+	}
+}
 
 function formatError(error: unknown): string {
 	if (axios.isAxiosError(error)) {
@@ -520,6 +612,7 @@ function restoreDungeonActions(): void {
 function start() {
 	void execute(async () => {
 		await afterMutation(await MtDungeonService.startMagneticCaverns(leaderId));
+		await showOriginalEntryText();
 		notice.value = 'Exploration initialisée sur la carte originale stepp_0.';
 	});
 }
@@ -689,7 +782,7 @@ function evacuateDefeated(): void {
 	});
 }
 function onKeyDown(event: KeyboardEvent): void {
-	if (event.altKey || event.ctrlKey || event.metaKey || cannotMove.value) return;
+	if (event.altKey || event.ctrlKey || event.metaKey || cannotMove.value || !!activeMessage.value) return;
 	const el = event.target;
 	if (el instanceof HTMLElement && ['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON'].includes(el.tagName)) return;
 	const key = event.key.toLowerCase();
@@ -711,10 +804,18 @@ function onKeyDown(event: KeyboardEvent): void {
 	move(direction);
 }
 onMounted(() => {
+	// STEP_20O_MT_DUNGEON
 	window.addEventListener('keydown', onKeyDown);
-	void loadVisualParty();
-	void loadDevCapabilities();
-	void refresh();
+	void (async () => {
+		await refresh();
+		await loadDevCapabilities();
+		if (route.query.mtEntry === '1' && session.value?.mapId.startsWith('stepp_')) {
+			await showOriginalEntryText();
+			const query = { ...route.query };
+			delete query.mtEntry;
+			await router.replace({ query });
+		}
+	})();
 });
 onBeforeUnmount(() => window.removeEventListener('keydown', onKeyDown));
 </script>
