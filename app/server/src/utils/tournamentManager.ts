@@ -25,6 +25,7 @@ import { ItemType } from '@dinorpg/core/models/enums/ItemType.js';
 import { RewardEnum } from '@dinorpg/core/models/enums/Parser.js';
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { RaceEnum } from '@dinorpg/core/models/enums/Race.js';
+import { StatTracking } from '@dinorpg/core/models/enums/StatsTracking.js';
 import { FightOutcome } from '@dinorpg/core/models/fight/fightResult.js';
 import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
 import { NewsType } from '@dinorpg/core/models/news/news.js';
@@ -1246,6 +1247,9 @@ export class TournamentManager {
 			if (index === 1) {
 				await prismaClient.userRewards.create({
 					data: { userId: userId, rewardId: Reward.TID1 }
+				});
+				await prismaClient.userTracking.create({
+					data: { userId: userId, stat: StatTracking.TID1 }
 				});
 				promises.push(addItemToInventory(userId, Item.TOUFUFU_BABY_RARE, 1));
 				promises.push(addItemToInventory(userId, Item.BOX_LEGENDARY, 1));
