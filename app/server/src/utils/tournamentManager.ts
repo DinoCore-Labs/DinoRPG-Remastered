@@ -25,6 +25,7 @@ import { ItemType } from '@dinorpg/core/models/enums/ItemType.js';
 import { RewardEnum } from '@dinorpg/core/models/enums/Parser.js';
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { RaceEnum } from '@dinorpg/core/models/enums/Race.js';
+import { StatTracking } from '@dinorpg/core/models/enums/StatsTracking.js';
 import { FightOutcome } from '@dinorpg/core/models/fight/fightResult.js';
 import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
 import { NewsType } from '@dinorpg/core/models/news/news.js';
