@@ -592,7 +592,7 @@ function paintFog(scene: MtDungeonScene): void {
 /** Original gfx.swf mask (symbol 49) overlays the scene but not HTML controls. */
 function paintMtDungeonOriginalMask(scene: MtDungeonScene): void {
 	if (!app) return;
-	const opacity = mtDungeonMaskAlpha(props.maskStrength ?? 0);
+	const opacity = mtDungeonMaskAlpha(scene.fogMask);
 	const texture = textures.get(MT_DUNGEON_MASK_URL);
 	if (opacity <= 0 || !texture) {
 		if (originalMask) originalMask.visible = false;
@@ -637,7 +637,7 @@ async function repaint(): Promise<void> {
 		...new Set([
 			...plan.sprites.map(sprite => sprite.url),
 			...(scene.fog.length ? MT_ORIGINAL_FOG_URLS : []),
-			...(props.maskStrength ? [MT_DUNGEON_MASK_URL] : [])
+			...(scene.fogMask > 0 ? [MT_DUNGEON_MASK_URL] : [])
 		])
 	];
 

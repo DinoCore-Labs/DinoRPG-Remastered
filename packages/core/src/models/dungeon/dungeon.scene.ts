@@ -87,6 +87,13 @@ export interface MtFogTile extends MtTilePosition {
 export interface MtDungeonScene {
 	viewport: MtViewport;
 	level: number;
+	/** Non-secret dimensions required by View.hx X-major frame selection. */
+	mapWidth: number;
+	mapHeight: number;
+	/** Resolved from MT_DUNGEON_DEFINITIONS stage skin, never inferred from the map name. */
+	skinKey: string;
+	/** Original skin.mask opacity 0..100; a separate fixed overlay from fog. */
+	fogMask: number;
 	fogColor: number;
 	floor: MtFloorTile[];
 	overlays: MtOverlayTile[];
@@ -343,5 +350,19 @@ export function buildMtDungeonScene(input: MtSceneInput): MtDungeonScene {
 			for (let py = viewport.minY; py < viewport.maxYExclusive; py++)
 				if (!isMtFogRevealed(input.fog, map, levelIndex, px, py)) fog.push({ x: px, y: py, color: skin.fog, blur: 32 });
 	}
-	return { viewport, level: levelIndex, fogColor: skin.fog, floor, overlays, walls, features, fog, roomIds };
+	return {
+		viewport,
+		level: levelIndex,
+		mapWidth: map.width,
+		mapHeight: map.height,
+		skinKey: skin.key,
+		fogMask: skin.mask,
+		fogColor: skin.fog,
+		floor,
+		overlays,
+		walls,
+		features,
+		fog,
+		roomIds
+	};
 }
