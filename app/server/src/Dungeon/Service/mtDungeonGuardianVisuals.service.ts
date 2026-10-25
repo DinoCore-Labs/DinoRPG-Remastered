@@ -13,10 +13,8 @@ export interface MtDungeonGuardianVisual {
 	source: 'door' | 'scenario';
 }
 
-// Verified exported identifiers in smonsters.swf for the Cavernes Magnétiques.
-// Do not let the library render its "unknown monster" fallback as real MT art.
-const MAGNETIC_MONSTER_GFX = new Set(['worm2', 'worm', 'scorp', 'cactus', 'brig1', 'brig2', 'brig3']);
-
+/** The native canvas resolves actual smonster frames for each MT graphic ID.
+ * Do not filter on stepp's seven monster IDs: each dungeon has its own list. */
 /** The caller must first call redactMtDungeonViewport; never pass the full map scene. */
 export function getVisibleMtDungeonGuardianVisuals(
 	visibleScene: Pick<MtDungeonScene, 'features'>,
@@ -39,7 +37,8 @@ export function getVisibleMtDungeonGuardianVisuals(
 				serverMonsterSprites: canonicalMonsterSprites
 			}).sprite;
 		}
-		if (!MAGNETIC_MONSTER_GFX.has(gfx)) continue;
+		// Fail closed on malformed IDs; never manufacture a placeholder or disclose hidden guardians.
+		if (!/^[a-z][a-z0-9]*$/.test(gfx)) continue;
 		visuals.push({ x: feature.x, y: feature.y, gfx, source: feature.source });
 	}
 	return visuals;

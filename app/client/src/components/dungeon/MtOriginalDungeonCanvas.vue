@@ -1,5 +1,5 @@
 <template>
-	<section class="mt-dungeon-renderer" aria-label="Exploration des Cavernes Magnétiques">
+	<section class="mt-dungeon-renderer" aria-label="Exploration du donjon">
 		<div
 			ref="mount"
 			class="mt-dungeon-renderer__stage"
