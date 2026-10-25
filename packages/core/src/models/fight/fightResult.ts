@@ -81,6 +81,8 @@ export interface FightResult {
 	statusReward?: DinozStatusId;
 	dialogReturn?: FightDialogReturn;
 	source?: FightSource;
+	/** Server-authored dungeon combat return context. */
+	dungeonReturn?: { leaderDinozId: number; mapId: string };
 	background?: string;
 	trainingProgram?: TrainingCenterProgramKey;
 	missionCompletion?: MissionInteractionCompleteResponse | null;

@@ -399,7 +399,6 @@ function paintGuardians(scene: MtDungeonScene, ticket: number): void {
 				if (disposed || !app || ticket !== generation || !frames.length) return;
 				const visual = new AnimatedSprite([...frames]);
 				visual.anchor.set(0.5);
-				// EternalTwin MazeRenderer limits guardians to 1.15 x 1.25 cells.
 				// Exported smonster frames may be larger than their nominal 72px canvas.
 				// Fit using the largest frame so the animation never changes size.
 				const frameWidth = Math.max(...frames.map(frame => frame.width));
@@ -408,7 +407,7 @@ function paintGuardians(scene: MtDungeonScene, ticket: number): void {
 					visual.destroy();
 					return;
 				}
-				visual.scale.set(Math.min(1, (40 * 1.15) / frameWidth, (40 * 1.25) / frameHeight));
+				visual.scale.set(Math.min(1, (40 * 1.05) / frameWidth, (40 * 1.15) / frameHeight));
 				visual.position.set(x, y);
 				visual.zIndex = guardian.y;
 				visual.animationSpeed = 0.2;
@@ -433,7 +432,6 @@ function paintFog(scene: MtDungeonScene): void {
 	// No artificial global atmosphere layer or client-side discovery.
 	fogLayer.filters = [];
 	if (!scene.fog.length) return;
-
 	for (const placement of mtOriginalFogSprites(scene)) {
 		const texture = textures.get(MT_ORIGINAL_FOG_URLS[placement.frame]);
 		if (!texture) continue;
@@ -467,7 +465,7 @@ function paintMtDungeonOriginalMask(scene: MtDungeonScene): void {
 	originalMask.visible = true;
 }
 
-/** STEP_20Z_MT_TERRAIN_COMPOSITE — rasterize native PNG floor and overlay before post-processing. */
+/** Rasterize native PNG floor and overlay before post-processing. */
 function mtCompositeTerrain(
 	plan: ReturnType<typeof createMtSpritePlan>,
 	scene: MtDungeonScene
