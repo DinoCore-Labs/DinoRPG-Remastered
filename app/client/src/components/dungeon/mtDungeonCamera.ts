@@ -3,9 +3,7 @@
  *
  * Source: Motion Twin, DinoRPG/gfx/dungeon/View.hx, updateScroll():
  * view.dx += (target - (view.ix + view.dx)) * 0.1 per Flash frame.
- *
- * Eternaltwin's maze-poc provided a useful Pixi camera reference, but uses
- * a dead-zone camera. Remastered intentionally keeps MT's 9x9 camera and
+ * Remastered intentionally keeps MT's 9x9 camera and
  * interpolates between SERVER-AUTHORIZED 9x9 viewports instead.
  *
  * The camera never decides which cells are accessible or visible.

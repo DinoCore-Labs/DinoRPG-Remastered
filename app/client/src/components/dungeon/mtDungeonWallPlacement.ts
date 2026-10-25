@@ -1,8 +1,3 @@
-/**
- * Pixel-perfect layout matching EternalTwin ed-ui/src/utils/dungeon/MazeRenderer.ts,
- * drawLevel() and edge(), with 40px cells and native-sized wall PNGs.
- * Cosmetic calibration is additive, and defaults to zero.
- */
 import type { MtWallPart } from '@dinorpg/core/models/dungeon/dungeon.scene.js';
 
 export interface MtWallPlacement {
