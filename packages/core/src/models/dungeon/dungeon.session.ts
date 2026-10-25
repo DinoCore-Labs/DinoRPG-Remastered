@@ -83,6 +83,7 @@ export type MtSessionBatchResult =
 			goldAwarded?: number;
 			walletGold?: number;
 			blockedDoor?: 'missing-key';
+			requiredKey?: number;
 	  };
 
 export interface MtSessionConfiguration {
@@ -298,13 +299,15 @@ export function applyMtDungeonCommandBatch(
 			// No key/flag is created by an unsuccessful crossing.
 			if (index !== commands.length - 1) return fail('invalid-batch', index + 1);
 			result.revision++;
-			const missingKey = decision.events.some(event => event.kind === 'locked-door');
+			const lockedDoor = decision.events.find(event => event.kind === 'locked-door');
 			return {
 				ok: true,
 				session: result,
 				accepted: index + 1,
 				pending: null,
-				...(missingKey ? { blockedDoor: 'missing-key' as const } : {})
+				...(lockedDoor?.kind === 'locked-door'
+					? { blockedDoor: 'missing-key' as const, requiredKey: lockedDoor.requiredKey }
+					: {})
 			};
 		}
 		const pending = makePending(cfg.map, result.position, decision.position, decision.events, command);
