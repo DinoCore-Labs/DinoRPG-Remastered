@@ -275,7 +275,12 @@ export async function resolveMtGuardianTrial(identity: MtSessionIdentity, token:
 			});
 			const cfg = deps.getConfiguration(session.mapId);
 			const settled = settleMtDungeonInteraction(cfg, session, result.result);
-			const stored = JSON.parse(JSON.stringify(result)) as Prisma.InputJsonValue;
+			// Include the verified dungeon origin in stored and returned fight results.
+			const dungeonResult: FightResult = {
+				...result,
+				dungeonReturn: { leaderDinozId: identity.leaderDinozId, mapId: session.mapId }
+			};
+			const stored = JSON.parse(JSON.stringify(dungeonResult)) as Prisma.InputJsonValue;
 			await prisma.$transaction(async tx => {
 				// Exactly one fight action per party member, whether won or lost.
 				const consumed = await tx.dinoz.updateMany({
@@ -327,7 +332,7 @@ export async function resolveMtGuardianTrial(identity: MtSessionIdentity, token:
 					data: { status: 'COMPLETED', result: stored }
 				});
 			});
-			return result;
+			return dungeonResult;
 		} catch (error) {
 			// Reward service is not part of the above transaction. Fail closed.
 			try {

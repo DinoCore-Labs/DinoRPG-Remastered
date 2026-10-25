@@ -230,7 +230,12 @@ export async function resolveMtDungeonFight(identity: MtSessionIdentity, token: 
 				}
 			);
 			const settled = settleMtDungeonInteraction(map, session, result.result);
-			const stored = JSON.parse(JSON.stringify(result)) as Prisma.InputJsonValue;
+			// Include the verified dungeon origin in stored and returned fight results.
+			const dungeonResult: FightResult = {
+				...result,
+				dungeonReturn: { leaderDinozId: identity.leaderDinozId, mapId: session.mapId }
+			};
+			const stored = JSON.parse(JSON.stringify(dungeonResult)) as Prisma.InputJsonValue;
 			await prisma.$transaction(async tx => {
 				// Consume one daily fight action for every Dinoz in this dungeon fight.
 				const consumed = await tx.dinoz.updateMany({
@@ -282,7 +287,7 @@ export async function resolveMtDungeonFight(identity: MtSessionIdentity, token: 
 					data: { status: 'COMPLETED', result: stored }
 				});
 			});
-			return result;
+			return dungeonResult;
 		} catch (error) {
 			// Reward mutations might already exist. Never put the attempt back in PREPARED.
 			try {
