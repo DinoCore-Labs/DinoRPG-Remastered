@@ -280,6 +280,7 @@ import { mtDungeonCombatTrigger } from '../components/dungeon/mtDungeonCombatTri
 import MtOriginalDungeonCanvas from '../components/dungeon/MtOriginalDungeonCanvas.vue';
 import { getDungeonSkin } from '@dinorpg/core/models/dungeon/dungeon.skins.js';
 import MtDungeonMessageBox from '../components/dungeon/MtDungeonMessageBox.vue';
+import { mtDungeonKeyPickupMessage, mtDungeonLockedDoorMessage } from '../components/dungeon/mtDungeonKeyNames.js';
 import { mtDungeonBoundaryAction } from '../components/dungeon/mtDungeonBoundaryAction.js'; // STEP_20R_MT_BOUNDARIES
 import { advanceMtTrail, mtFollowerPositions, type MtTrailPoint } from '../components/dungeon/dungeonPartyTrail.js';
 import { DinozService } from '../services/dinoz.service.js';
@@ -650,7 +651,7 @@ function move(direction: 'north' | 'south' | 'west' | 'east' | 'up' | 'down') {
 			// Consume the revision, but do not animate a fake movement.
 			await afterMutation(result.session);
 			pickupMessage.value = Number.isInteger(result.requiredKey)
-				? `Cette porte est verrouillée. Il vous faut la clé n°${result.requiredKey}.`
+				? mtDungeonLockedDoorMessage(leaderId, result.session.mapId, result.requiredKey!)
 				: 'Cette porte est verrouillée. Il faut trouver sa clé dans le donjon.';
 			return;
 		}
@@ -667,8 +668,8 @@ function move(direction: 'north' | 'south' | 'west' | 'east' | 'up' | 'down') {
 		if (collectedKeys.length > 0)
 			pickupMessage.value =
 				collectedKeys.length === 1
-					? `Vous avez trouvé la clé n°${collectedKeys[0]}.`
-					: `Vous avez trouvé les clés n°${collectedKeys.join(', ')}.`;
+					? mtDungeonKeyPickupMessage(leaderId, result.session.mapId, collectedKeys[0]!)
+					: collectedKeys.map(id => mtDungeonKeyPickupMessage(leaderId, result.session.mapId, id)).join('\n');
 		if (await settleMtBoundary(result.session)) return;
 		if (mtDungeonCombatTrigger(result.session.pending, encounter.value) === 'guardian') {
 			const { token } = await MtDungeonService.prepareGuardianFight(leaderId, result.session.revision);
