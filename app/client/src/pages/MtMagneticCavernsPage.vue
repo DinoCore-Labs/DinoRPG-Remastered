@@ -24,7 +24,9 @@
 		<section v-if="!session && !loading && !exitOutcome" class="mt-test__panel">
 			<p>Entre dans le donjon depuis les Pylônes de Magnétite avec un groupe disponible.</p>
 			<p>Les conditions d'accès et la position des Dinoz sont vérifiées côté serveur.</p>
-			<button type="button" :disabled="busy" @click="start">Entrer dans les Cavernes Magnétiques</button>
+			<RouterLink :to="{ name: 'DinozPage', params: { id: leaderId } }"
+				>Retour aux actions du Dinoz pour entrer</RouterLink
+			>
 		</section>
 
 		<section v-if="exitOutcome" class="mt-test__panel" aria-live="polite">
@@ -607,13 +609,6 @@ function restoreDungeonActions(): void {
 			throw new Error('Une action reste indisponible : vérifiez les Dinoz du groupe.');
 		}
 		notice.value = `${paid.used} Potion(s) d'Irma consommée(s). Exploration reprise.`;
-	});
-}
-function start() {
-	void execute(async () => {
-		await afterMutation(await MtDungeonService.startMagneticCaverns(leaderId));
-		await showOriginalEntryText();
-		notice.value = 'Exploration initialisée sur la carte originale stepp_0.';
 	});
 }
 function move(direction: 'north' | 'south' | 'west' | 'east' | 'up' | 'down') {

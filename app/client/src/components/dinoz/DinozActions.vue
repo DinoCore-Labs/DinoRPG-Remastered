@@ -25,17 +25,10 @@
 			<p>{{ $t('common.actions') }}</p>
 		</div>
 		<div class="action_content">
-			<!-- STEP_20O_MT_DUNGEON: this is navigation, never a gameplay action. -->
-			<RouterLink
-				v-if="dinoz.dungeon?.dungeonId === 'stepp'"
-				class="dungeon-resume"
-				:to="{ name: 'MtMagneticCavernsPage', params: { id: dinoz.dungeon.leaderDinozId } }"
-			>
-				{{ $t('action.name.resume_dungeon') }}
-			</RouterLink>
+			<DZDisclaimer v-if="dinozInDungeon" :content="$t('action.description.dungeon_status')" help />
 			<template v-for="didi in dinozFullParty" :key="didi.id">
 				<DinozMissionHUD
-					v-if="didi.currentMission"
+					v-if="!dinozInDungeon && didi.currentMission"
 					:currentMission="didi.currentMission"
 					:dinozName="didi.name"
 					:dinozId="didi.id"
@@ -49,7 +42,7 @@
 				:rewards="missionReward.rewards"
 				@close="closeMissionRewardModal"
 			/>
-			<Tippy tag="p" theme="small" class="follow" v-if="leaderDinoz" @click="goToLeader()">
+			<Tippy tag="p" theme="small" class="follow" v-if="leaderDinoz && !dinozInDungeon" @click="goToLeader()">
 				{{ $t('dinoz.hud.following') }}
 				<template #content>
 					{{ $t(`dinoz.hud.follow`, { leader: leaderDinoz.name }) }}
@@ -416,7 +409,8 @@ export default defineComponent({
 						});
 				const res = await this.$confirm({
 					message,
-					header: this.$t('popup.attention'),
+					header:
+						action.name === Action.DUNGEON_ENTER ? this.$t('action.name.dungeon_enter') : this.$t('popup.attention'),
 					acceptLabel: this.$t('popup.accept'),
 					rejectLabel: this.$t('popup.reject'),
 					icon: 'pi pi-exclamation-triangle'
@@ -424,18 +418,29 @@ export default defineComponent({
 				if (!res) return;
 			}
 			switch (action.name) {
-				case Action.DUNGEON: // STEP_20O_MT_DUNGEON
+				case Action.DUNGEON_ENTER:
 					try {
 						await MtDungeonService.startMagneticCaverns(this.dinozId);
-						await this.$router.push({
-							name: 'MtMagneticCavernsPage',
-							params: { id: String(this.dinozId) },
-							query: { mtEntry: '1' }
-						});
+						try {
+							const definitions = await MtDungeonService.getCatalog(String(this.localStore.getLanguage ?? 'fr'));
+							const text = definitions.find(definition => definition.id === 'stepp')?.enter.text;
+							if (text) this.$toast.open({ message: formatText(text), type: 'info' });
+						} catch {
+							// Entry already succeeded; unavailable metadata must not undo it.
+						}
+						await this.refreshDinoz();
 					} catch (error) {
 						errorHandler.handle(error, this.$toast);
 						await this.refreshDinoz();
 					}
+					break;
+				case Action.DUNGEON:
+					await this.$router.push({
+						name: 'MtMagneticCavernsPage',
+						params: {
+							id: String(typeof action.prop === 'number' ? action.prop : (this.dinoz.leaderId ?? this.dinozId))
+						}
+					});
 					break;
 				case Action.IRMA:
 				case Action.IRMAS:
@@ -968,6 +973,9 @@ export default defineComponent({
 		}
 	},
 	computed: {
+		dinozInDungeon(): boolean {
+			return this.dinoz.actions?.some(action => action.name === Action.DUNGEON) ?? false;
+		},
 		dinozFullParty(): DinozFiche[] {
 			const list = this.dinozStore.getDinozList ?? [];
 			const byId = new Map(list.map(dinoz => [dinoz.id, dinoz]));
@@ -1141,20 +1149,6 @@ export default defineComponent({
 			}
 		}
 	}
-}
-.dungeon-resume {
-	// STEP_20O_MT_DUNGEON
-	padding: 8px 6px;
-	border: 1px solid #8b6839;
-	background: #e9d09f;
-	color: #4c2f16;
-	font-size: 10pt;
-	text-align: center;
-	font-weight: bold;
-	text-decoration: none;
-}
-.dungeon-resume:hover {
-	background: #f2dfba;
 }
 .selling {
 	margin-right: 1px;

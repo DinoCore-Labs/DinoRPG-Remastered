@@ -54,7 +54,8 @@ export enum Action {
 	STOP_DEFEND_TOWER = 'stop_defend_tower',
 	DEFENDING_DEVOURER = 'defending_devourer',
 	BUILD_DOJO = 'build_dojo',
-	DUNGEON = 'dungeon' // STEP_20O_MT_DUNGEON
+	DUNGEON_ENTER = 'dungeon_enter',
+	DUNGEON = 'dungeon'
 }
 
 export interface ActionFiche {
@@ -247,9 +248,14 @@ export const actionList: Readonly<Record<Action, ActionFiche>> = {
 		name: Action.BUILD_DOJO,
 		imgName: 'act_dojo'
 	},
+	[Action.DUNGEON_ENTER]: {
+		name: Action.DUNGEON_ENTER,
+		imgName: 'act_train',
+		confirm: true,
+		confirmMessageKey: 'action.description.dungeon_enter'
+	},
 	[Action.DUNGEON]: {
 		name: Action.DUNGEON,
-		imgName: 'act_explore',
-		prop: 'stepp'
+		imgName: 'act_train'
 	}
 };
