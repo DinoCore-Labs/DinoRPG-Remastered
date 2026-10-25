@@ -51,6 +51,7 @@ describe('MT key doors: authority, flags, and restored discoveries (step 20F)', 
 		const state = { ...empty, position: { x: 2, y: 1, l: 0 } };
 		const response = accepted(state, 2, 1, 1, 0);
 		expect(response.blockedDoor).toBe('missing-key');
+		expect(response.requiredKey).toBe(2);
 		expect(response.session.position).toEqual(state.position);
 		expect(response.session.keys).toEqual([]);
 		expect(response.session.flags).toEqual([]);
@@ -58,6 +59,7 @@ describe('MT key doors: authority, flags, and restored discoveries (step 20F)', 
 		// A key with the wrong index must never open this door.
 		const wrongKey = accepted({ ...state, keys: [true] }, 2, 1, 1, 0);
 		expect(wrongKey.blockedDoor).toBe('missing-key');
+		expect(wrongKey.requiredKey).toBe(2);
 		expect(wrongKey.session.position).toEqual(state.position);
 	});
 
@@ -65,6 +67,7 @@ describe('MT key doors: authority, flags, and restored discoveries (step 20F)', 
 		const initial = createMtDungeonSession(cfg);
 		const key = accepted(initial, 1, 1, 1, 0);
 		expect(key.blockedDoor).toBeUndefined();
+		expect(key.requiredKey).toBeUndefined();
 		expect(key.session.keys[2]).toBe(true);
 		expect(key.session.flags).toContain(getMtFlagIndex(map, 0, 2, 1));
 		const door = accepted(key.session, 2, 1, 1, 0);
