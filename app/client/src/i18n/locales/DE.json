@@ -3139,7 +3139,8 @@
 			"tower_attack": "Un autre joueur contrôle déjà la Dévoreuse. Vous devrez combattre pour pouvoir en prendre le contrôle et récolter ses précieuses graînes.",
 			"tower_defend": "Personne n'a actuellement le contrôle de la dévoreuse. Profitez-en pour en prendre le contrôle !",
 			"stop_defend_tower": "Si vous relachez votre contrôle sur la Dévoreuse, il vous faudra à nouveau combattre pour le regagner. Et d'autres joueurs attendent sûrement cette occasion pour s'en emparer à leur tour !",
-			"build_dojo": "Construire votre Dojo"
+			"build_dojo": "Construire votre Dojo",
+			"dungeon": "Betritt die Magnetischen Höhlen und erkunde den ursprünglichen Motion-Twin-Dungeon."
 		},
 		"name": {
 			"fight": "Combattre",
@@ -3179,7 +3180,9 @@
 			"tower_attack": "Contrôler la Dévoreuse",
 			"tower_defend": "Défendre la Dévoreuse",
 			"stop_defend_tower": "Relacher le Contrôle",
-			"build_dojo": "Construire le Dojo"
+			"build_dojo": "Construire le Dojo",
+			"dungeon": "Magnetische Höhlen erkunden",
+			"resume_dungeon": "Erkundung fortsetzen"
 		}
 	},
 	"fight": {
