@@ -56,15 +56,12 @@
 					:show-unverified-same-name-overlays="true"
 				/>
 				<div v-else class="mt-test__placeholder">{{ $t('dungeon.loadingView') }}</div>
-				<!-- STEP_20X_VIEWPORT — dialogue visible directement sur le donjon. -->
+				<!-- dialogue visible directement sur le donjon. -->
 				<MtDungeonMessageBox
 					v-if="activeMessage"
 					placement="viewport"
 					:variant="
-						activeMessage.kind === 'entry' ||
-						activeMessage.kind === 'irma' ||
-						activeMessage.kind === 'pickup' ||
-						activeMessage.kind === 'exit'
+						activeMessage.kind === 'entry' || activeMessage.kind === 'irma' || activeMessage.kind === 'pickup'
 							? 'notice'
 							: 'dialog'
 					"

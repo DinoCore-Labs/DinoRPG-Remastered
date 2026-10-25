@@ -40,7 +40,8 @@ import { getMtDungeonOriginalPendingEvidence } from '../Service/mtDungeonOrigina
 import {
 	getMtDungeonArchive,
 	mtDungeonDependencies,
-	MtDungeonEntryError
+	MtDungeonEntryError,
+	resolveMtDungeonAtLeaderPlace
 } from '../Service/mtDungeonRuntime.service.js';
 import {
 	MtDungeonScenarioSettlementError,
@@ -60,9 +61,7 @@ import {
 } from '../Service/mtDungeonWorldExit.service.js';
 
 const leaderIdSchema = z.coerce.number().int().positive();
-const startSchema = z
-	.object({ leaderDinozId: z.number().int().positive(), dungeonId: z.string().regex(/^[a-z][a-z\d]*$/) })
-	.strict();
+const startSchema = z.object({ leaderDinozId: z.number().int().positive() }).strict();
 const oneCommandSchema = z
 	.object({
 		x: z.number().int().nonnegative(),
@@ -466,10 +465,14 @@ export async function mtDungeonRoutes(app: FastifyInstance) {
 		if (!body.success) return reply.code(400).send({ code: 'invalid-start' });
 		const deps = mtDungeonDependencies();
 		try {
+			const dungeonId = await resolveMtDungeonAtLeaderPlace(getMtDungeonArchive(), {
+				userId: req.user.id,
+				leaderDinozId: body.data.leaderDinozId
+			});
 			const session = await openMtDungeonSession(
 				deps,
 				{ userId: req.user.id, leaderDinozId: body.data.leaderDinozId },
-				`${body.data.dungeonId}_0`
+				`${dungeonId}_0`
 			);
 			return reply.code(201).send(session);
 		} catch (error) {

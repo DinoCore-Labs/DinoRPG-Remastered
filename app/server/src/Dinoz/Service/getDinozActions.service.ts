@@ -23,7 +23,8 @@ import { listAvailableDialogs } from '../../Dialog/Service/dialog.service.js';
 import {
 	assertMtDungeonEntry,
 	getMtDungeonArchive,
-	MtDungeonEntryError
+	MtDungeonEntryError,
+	resolveMtDungeonAtLeaderPlace
 } from '../../Dungeon/Service/mtDungeonRuntime.service.js'; // STEP_20P_ORIGINAL_MT_ACTIONS
 import { getSpecificSecret } from '../../jobs/controller/getSpecificSecret.js';
 import { type DinozMissionState, resolveCurrentMission } from '../../Mission/Service/missionCurrent.service.js';
@@ -559,15 +560,12 @@ export async function getAvailableActions(
 			pushUniqueAction(availableActions, actionList[Action.BUILD_DOJO]);
 		}
 	}
-	// MT eligibility is verified again by POST /dungeon/mt/start under the gameplay lock.
-	if (
-		dinoz.leaderId === null &&
-		dinoz.placeId === PlaceEnum.PYLONES_DE_MAGNETITES &&
-		dinoz.life > 0 &&
-		dinoz.state === null
-	) {
+	// The authoritative start endpoint resolves again under the gameplay lock.
+	if (dinoz.leaderId === null && dinoz.life > 0 && dinoz.state === null) {
 		try {
-			await assertMtDungeonEntry(getMtDungeonArchive(), { userId: user.id, leaderDinozId: dinoz.id }, 'stepp_0');
+			const identity = { userId: user.id, leaderDinozId: dinoz.id };
+			const dungeonId = await resolveMtDungeonAtLeaderPlace(getMtDungeonArchive(), identity);
+			await assertMtDungeonEntry(getMtDungeonArchive(), identity, `${dungeonId}_0`);
 			pushUniqueAction(availableActions, actionList[Action.DUNGEON_ENTER]);
 		} catch (error) {
 			if (!(error instanceof MtDungeonEntryError)) throw error;
