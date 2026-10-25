@@ -382,6 +382,7 @@ const cannotMove = computed(
 		partyDefeated.value ||
 		partyLeaderDead.value ||
 		partyNeedsIrma.value ||
+		!!activeMessage.value ||
 		!partyActionsLoaded.value ||
 		busy.value ||
 		loading.value ||
