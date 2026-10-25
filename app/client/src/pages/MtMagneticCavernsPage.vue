@@ -3,7 +3,11 @@
 		<!-- STEP_20O_MT_DUNGEON: original eight-piece Motion Twin message box. -->
 		<MtDungeonMessageBox
 			v-if="activeMessage && !session"
-			:variant="activeMessage.kind === 'entry' || activeMessage.kind === 'irma' ? 'notice' : 'dialog'"
+			:variant="
+				activeMessage.kind === 'entry' || activeMessage.kind === 'irma' || activeMessage.kind === 'pickup'
+					? 'notice'
+					: 'dialog'
+			"
 			:title="activeMessage.title"
 			:text="activeMessage.text"
 			:confirm-label="activeMessage.confirmLabel"
@@ -79,7 +83,11 @@
 					<MtDungeonMessageBox
 						v-if="activeMessage"
 						placement="viewport"
-						:variant="activeMessage.kind === 'entry' || activeMessage.kind === 'irma' ? 'notice' : 'dialog'"
+						:variant="
+							activeMessage.kind === 'entry' || activeMessage.kind === 'irma' || activeMessage.kind === 'pickup'
+								? 'notice'
+								: 'dialog'
+						"
 						:title="activeMessage.title"
 						:text="activeMessage.text"
 						:confirm-label="activeMessage.confirmLabel"
@@ -302,6 +310,7 @@ const exitOutcome = ref<MtDungeonWorldExitResult | null>(null);
 const errorMessage = ref('');
 const notice = ref('');
 const irmaMessage = ref<string | null>(null);
+const pickupMessage = ref<string | null>(null);
 const originalEntryText = ref<string | null>(null); // STEP_20O_MT_DUNGEON
 const entryDismissed = ref(false);
 const exitDismissed = ref(false);
@@ -415,7 +424,7 @@ const actionAvailable = computed(() => {
 	);
 });
 
-type MtNarrativeKind = 'entry' | 'exit' | 'scenario' | 'scenario-combat' | 'irma'; // STEP_20O_MT_DUNGEON
+type MtNarrativeKind = 'entry' | 'exit' | 'scenario' | 'scenario-combat' | 'irma' | 'pickup'; // STEP_20O_MT_DUNGEON
 type MtNarrative = { kind: MtNarrativeKind; title: string; text: string; confirmLabel: string; cancelLabel?: string };
 const activeMessage = computed((): MtNarrative | null => {
 	if (exitOutcome.value && !exitDismissed.value) {
@@ -429,6 +438,8 @@ const activeMessage = computed((): MtNarrative | null => {
 			confirmLabel: 'Continuer'
 		};
 	}
+	if (session.value && pickupMessage.value)
+		return { kind: 'pickup', title: '', text: pickupMessage.value, confirmLabel: 'Continuer' };
 	if (session.value && irmaMessage.value)
 		return { kind: 'irma', title: '', text: irmaMessage.value, confirmLabel: 'Continuer' };
 	const run = session.value;
@@ -459,6 +470,7 @@ const activeMessage = computed((): MtNarrative | null => {
 });
 function closeMessage(): void {
 	const kind = activeMessage.value?.kind;
+	if (kind === 'pickup') pickupMessage.value = null;
 	if (kind === 'irma') irmaMessage.value = null;
 	if (kind === 'entry') entryDismissed.value = true;
 	if (kind === 'exit') exitDismissed.value = true;
@@ -467,6 +479,7 @@ function closeMessage(): void {
 }
 function confirmMessage(): void {
 	const kind = activeMessage.value?.kind;
+	if (kind === 'pickup') pickupMessage.value = null;
 	if (kind === 'irma') irmaMessage.value = null;
 	if (kind === 'entry') entryDismissed.value = true;
 	if (kind === 'exit') {
@@ -635,7 +648,9 @@ function move(direction: 'north' | 'south' | 'west' | 'east' | 'up' | 'down') {
 		if (result.blockedDoor === 'missing-key') {
 			// Consume the revision, but do not animate a fake movement.
 			await afterMutation(result.session);
-			notice.value = 'Cette porte est verrouillée. Il faut trouver sa clé dans le donjon.';
+			pickupMessage.value = Number.isInteger(result.requiredKey)
+				? `Cette porte est verrouillée. Il vous faut la clé n°${result.requiredKey}.`
+				: 'Cette porte est verrouillée. Il faut trouver sa clé dans le donjon.';
 			return;
 		}
 		if (direction === 'west') facingRight.value = false;
@@ -647,6 +662,12 @@ function move(direction: 'north' | 'south' | 'west' | 'east' | 'up' | 'down') {
 			Math.max(0, visualMembers.value.length - 1)
 		);
 		await afterMutation(result.session);
+		const collectedKeys = result.session.keys.flatMap((owned, id) => (owned && !previous.keys[id] ? [id] : []));
+		if (collectedKeys.length > 0)
+			pickupMessage.value =
+				collectedKeys.length === 1
+					? `Vous avez trouvé la clé n°${collectedKeys[0]}.`
+					: `Vous avez trouvé les clés n°${collectedKeys.join(', ')}.`;
 		if (await settleMtBoundary(result.session)) return;
 		if (mtDungeonCombatTrigger(result.session.pending, encounter.value) === 'guardian') {
 			const { token } = await MtDungeonService.prepareGuardianFight(leaderId, result.session.revision);
@@ -664,10 +685,10 @@ function move(direction: 'north' | 'south' | 'west' | 'east' | 'up' | 'down') {
 		}
 		if (typeof result.goldAwarded === 'number') {
 			if (typeof result.walletGold === 'number') userStore().setGold(result.walletGold);
-			notice.value =
+			pickupMessage.value =
 				result.goldAwarded > 0
-					? `Trésor récupéré : +${result.goldAwarded} or.`
-					: 'Trésor récupéré (valeur MT brute : 0).';
+					? `Vous avez récupéré ${result.goldAwarded} pièces d'or !`
+					: 'Ce trésor ne contient plus de pièces d’or.';
 		}
 	});
 }
