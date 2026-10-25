@@ -57,6 +57,7 @@ import { createMtSpritePlan, type MtRandomFrameSource } from './mtOriginalSprite
 import { placeMtDungeonItem } from './mtDungeonItemPlacement.js';
 
 import { mtWallBounds, placeMtWall } from './mtDungeonWallPlacement.js';
+import { MT_DUNGEON_MASK_URL, mtDungeonMaskAlpha, mtDungeonMaskTint } from './mtDungeonMask.js';
 import {
 	MT_ORIGINAL_FOG_BLUR_PX,
 	MT_ORIGINAL_FOG_BLUR_QUALITY,
@@ -99,6 +100,8 @@ const props = defineProps<{
 	assetBase?: string;
 
 	showUnverifiedSameNameOverlays?: boolean;
+	/** Original MT skin.mask percentage for the stage-fixed vignette. */
+	maskStrength?: number;
 }>();
 
 const mount = ref<HTMLDivElement | null>(null);
@@ -176,6 +179,9 @@ let actorsLayer: Container;
 let nearWalls: Container;
 
 let fogLayer: Container;
+
+/** Separate screen-space overlay: does not scroll with worldLayer. */
+let originalMask: Sprite | null = null;
 
 let diagnosticsLayer: Container;
 
@@ -583,6 +589,26 @@ function paintFog(scene: MtDungeonScene): void {
 	}
 }
 
+/** Original gfx.swf mask (symbol 49) overlays the scene but not HTML controls. */
+function paintMtDungeonOriginalMask(scene: MtDungeonScene): void {
+	if (!app) return;
+	const opacity = mtDungeonMaskAlpha(props.maskStrength ?? 0);
+	const texture = textures.get(MT_DUNGEON_MASK_URL);
+	if (opacity <= 0 || !texture) {
+		if (originalMask) originalMask.visible = false;
+		return;
+	}
+	if (!originalMask) {
+		originalMask = new Sprite(texture);
+		originalMask.position.set(0, 0);
+		// View.hx: mask is attached to the root depth manager, NOT levelMC.
+		app.stage.addChild(originalMask);
+	}
+	originalMask.tint = mtDungeonMaskTint(scene.fogColor);
+	originalMask.alpha = opacity;
+	originalMask.visible = true;
+}
+
 async function repaint(): Promise<void> {
 	const ticket = ++generation;
 
@@ -608,7 +634,11 @@ async function repaint(): Promise<void> {
 
 	// Load the SWF-derived fog frames together with the already required MT sprites.
 	const paths = [
-		...new Set([...plan.sprites.map(sprite => sprite.url), ...(scene.fog.length ? MT_ORIGINAL_FOG_URLS : [])])
+		...new Set([
+			...plan.sprites.map(sprite => sprite.url),
+			...(scene.fog.length ? MT_ORIGINAL_FOG_URLS : []),
+			...(props.maskStrength ? [MT_DUNGEON_MASK_URL] : [])
+		])
 	];
 
 	const fetched = await Promise.allSettled(
@@ -677,6 +707,7 @@ async function repaint(): Promise<void> {
 	for (const sprite of plan.sprites) paintSprite(sprite, scene);
 
 	paintFog(scene);
+	paintMtDungeonOriginalMask(scene);
 
 	diagnostics.value = [...errors];
 
@@ -754,6 +785,8 @@ watch(
 
 		props.showUnverifiedSameNameOverlays,
 
+		props.maskStrength,
+
 		debugWalls.value,
 
 		calibrationVersion.value
@@ -797,6 +830,7 @@ onBeforeUnmount(() => {
 	app?.destroy(true, { children: true });
 
 	app = null;
+	originalMask = null;
 });
 </script>
 

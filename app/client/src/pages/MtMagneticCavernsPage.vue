@@ -66,6 +66,7 @@
 					<MtOriginalDungeonCanvas
 						v-if="view"
 						:scene="view.scene"
+						:mask-strength="getDungeonSkin(view.skin)?.mask ?? 0"
 						:guardians="view.guardianSprites ?? []"
 						:stage-key="session.mapId"
 						:actors="visualParty"
@@ -255,6 +256,7 @@ import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { mtDungeonCombatTrigger } from '../components/dungeon/mtDungeonCombatTrigger.js';
 import MtOriginalDungeonCanvas from '../components/dungeon/MtOriginalDungeonCanvas.vue';
+import { getDungeonSkin } from '@dinorpg/core/models/dungeon/dungeon.skins.js';
 import MtDungeonMessageBox from '../components/dungeon/MtDungeonMessageBox.vue';
 import { mtDungeonBoundaryAction } from '../components/dungeon/mtDungeonBoundaryAction.js'; // STEP_20R_MT_BOUNDARIES
 import { advanceMtTrail, mtFollowerPositions, type MtTrailPoint } from '../components/dungeon/dungeonPartyTrail.js';
