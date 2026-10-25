@@ -35,8 +35,6 @@ export interface DinozFiche {
 	maxExperience: number;
 	race: DinozRace;
 	placeId: number;
-	/** Active MT run, reported only for its owner (leader or current follower). STEP_20O_MT_DUNGEON */
-	dungeon?: { leaderDinozId: number; dungeonId: string };
 	actions: ActionFiche[];
 	items: number[];
 	lockedMagicItems?: { itemId: number; equippedAt: string }[];
@@ -91,7 +89,7 @@ export interface DinozAdminFiche {
 	nbrUpAir: number;
 	status: number[];
 	skills: number[];
-	//unlockableSkills: number[];
+	unlockableSkills: number[];
 }
 
 export interface DinozPublicFiche {

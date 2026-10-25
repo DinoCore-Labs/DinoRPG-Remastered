@@ -38,6 +38,7 @@ import { DinozService } from '../services/dinoz.service';
 import { dinozStore } from '../store/dinozStore';
 import { userStore } from '../store/userStore';
 import type { DinozFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
+import { Action } from '@dinorpg/core/models/dinoz/dinozActions.js'; // STEP_20P_ORIGINAL_MT_ACTIONS
 import DinozName from '../components/dinoz/DinozName.vue';
 import DinozActions from '../components/dinoz/DinozActions.vue';
 import TabPanels from '../components/common/TabPanels.vue';
@@ -81,6 +82,8 @@ export default defineComponent({
 			const dinozData = await DinozService.getDinozFiche(dinozId, {
 				silent: options.silent ?? false
 			});
+			// Outside-world movement is disabled for an active dungeon run.
+			if (dinozData.actions.some(action => action.name === Action.DUNGEON)) dinozData.borderPlace = [];
 			this.dinozData = dinozData;
 			this.dinozStore.setDinoz(dinozData);
 			await Promise.all(

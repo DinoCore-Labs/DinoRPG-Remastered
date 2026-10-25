@@ -3140,7 +3140,9 @@
 			"tower_defend": "Personne n'a actuellement le contrôle de la dévoreuse. Profitez-en pour en prendre le contrôle !",
 			"stop_defend_tower": "Si vous relachez votre contrôle sur la Dévoreuse, il vous faudra à nouveau combattre pour le regagner. Et d'autres joueurs attendent sûrement cette occasion pour s'en emparer à leur tour !",
 			"build_dojo": "Construire votre Dojo",
-			"dungeon": "Entra en las Cavernas Magnéticas y explora el calabozo original de Motion Twin."
+			"dungeon_enter": "Puedes explorar este lugar, ¡pero ten cuidado de no perderte!",
+			"dungeon": "Ver el progreso de la exploración actual...",
+			"dungeon_status": "Tu Dinoz está explorando una zona..."
 		},
 		"name": {
 			"fight": "Combattre",
@@ -3181,8 +3183,8 @@
 			"tower_defend": "Défendre la Dévoreuse",
 			"stop_defend_tower": "Relacher le Contrôle",
 			"build_dojo": "Construire le Dojo",
-			"dungeon": "Explorar las Cavernas Magnéticas",
-			"resume_dungeon": "Volver a explorar"
+			"dungeon_enter": "Entrar",
+			"dungeon": "Consultar el mapa"
 		}
 	},
 	"fight": {
