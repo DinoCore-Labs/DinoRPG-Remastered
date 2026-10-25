@@ -1,15 +1,12 @@
 /**
- * Sprite masks extracted from Motion Twin DinoRPG gfx/dungeon/gfx.swf
- * ExportAssets 'fog', DefineSprite 404, 4 frames: each contains
- * the 40x40 black Shape399 plus one of Shapes400..403, with curved edges.
+ * Fog symbol 404 extracted from Motion Twin gfx/dungeon/gfx.swf.
+ * Source validation: djview.swf AVM1 View.displayLevel() and View.updateFog().
+ * 4 frames, 40px tile spacing, 68px raster masks with (-14,-14) registration.
+ * Historical linear index uses x * MAP HEIGHT (not width).
  *
- * Pixels are WHITE, not black, only so PixiJS multiplicative tint works;
- * alpha and 68x68 geometry are unchanged from the extracted PNGs.
- * 68px source viewBox = (-14,-14,68,68), at native 40px MT scale.
- *
- * MT gfx/dungeon/View.hx displayLevel(): draw each unknown tile into the
- * same BitmapData, then tint the composite to skin.fog and blur it 32px.
- * No invented radii, global darkening or server-side visibility changes.
+ * Crucial: roomIds is intentionally REDACTED from authenticated API responses.
+ * Dimensions are harmless public metadata carried explicitly by MtDungeonScene.
+ * Never infer map height from roomIds or viewport dimensions.
  */
 import type { MtDungeonScene, MtViewport } from '@dinorpg/core/models/dungeon/dungeon.scene.js';
 
@@ -17,7 +14,7 @@ export const MT_ORIGINAL_FOG_TILE_PX = 40;
 export const MT_ORIGINAL_FOG_MARGIN_PX = 14;
 export const MT_ORIGINAL_FOG_BLUR_PX = 32;
 export const MT_ORIGINAL_FOG_BLUR_QUALITY = 1;
-// fx_reveal is a separate SWF symbol, not part of this extraction.
+// fx_reveal is a separate SWF symbol. No client-side discovery is performed here.
 export const MT_ORIGINAL_FOG_REVEAL_ALPHA = 0.22;
 export const MT_ORIGINAL_FOG_REVEAL_BLUR_PX = 12;
 
@@ -29,24 +26,24 @@ export const MT_ORIGINAL_FOG_URLS = [
 ] as const;
 
 export interface MtOriginalFogSprite {
-	/** Screen-space location of the 68x68 alpha mask, before camera easing. */
 	x: number;
 	y: number;
+	/** Zero-based index into MT_ORIGINAL_FOG_URLS; Flash frame = frame + 1. */
 	frame: 0 | 1 | 2 | 3;
 }
 
-function positiveMod(value: number, mod: number): number {
-	return ((value % mod) + mod) % mod;
+function positiveMod(value: number, divisor: number): number {
+	return ((value % divisor) + divisor) % divisor;
 }
 
-/**
- * View.hx uses X-major 'pos = level * width * height + x * height + y'.
- * Its frame expression divides by a 'block' MovieClip frame count, not the
- * fog sprite frame count. As the extracted fog has 4 frames, use the four
- * available variants, keyed by the historical X-major index. This is a
- * documented selection fallback, NOT proof of the original modulo's value.
- * The selection is deterministic regardless of viewport/camera position.
- */
+/** View.hx: pos = posL * width * height + px * height + py. */
+export function mtOriginalFogIndex(level: number, width: number, height: number, x: number, y: number): number {
+	if (![level, width, height, x, y].every(Number.isInteger) || width <= 0 || height <= 0 || level < 0)
+		throw new Error('Invalid Motion Twin fog dimensions / position.');
+	return level * width * height + x * height + y;
+}
+
+/** View.displayLevel: fog.gotoAndStop(1 + (pos % fog._totalframes)). */
 export function mtOriginalFogFrame(
 	level: number,
 	mapWidth: number,
@@ -54,7 +51,7 @@ export function mtOriginalFogFrame(
 	x: number,
 	y: number
 ): 0 | 1 | 2 | 3 {
-	const index = level * mapWidth * mapHeight + x * mapHeight + y;
+	const index = mtOriginalFogIndex(level, mapWidth, mapHeight, x, y);
 	return positiveMod(index, MT_ORIGINAL_FOG_URLS.length) as 0 | 1 | 2 | 3;
 }
 
@@ -72,11 +69,9 @@ export function mtOriginalFogSprite(
 	};
 }
 
-/** Inputs are strictly the scene's unknown tiles, already decided by the server. */
+/** Fog tiles come exclusively from the server-authorized scene. No revealing here. */
 export function mtOriginalFogSprites(
-	scene: Pick<MtDungeonScene, 'fog' | 'viewport' | 'roomIds' | 'level'>
+	scene: Pick<MtDungeonScene, 'fog' | 'viewport' | 'level' | 'mapWidth' | 'mapHeight'>
 ): MtOriginalFogSprite[] {
-	const mapWidth = scene.roomIds.length;
-	const mapHeight = scene.roomIds[0]?.length ?? 0;
-	return scene.fog.map(tile => mtOriginalFogSprite(tile, scene.viewport, scene.level, mapWidth, mapHeight));
+	return scene.fog.map(tile => mtOriginalFogSprite(tile, scene.viewport, scene.level, scene.mapWidth, scene.mapHeight));
 }
