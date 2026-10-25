@@ -70,7 +70,7 @@ function intentFor(session: MtDungeonSession) {
 		return createMtGuardianTrialIntent({
 			session,
 			configuration: archive.configuration(session.mapId),
-			definition: archive.definition('stepp')
+			definition: archive.definition(session.mapId.slice(0, session.mapId.lastIndexOf('_')))
 		});
 	} catch {
 		throw new MtDungeonGuardianTrialError('not-ready');
@@ -87,7 +87,6 @@ function wrongAttemptStatus(status: string): MtDungeonGuardianTrialError {
 
 /** Read-only and only if the current user owns the validated pending guardian. */
 export async function getMtGuardianTrialPreview(identity: MtSessionIdentity) {
-	ensureEnabled();
 	const session = await mtDungeonDependencies().repository.load(identity);
 	if (!session) throw new MtDungeonGuardianTrialError('not-found');
 	const intent = intentFor(session);
@@ -231,7 +230,9 @@ export async function resolveMtGuardianTrial(identity: MtSessionIdentity, token:
 			throw new MtDungeonGuardianTrialError('unknown-monster');
 		const monsters = attempt.monsterKeys.map(knownMonster);
 		const dungeonPlace = Object.values(placeListv2).find(
-			place => place.name === getMtDungeonArchive().definition('stepp').enter.place
+			place =>
+				place.name ===
+				getMtDungeonArchive().definition(session.mapId.slice(0, session.mapId.lastIndexOf('_'))).enter.place
 		)?.placeId;
 		/* MT20N RESOLVE GUARDIAN: remove deceased followers */
 		await prisma.$transaction(tx => detachDeadMtDungeonFollowers(tx, identity));

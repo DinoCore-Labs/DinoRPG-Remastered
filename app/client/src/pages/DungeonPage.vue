@@ -179,27 +179,8 @@
 					Combattre
 				</button>
 				<template v-if="session.pending.kind === 'guardian'">
-					<p v-if="guardianTrial" class="mt-test__caption">
-						Gardien MT : <strong>{{ guardianTrial.monsterKey }}</strong> — apparence issue du catalogue MT.
-					</p>
-					<p class="mt-test__caption">
-						Le combat utilise le moteur Remastered ; il consomme l'action de combat des Dinoz et peut attribuer de l'XP
-						ou des objets.
-					</p>
 					<button type="button" :disabled="busy" @click="fightGuardian">Combattre le gardien</button>
 				</template>
-				<button
-					v-if="session.pending.kind === 'guardian' && devCapabilities?.guardianSkip"
-					type="button"
-					:disabled="busy"
-					@click="skipGuardian"
-				>
-					Franchir le gardien (test local, sans combat)
-				</button>
-				<p v-if="!actionAvailable" class="mt-test__caption">
-					Cette interaction n'est pas encore résoluble dans cette version. Le déplacement reste bloqué conformément à
-					l'état serveur.
-				</p>
 			</section>
 			<section v-if="activeHealZone" class="mt-test__panel" aria-live="polite">
 				<p>Zone de soin active : utilise des objets de soin sur la fiche de tes Dinoz, puis reviens ici.</p>
@@ -250,7 +231,6 @@ import {
 	type MtDungeonCatalogEntry,
 	type MtDungeonJournalEntry,
 	type MtDungeonEncounter,
-	type MtDungeonDevCapabilities,
 	type MtGuardianTrialPreview
 } from '../services/mtDungeon.service.js';
 import { sessionStore } from '../store/sessionStore';
@@ -276,8 +256,6 @@ const pickupMessage = ref<string | null>(null);
 const originalEntryText = ref<string | null>(null); // STEP_20O_MT_DUNGEON
 const entryDismissed = ref(false);
 const scenarioDismissedRevision = ref('');
-const devCapabilities = ref<MtDungeonDevCapabilities | null>(null);
-const guardianTrial = ref<MtGuardianTrialPreview | null>(null);
 const loading = ref(true);
 const busy = ref(false);
 const visualMembers = ref<{ id: number; display: string; life: number; fight: boolean; remaining: number }[]>([]);
@@ -511,7 +489,6 @@ async function refresh(): Promise<void> {
 		session.value = current;
 		view.value = latestView;
 		encounter.value = latestEncounter;
-		await loadGuardianTrial(current);
 		await loadVisualParty();
 		if (latestView) await loadJournal();
 		// Recover a boundary from a previous refresh/browser tab without a second button.
@@ -521,7 +498,6 @@ async function refresh(): Promise<void> {
 			session.value = null;
 			view.value = null;
 			encounter.value = null;
-			guardianTrial.value = null;
 			journalEntries.value = [];
 			journalError.value = '';
 		} else errorMessage.value = formatError(error);
@@ -545,7 +521,6 @@ async function afterMutation(next: MtDungeonSession): Promise<void> {
 	session.value = next;
 	view.value = latestView;
 	encounter.value = latestEncounter;
-	await loadGuardianTrial(next);
 	await loadVisualParty();
 	if (journalChanged) await loadJournal();
 }
@@ -690,15 +665,6 @@ function resolveScenario() {
 		notice.value = outcome.message ?? 'Événement traité par le serveur.';
 	});
 }
-async function loadGuardianTrial(run: MtDungeonSession): Promise<void> {
-	guardianTrial.value = null;
-	if (!run.pending || run.pending.kind !== 'guardian' || !import.meta.env.DEV) return;
-	try {
-		guardianTrial.value = await MtDungeonService.getGuardianTrialPreview(leaderId);
-	} catch {
-		/* Not enabled or no valid guardian: keep the original pending state. */
-	}
-}
 function fightGuardian() {
 	if (session.value?.pending?.kind !== 'guardian') return;
 	void execute(async () => {
@@ -718,31 +684,6 @@ function fight() {
 		await router.push({ name: 'FightPage', params: { dinozId: String(leaderId) } });
 	});
 }
-async function loadDevCapabilities(): Promise<void> {
-	if (!import.meta.env.DEV) return;
-	try {
-		devCapabilities.value = await MtDungeonService.getDevCapabilities();
-		if (session.value) await loadGuardianTrial(session.value);
-	} catch {
-		// 404 is expected when the server has not opted in to local dev tools.
-		devCapabilities.value = null;
-	}
-}
-function skipGuardian(): void {
-	if (!session.value || session.value.pending?.kind !== 'guardian' || !devCapabilities.value?.guardianSkip) return;
-	void execute(async () => {
-		const previous = session.value!;
-		const next = await MtDungeonService.devSkipGuardian(leaderId, previous.revision);
-		movementTrail.value = advanceMtTrail(
-			movementTrail.value,
-			asTrailPoint(previous),
-			asTrailPoint(next),
-			Math.max(0, visualMembers.value.length - 1)
-		);
-		await afterMutation(next);
-		notice.value = 'Gardien franchi en mode test : aucun combat, XP ou récompense.';
-	});
-}
 function evacuateDefeated(): void {
 	if (!session.value || (!partyDefeated.value && !partyLeaderDead.value)) return;
 	void execute(async () => {
@@ -750,7 +691,6 @@ function evacuateDefeated(): void {
 		session.value = null;
 		view.value = null;
 		encounter.value = null;
-		guardianTrial.value = null;
 		movementTrail.value = [];
 		await router.replace({ name: 'DinozPage', params: { id: String(leaderId) } });
 	});
@@ -787,7 +727,6 @@ onMounted(() => {
 		} catch {
 			/* API indisponible : afficher l'identifiant sans inventer de nom */
 		}
-		await loadDevCapabilities();
 		if (route.query.mtEntry === '1' && session.value) {
 			await showOriginalEntryText();
 			const query = { ...route.query };
