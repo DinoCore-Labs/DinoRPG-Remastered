@@ -1,6 +1,7 @@
 <template>
 	<div class="mt-msgbox-overlay" @click.self="$emit('close')">
 		<section class="mt-msgbox" role="dialog" aria-modal="true" :aria-label="title">
+			<img class="mt-scroll" src="/dungeon/mt/item_scroll.png" />
 			<span
 				v-for="piece in pieces"
 				:key="piece"
@@ -42,6 +43,15 @@ const pieces = ['topleft', 'top', 'topright', 'left', 'right', 'bottomleft', 'bo
 	justify-content: center;
 	padding: 1.2rem;
 	background: rgb(18 12 8 / 65%);
+}
+.mt-scroll {
+	position: absolute;
+	top: -15px;
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 2501;
+	width: 40px;
+	height: auto;
 }
 .mt-msgbox {
 	--mt-edge: 18px;

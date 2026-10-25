@@ -57,6 +57,12 @@ import { createMtSpritePlan, type MtRandomFrameSource } from './mtOriginalSprite
 import { placeMtDungeonItem } from './mtDungeonItemPlacement.js';
 
 import { mtWallBounds, placeMtWall } from './mtDungeonWallPlacement.js';
+import {
+	MT_ORIGINAL_FOG_BLUR_PX,
+	MT_ORIGINAL_FOG_BLUR_QUALITY,
+	MT_ORIGINAL_FOG_URLS,
+	mtOriginalFogSprites
+} from './mtDungeonOriginalFog.js';
 
 import { loadMtDungeonActorFrames } from './mtDungeonActorFrames.js';
 import { loadMtDungeonGuardianFrames } from './mtDungeonGuardianFrames.js';
@@ -558,25 +564,23 @@ function paintGuardians(scene: MtDungeonScene, ticket: number): void {
 }
 
 function paintFog(scene: MtDungeonScene): void {
+	// Original Motion Twin fog sprites: gfx.swf / DefineSprite 404.
+	// Compose the tinted alpha shapes first, then blur the whole fog plane once.
+	// No artificial global atmosphere layer or client-side discovery.
+	fogLayer.filters = [];
 	if (!scene.fog.length) return;
 
-	const marks = new Graphics();
-
-	for (const tile of scene.fog) {
-		const x = (tile.x - scene.viewport.ix) * 40;
-
-		const y = (tile.y - scene.viewport.iy) * 40;
-
-		marks.rect(x, y, 40, 40);
+	for (const placement of mtOriginalFogSprites(scene)) {
+		const texture = textures.get(MT_ORIGINAL_FOG_URLS[placement.frame]);
+		if (!texture) continue;
+		const sprite = new Sprite(texture);
+		sprite.position.set(placement.x, placement.y);
+		sprite.tint = palette(scene.fogColor);
+		fogLayer.addChild(sprite);
 	}
-
-	marks.fill({ color: palette(scene.fogColor) });
-
-	// Visual approximation only: original uses Flash BlurFilter(32,32,1).
-
-	marks.filters = [new BlurFilter({ strength: 16, quality: 3 })];
-
-	fogLayer.addChild(marks);
+	if (fogLayer.children.length) {
+		fogLayer.filters = [new BlurFilter({ strength: MT_ORIGINAL_FOG_BLUR_PX, quality: MT_ORIGINAL_FOG_BLUR_QUALITY })];
+	}
 }
 
 async function repaint(): Promise<void> {
@@ -602,7 +606,10 @@ async function repaint(): Promise<void> {
 		return;
 	}
 
-	const paths = [...new Set(plan.sprites.map(sprite => sprite.url))];
+	// Load the SWF-derived fog frames together with the already required MT sprites.
+	const paths = [
+		...new Set([...plan.sprites.map(sprite => sprite.url), ...(scene.fog.length ? MT_ORIGINAL_FOG_URLS : [])])
+	];
 
 	const fetched = await Promise.allSettled(
 		paths.map(async path => {
@@ -612,7 +619,9 @@ async function repaint(): Promise<void> {
 
 	if (!app || disposed || ticket !== generation) return;
 
-	const errors = new Set(plan.unresolved);
+	const errors = new Set(
+		plan.unresolved.filter(message => !message.startsWith('Brouillard original fog + BlurFilter'))
+	);
 
 	fetched.forEach((result, index) => {
 		if (result.status === 'rejected') errors.add(`PNG inaccessible : ${paths[index]}`);
