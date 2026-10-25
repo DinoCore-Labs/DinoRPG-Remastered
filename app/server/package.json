@@ -42,7 +42,7 @@
 		"fastify-type-provider-zod": "^7.0.0",
 		"pg": "^8.23.0",
 		"sharp": "^0.35.5",
-		"zod": "^4.5.4"
+		"zod": "^4.6.6"
 	},
 	"devDependencies": {
 		"@types/bcrypt": "^6.0.0",
