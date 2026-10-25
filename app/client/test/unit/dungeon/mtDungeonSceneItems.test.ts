@@ -61,15 +61,20 @@ describe('Original MT dungeon static item sprite selection', () => {
 		]);
 	});
 
-	it('does not fabricate an absent original heal PNG or unsupported icon', () => {
+	it('renders the recovered heal sprite without inventing unsupported scenario icons', () => {
 		const scene = emptyScene();
 		scene.features = [
 			{ kind: 'heal', x: 2, y: 2, consumed: false },
 			{ kind: 'scenario-icon', x: 3, y: 2, icon: 'missing_mystery' }
 		];
 		const plan = createMtSpritePlan(scene);
-		expect(plan.sprites).toEqual([]);
-		expect(plan.unresolved.some(e => e.includes('Objet de soin'))).toBe(true);
+		expect(plan.sprites.map(s => s.file)).toEqual(['item_heal.png']);
+		expect(plan.sprites[0]).toMatchObject({
+			url: '/dungeon/mt/item_heal.png',
+			label: 'item:heal:item_heal.png',
+			x: 80,
+			y: 80
+		});
 		expect(plan.unresolved.some(e => e.includes('missing_mystery'))).toBe(true);
 	});
 });

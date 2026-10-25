@@ -13,7 +13,7 @@
 			:aria-modal="variant === 'dialog' ? 'true' : 'false'"
 			:aria-label="title || text"
 		>
-			<img class="mt-msgbox__tab" src="/dungeon/mt/item_scroll.png" aria-hidden="true" />
+			<img class="mt-msgbox__tab" :src="'/dungeon/mt/item_scroll.png'" aria-hidden="true" />
 			<span
 				v-for="piece in pieces"
 				:key="piece"
