@@ -89,7 +89,7 @@ const gameConfig: Record<GameEnv, GameConfig> = {
 		world: {
 			disableSwampMovementBlock: true,
 			disableSwampFightRules: false,
-			activeFeatures: ['starquest', 'dojo', 'intro', 'cavmagnet']
+			activeFeatures: ['starquest', 'dojo', 'intro', 'cavmagnet', 'katatombs']
 		},
 		general: {
 			initialMoney: 1_000_000,
