@@ -1,0 +1,258 @@
+[
+	{
+		"key": "labo",
+		"wall": "labo",
+		"ground": "labo",
+		"mask": 100,
+		"fog": 856359,
+		"perlin": "PDense"
+	},
+	{
+		"key": "cuzco",
+		"wall": "forest",
+		"ground": "sewer",
+		"mask": 20,
+		"fog": 3159838,
+		"perlin": "PDense"
+	},
+	{
+		"key": "tomb3",
+		"wall": "ruin",
+		"ground": "crypt",
+		"mask": 100,
+		"fog": 3345677,
+		"perlin": "PDense"
+	},
+	{
+		"key": "tomb2",
+		"wall": "ruin",
+		"ground": "desert",
+		"mask": 100,
+		"fog": 4010789,
+		"perlin": "PDense"
+	},
+	{
+		"key": "tomb",
+		"wall": "egypt",
+		"ground": "crypt",
+		"mask": 100,
+		"fog": 4403235,
+		"perlin": "PFew"
+	},
+	{
+		"key": "pyramid2",
+		"wall": "egypt",
+		"ground": "hell",
+		"mask": 60,
+		"fog": 4403235,
+		"perlin": "PNormal"
+	},
+	{
+		"key": "pyramid",
+		"wall": "egypt",
+		"ground": "desert",
+		"mask": 60,
+		"fog": 4403235,
+		"perlin": "PNormal"
+	},
+	{
+		"key": "hell_oasis",
+		"wall": "hell",
+		"ground": "desert",
+		"mask": 0,
+		"fog": 3345677,
+		"perlin": "PNormal"
+	},
+	{
+		"key": "cave",
+		"wall": "cavern",
+		"ground": "grass",
+		"mask": 100,
+		"fog": 2237973,
+		"perlin": "PDense"
+	},
+	{
+		"key": "oasis2",
+		"wall": "forest",
+		"ground": "desert",
+		"mask": 30,
+		"fog": 4403235,
+		"perlin": "PDense"
+	},
+	{
+		"key": "oasis",
+		"wall": "forest",
+		"ground": "desert",
+		"mask": 30,
+		"fog": 4403235,
+		"perlin": "PNormal"
+	},
+	{
+		"key": "forest4",
+		"wall": "forest",
+		"ground": "cavern",
+		"mask": 100,
+		"fog": 3023921,
+		"perlin": "PNormal"
+	},
+	{
+		"key": "forest3",
+		"wall": "forest",
+		"ground": "grass",
+		"mask": 60,
+		"fog": 3159838,
+		"perlin": "PNormal"
+	},
+	{
+		"key": "forest2",
+		"wall": "forest",
+		"ground": "cavern",
+		"mask": 30,
+		"fog": 3159838,
+		"perlin": "PFew"
+	},
+	{
+		"key": "forest",
+		"wall": "forest",
+		"ground": "grass",
+		"mask": 0,
+		"fog": 3159838,
+		"perlin": "PDense"
+	},
+	{
+		"key": "hell2",
+		"wall": "hell",
+		"ground": "cavern",
+		"mask": 100,
+		"fog": 3345677,
+		"perlin": "PDense"
+	},
+	{
+		"key": "hell",
+		"wall": "hell",
+		"ground": "hell",
+		"mask": 100,
+		"fog": 3345677,
+		"perlin": "PNormal"
+	},
+	{
+		"key": "ruin4",
+		"wall": "ruin",
+		"ground": "hell",
+		"mask": 100,
+		"fog": 2562332,
+		"perlin": "PDense"
+	},
+	{
+		"key": "ruin3",
+		"wall": "ruin",
+		"ground": "grass",
+		"mask": 60,
+		"fog": 3159838,
+		"perlin": "PNormal"
+	},
+	{
+		"key": "ruin2",
+		"wall": "ruin",
+		"ground": "sewer",
+		"mask": 100,
+		"fog": 2562332,
+		"perlin": "PNormal"
+	},
+	{
+		"key": "ruin",
+		"wall": "ruin",
+		"ground": "cavern",
+		"mask": 100,
+		"fog": 2434864,
+		"perlin": "PNormal"
+	},
+	{
+		"key": "mine2",
+		"wall": "mine",
+		"ground": "cavern",
+		"mask": 100,
+		"fog": 3484704,
+		"perlin": "PNormal"
+	},
+	{
+		"key": "mine",
+		"wall": "mine",
+		"ground": "desert",
+		"mask": 60,
+		"fog": 3484704,
+		"perlin": "PDense"
+	},
+	{
+		"key": "sewer3",
+		"wall": "sewer",
+		"ground": "cavern",
+		"mask": 100,
+		"fog": 3617310,
+		"perlin": "PFew"
+	},
+	{
+		"key": "sewer2",
+		"wall": "sewer",
+		"ground": "sewer",
+		"mask": 100,
+		"fog": 3617310,
+		"perlin": "PFew"
+	},
+	{
+		"key": "sewer",
+		"wall": "sewer",
+		"ground": "sewer",
+		"mask": 70,
+		"fog": 3617310,
+		"perlin": "PFew"
+	},
+	{
+		"key": "desert",
+		"wall": "cavern",
+		"ground": "desert",
+		"mask": 50,
+		"fog": 4010789,
+		"perlin": "PFew"
+	},
+	{
+		"key": "cavern3",
+		"wall": "cavern",
+		"ground": "desert",
+		"mask": 70,
+		"fog": 2562332,
+		"perlin": "PDense"
+	},
+	{
+		"key": "cavern2",
+		"wall": "cavern",
+		"ground": "hell",
+		"mask": 70,
+		"fog": 2562332,
+		"perlin": "PNormal"
+	},
+	{
+		"key": "cavern",
+		"wall": "cavern",
+		"ground": "cavern",
+		"mask": 100,
+		"fog": 3744809,
+		"perlin": "PNormal"
+	},
+	{
+		"key": "crypt2",
+		"wall": "crypt",
+		"ground": "sewer",
+		"mask": 100,
+		"fog": 2562332,
+		"perlin": "PDense"
+	},
+	{
+		"key": "crypt",
+		"wall": "crypt",
+		"ground": "crypt",
+		"mask": 100,
+		"fog": 2562332,
+		"perlin": "PNormal"
+	}
+]
