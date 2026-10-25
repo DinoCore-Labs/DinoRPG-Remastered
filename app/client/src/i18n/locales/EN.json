@@ -3235,9 +3235,9 @@
 			"tower_defend": "No one currently controls the Devourer. Take this opportunity to seize control!",
 			"stop_defend_tower": "If you relinquish control of the Devourer, you will have to fight again to regain it. Other players are surely waiting for the opportunity to seize it themselves!",
 			"build_dojo": "Build your Dojo",
-			"dungeon": "Explore the Magnetic Caverns",
-			"resume_dungeon": "Resume exploring",
-			"dungeon": "Enter the Magnetic Caverns and explore the original Motion Twin dungeon."
+			"dungeon_enter": "You can explore this place, but take care of not getting lost!",
+			"dungeon": "Check the current exploration state...",
+			"dungeon_status": "Your Dinoz is currently exploring an area..."
 		},
 		"name": {
 			"fight": "Fight",
@@ -3277,7 +3277,9 @@
 			"tower_attack": "Take Control of the Devourer",
 			"tower_defend": "Defend the Devourer",
 			"stop_defend_tower": "Relinquish Control",
-			"build_dojo": "Build your Dojo"
+			"build_dojo": "Build your Dojo",
+			"dungeon_enter": "Enter",
+			"dungeon": "Check the Map"
 		}
 	},
 	"fight": {
