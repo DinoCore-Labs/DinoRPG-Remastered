@@ -1,6 +1,13 @@
+import { Action, actionList } from '@dinorpg/core/models/dinoz/dinozActions.js';
+import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import type { FastifyReply, FastifyRequest } from 'fastify';
 
+import {
+	assertMtDungeonEntry,
+	getMtDungeonArchive,
+	MtDungeonEntryError
+} from '../../Dungeon/Service/mtDungeonRuntime.service.js'; // STEP_20O_MT_DUNGEON
 import { advanceDinozMissionOnWait } from '../../Mission/Controller/mission.progress.js';
 import { prisma } from '../../prisma.js';
 import { toDinozFiche } from '../../utils/dinoz/dinozFiche.mapper.js';
@@ -79,6 +86,36 @@ export async function getDinozFiche(req: FastifyRequest<{ Params: Params }>, rep
 	const currentTournament = await TournamentManager.getCurrentTournamentState(prisma);
 	// Create the answer that will be sent back
 	const ret = toDinozFiche(playerData, dinozId, ficheRest, currentTournament);
+	// STEP_20O_MT_DUNGEON: suppress ordinary world actions for every member of an active run.
+	// The dungeon entrance/scene remains authoritative; never trust a client-provided run id.
+	const activeRun = await prisma.mtDungeonRun.findFirst({
+		where: { userId: authedId, leaderDinozId: myDinoz.leaderId ?? myDinoz.id },
+		select: { leaderDinozId: true, mapId: true }
+	});
+	if (activeRun) {
+		ret.dungeon = {
+			leaderDinozId: activeRun.leaderDinozId,
+			dungeonId: activeRun.mapId.slice(0, activeRun.mapId.lastIndexOf('_'))
+		};
+		ret.actions = [];
+		ret.borderPlace = [];
+		return reply.send(ret);
+	}
 	ret.actions = await getAvailableActions(myDinoz, playerData);
+	// Show the same entry as the server accepts; the start route rechecks atomically.
+	if (
+		myDinoz.leaderId === null &&
+		myDinoz.placeId === PlaceEnum.PYLONES_DE_MAGNETITES &&
+		myDinoz.state === null &&
+		myDinoz.life > 0 &&
+		myDinoz.fight
+	) {
+		try {
+			await assertMtDungeonEntry(getMtDungeonArchive(), { userId: authedId, leaderDinozId: myDinoz.id }, 'stepp_0');
+			ret.actions.push(actionList[Action.DUNGEON]);
+		} catch (error) {
+			if (!(error instanceof MtDungeonEntryError)) throw error;
+		}
+	}
 	return reply.send(ret);
 }

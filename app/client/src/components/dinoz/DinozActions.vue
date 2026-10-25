@@ -25,6 +25,14 @@
 			<p>{{ $t('common.actions') }}</p>
 		</div>
 		<div class="action_content">
+			<!-- STEP_20O_MT_DUNGEON: this is navigation, never a gameplay action. -->
+			<RouterLink
+				v-if="dinoz.dungeon?.dungeonId === 'stepp'"
+				class="dungeon-resume"
+				:to="{ name: 'MtMagneticCavernsPage', params: { id: dinoz.dungeon.leaderDinozId } }"
+			>
+				{{ $t('action.name.resume_dungeon') }}
+			</RouterLink>
 			<template v-for="didi in dinozFullParty" :key="didi.id">
 				<DinozMissionHUD
 					v-if="didi.currentMission"
@@ -164,6 +172,7 @@ import { localStore } from '../../store/localStore.js';
 import GatherRewardModal from '../modal/GatherRewardModal.vue';
 import type { GatherResult } from '@dinorpg/core/models/gather/gatherResult.js';
 import { DojoService } from '../../services/dojo.service.ts';
+import { MtDungeonService } from '../../services/mtDungeon.service.js';
 
 export default defineComponent({
 	name: 'DinozActions',
@@ -415,6 +424,19 @@ export default defineComponent({
 				if (!res) return;
 			}
 			switch (action.name) {
+				case Action.DUNGEON: // STEP_20O_MT_DUNGEON
+					try {
+						await MtDungeonService.startMagneticCaverns(this.dinozId);
+						await this.$router.push({
+							name: 'MtMagneticCavernsPage',
+							params: { id: String(this.dinozId) },
+							query: { mtEntry: '1' }
+						});
+					} catch (error) {
+						errorHandler.handle(error, this.$toast);
+						await this.refreshDinoz();
+					}
+					break;
 				case Action.IRMA:
 				case Action.IRMAS:
 				case Action.ACTION:
@@ -836,7 +858,6 @@ export default defineComponent({
 						rejectLabel: this.$t('popup.reject'),
 						icon: 'pi pi-exclamation-triangle'
 					});
-
 					if (res) {
 						const dojo = await DojoService.buildDojo();
 						userStore().setDojoId(dojo.dojoId);
@@ -1120,6 +1141,20 @@ export default defineComponent({
 			}
 		}
 	}
+}
+.dungeon-resume {
+	// STEP_20O_MT_DUNGEON
+	padding: 8px 6px;
+	border: 1px solid #8b6839;
+	background: #e9d09f;
+	color: #4c2f16;
+	font-size: 10pt;
+	text-align: center;
+	font-weight: bold;
+	text-decoration: none;
+}
+.dungeon-resume:hover {
+	background: #f2dfba;
 }
 .selling {
 	margin-right: 1px;
