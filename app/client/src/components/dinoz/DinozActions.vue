@@ -13,6 +13,15 @@
 -->
 <template>
 	<div class="actions">
+		<!-- STEP_20R_MT_ENTRY_DIALOG : texte MT après création, sur la fiche Dinoz. -->
+		<MtDungeonMessageBox
+			v-if="dungeonEntryMessage"
+			:title="dungeonEntryMessage.title"
+			:text="dungeonEntryMessage.text"
+			confirm-label="Continuer"
+			@confirm="dungeonEntryMessage = null"
+			@close="dungeonEntryMessage = null"
+		/>
 		<Resurrect :enabled="resurrect" @close="resurrect = false" />
 		<Reincarnate :enabled="reincarnate" :dinoz="dinoz" @close="reincarnate = false" />
 		<MissionTalkModal
@@ -166,6 +175,7 @@ import GatherRewardModal from '../modal/GatherRewardModal.vue';
 import type { GatherResult } from '@dinorpg/core/models/gather/gatherResult.js';
 import { DojoService } from '../../services/dojo.service.ts';
 import { MtDungeonService } from '../../services/mtDungeon.service.js';
+import MtDungeonMessageBox from '../dungeon/MtDungeonMessageBox.vue';
 
 export default defineComponent({
 	name: 'DinozActions',
@@ -190,7 +200,8 @@ export default defineComponent({
 			missionReward: null as MissionInteractionRewardModal | null,
 			reincarnate: false as boolean,
 			fastGatherOver: false,
-			fastGatherResult: null as GatherResult | null
+			fastGatherResult: null as GatherResult | null,
+			dungeonEntryMessage: null as { title: string; text: string } | null
 		};
 	},
 	components: {
@@ -201,7 +212,8 @@ export default defineComponent({
 		DZDisclaimer,
 		DZFollow,
 		Reincarnate,
-		GatherRewardModal
+		GatherRewardModal,
+		MtDungeonMessageBox
 	},
 	props: {
 		dinoz: {
@@ -418,17 +430,15 @@ export default defineComponent({
 				if (!res) return;
 			}
 			switch (action.name) {
-				case Action.DUNGEON_ENTER:
+				case Action.DUNGEON_ENTER: // STEP_20R_MT_ENTRY_DIALOG
 					try {
+						// Charger la phrase d'origine AVANT la création : une réponse vide ne doit pas créer une session silencieuse.
+						const definitions = await MtDungeonService.getCatalog(String(this.localStore.getLanguage ?? 'fr'));
+						const definition = definitions.find(entry => entry.id === 'stepp');
+						if (!definition?.enter.text) throw new Error('Texte d’entrée original MT indisponible.');
 						await MtDungeonService.startMagneticCaverns(this.dinozId);
-						try {
-							const definitions = await MtDungeonService.getCatalog(String(this.localStore.getLanguage ?? 'fr'));
-							const text = definitions.find(definition => definition.id === 'stepp')?.enter.text;
-							if (text) this.$toast.open({ message: formatText(text), type: 'info' });
-						} catch {
-							// Entry already succeeded; unavailable metadata must not undo it.
-						}
 						await this.refreshDinoz();
+						this.dungeonEntryMessage = { title: definition.name, text: definition.enter.text };
 					} catch (error) {
 						errorHandler.handle(error, this.$toast);
 						await this.refreshDinoz();
