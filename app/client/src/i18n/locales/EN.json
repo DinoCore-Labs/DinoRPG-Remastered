@@ -3234,7 +3234,10 @@
 			"tower_attack": "Another player already controls the Devourer. You will have to fight to take control of it and harvest its precious seeds.",
 			"tower_defend": "No one currently controls the Devourer. Take this opportunity to seize control!",
 			"stop_defend_tower": "If you relinquish control of the Devourer, you will have to fight again to regain it. Other players are surely waiting for the opportunity to seize it themselves!",
-			"build_dojo": "Build your Dojo"
+			"build_dojo": "Build your Dojo",
+			"dungeon": "Explore the Magnetic Caverns",
+			"resume_dungeon": "Resume exploring",
+			"dungeon": "Enter the Magnetic Caverns and explore the original Motion Twin dungeon."
 		},
 		"name": {
 			"fight": "Fight",

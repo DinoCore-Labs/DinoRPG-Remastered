@@ -35,6 +35,8 @@ export interface DinozFiche {
 	maxExperience: number;
 	race: DinozRace;
 	placeId: number;
+	/** Active MT run, reported only for its owner (leader or current follower). STEP_20O_MT_DUNGEON */
+	dungeon?: { leaderDinozId: number; dungeonId: string };
 	actions: ActionFiche[];
 	items: number[];
 	lockedMagicItems?: { itemId: number; equippedAt: string }[];
@@ -53,13 +55,7 @@ export interface DinozFiche {
 	gather: boolean;
 	rest?: DinozRestInfos | null;
 	stateTimer?: string;
-	//concentration: Concentration | null;
 	tournament: { id: string; levelLimit: number } | null;
-	/*npcAwait?: {
-		npcSpeech: string;
-		npcName: string;
-	};*/
-	//build?: DinozBuild;
 }
 
 export interface DinozFicheLite {
