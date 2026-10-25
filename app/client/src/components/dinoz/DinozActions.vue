@@ -435,10 +435,11 @@ export default defineComponent({
 				case Action.DUNGEON_ENTER:
 					try {
 						// Charger la phrase d'origine AVANT la création : une réponse vide ne doit pas créer une session silencieuse.
+						const session = await MtDungeonService.startDungeon(this.dinozId);
+						const dungeonId = session.mapId.split('_')[0];
 						const definitions = await MtDungeonService.getCatalog(String(this.localStore.getLanguage ?? 'fr'));
-						const definition = definitions.find(entry => entry.id === 'stepp');
-						if (!definition?.enter.text) throw new Error('Texte d’entrée original MT indisponible.');
-						await MtDungeonService.startMagneticCaverns(this.dinozId);
+						const definition = definitions.find(entry => entry.id === dungeonId);
+						if (!definition) throw new Error('Donjon MT inconnu dans le catalogue.');
 						await this.refreshDinoz();
 						this.dungeonEntryMessage = { title: definition.name, text: definition.enter.text };
 					} catch (error) {

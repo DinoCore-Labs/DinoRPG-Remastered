@@ -119,8 +119,8 @@ export const MtDungeonService = {
 	getView(id: number): Promise<MtDungeonCurrentView> {
 		return api.get(`/dungeon/mt/${id}/view`, { silent: true });
 	},
-	startDungeon(id: number, dungeonId: string): Promise<MtDungeonSession> {
-		return api.post('/dungeon/mt/start', { leaderDinozId: id, dungeonId });
+	startDungeon(id: number): Promise<MtDungeonSession> {
+		return api.post('/dungeon/mt/start', { leaderDinozId: id });
 	},
 	startMagneticCaverns(id: number): Promise<MtDungeonSession> {
 		return this.startDungeon(id, 'stepp');
