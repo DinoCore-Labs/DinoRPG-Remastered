@@ -51,12 +51,13 @@ import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 
 import type { MtDungeonScene, MtWallPart } from '@dinorpg/core/models/dungeon/dungeon.scene.js';
 
-import { AnimatedSprite, Application, Assets, BlurFilter, Container, Graphics, Sprite, type Texture } from 'pixi.js';
+import { AnimatedSprite, Application, Assets, BlurFilter, Container, Graphics, Sprite, Texture } from 'pixi.js';
 
 import { createMtSpritePlan, type MtRandomFrameSource } from './mtOriginalSpriteCatalog.js';
 import { placeMtDungeonItem } from './mtDungeonItemPlacement.js';
 
 import { mtWallBounds, placeMtWall } from './mtDungeonWallPlacement.js';
+import { composeMtTerrainBitmap, isMtTerrainDraw, type MtTerrainDraw } from './mtDungeonTerrainEffects.js';
 import { MT_DUNGEON_MASK_URL, mtDungeonMaskAlpha, mtDungeonMaskTint } from './mtDungeonMask.js';
 import {
 	MT_ORIGINAL_FOG_BLUR_PX,
@@ -169,6 +170,9 @@ let disposed = false;
 let generation = 0;
 
 let ground: Container;
+
+/** Dynamic Pixi CanvasSource, owned by this renderer (never an Assets texture). */
+let mtTerrainTexture: Texture | null = null;
 
 let northernWalls: Container;
 
@@ -609,6 +613,21 @@ function paintMtDungeonOriginalMask(scene: MtDungeonScene): void {
 	originalMask.visible = true;
 }
 
+/** STEP_20Z_MT_TERRAIN_COMPOSITE — rasterize native PNG floor and overlay before post-processing. */
+function mtCompositeTerrain(
+	plan: ReturnType<typeof createMtSpritePlan>,
+	scene: MtDungeonScene
+): ReturnType<typeof composeMtTerrainBitmap> {
+	const terrain = plan.sprites.filter(sprite => isMtTerrainDraw(sprite.label));
+	const images: MtTerrainDraw[] = [];
+	for (const sprite of terrain) {
+		const resource = textures.get(sprite.url)?.source.resource;
+		if (!resource) return null;
+		images.push({ label: sprite.label, x: sprite.x, y: sprite.y, image: resource as CanvasImageSource });
+	}
+	return composeMtTerrainBitmap(images, scene.viewport);
+}
+
 async function repaint(): Promise<void> {
 	const ticket = ++generation;
 
@@ -699,12 +718,33 @@ async function repaint(): Promise<void> {
 
 	worldLayer.position.set(shift.offsetX, shift.offsetY);
 
+	// A failed Canvas2D or unsupported ImageSource must retain the old Pixi tiles.
+	const composedTerrain = mtCompositeTerrain(plan, scene);
+	let nextTerrainTexture: Texture | null = null;
+	if (composedTerrain) {
+		try {
+			nextTerrainTexture = Texture.from(composedTerrain.canvas);
+		} catch {
+			// Preserve original tile renderer as a safe fallback.
+		}
+	}
+
 	clearGuardianNodes();
 	for (const layer of [ground, northernWalls, items, nearWalls, fogLayer, diagnosticsLayer]) clear(layer);
+	mtTerrainTexture?.destroy(true);
+	mtTerrainTexture = nextTerrainTexture;
 
 	app.renderer.background.color = palette(scene.fogColor);
 
-	for (const sprite of plan.sprites) paintSprite(sprite, scene);
+	for (const sprite of plan.sprites) {
+		if (mtTerrainTexture && isMtTerrainDraw(sprite.label)) continue;
+		paintSprite(sprite, scene);
+	}
+	if (mtTerrainTexture && composedTerrain) {
+		const visual = new Sprite(mtTerrainTexture);
+		visual.position.set(composedTerrain.x, composedTerrain.y);
+		ground.addChild(visual);
+	}
 
 	paintFog(scene);
 	paintMtDungeonOriginalMask(scene);
@@ -827,6 +867,8 @@ onBeforeUnmount(() => {
 
 	renderedScene = null;
 
+	mtTerrainTexture?.destroy(true);
+	mtTerrainTexture = null;
 	app?.destroy(true, { children: true });
 
 	app = null;
