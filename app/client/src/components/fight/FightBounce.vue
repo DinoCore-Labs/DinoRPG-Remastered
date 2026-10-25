@@ -199,22 +199,24 @@ export default defineComponent({
 			if (this.loadingContinue) return;
 			this.loadingContinue = true;
 			try {
-				// A follower shares the dungeon session of its leader.
-				const leaderId = this.dinozStore.getDinoz(this.dinozId)?.leaderId ?? this.dinozId;
-				try {
-					const dungeon = await MtDungeonService.getSession(leaderId);
-					if (dungeon.mapId.startsWith('stepp_')) {
-						await this.$router.replace({
-							name: 'MtMagneticCavernsPage',
-							params: { id: String(leaderId) }
-						});
+				// Only an explicitly tagged dungeon fight can return to DungeonPage.
+				const dungeonReturn = this.fight.dungeonReturn;
+				if (dungeonReturn) {
+					try {
+						const active = await MtDungeonService.getSession(dungeonReturn.leaderDinozId);
+						const expectedDungeon = dungeonReturn.mapId.replace(/_[0-9]+$/, '');
+						if (!active.mapId.startsWith(expectedDungeon + '_')) {
+							throw new Error('La session active ne correspond pas au donjon du combat.');
+						}
+						await this.$router.replace({ name: 'DungeonPage', params: { id: String(dungeonReturn.leaderDinozId) } });
+						return;
+					} catch (error) {
+						if (!axios.isAxiosError(error) || error.response?.status !== 404) throw error;
+						// The server ended the dungeon run (e.g. leader KO or entire team defeated).
+						await this.$router.replace({ name: 'DinozPage', params: { id: String(dungeonReturn.leaderDinozId) } });
 						return;
 					}
-				} catch (error) {
-					// 404 = no active dungeon run; any other error is not a safe fallback.
-					if (!axios.isAxiosError(error) || error.response?.status !== 404) throw error;
 				}
-
 				// Preserve the dialogue continuation after ordinary fights.
 				if (this.fight.result && this.fight.dialogReturn) {
 					await this.$router.replace({
@@ -231,9 +233,10 @@ export default defineComponent({
 					name: 'DinozPage',
 					params: { id: this.dinozId.toString() }
 				});
-			} catch {
+			} catch (error) {
+				console.error('Erreur de retour après combat', error);
 				this.$toast.open({
-					message: 'Impossible de vérifier la session du donjon. Réessaie.',
+					message: 'Impossible de revenir après le combat. Réessaie.',
 					type: 'error'
 				});
 			} finally {
