@@ -7,7 +7,7 @@
 			:aria-modal="variant === 'dialog' ? 'true' : 'false'"
 			:aria-label="title || text"
 		>
-			<img class="mt-msgbox__tab" :src="'/dungeon/mt/item_scroll.png'" aria-hidden="true" />
+			<img v-if="iconUrl" class="mt-msgbox__tab" :src="iconUrl" alt="" aria-hidden="true" />
 			<span
 				v-for="piece in pieces"
 				:key="piece"
@@ -43,6 +43,16 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
+
+// MT's original scene/message icons; never interpolate untrusted strings into asset URLs.
+const ITEM_ICONS: Readonly<Record<string, string>> = {
+	chest: 'item_chest.png',
+	scroll: 'item_scroll.png',
+	skel: 'item_skel.png',
+	gold: 'item_gold.png',
+	key: 'item_key_01.png'
+};
 const props = withDefaults(
 	defineProps<{
 		title?: string;
@@ -52,9 +62,14 @@ const props = withDefaults(
 		busy?: boolean;
 		variant?: 'notice' | 'dialog';
 		placement?: 'screen' | 'viewport';
+		icon?: string | null;
 	}>(),
 	{ variant: 'dialog', placement: 'screen', busy: false }
 );
+const iconUrl = computed(() => {
+	const filename = props.icon ? ITEM_ICONS[props.icon] : undefined;
+	return filename ? `/dungeon/mt/${filename}` : null;
+});
 const emit = defineEmits<{ confirm: []; close: [] }>();
 const pieces = ['topleft', 'top', 'topright', 'left', 'right', 'bottomleft', 'bottom', 'bottomright'] as const;
 

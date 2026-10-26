@@ -14,6 +14,7 @@
 			:text="activeMessage.text"
 			:confirm-label="activeMessage.confirmLabel"
 			:cancel-label="activeMessage.cancelLabel"
+			:icon="activeMessage.icon"
 			:busy="busy"
 			@confirm="confirmMessage"
 			@close="closeMessage"
@@ -59,6 +60,7 @@
 					:text="activeMessage.text"
 					:confirm-label="activeMessage.confirmLabel"
 					:cancel-label="activeMessage.cancelLabel"
+					:icon="activeMessage.icon"
 					:busy="busy"
 					@confirm="confirmMessage"
 					@close="closeMessage"
@@ -185,6 +187,7 @@ const errorMessage = ref('');
 const notice = ref('');
 const irmaMessage = ref<string | null>(null);
 const pickupMessage = ref<string | null>(null);
+const pickupIcon = ref<string | null>(null);
 const originalEntryText = ref<string | null>(null);
 const entryDismissed = ref(false);
 const scenarioDismissedRevision = ref('');
@@ -282,7 +285,14 @@ const stairDirections = computed(() => {
 });
 
 type MtNarrativeKind = 'entry' | 'scenario' | 'scenario-combat' | 'irma' | 'pickup';
-type MtNarrative = { kind: MtNarrativeKind; title: string; text: string; confirmLabel: string; cancelLabel?: string };
+type MtNarrative = {
+	kind: MtNarrativeKind;
+	title: string;
+	text: string;
+	confirmLabel: string;
+	cancelLabel?: string;
+	icon?: string | null;
+};
 const activeMessage = computed((): MtNarrative | null => {
 	if (session.value && originalEntryText.value && !entryDismissed.value) {
 		return {
@@ -293,7 +303,13 @@ const activeMessage = computed((): MtNarrative | null => {
 		};
 	}
 	if (session.value && pickupMessage.value)
-		return { kind: 'pickup', title: '', text: pickupMessage.value, confirmLabel: t('dungeon.continue') };
+		return {
+			kind: 'pickup',
+			title: '',
+			text: pickupMessage.value,
+			confirmLabel: t('dungeon.continue'),
+			icon: pickupIcon.value
+		};
 	if (session.value && irmaMessage.value)
 		return { kind: 'irma', title: '', text: irmaMessage.value, confirmLabel: t('dungeon.continue') };
 	const run = session.value;
@@ -306,6 +322,7 @@ const activeMessage = computed((): MtNarrative | null => {
 				kind: 'scenario',
 				title: t('dungeon.discovery'),
 				text: current.text,
+				icon: current.messageIcon ?? null,
 				confirmLabel: t('dungeon.readCollect'),
 				cancelLabel: t('dungeon.later')
 			};
@@ -315,6 +332,7 @@ const activeMessage = computed((): MtNarrative | null => {
 				kind: 'scenario-combat',
 				title: t('dungeon.encounterTitle'),
 				text: current.text,
+				icon: current.messageIcon ?? null,
 				confirmLabel: t('dungeon.fight'),
 				cancelLabel: t('dungeon.later')
 			};
@@ -324,7 +342,10 @@ const activeMessage = computed((): MtNarrative | null => {
 });
 function closeMessage(): void {
 	const kind = activeMessage.value?.kind;
-	if (kind === 'pickup') pickupMessage.value = null;
+	if (kind === 'pickup') {
+		pickupMessage.value = null;
+		pickupIcon.value = null;
+	}
 	if (kind === 'irma') irmaMessage.value = null;
 	if (kind === 'entry') entryDismissed.value = true;
 	if ((kind === 'scenario' || kind === 'scenario-combat') && session.value)
@@ -332,7 +353,10 @@ function closeMessage(): void {
 }
 function confirmMessage(): void {
 	const kind = activeMessage.value?.kind;
-	if (kind === 'pickup') pickupMessage.value = null;
+	if (kind === 'pickup') {
+		pickupMessage.value = null;
+		pickupIcon.value = null;
+	}
 	if (kind === 'irma') irmaMessage.value = null;
 	if (kind === 'entry') entryDismissed.value = true;
 	if (kind === 'scenario') {
@@ -489,6 +513,7 @@ function move(direction: 'north' | 'south' | 'west' | 'east' | 'up' | 'down') {
 			return;
 		}
 		if (result.blockedDoor === 'missing-key') {
+			pickupIcon.value = null;
 			// Consume the revision, but do not animate a fake movement.
 			await afterMutation(result.session);
 			pickupMessage.value = Number.isInteger(result.requiredKey)
@@ -506,11 +531,13 @@ function move(direction: 'north' | 'south' | 'west' | 'east' | 'up' | 'down') {
 		);
 		await afterMutation(result.session);
 		const collectedKeys = result.session.keys.flatMap((owned, id) => (owned && !previous.keys[id] ? [id] : []));
-		if (collectedKeys.length > 0)
+		if (collectedKeys.length > 0) {
+			pickupIcon.value = 'key';
 			pickupMessage.value =
 				collectedKeys.length === 1
 					? mtDungeonKeyPickupMessage(leaderId, result.session.mapId, collectedKeys[0]!, t)
 					: collectedKeys.map(id => mtDungeonKeyPickupMessage(leaderId, result.session.mapId, id, t)).join('\n');
+		}
 		if (await settleMtBoundary(result.session)) return;
 		if (mtDungeonCombatTrigger(result.session.pending, encounter.value) === 'guardian') {
 			const { token } = await MtDungeonService.prepareGuardianFight(leaderId, result.session.revision);
@@ -535,6 +562,7 @@ function move(direction: 'north' | 'south' | 'west' | 'east' | 'up' | 'down') {
 			return;
 		}
 		if (typeof result.goldAwarded === 'number') {
+			pickupIcon.value = 'gold';
 			if (typeof result.walletGold === 'number') userStore().setGold(result.walletGold);
 			pickupMessage.value =
 				result.goldAwarded > 0 ? t('dungeon.goldPickup', { amount: result.goldAwarded }) : t('dungeon.goldEmpty');
