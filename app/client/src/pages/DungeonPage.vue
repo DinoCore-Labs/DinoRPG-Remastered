@@ -681,24 +681,6 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeyDown));
 	margin: 0 auto 1rem;
 	color: #37291b;
 }
-.mt-test__header {
-	text-align: center;
-}
-.mt-test__header h2 {
-	margin: 0.65rem 0 0.25rem;
-	font-size: 1.3rem;
-}
-.mt-test__header p {
-	font-size: 0.8rem;
-	margin: 0.25rem 0 0.55rem;
-}
-.mt-test__status {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
-	gap: 0.4rem 0.85rem;
-	font-size: 0.75rem;
-}
 .mt-test__original-controls {
 	position: absolute;
 	z-index: 20;
