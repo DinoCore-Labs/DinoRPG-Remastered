@@ -16,8 +16,8 @@ vi.mock('@eternaltwin/dinorpg_animations', () => ({
 			mocks.constructors.push(data);
 		}
 		toRawAnimation(cb: (frames: string[]) => void, width: number, height: number) {
-			expect(width).toBe(72);
-			expect(height).toBe(72);
+			expect(width).toBe(160);
+			expect(height).toBe(160);
 			cb(['data:image/png;base64,AAAA', 'data:image/png;base64,BBBB']);
 		}
 		destroy() {
