@@ -1,9 +1,3 @@
-<!--
-  STEP_20X_MT_MSGBOX
-  Frame images are the eight original msgbox_*.png slices already shipped in
-  app/client/public/dungeon/mt/. Keep their native 77x41 and 23x41 dimensions.
-  No beige panel, background dimmer or fake parchment icon.
--->
 <template>
 	<div class="mt-msgbox-overlay" :class="`mt-msgbox-overlay--${placement}`" @click.self="dismissOutside">
 		<section
