@@ -125,7 +125,13 @@ export async function prepareMtGuardianTrial(identity: MtSessionIdentity, revisi
 				old.mapId !== intent.mapId ||
 				old.scenarioIndex !== MT_GUARDIAN_TRIAL_INDEX ||
 				old.pendingJson !== intent.pendingJson ||
-				!old.monsterKeys.length
+				!old.monsterKeys.length ||
+				old.monsterKeys.some(
+					key =>
+						!getMtDungeonArchive()
+							.definition(session.mapId.slice(0, session.mapId.lastIndexOf('_')))
+							.monsters.includes(key)
+				)
 			)
 				throw new MtDungeonGuardianTrialError('conflict');
 			return { token: old.token, revision, monsterKeys: [...old.monsterKeys], experimental: true as const };
@@ -140,20 +146,31 @@ export async function prepareMtGuardianTrial(identity: MtSessionIdentity, revisi
 		const user = await getDinozFightDataRequest(identity.leaderDinozId, identity.userId);
 		const party = user?.dinoz ?? [];
 		const leader = party.find(d => d.id === identity.leaderDinozId);
+		// A dungeon battle must never accidentally include an unrelated Dinoz.
+		const validParty =
+			!!leader && leader.leaderId === null && party.every(d => d.id === leader.id || d.leaderId === leader.id);
 		if (
 			!entrance ||
 			!leader ||
+			!validParty ||
 			!party.length ||
 			party.some(
 				d => d.placeId !== entrance.placeId || d.life <= 0 || !d.fight || d.state !== null || d.concentration !== null
 			)
 		)
 			throw new MtDungeonGuardianTrialError('group-unavailable');
+		// The original XML can refer to monsters absent from the Remastered fight engine.
+		// Never pass unsupported identifiers into generateMonsterList or silently
+		// substitute unrelated overworld monsters.
+		const supportedKeys = definition.monsters.filter(
+			key => key !== 'any' && Object.prototype.hasOwnProperty.call(monsterByKey, key)
+		);
+		if (!supportedKeys.length) throw new MtDungeonGuardianTrialError('unknown-monster');
 		const generated = await generateMonsterList(
 			[leader, ...party.filter(d => d.id !== leader.id)],
 			entrance.placeId,
 			undefined,
-			definition.monsters
+			supportedKeys
 		);
 		const monsterKeys = generated.map(monster => getMonsterKeyById(monster.id));
 		if (!monsterKeys.length || monsterKeys.some(key => !key || !definition.monsters.includes(key)))

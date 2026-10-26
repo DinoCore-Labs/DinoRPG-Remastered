@@ -181,7 +181,7 @@ interface ActorState {
 
 const actorNodes = new Map<number, ActorState>();
 const guardianNodes = new Set<AnimatedSprite>();
-/** STEP36_MT_DEPTH_SORT: Walls in the foreground share one Y-sorted container with actors. */
+/** Walls in the foreground share one Y-sorted container with actors. */
 const sortedWallNodes = new Set<Sprite>();
 
 function clearSortedWalls(): void {

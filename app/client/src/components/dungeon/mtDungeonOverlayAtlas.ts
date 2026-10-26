@@ -2,7 +2,7 @@
  * Visual-only adapters between historical View.hx overlay *timeline labels*
  * and the PNG families recovered from its graphics export.
  *
- * MT's view uses skin.over = [symbol, symbol] and a 1..15 neighbourhood mask.
+ * MT's view uses skin.over = [symbol, symbol] and a 1.15 neighbourhood mask.
  * The complete Flash timeline-to-PNG correspondence is NOT preserved in the
  * named PNG archive. These mappings are COLOR/TEXTURE hypotheses, not an
  * assertion of byte-for-byte original rendering. The opt-in sprite-plan switch

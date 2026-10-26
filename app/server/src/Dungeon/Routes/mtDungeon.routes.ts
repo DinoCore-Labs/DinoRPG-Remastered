@@ -130,7 +130,9 @@ export async function mtDungeonRoutes(app: FastifyInstance) {
 			);
 		} catch (error) {
 			if (error instanceof MtDungeonGuardianTrialError)
-				return reply.code(error.code === 'not-found' ? 404 : 409).send({ code: error.code });
+				return reply
+					.code(error.code === 'not-found' ? 404 : error.code === 'unknown-monster' ? 422 : 409)
+					.send({ code: error.code });
 			throw error;
 		}
 	});

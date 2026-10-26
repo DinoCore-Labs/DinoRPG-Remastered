@@ -1,5 +1,4 @@
 /**
- * Static dungeon item placement equivalent to MazeRenderer.drawIcon()/sprite().
  * This is a graphical adapter for authentic archived PNGs, not a gameplay rule.
  * Logical map coordinates stay at the top-left of a 40px cell in sprite plans.
  * No sprite is created for an unknown filename or a missing Flash export.
