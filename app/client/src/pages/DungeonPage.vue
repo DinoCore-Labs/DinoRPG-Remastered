@@ -27,16 +27,6 @@
 			<RouterLink :to="{ name: 'DinozPage', params: { id: leaderId } }">{{ $t('dungeon.enterReturn') }}</RouterLink>
 		</section>
 		<template v-if="session">
-			<details class="mt-test__status">
-				<summary>{{ $t('dungeon.explorationInfo') }}</summary>
-				<span
-					>Carte : <strong>{{ session.mapId }}</strong></span
-				>
-				<span>Étage : {{ stage + 1 }} / 4</span>
-				<span>Case : {{ session.position.x }}, {{ session.position.y }}, {{ session.position.l }}</span>
-				<span>Révision : {{ session.revision }}</span>
-				<span>Clés MT récupérées : {{ session.keys.filter(Boolean).length }}</span>
-			</details>
 			<section v-if="partyDefeated || partyLeaderDead" class="mt-test__panel" aria-live="polite">
 				<p v-if="partyDefeated">
 					Tous les Dinoz sont KO. Le groupe doit quitter le donjon pour pouvoir être ressuscité.
@@ -148,63 +138,8 @@
 						</button>
 					</template>
 				</div>
-				<div v-if="view && partyNeedsIrma && !partyDefeated" class="mt-test__irma-hint" role="status">
-					Actions épuisées : utilisez Irma pour continuer.
-				</div>
 				<div v-if="view" class="mt-test__original-level">Niveau -{{ session.position.l + 1 }}</div>
 			</div>
-			<button class="mt-test__refresh" type="button" :disabled="busy" @click="refresh">
-				{{ $t('dungeon.refreshView') }}
-			</button>
-			<section v-if="session.pending && !mtDungeonBoundaryAction(session)" class="mt-test__panel" aria-live="polite">
-				<p v-if="encounter?.text">{{ encounter.text }}</p>
-				<button
-					v-if="session.pending.kind === 'scenario' && encounter?.kind === 'scenario'"
-					type="button"
-					:disabled="busy"
-					@click="resolveScenario"
-				>
-					Lire / récupérer le coffre
-				</button>
-				<button
-					v-if="
-						session.pending.kind === 'scenario' &&
-						encounter?.kind === 'scenario-combat' &&
-						encounter.status === 'ready-for-combat'
-					"
-					type="button"
-					:disabled="busy"
-					@click="fight"
-				>
-					Combattre
-				</button>
-				<template v-if="session.pending.kind === 'guardian'">
-					<button type="button" :disabled="busy" @click="fightGuardian">Combattre le gardien</button>
-				</template>
-			</section>
-			<section v-if="activeHealZone" class="mt-test__panel" aria-live="polite">
-				<p>Zone de soin active : utilise des objets de soin sur la fiche de tes Dinoz, puis reviens ici.</p>
-				<p>La zone sera définitivement désactivée dès que le groupe quittera cette case.</p>
-				<RouterLink :to="{ name: 'DinozPage', params: { id: leaderId } }">Soigner le chef de groupe</RouterLink>
-				<RouterLink
-					v-for="member in visualMembers.filter(m => m.id !== leaderId)"
-					:key="member.id"
-					:to="{ name: 'DinozPage', params: { id: member.id } }"
-					>Soigner le Dinoz {{ member.id }}</RouterLink
-				>
-			</section>
-			<details v-if="view" class="mt-test__details mt-test__journal">
-				<summary>Journal et coffres découverts ({{ journalEntries.length }})</summary>
-				<p v-if="journalError" role="status">{{ journalError }}</p>
-				<p v-else-if="journalEntries.length === 0">{{ $t('dungeon.noDiscoveries') }}</p>
-				<ol v-else>
-					<li v-for="entry in journalEntries" :key="`${entry.mapId}:${entry.level}:${entry.scenarioIndex}`">
-						<strong>Carte {{ entry.stage + 1 }} — niveau {{ entry.level + 1 }}</strong>
-						<p>{{ entry.text }}</p>
-					</li>
-				</ol>
-				<button type="button" :disabled="busy" @click="loadJournal">{{ $t('dungeon.refreshDiscoveries') }}</button>
-			</details>
 		</template>
 	</section>
 </template>

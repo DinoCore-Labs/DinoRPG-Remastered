@@ -1,0 +1,51 @@
+{
+	"title": "Dungeon",
+	"exploration": "Dungeon-Erkundung",
+	"disclaimer": "**{dinoz}** erkundet gerade **{dungeonName}**. Dieser Dinoz kann den Dungeon nur verlassen, wenn er den Eingang oder Ausgang findet oder stirbt.",
+	"loading": "Dungeon wird geladen…",
+	"enterFromWorld": "Betritt den Dungeon am Zugangsort mit einer einsatzbereiten Gruppe.",
+	"entryValidated": "Der Server überprüft die Zugangsbedingungen und die Positionen der Dinoz.",
+	"enterReturn": "Zurück zu den Dinoz-Aktionen, um einzutreten",
+	"completed": "Dungeon abgeschlossen",
+	"explorationInfo": "Informationen zur Erkundung",
+	"allKo": "Alle Dinoz sind kampfunfähig. Die Gruppe muss den Dungeon verlassen, bevor sie wiederbelebt werden können.",
+	"leaderKo": "Der Gruppenanführer ist kampfunfähig: Vor der weiteren Erkundung muss die Gruppe evakuiert werden.",
+	"evacuate": "Kampfunfähige Gruppe evakuieren",
+	"loadingView": "Ansicht wird geladen…",
+	"refreshView": "Ansicht aktualisieren",
+	"noDiscoveries": "Noch keine Entdeckungen.",
+	"refreshDiscoveries": "Entdeckungen aktualisieren",
+	"diagnostics": "Originaltreue-Diagnose",
+	"journalUnavailable": "Tagebuch vorübergehend nicht verfügbar.",
+	"keys": {
+		"name": "Schlüssel {prefix} {suffix}",
+		"unknown": "Schlüssel Nr. {id}",
+		"pickup": "Du hast den {key} gefunden!",
+		"lockedDoor": "Diese Tür ist verschlossen. Du benötigst den {key}.",
+		"prefixes": {
+			"p0": "der Bäume",
+			"p1": "der Tintenfische",
+			"p2": "der Drachen",
+			"p3": "der Kabukis",
+			"p4": "von Romeo",
+			"p5": "der Goblins",
+			"p6": "der Engel",
+			"p7": "der Dornfresser"
+		},
+		"suffixes": {
+			"s0": "Magisch",
+			"s1": "Verzaubert",
+			"s2": "Tot",
+			"s3": "aus Plastik",
+			"s4": "Funkelnd",
+			"s5": "Rot",
+			"s6": "Geschminkt",
+			"s7": "aus Pappe"
+		}
+	},
+	"goldPickup": "Du hast {amount} Goldmünzen eingesammelt!",
+	"goldEmpty": "In diesem Schatz sind keine Goldmünzen mehr.",
+	"missingDoorKey": "Diese Tür ist verschlossen. Du musst den passenden Schlüssel im Dungeon finden.",
+	"moveRefused": "Der Server hat die Bewegung abgelehnt.",
+	"scenarioProcessed": "Ereignis vom Server verarbeitet."
+}
