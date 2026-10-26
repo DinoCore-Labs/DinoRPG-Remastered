@@ -1,9 +1,7 @@
 /**
  * Deterministic preview of the terrain noise used by the dungeon scene.
  *
- * Transcribed from EternalTwin's MazeRenderer.zoneIds() value-noise lattice,
- * NOT Flash BitmapData.perlinNoise. Never describe it as an exact Motion Twin
- * reproduction. Stable absolute map coordinates avoid camera-scroll seams.
+ * Stable absolute map coordinates avoid camera-scroll seams.
  *
  * The historical View.getOverMap() thresholds, bitmasks and skin settings
  * remain in dungeon.scene.ts. This function only provides the blue-channel
