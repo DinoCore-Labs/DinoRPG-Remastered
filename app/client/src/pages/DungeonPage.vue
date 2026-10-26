@@ -230,8 +230,7 @@ import {
 	type MtDungeonCurrentView,
 	type MtDungeonCatalogEntry,
 	type MtDungeonJournalEntry,
-	type MtDungeonEncounter,
-	type MtGuardianTrialPreview
+	type MtDungeonEncounter
 } from '../services/mtDungeon.service.js';
 import { sessionStore } from '../store/sessionStore';
 import { localStore } from '../store/localStore';
@@ -357,18 +356,6 @@ const stairDirections = computed(() => {
 	return view.value.scene.features
 		.filter(f => f.kind === 'stair' && f.x === here.x && f.y === here.y)
 		.map(f => (f.kind === 'stair' ? (isTowerDungeon.value ? (f.up ? 'up' : 'down') : f.up ? 'down' : 'up') : ''));
-});
-const actionAvailable = computed(() => {
-	const pending = session.value?.pending;
-	if (!pending) return false;
-	if (pending.kind === 'boundary-exit') return true;
-	if (pending.kind === 'boundary-start') return true;
-	if (pending.kind === 'guardian') return true;
-	if (pending.kind !== 'scenario') return false;
-	return (
-		encounter.value?.kind === 'scenario' ||
-		(encounter.value?.kind === 'scenario-combat' && encounter.value.status === 'ready-for-combat')
-	);
 });
 
 type MtNarrativeKind = 'entry' | 'scenario' | 'scenario-combat' | 'irma' | 'pickup'; // STEP_20O_MT_DUNGEON
@@ -553,10 +540,10 @@ function restoreDungeonActions(): void {
 		// Confirmed server action: the MT notice only acknowledges its result.
 		const n = paid.used;
 		const messages: Record<string, string> = {
-			fr: `Vous avez utilisé ${n} potion${n > 1 ? 's' : ''} d'Irma pour votre groupe de Dinoz. Ils peuvent à nouveau se déplacer aujourd'hui.`,
-			en: `You have used ${n} Madam Irma's Potion${n > 1 ? 's' : ''} for your Dinoz group. They can move again today.`,
-			es: `Has usado ${n} poción${n > 1 ? 'es' : ''} de Irma para tu grupo de Dinoz. Hoy pueden volver a moverse.`,
-			de: `Du hast ${n} Irma-Trank${n > 1 ? 'tränke' : ''} für deine Dinoz-Gruppe benutzt. Sie kann sich heute wieder bewegen.`
+			fr: `Vous avez utilisé ${n} potion${n > 1 ? 's' : ''} d'Irma pour votre groupe de Dinoz.`,
+			en: `You have used ${n} Madam Irma's Potion${n > 1 ? 's' : ''} for your Dinoz group.`,
+			es: `Has usado ${n} poción${n > 1 ? 'es' : ''} de Irma para tu grupo de Dinoz.`,
+			de: `Du hast ${n} Irma-Trank${n > 1 ? 'tränke' : ''} für deine Dinoz-Gruppe benutzt.`
 		};
 		irmaMessage.value = messages[language.value.slice(0, 2)] ?? messages.fr ?? '';
 		notice.value = '';
