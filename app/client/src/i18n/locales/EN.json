@@ -6790,5 +6790,56 @@
 			"title": "The Piglous are back in Dinoville!",
 			"viewEvent": "View Event"
 		}
+	},
+	"dungeon": {
+		"title": "Dungeon",
+		"exploration": "Dungeon exploration",
+		"disclaimer": "**{dinoz}** is currently exploring **{dungeonName}**. This Dinoz can only leave by finding the entrance, the exit, or dying.",
+		"loading": "Loading dungeon…",
+		"enterFromWorld": "Enter the dungeon from its access location with an available party.",
+		"entryValidated": "The access requirements and Dinoz positions are checked by the server.",
+		"enterReturn": "Return to the Dinoz actions to enter",
+		"completed": "Dungeon completed",
+		"explorationInfo": "Exploration information",
+		"allKo": "All Dinoz are knocked out. The party must leave the dungeon before they can be revived.",
+		"leaderKo": "The party leader is knocked out: evacuation is required before exploration can continue.",
+		"evacuate": "Evacuate knocked-out party",
+		"loadingView": "Loading view…",
+		"refreshView": "Refresh view",
+		"noDiscoveries": "No discoveries yet.",
+		"refreshDiscoveries": "Refresh discoveries",
+		"diagnostics": "Fidelity diagnostics",
+		"journalUnavailable": "Journal temporarily unavailable.",
+		"keys": {
+			"name": "Key {prefix} {suffix}",
+			"unknown": "Key No. {id}",
+			"pickup": "You found the {key}!",
+			"lockedDoor": "This door is locked. You need the {key}.",
+			"prefixes": {
+				"p0": "of the Trees",
+				"p1": "of the Squids",
+				"p2": "of the Dragons",
+				"p3": "of the Kabukis",
+				"p4": "of Romeo",
+				"p5": "of the Goblins",
+				"p6": "of the Angels",
+				"p7": "of the Thorn Eaters"
+			},
+			"suffixes": {
+				"s0": "Magical",
+				"s1": "Enchanted",
+				"s2": "Dead",
+				"s3": "Made of Plastic",
+				"s4": "Sparkling",
+				"s5": "Red",
+				"s6": "Made Up",
+				"s7": "Made of Cardboard"
+			}
+		},
+		"goldPickup": "You collected {amount} gold coins!",
+		"goldEmpty": "There are no gold coins left in this treasure.",
+		"missingDoorKey": "This door is locked. You need to find its key in the dungeon.",
+		"moveRefused": "The server refused the move.",
+		"scenarioProcessed": "Event processed by the server."
 	}
 }
