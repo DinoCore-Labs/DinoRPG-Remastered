@@ -63,8 +63,15 @@ function decodeFrame(src: string): Promise<HTMLImageElement> {
 
 /** Crop using the union of every animated frame, never one rectangle per frame. */
 async function cropStandFrames(sources: readonly string[]): Promise<readonly string[]> {
-	// Unit tests and environments without a canvas retain the original frames.
-	if (typeof document === 'undefined' || typeof Image === 'undefined') return sources;
+	// jsdom ne décode pas réellement les images data: utilisées par les tests.
+	// On conserve les frames originales dans cet environnement.
+	if (
+		typeof document === 'undefined' ||
+		typeof Image === 'undefined' ||
+		navigator.userAgent.toLowerCase().includes('jsdom')
+	) {
+		return sources;
+	}
 	const images = await Promise.all(sources.map(decodeFrame));
 	const width = images[0]!.naturalWidth;
 	const height = images[0]!.naturalHeight;
