@@ -29,7 +29,7 @@
 		<template v-if="session">
 			<section v-if="partyDefeated || partyLeaderDead" class="mt-test__panel" aria-live="polite">
 				<p v-if="partyDefeated">
-					Tous les Dinoz sont KO. Le groupe doit quitter le donjon pour pouvoir être ressuscité.
+					{{ $t('dungeon.allKo') }}
 				</p>
 				<p v-else>{{ $t('dungeon.leaderKo') }}</p>
 				<button type="button" :disabled="busy" @click="evacuateDefeated">{{ $t('dungeon.evacuate') }}</button>
@@ -63,28 +63,24 @@
 					@confirm="confirmMessage"
 					@close="closeMessage"
 				/>
-				<div
-					v-if="view && !partyDefeated"
-					class="mt-test__original-controls"
-					aria-label="Commandes originales du donjon"
-				>
+				<div v-if="view && !partyDefeated" class="mt-test__original-controls" :aria-label="$t('dungeon.controls')">
 					<button
 						v-if="partyNeedsIrma"
 						class="mt-test__original-irma"
 						type="button"
 						:disabled="busy || !partyActionsLoaded"
-						aria-label="Utiliser Irma pour restaurer les actions du groupe"
-						title="Restaurer les actions du groupe"
+						:aria-label="$t('dungeon.irmaRestore')"
+						:title="$t('dungeon.irmaRestoreShort')"
 						@click="restoreDungeonActions"
 					>
-						<img src="/dungeon/mt/interf_irma.png" alt="Potion d'Irma" />
+						<img src="/dungeon/mt/interf_irma.png" :alt="$t('dungeon.irmaPotion')" />
 					</button>
 					<template v-else>
 						<button
 							class="mt-test__original-dir mt-test__original-up"
 							type="button"
 							:disabled="cannotMove"
-							aria-label="Nord"
+							:aria-label="$t('dungeon.north')"
 							@click="move('north')"
 						>
 							<img src="/dungeon/mt/interf_arrow.png" alt="" />
@@ -93,7 +89,7 @@
 							class="mt-test__original-dir mt-test__original-left"
 							type="button"
 							:disabled="cannotMove"
-							aria-label="Ouest"
+							:aria-label="$t('dungeon.west')"
 							@click="move('west')"
 						>
 							<img src="/dungeon/mt/interf_arrow.png" alt="" />
@@ -102,7 +98,7 @@
 							class="mt-test__original-dir mt-test__original-right"
 							type="button"
 							:disabled="cannotMove"
-							aria-label="Est"
+							:aria-label="$t('dungeon.east')"
 							@click="move('east')"
 						>
 							<img src="/dungeon/mt/interf_arrow.png" alt="" />
@@ -111,7 +107,7 @@
 							class="mt-test__original-dir mt-test__original-down"
 							type="button"
 							:disabled="cannotMove"
-							aria-label="Sud"
+							:aria-label="$t('dungeon.south')"
 							@click="move('south')"
 						>
 							<img src="/dungeon/mt/interf_arrow.png" alt="" />
@@ -121,7 +117,7 @@
 							class="mt-test__original-stair mt-test__original-stair-up"
 							type="button"
 							:disabled="cannotMove"
-							aria-label="Escalier vers le haut"
+							:aria-label="$t('dungeon.stairUp')"
 							@click="move('up')"
 						>
 							<img src="/dungeon/mt/interf_stair_up.png" alt="" />
@@ -131,14 +127,16 @@
 							class="mt-test__original-stair mt-test__original-stair-down"
 							type="button"
 							:disabled="cannotMove"
-							aria-label="Escalier vers le bas"
+							:aria-label="$t('dungeon.stairDown')"
 							@click="move('down')"
 						>
 							<img src="/dungeon/mt/interf_stair_down.png" alt="" />
 						</button>
 					</template>
 				</div>
-				<div v-if="view" class="mt-test__original-level">Niveau -{{ session.position.l + 1 }}</div>
+				<div v-if="view" class="mt-test__original-level">
+					{{ $t('dungeon.level', { level: session.position.l + 1 }) }}
+				</div>
 			</div>
 		</template>
 	</section>
@@ -157,7 +155,7 @@ import { getDungeonSkin } from '@dinorpg/core/models/dungeon/dungeon.skins.js';
 import { MT_DUNGEON_DEFINITIONS } from '@dinorpg/core/models/dungeon/dungeon.mtData.js';
 import MtDungeonMessageBox from '../components/dungeon/MtDungeonMessageBox.vue';
 import { mtDungeonKeyPickupMessage, mtDungeonLockedDoorMessage } from '../components/dungeon/mtDungeonKeyNames.js';
-import { mtDungeonBoundaryAction } from '../components/dungeon/mtDungeonBoundaryAction.js'; // STEP_20R_MT_BOUNDARIES
+import { mtDungeonBoundaryAction } from '../components/dungeon/mtDungeonBoundaryAction.js';
 import { advanceMtTrail, mtFollowerPositions, type MtTrailPoint } from '../components/dungeon/dungeonPartyTrail.js';
 import { DinozService } from '../services/dinoz.service.js';
 import {
@@ -187,7 +185,7 @@ const errorMessage = ref('');
 const notice = ref('');
 const irmaMessage = ref<string | null>(null);
 const pickupMessage = ref<string | null>(null);
-const originalEntryText = ref<string | null>(null); // STEP_20O_MT_DUNGEON
+const originalEntryText = ref<string | null>(null);
 const entryDismissed = ref(false);
 const scenarioDismissedRevision = ref('');
 const loading = ref(true);
@@ -242,7 +240,6 @@ async function loadVisualParty(): Promise<void> {
 		partyActionsLoaded.value = false;
 	}
 }
-const stage = computed(() => Number(session.value?.mapId.match(/_([0-9]+)$/)?.[1] ?? 0));
 const dungeonId = computed(() => session.value?.mapId.replace(/_[0-9]+$/, '') ?? '');
 const dungeonName = computed(
 	() => catalog.value.find(entry => entry.id === dungeonId.value)?.name || dungeonId.value || t('dungeon.title')
@@ -269,15 +266,6 @@ const cannotMove = computed(
 		!!session.value.pending ||
 		session.value.locked
 );
-const activeHealZone = computed(() => {
-	const run = session.value;
-	const current = view.value;
-	if (!run || !current || run.locked || run.pending) return false;
-	return current.scene.features.some(
-		feature =>
-			feature.kind === 'heal' && !feature.consumed && feature.x === run.position.x && feature.y === run.position.y
-	);
-});
 const language = computed(() =>
 	String(localStore().getLanguage ?? 'fr')
 		.toLowerCase()
@@ -293,7 +281,7 @@ const stairDirections = computed(() => {
 		.map(f => (f.kind === 'stair' ? (isTowerDungeon.value ? (f.up ? 'up' : 'down') : f.up ? 'down' : 'up') : ''));
 });
 
-type MtNarrativeKind = 'entry' | 'scenario' | 'scenario-combat' | 'irma' | 'pickup'; // STEP_20O_MT_DUNGEON
+type MtNarrativeKind = 'entry' | 'scenario' | 'scenario-combat' | 'irma' | 'pickup';
 type MtNarrative = { kind: MtNarrativeKind; title: string; text: string; confirmLabel: string; cancelLabel?: string };
 const activeMessage = computed((): MtNarrative | null => {
 	if (session.value && originalEntryText.value && !entryDismissed.value) {
@@ -301,13 +289,13 @@ const activeMessage = computed((): MtNarrative | null => {
 			kind: 'entry',
 			title: dungeonName.value,
 			text: originalEntryText.value,
-			confirmLabel: 'Continuer'
+			confirmLabel: t('dungeon.continue')
 		};
 	}
 	if (session.value && pickupMessage.value)
-		return { kind: 'pickup', title: '', text: pickupMessage.value, confirmLabel: 'Continuer' };
+		return { kind: 'pickup', title: '', text: pickupMessage.value, confirmLabel: t('dungeon.continue') };
 	if (session.value && irmaMessage.value)
-		return { kind: 'irma', title: '', text: irmaMessage.value, confirmLabel: 'Continuer' };
+		return { kind: 'irma', title: '', text: irmaMessage.value, confirmLabel: t('dungeon.continue') };
 	const run = session.value;
 	const current = encounter.value;
 	if (run?.pending?.kind === 'scenario' && current?.text) {
@@ -316,19 +304,19 @@ const activeMessage = computed((): MtNarrative | null => {
 		if (current.kind === 'scenario') {
 			return {
 				kind: 'scenario',
-				title: 'Découverte',
+				title: t('dungeon.discovery'),
 				text: current.text,
-				confirmLabel: 'Lire / récupérer',
-				cancelLabel: 'Plus tard'
+				confirmLabel: t('dungeon.readCollect'),
+				cancelLabel: t('dungeon.later')
 			};
 		}
 		if (current.kind === 'scenario-combat' && current.status === 'ready-for-combat') {
 			return {
 				kind: 'scenario-combat',
-				title: 'Rencontre',
+				title: t('dungeon.encounterTitle'),
 				text: current.text,
-				confirmLabel: 'Combattre',
-				cancelLabel: 'Plus tard'
+				confirmLabel: t('dungeon.fight'),
+				cancelLabel: t('dungeon.later')
 			};
 		}
 	}
@@ -339,7 +327,6 @@ function closeMessage(): void {
 	if (kind === 'pickup') pickupMessage.value = null;
 	if (kind === 'irma') irmaMessage.value = null;
 	if (kind === 'entry') entryDismissed.value = true;
-
 	if ((kind === 'scenario' || kind === 'scenario-combat') && session.value)
 		scenarioDismissedRevision.value = session.value.mapId + ':' + session.value.revision;
 }
@@ -373,9 +360,11 @@ async function showOriginalEntryText(): Promise<void> {
 function formatError(error: unknown): string {
 	if (axios.isAxiosError(error)) {
 		const code = (error.response?.data as { code?: string } | undefined)?.code;
-		return code ? `Serveur : ${code}` : `Requête impossible (${error.response?.status ?? 'réseau'}).`;
+		return code
+			? t('dungeon.serverError', { code })
+			: t('dungeon.requestFailed', { status: error.response?.status ?? t('dungeon.network') });
 	}
-	return error instanceof Error ? error.message : 'Erreur inattendue.';
+	return error instanceof Error ? error.message : t('dungeon.unexpectedError');
 }
 
 /** Read-only: an inaccessible journal must never block dungeon movement. */
@@ -385,7 +374,7 @@ async function loadJournal(): Promise<void> {
 		journalEntries.value = result.entries;
 		journalError.value = '';
 	} catch {
-		journalError.value = 'Journal momentanément indisponible.';
+		journalError.value = t('dungeon.journalUnavailable');
 	}
 }
 
@@ -399,7 +388,7 @@ async function refresh(): Promise<void> {
 		// A rejected move or a browser-tab resync must not produce a fake walk.
 		const latestView = await MtDungeonService.getView(leaderId);
 		if (latestView && (latestView.revision !== current.revision || latestView.mapId !== current.mapId))
-			throw new Error('La vue du donjon a changé pendant le chargement : actualise pour synchroniser.');
+			throw new Error(t('dungeon.viewOutdated'));
 		const latestEncounter =
 			current.pending && latestView ? (await MtDungeonService.getEncounter(leaderId, language.value)).encounter : null;
 		if (
@@ -430,7 +419,7 @@ async function refresh(): Promise<void> {
 async function afterMutation(next: MtDungeonSession): Promise<void> {
 	const latestView = await MtDungeonService.getView(leaderId);
 	if (latestView.revision !== next.revision || latestView.mapId !== next.mapId)
-		throw new Error('La session a changé pendant le déplacement : une actualisation est nécessaire.');
+		throw new Error(t('dungeon.sessionOutdated'));
 	const latestEncounter = next.pending
 		? (await MtDungeonService.getEncounter(leaderId, language.value)).encounter
 		: null;
@@ -470,17 +459,11 @@ function restoreDungeonActions(): void {
 		const paid = await MtDungeonService.useDungeonIrma(leaderId, session.value!.revision);
 		await loadVisualParty();
 		if (!partyActionsLoaded.value || partyNeedsIrma.value) {
-			throw new Error('Une action reste indisponible : vérifiez les Dinoz du groupe.');
+			throw new Error(t('dungeon.actionUnavailable'));
 		}
 		// Confirmed server action: the MT notice only acknowledges its result.
 		const n = paid.used;
-		const messages: Record<string, string> = {
-			fr: `Vous avez utilisé ${n} potion${n > 1 ? 's' : ''} d'Irma pour votre groupe de Dinoz.`,
-			en: `You have used ${n} Madam Irma's Potion${n > 1 ? 's' : ''} for your Dinoz group.`,
-			es: `Has usado ${n} poción${n > 1 ? 'es' : ''} de Irma para tu grupo de Dinoz.`,
-			de: `Du hast ${n} Irma-Trank${n > 1 ? 'tränke' : ''} für deine Dinoz-Gruppe benutzt.`
-		};
-		irmaMessage.value = messages[language.value.slice(0, 2)] ?? messages.fr ?? '';
+		irmaMessage.value = t(n === 1 ? 'dungeon.irmaUsedOne' : 'dungeon.irmaUsedMany', { count: n });
 		notice.value = '';
 	});
 }
@@ -569,7 +552,7 @@ async function settleMtBoundary(current: MtDungeonSession): Promise<boolean> {
 		return true;
 	}
 	const outcome = await MtDungeonService.worldExit(leaderId, current.revision, language.value);
-	// STEP_27_EXIT_ON_DINOZ: the server exit is committed before navigation.
+	// Commit the server exit before navigation.
 	// Carry the original MT message in Vue Router history state, never a URL parameter.
 	await router.replace({
 		name: 'DinozPage',
@@ -591,19 +574,6 @@ function resolveScenario() {
 		);
 		await afterMutation(outcome.session);
 		notice.value = outcome.message ?? t('dungeon.scenarioProcessed');
-	});
-}
-function fightGuardian() {
-	if (session.value?.pending?.kind !== 'guardian') return;
-	void execute(async () => {
-		const { token } = await MtDungeonService.prepareGuardianFight(leaderId, session.value!.revision);
-		const result = await MtDungeonService.resolveGuardianFight(leaderId, token);
-		sessionStore().setFightResult(result);
-		await router.push({
-			name: 'FightPage',
-			params: { dinozId: String(leaderId) },
-			query: { mtDungeonLeader: String(leaderId) }
-		});
 	});
 }
 function fight() {
@@ -654,7 +624,6 @@ function onKeyDown(event: KeyboardEvent): void {
 	move(direction);
 }
 onMounted(() => {
-	// STEP_20O_MT_DUNGEON
 	window.addEventListener('keydown', onKeyDown);
 	void (async () => {
 		await refresh();
