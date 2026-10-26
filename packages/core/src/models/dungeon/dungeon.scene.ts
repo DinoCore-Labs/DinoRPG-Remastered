@@ -1,5 +1,5 @@
 import { DUNGEON_TILE_SIZE, DUNGEON_VIEW_COLUMNS, DUNGEON_VIEW_ROWS, type DungeonSkin } from './dungeon.skins.js';
-import type { DungeonDoor, DungeonIcon, DungeonItem, DungeonPoint, DungeonStructure } from './dungeon.types.js';
+import type { DungeonDoor, DungeonIcon, DungeonItem, DungeonStructure } from './dungeon.types.js';
 
 export type MtWallPart =
 	| 'front'
