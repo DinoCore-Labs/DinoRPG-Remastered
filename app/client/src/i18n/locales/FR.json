@@ -6809,6 +6809,37 @@
 		"noDiscoveries": "Aucun texte découvert pour le moment.",
 		"refreshDiscoveries": "Actualiser les découvertes",
 		"diagnostics": "Diagnostics de fidélité",
-		"journalUnavailable": "Journal momentanément indisponible."
+		"journalUnavailable": "Journal momentanément indisponible.",
+		"keys": {
+			"name": "Clé {prefix} {suffix}",
+			"unknown": "Clé n°{id}",
+			"pickup": "Vous avez trouvé la {key} !",
+			"lockedDoor": "Cette porte est verrouillée. Il vous faut la {key}.",
+			"prefixes": {
+				"p0": "des Arbres",
+				"p1": "des Calmars",
+				"p2": "des Dragons",
+				"p3": "des Kabukis",
+				"p4": "des Roméo",
+				"p5": "des Gobelins",
+				"p6": "des Anges",
+				"p7": "des Roncivores"
+			},
+			"suffixes": {
+				"s0": "Magiques",
+				"s1": "Enchantés",
+				"s2": "Morts",
+				"s3": "en Plastique",
+				"s4": "Étincelants",
+				"s5": "Rouges",
+				"s6": "Maquillés",
+				"s7": "en Carton"
+			}
+		},
+		"goldPickup": "Vous avez récupéré {amount} pièces d'or !",
+		"goldEmpty": "Ce trésor ne contient plus de pièces d’or.",
+		"missingDoorKey": "Cette porte est verrouillée. Il faut trouver sa clé dans le donjon.",
+		"moveRefused": "Déplacement refusé par le serveur.",
+		"scenarioProcessed": "Événement traité par le serveur."
 	}
 }

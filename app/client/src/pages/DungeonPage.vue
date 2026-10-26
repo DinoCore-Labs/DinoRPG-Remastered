@@ -580,15 +580,15 @@ function move(direction: 'north' | 'south' | 'west' | 'east' | 'up' | 'down') {
 		const command: DungeonCommand = { ...previous.position, dx, dy, dl };
 		const result = await MtDungeonService.move(leaderId, previous.revision, command);
 		if (!result.ok) {
-			notice.value = 'Déplacement refusé par le serveur.';
+			notice.value = t('dungeon.moveRefused');
 			return;
 		}
 		if (result.blockedDoor === 'missing-key') {
 			// Consume the revision, but do not animate a fake movement.
 			await afterMutation(result.session);
 			pickupMessage.value = Number.isInteger(result.requiredKey)
-				? mtDungeonLockedDoorMessage(leaderId, result.session.mapId, result.requiredKey!)
-				: 'Cette porte est verrouillée. Il faut trouver sa clé dans le donjon.';
+				? mtDungeonLockedDoorMessage(leaderId, result.session.mapId, result.requiredKey!, t)
+				: t('dungeon.missingDoorKey');
 			return;
 		}
 		if (direction === 'west') facingRight.value = false;
@@ -604,8 +604,8 @@ function move(direction: 'north' | 'south' | 'west' | 'east' | 'up' | 'down') {
 		if (collectedKeys.length > 0)
 			pickupMessage.value =
 				collectedKeys.length === 1
-					? mtDungeonKeyPickupMessage(leaderId, result.session.mapId, collectedKeys[0]!)
-					: collectedKeys.map(id => mtDungeonKeyPickupMessage(leaderId, result.session.mapId, id)).join('\n');
+					? mtDungeonKeyPickupMessage(leaderId, result.session.mapId, collectedKeys[0]!, t)
+					: collectedKeys.map(id => mtDungeonKeyPickupMessage(leaderId, result.session.mapId, id, t)).join('\n');
 		if (await settleMtBoundary(result.session)) return;
 		if (mtDungeonCombatTrigger(result.session.pending, encounter.value) === 'guardian') {
 			const { token } = await MtDungeonService.prepareGuardianFight(leaderId, result.session.revision);
@@ -632,9 +632,7 @@ function move(direction: 'north' | 'south' | 'west' | 'east' | 'up' | 'down') {
 		if (typeof result.goldAwarded === 'number') {
 			if (typeof result.walletGold === 'number') userStore().setGold(result.walletGold);
 			pickupMessage.value =
-				result.goldAwarded > 0
-					? `Vous avez récupéré ${result.goldAwarded} pièces d'or !`
-					: 'Ce trésor ne contient plus de pièces d’or.';
+				result.goldAwarded > 0 ? t('dungeon.goldPickup', { amount: result.goldAwarded }) : t('dungeon.goldEmpty');
 		}
 	});
 }
@@ -670,7 +668,7 @@ function resolveScenario() {
 			Math.max(0, visualMembers.value.length - 1)
 		);
 		await afterMutation(outcome.session);
-		notice.value = outcome.message ?? 'Événement traité par le serveur.';
+		notice.value = outcome.message ?? t('dungeon.scenarioProcessed');
 	});
 }
 function fightGuardian() {
