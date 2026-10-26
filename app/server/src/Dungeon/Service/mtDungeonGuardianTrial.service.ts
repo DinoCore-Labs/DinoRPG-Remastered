@@ -53,17 +53,6 @@ export class MtDungeonGuardianTrialError extends Error {
 	}
 }
 
-export function mtDungeonGuardianTrialEnabled(): boolean {
-	return (
-		GLOBAL.config.env === 'development' &&
-		!GLOBAL.config.isProduction &&
-		process.env.MT_DUNGEON_DEV_TOOLS === 'true' &&
-		process.env.MT_DUNGEON_DEV_GUARDIAN_FIGHTS === 'true'
-	);
-}
-function ensureEnabled(): void {
-	if (!mtDungeonGuardianTrialEnabled()) throw new MtDungeonGuardianTrialError('disabled');
-}
 function intentFor(session: MtDungeonSession) {
 	const archive = getMtDungeonArchive();
 	try {
