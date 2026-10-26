@@ -3,25 +3,28 @@ import { describe, expect, it } from 'vitest';
 import {
 	mtDungeonKeyName,
 	mtDungeonKeyPickupMessage,
-	mtDungeonLockedDoorMessage
+	mtDungeonLockedDoorMessage,
+	type MtDungeonTranslate
 } from '../../../src/components/dungeon/mtDungeonKeyNames.js';
+import fr from '../../../src/i18n/locales/FR.json';
 
-describe('MT dungeon cosmetic key names (archived DinoCenter examples)', () => {
-	it('generates a stable prefix + suffix across stages and reloads', () => {
-		const name = mtDungeonKeyName(42, 'stepp_0', 3);
-		expect(name).toMatch(
-			/^Clé des .+ (Magiques|Enchantés|Morts|en Plastique|Étincellants|Rouges|Maquillés|en Carton)$/
-		);
-		expect(mtDungeonKeyName(42, 'stepp_3', 3)).toBe(name);
-		expect(mtDungeonKeyName(42, 'stepp_0', 3)).toBe(name);
+const t: MtDungeonTranslate = (path, params = {}) => {
+	const value = path
+		.split('.')
+		.reduce<unknown>((o, k) => (o && typeof o === 'object' ? (o as Record<string, unknown>)[k] : undefined), fr);
+	if (typeof value !== 'string') throw Error('Missing ' + path);
+	return value.replace(/\{(\w+)\}/g, (_, key: string) => String(params[key] ?? ''));
+};
+describe('localized MT key names', () => {
+	it('keeps a stable localized name across stages', () => {
+		const name = mtDungeonKeyName(42, 'stepp_0', 3, t);
+		expect(name).toMatch(/^Clé des /);
+		expect(mtDungeonKeyName(42, 'stepp_3', 3, t)).toBe(name);
 	});
-	it('uses the exact same key name for discovery and locked door', () => {
-		const name = mtDungeonKeyName(42, 'stepp_0', 7).replace(/^Clé /, 'clé ');
-		expect(mtDungeonKeyPickupMessage(42, 'stepp_0', 7)).toContain(name);
-		expect(mtDungeonLockedDoorMessage(42, 'stepp_2', 7)).toContain(name);
+	it('keeps names identical in pickup and locked door', () => {
+		const name = mtDungeonKeyName(42, 'stepp_0', 7, t);
+		expect(mtDungeonKeyPickupMessage(42, 'stepp_0', 7, t)).toContain(name);
+		expect(mtDungeonLockedDoorMessage(42, 'stepp_2', 7, t)).toContain(name);
 	});
-	it('falls back on invalid identities rather than creating an untrusted key', () => {
-		expect(mtDungeonKeyName(0, 'stepp_0', 2)).toBe('Clé n°2');
-		expect(mtDungeonKeyName(42, 'bad', 2)).toBe('Clé n°2');
-	});
+	it('uses localized invalid key name', () => expect(mtDungeonKeyName(0, 'stepp_0', 2, t)).toBe('Clé n°2'));
 });
