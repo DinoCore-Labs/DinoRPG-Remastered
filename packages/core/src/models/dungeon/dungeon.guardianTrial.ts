@@ -38,8 +38,16 @@ export function createMtGuardianTrialIntent(input: {
 	});
 	if (encounter?.kind !== 'guardian' || session.pending?.kind !== 'guardian' || !session.locked)
 		throw new Error('No validated MT guardian pending for this session.');
-	if (!session.mapId.startsWith(`${definition.id}_`) || !definition.monsters.length)
-		throw new Error('Invalid original MT guardian monster roster.');
+	const stage = Number(session.mapId.slice(definition.id.length + 1));
+	if (
+		!session.mapId.startsWith(`${definition.id}_`) ||
+		!Number.isSafeInteger(stage) ||
+		stage < 0 ||
+		stage >= definition.stages.length ||
+		configuration.mapId !== session.mapId ||
+		!definition.monsters.length
+	)
+		throw new Error('Invalid original MT guardian map, stage or monster roster.');
 	const pos = session.pending.to;
 	// Reuse MT's deterministic VISUAL draw, but the available canonical XML
 	// roster is only a practical test pool — the archived server _monsters list
