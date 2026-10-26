@@ -31,20 +31,6 @@ export interface MtDungeonEncounter {
 	languageUsed?: string;
 }
 
-export interface MtGuardianTrialPreview {
-	mapId: string;
-	revision: number;
-	monsterKey: string;
-	experimental: true;
-	note: string;
-}
-
-export interface MtDungeonDevCapabilities {
-	guardianFight?: boolean;
-	guardianSkip: boolean;
-	surfaceExit: boolean;
-}
-
 export interface MtDungeonJournalEntry {
 	mapId: string;
 	stage: number;
@@ -82,29 +68,11 @@ export const MtDungeonService = {
 	getJournal(id: number, language: string): Promise<MtDungeonJournal> {
 		return api.get(`/dungeon/mt/${id}/journal`, { params: { lang: language }, silent: true });
 	},
-	getGuardianTrialPreview(id: number): Promise<MtGuardianTrialPreview> {
-		return api.get(`/dungeon/mt/${id}/dev/guardian/fight/preview`, { silent: true });
-	},
 	prepareGuardianFight(id: number, revision: number): Promise<{ token: string }> {
 		return api.post(`/dungeon/mt/${id}/guardian/fight/prepare`, { revision });
 	},
 	resolveGuardianFight(id: number, token: string): Promise<FightResult> {
 		return api.post(`/dungeon/mt/${id}/guardian/fight/resolve`, { token });
-	},
-	prepareGuardianTrial(id: number, revision: number): Promise<{ token: string; experimental: true }> {
-		return api.post(`/dungeon/mt/${id}/dev/guardian/fight/prepare`, { revision });
-	},
-	resolveGuardianTrial(id: number, token: string): Promise<FightResult> {
-		return api.post(`/dungeon/mt/${id}/dev/guardian/fight/resolve`, { token });
-	},
-	getDevCapabilities(): Promise<MtDungeonDevCapabilities> {
-		return api.get('/dungeon/mt/dev/capabilities', { silent: true });
-	},
-	devSkipGuardian(id: number, revision: number): Promise<MtDungeonSession> {
-		return api.post(`/dungeon/mt/${id}/dev/guardian/skip`, { revision });
-	},
-	devLeaveToSurface(id: number, revision: number): Promise<{ ok: true }> {
-		return api.post(`/dungeon/mt/${id}/dev/surface/exit`, { revision });
 	},
 	/** Escape a session stranded by a pre-fix total defeat (server verifies all HP). */
 	evacuateDefeatedGroup(id: number, revision: number): Promise<{ evacuated: true }> {
