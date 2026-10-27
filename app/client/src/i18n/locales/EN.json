@@ -3234,7 +3234,10 @@
 			"tower_attack": "Another player already controls the Devourer. You will have to fight to take control of it and harvest its precious seeds.",
 			"tower_defend": "No one currently controls the Devourer. Take this opportunity to seize control!",
 			"stop_defend_tower": "If you relinquish control of the Devourer, you will have to fight again to regain it. Other players are surely waiting for the opportunity to seize it themselves!",
-			"build_dojo": "Build your Dojo"
+			"build_dojo": "Build your Dojo",
+			"dungeon_enter": "You can explore this place, but take care of not getting lost!",
+			"dungeon": "Check the current exploration state...",
+			"dungeon_status": "Your Dinoz is currently exploring an area..."
 		},
 		"name": {
 			"fight": "Fight",
@@ -3274,7 +3277,9 @@
 			"tower_attack": "Take Control of the Devourer",
 			"tower_defend": "Defend the Devourer",
 			"stop_defend_tower": "Relinquish Control",
-			"build_dojo": "Build your Dojo"
+			"build_dojo": "Build your Dojo",
+			"dungeon_enter": "Enter",
+			"dungeon": "Check the Map"
 		}
 	},
 	"fight": {
@@ -6785,5 +6790,82 @@
 			"title": "The Piglous are back in Dinoville!",
 			"viewEvent": "View Event"
 		}
+	},
+	"dungeon": {
+		"title": "Dungeon",
+		"exploration": "Dungeon exploration",
+		"disclaimer": "**{dinoz}** is currently exploring **{dungeonName}**. This Dinoz can only leave by finding the entrance, the exit, or dying.",
+		"loading": "Loading dungeon…",
+		"enterFromWorld": "Enter the dungeon from its access location with an available party.",
+		"entryValidated": "The access requirements and Dinoz positions are checked by the server.",
+		"enterReturn": "Return to the Dinoz actions to enter",
+		"completed": "Dungeon completed",
+		"explorationInfo": "Exploration information",
+		"allKo": "All Dinoz are knocked out. The party must leave the dungeon before they can be revived.",
+		"leaderKo": "The party leader is knocked out: evacuation is required before exploration can continue.",
+		"evacuate": "Evacuate knocked-out party",
+		"loadingView": "Loading view…",
+		"refreshView": "Refresh view",
+		"noDiscoveries": "No discoveries yet.",
+		"refreshDiscoveries": "Refresh discoveries",
+		"diagnostics": "Fidelity diagnostics",
+		"journalUnavailable": "Journal temporarily unavailable.",
+		"keys": {
+			"name": "Key {prefix} {suffix}",
+			"unknown": "Key No. {id}",
+			"pickup": "You found the {key}!",
+			"lockedDoor": "This door is locked. You need the {key}.",
+			"prefixes": {
+				"p0": "of the Trees",
+				"p1": "of the Squids",
+				"p2": "of the Dragons",
+				"p3": "of the Kabukis",
+				"p4": "of Romeo",
+				"p5": "of the Goblins",
+				"p6": "of the Angels",
+				"p7": "of the Thorn Eaters"
+			},
+			"suffixes": {
+				"s0": "Magical",
+				"s1": "Enchanted",
+				"s2": "Dead",
+				"s3": "Made of Plastic",
+				"s4": "Sparkling",
+				"s5": "Red",
+				"s6": "Made Up",
+				"s7": "Made of Cardboard"
+			}
+		},
+		"goldPickup": "You collected {amount} gold coins!",
+		"goldEmpty": "There are no gold coins left in this treasure.",
+		"missingDoorKey": "This door is locked. You need to find its key in the dungeon.",
+		"moveRefused": "The server refused the move.",
+		"scenarioProcessed": "Event processed by the server.",
+		"controls": "Original dungeon controls",
+		"irmaRestore": "Use an Irma Potion to restore the party’s actions",
+		"irmaRestoreShort": "Restore party actions",
+		"irmaPotion": "Irma Potion",
+		"north": "North",
+		"south": "South",
+		"east": "East",
+		"west": "West",
+		"stairUp": "Stairs up",
+		"stairDown": "Stairs down",
+		"level": "Level -{level}",
+		"continue": "Continue",
+		"discovery": "Discovery",
+		"encounterTitle": "Encounter",
+		"readCollect": "Read / collect",
+		"fight": "Fight",
+		"later": "Later",
+		"serverError": "Server: {code}",
+		"requestFailed": "Request failed ({status}).",
+		"network": "network",
+		"unexpectedError": "Unexpected error.",
+		"viewOutdated": "The dungeon view changed while loading. Refresh to synchronize.",
+		"sessionOutdated": "The session changed during movement. Please refresh.",
+		"actionUnavailable": "An action is still unavailable. Check your party’s Dinoz.",
+		"irmaUsedOne": "You used {count} Irma Potion for your Dinoz party.",
+		"irmaUsedMany": "You used {count} Irma Potions for your Dinoz party."
 	}
 }

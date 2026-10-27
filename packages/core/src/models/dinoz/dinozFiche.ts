@@ -53,13 +53,7 @@ export interface DinozFiche {
 	gather: boolean;
 	rest?: DinozRestInfos | null;
 	stateTimer?: string;
-	//concentration: Concentration | null;
 	tournament: { id: string; levelLimit: number } | null;
-	/*npcAwait?: {
-		npcSpeech: string;
-		npcName: string;
-	};*/
-	//build?: DinozBuild;
 }
 
 export interface DinozFicheLite {
@@ -95,7 +89,7 @@ export interface DinozAdminFiche {
 	nbrUpAir: number;
 	status: number[];
 	skills: number[];
-	//unlockableSkills: number[];
+	unlockableSkills: number[];
 }
 
 export interface DinozPublicFiche {

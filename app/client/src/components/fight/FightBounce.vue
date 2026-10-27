@@ -137,12 +137,14 @@
 </template>
 
 <script lang="ts">
+import axios from 'axios';
 import { defineComponent, type PropType } from 'vue';
 import DZButton from '../utils/DZButton.vue';
 import type { FightResult } from '@dinorpg/core/models/fight/fightResult.js';
 import { itemList } from '@dinorpg/core/models/items/itemList.js';
 import translateFightStep from '../../fight/translateFightStep.js';
 import { dinozStore } from '../../store/dinozStore.js';
+import { MtDungeonService } from '../../services/mtDungeon.service.js';
 import { getItemFiche } from '@dinorpg/core/models/items/getItemFiche.js';
 import type { ItemFiche } from '@dinorpg/core/models/items/itemFiche.js';
 
@@ -193,24 +195,53 @@ export default defineComponent({
 		showAnimation(): void {
 			this.$emit('showAnimation');
 		},
-		returnToDinoz() {
-			if (this.fight.result && this.fight.dialogReturn) {
-				this.$router.replace({
-					name: 'DialogPage',
-					params: {
-						id: this.dinozId.toString(),
-						dialogId: this.fight.dialogReturn.dialogId
-					},
-					query: {
-						phaseId: this.fight.dialogReturn.phaseId
+		async returnToDinoz(): Promise<void> {
+			if (this.loadingContinue) return;
+			this.loadingContinue = true;
+			try {
+				// Only an explicitly tagged dungeon fight can return to DungeonPage.
+				const dungeonReturn = this.fight.dungeonReturn;
+				if (dungeonReturn) {
+					try {
+						const active = await MtDungeonService.getSession(dungeonReturn.leaderDinozId);
+						const expectedDungeon = dungeonReturn.mapId.replace(/_[0-9]+$/, '');
+						if (!active.mapId.startsWith(expectedDungeon + '_')) {
+							throw new Error('La session active ne correspond pas au donjon du combat.');
+						}
+						await this.$router.replace({ name: 'DungeonPage', params: { id: String(dungeonReturn.leaderDinozId) } });
+						return;
+					} catch (error) {
+						if (!axios.isAxiosError(error) || error.response?.status !== 404) throw error;
+						// The server ended the dungeon run (e.g. leader KO or entire team defeated).
+						await this.$router.replace({ name: 'DinozPage', params: { id: String(dungeonReturn.leaderDinozId) } });
+						return;
 					}
+				}
+				// Preserve the dialogue continuation after ordinary fights.
+				if (this.fight.result && this.fight.dialogReturn) {
+					await this.$router.replace({
+						name: 'DialogPage',
+						params: {
+							id: this.dinozId.toString(),
+							dialogId: this.fight.dialogReturn.dialogId
+						},
+						query: { phaseId: this.fight.dialogReturn.phaseId }
+					});
+					return;
+				}
+				await this.$router.replace({
+					name: 'DinozPage',
+					params: { id: this.dinozId.toString() }
 				});
-				return;
+			} catch (error) {
+				console.error('Erreur de retour après combat', error);
+				this.$toast.open({
+					message: 'Impossible de revenir après le combat. Réessaie.',
+					type: 'error'
+				});
+			} finally {
+				this.loadingContinue = false;
 			}
-			this.$router.replace({
-				name: 'DinozPage',
-				params: { id: this.dinozId.toString() }
-			});
 		},
 		toggleFightHistory(): void {
 			if (this.displayFightHistory) {

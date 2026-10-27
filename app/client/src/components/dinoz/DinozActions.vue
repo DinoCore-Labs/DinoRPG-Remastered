@@ -13,6 +13,17 @@
 -->
 <template>
 	<div class="actions">
+		<!-- STEP_20R_MT_ENTRY_DIALOG : texte MT après création, sur la fiche Dinoz. -->
+		<!-- STEP_20X_ENTRY -->
+		<MtDungeonMessageBox
+			variant="notice"
+			v-if="dungeonEntryMessage"
+			:title="dungeonEntryMessage.title"
+			:text="dungeonEntryMessage.text"
+			confirm-label="Continuer"
+			@confirm="dungeonEntryMessage = null"
+			@close="dungeonEntryMessage = null"
+		/>
 		<Resurrect :enabled="resurrect" @close="resurrect = false" />
 		<Reincarnate :enabled="reincarnate" :dinoz="dinoz" @close="reincarnate = false" />
 		<MissionTalkModal
@@ -25,9 +36,10 @@
 			<p>{{ $t('common.actions') }}</p>
 		</div>
 		<div class="action_content">
+			<DZDisclaimer v-if="dinozInDungeon" :content="$t('action.description.dungeon_status')" help />
 			<template v-for="didi in dinozFullParty" :key="didi.id">
 				<DinozMissionHUD
-					v-if="didi.currentMission"
+					v-if="!dinozInDungeon && didi.currentMission"
 					:currentMission="didi.currentMission"
 					:dinozName="didi.name"
 					:dinozId="didi.id"
@@ -41,7 +53,7 @@
 				:rewards="missionReward.rewards"
 				@close="closeMissionRewardModal"
 			/>
-			<Tippy tag="p" theme="small" class="follow" v-if="leaderDinoz" @click="goToLeader()">
+			<Tippy tag="p" theme="small" class="follow" v-if="leaderDinoz && !dinozInDungeon" @click="goToLeader()">
 				{{ $t('dinoz.hud.following') }}
 				<template #content>
 					{{ $t(`dinoz.hud.follow`, { leader: leaderDinoz.name }) }}
@@ -164,6 +176,8 @@ import { localStore } from '../../store/localStore.js';
 import GatherRewardModal from '../modal/GatherRewardModal.vue';
 import type { GatherResult } from '@dinorpg/core/models/gather/gatherResult.js';
 import { DojoService } from '../../services/dojo.service.ts';
+import { MtDungeonService } from '../../services/mtDungeon.service.js';
+import MtDungeonMessageBox from '../dungeon/MtDungeonMessageBox.vue';
 
 export default defineComponent({
 	name: 'DinozActions',
@@ -188,7 +202,8 @@ export default defineComponent({
 			missionReward: null as MissionInteractionRewardModal | null,
 			reincarnate: false as boolean,
 			fastGatherOver: false,
-			fastGatherResult: null as GatherResult | null
+			fastGatherResult: null as GatherResult | null,
+			dungeonEntryMessage: null as { title: string; text: string } | null
 		};
 	},
 	components: {
@@ -199,7 +214,8 @@ export default defineComponent({
 		DZDisclaimer,
 		DZFollow,
 		Reincarnate,
-		GatherRewardModal
+		GatherRewardModal,
+		MtDungeonMessageBox
 	},
 	props: {
 		dinoz: {
@@ -407,7 +423,8 @@ export default defineComponent({
 						});
 				const res = await this.$confirm({
 					message,
-					header: this.$t('popup.attention'),
+					header:
+						action.name === Action.DUNGEON_ENTER ? this.$t('action.name.dungeon_enter') : this.$t('popup.attention'),
 					acceptLabel: this.$t('popup.accept'),
 					rejectLabel: this.$t('popup.reject'),
 					icon: 'pi pi-exclamation-triangle'
@@ -415,6 +432,29 @@ export default defineComponent({
 				if (!res) return;
 			}
 			switch (action.name) {
+				case Action.DUNGEON_ENTER:
+					try {
+						// Charger la phrase d'origine AVANT la création : une réponse vide ne doit pas créer une session silencieuse.
+						const session = await MtDungeonService.startDungeon(this.dinozId);
+						const dungeonId = session.mapId.split('_')[0];
+						const definitions = await MtDungeonService.getCatalog(String(this.localStore.getLanguage ?? 'fr'));
+						const definition = definitions.find(entry => entry.id === dungeonId);
+						if (!definition) throw new Error('Donjon MT inconnu dans le catalogue.');
+						await this.refreshDinoz();
+						this.dungeonEntryMessage = { title: definition.name, text: definition.enter.text };
+					} catch (error) {
+						errorHandler.handle(error, this.$toast);
+						await this.refreshDinoz();
+					}
+					break;
+				case Action.DUNGEON:
+					await this.$router.push({
+						name: 'DungeonPage',
+						params: {
+							id: String(typeof action.prop === 'number' ? action.prop : (this.dinoz.leaderId ?? this.dinozId))
+						}
+					});
+					break;
 				case Action.IRMA:
 				case Action.IRMAS:
 				case Action.ACTION:
@@ -836,7 +876,6 @@ export default defineComponent({
 						rejectLabel: this.$t('popup.reject'),
 						icon: 'pi pi-exclamation-triangle'
 					});
-
 					if (res) {
 						const dojo = await DojoService.buildDojo();
 						userStore().setDojoId(dojo.dojoId);
@@ -947,6 +986,9 @@ export default defineComponent({
 		}
 	},
 	computed: {
+		dinozInDungeon(): boolean {
+			return this.dinoz.actions?.some(action => action.name === Action.DUNGEON) ?? false;
+		},
 		dinozFullParty(): DinozFiche[] {
 			const list = this.dinozStore.getDinozList ?? [];
 			const byId = new Map(list.map(dinoz => [dinoz.id, dinoz]));

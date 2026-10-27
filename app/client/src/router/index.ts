@@ -25,6 +25,7 @@ import createClan from '../pages/Clan/CreateClan.vue';
 import DialogPage from '../pages/DialogPage.vue';
 import DinozPage from '../pages/DinozPage.vue';
 import DojoPage from '../pages/DojoPage.vue';
+import DungeonPage from '../pages/DungeonPage.vue';
 import FAQPage from '../pages/FAQPage.vue';
 import FightPage from '../pages/FightPage.vue';
 import ForcebrutPage from '../pages/ForcebrutPage.vue';
@@ -126,6 +127,13 @@ const routes: RouteRecord[] = [
 				name: 'MyIngredients',
 				component: Ingredients,
 				meta: { auth: true }
+			},
+			{
+				path: '/dinoz/:id/dungeon',
+				name: 'DungeonPage',
+				component: DungeonPage,
+				meta: { auth: true },
+				beforeEnter: requireOwnedDinozByParam('id')
 			},
 			{
 				path: '/dinoz/:id',

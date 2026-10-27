@@ -1,0 +1,99 @@
+/** Wiring against existing Remastered auth, conditions and locks. */
+import { defaultConditionKeyMaps } from '@dinorpg/core/models/conditions/defaultConditionKeyMaps.js';
+import { mtDungeonEntryCondition } from '@dinorpg/core/models/dungeon/dungeon.definition.js';
+import { placeListv2 } from '@dinorpg/core/models/place/placeListv2.js';
+import { evalCondition } from '@dinorpg/core/models/utils/conditions/evalConditions.js';
+
+import gameConfig from '../../config/game.config.js';
+import { getDinozFightDataRequest } from '../../Dinoz/Controller/getDinozFight.controller.js';
+import { buildConditionContext } from '../../utils/conditions/buildConditionContext.js';
+import { withUserGameplayLock } from '../../utils/database/userGameplayLock.js';
+import { prismaMtDungeonRunRepository } from '../Repository/prismaMtDungeonRun.repository.js';
+import { assertMtDungeonPartyActions } from './mtDungeonActionGate.service.js';
+import { MtDungeonArchive } from './mtDungeonArchive.service.js';
+import { settleMtDungeonGoldArrival } from './mtDungeonGold.service.js';
+import { settleMtDungeonHealArrival } from './mtDungeonHeal.service.js';
+import { loadMtDungeonProgress } from './mtDungeonProgress.service.js';
+import type { MtDungeonSessionDependencies, MtSessionIdentity } from './mtDungeonSession.service.js';
+
+export class MtDungeonEntryError extends Error {
+	constructor(public readonly reason: string) {
+		super(`MT dungeon entry denied: ${reason}`);
+	}
+}
+
+/** Resolve the only historical dungeon whose entrance matches the leader's actual place.
+ * This discovery is a convenience; assertMtDungeonEntry remains the authority under gameplay lock.
+ */
+export async function resolveMtDungeonAtLeaderPlace(
+	archive: MtDungeonArchive,
+	identity: MtSessionIdentity
+): Promise<string> {
+	const user = await getDinozFightDataRequest(identity.leaderDinozId, identity.userId);
+	if (!user) throw new MtDungeonEntryError('user-not-found');
+	const leader = user.dinoz.find(d => d.id === identity.leaderDinozId);
+	if (!leader || leader.userId !== identity.userId || leader.leaderId !== null)
+		throw new MtDungeonEntryError('not-owned-leader');
+	const matches = archive.definitions('fr').filter(def => {
+		const place = Object.values(placeListv2).find(p => p.name === def.enter.place);
+		return place?.placeId === leader.placeId;
+	});
+	if (!matches.length) throw new MtDungeonEntryError('no-dungeon-at-place');
+	if (matches.length !== 1) throw new MtDungeonEntryError('ambiguous-dungeon-at-place');
+	return matches[0]!.id;
+}
+
+/** Check exact original entrance condition using Remastered's condition engine. */
+export async function assertMtDungeonEntry(
+	archive: MtDungeonArchive,
+	identity: MtSessionIdentity,
+	mapId: string
+): Promise<void> {
+	const [dungeonId, stageIndex] = mapId.split('_');
+	// Players enter only through the first stage; later stages require trusted server transition.
+	if (stageIndex !== '0') throw new MtDungeonEntryError('non-entry-stage');
+	const def = archive.definition(dungeonId!);
+	const place = Object.values(placeListv2).find(p => p.name === def.enter.place);
+	if (!place) throw new MtDungeonEntryError('unknown-mt-entry-place');
+	const user = await getDinozFightDataRequest(identity.leaderDinozId, identity.userId);
+	if (!user) throw new MtDungeonEntryError('user-not-found');
+	const leader = user.dinoz.find((d: (typeof user.dinoz)[number]) => d.id === identity.leaderDinozId);
+	if (!leader || leader.leaderId !== null || leader.userId !== identity.userId)
+		throw new MtDungeonEntryError('not-owned-leader');
+	if (leader.canRename) throw new MtDungeonEntryError('unnamed-dinoz');
+	if (user.dinoz.some((d: (typeof user.dinoz)[number]) => d.placeId !== place.placeId))
+		throw new MtDungeonEntryError('group-not-at-entrance');
+	if (
+		user.dinoz.some(
+			(d: (typeof user.dinoz)[number]) => d.life <= 0 || d.state !== null || d.concentration !== null || !d.fight
+		)
+	)
+		throw new MtDungeonEntryError('group-unavailable');
+	const condition = mtDungeonEntryCondition(def.condition);
+	for (const member of user.dinoz) {
+		const context = buildConditionContext({ ...user, dinoz: [member] }, member.id, defaultConditionKeyMaps, {
+			activeFeatures: gameConfig.world.activeFeatures
+		});
+		if (!evalCondition(context, condition)) throw new MtDungeonEntryError('condition-not-met');
+	}
+}
+
+let singleton: MtDungeonArchive | null = null;
+export function getMtDungeonArchive(): MtDungeonArchive {
+	return (singleton ??= new MtDungeonArchive());
+}
+
+export function mtDungeonDependencies(): MtDungeonSessionDependencies {
+	const archive = getMtDungeonArchive();
+	return {
+		repository: prismaMtDungeonRunRepository,
+		loadProgress: loadMtDungeonProgress,
+		assertPartyActions: assertMtDungeonPartyActions,
+		settleHeal: settleMtDungeonHealArrival,
+		settleGold: settleMtDungeonGoldArrival,
+		getConfiguration: mapId => archive.configuration(mapId),
+		getStageCount: dungeonId => archive.definition(dungeonId).stages.length,
+		withLock: withUserGameplayLock,
+		beforeOpen: (identity, mapId) => assertMtDungeonEntry(archive, identity, mapId)
+	};
+}

@@ -3139,7 +3139,10 @@
 			"tower_attack": "Un autre joueur contrôle déjà la Dévoreuse. Vous devrez combattre pour pouvoir en prendre le contrôle et récolter ses précieuses graînes.",
 			"tower_defend": "Personne n'a actuellement le contrôle de la dévoreuse. Profitez-en pour en prendre le contrôle !",
 			"stop_defend_tower": "Si vous relachez votre contrôle sur la Dévoreuse, il vous faudra à nouveau combattre pour le regagner. Et d'autres joueurs attendent sûrement cette occasion pour s'en emparer à leur tour !",
-			"build_dojo": "Construire votre Dojo"
+			"build_dojo": "Construire votre Dojo",
+			"dungeon_enter": "Du kannst diesen Ort erkunden, aber pass auf, dass du dich nicht verirrst!",
+			"dungeon": "Den aktuellen Erkundungsfortschritt ansehen...",
+			"dungeon_status": "Dein Dinoz erkundet gerade ein Gebiet..."
 		},
 		"name": {
 			"fight": "Combattre",
@@ -3179,7 +3182,9 @@
 			"tower_attack": "Contrôler la Dévoreuse",
 			"tower_defend": "Défendre la Dévoreuse",
 			"stop_defend_tower": "Relacher le Contrôle",
-			"build_dojo": "Construire le Dojo"
+			"build_dojo": "Construire le Dojo",
+			"dungeon_enter": "Betreten",
+			"dungeon": "Karte ansehen"
 		}
 	},
 	"fight": {
@@ -6640,5 +6645,82 @@
 			"title": "Les Piglous sont de retour dans Dinoville !",
 			"viewEvent": "Voir l'Event"
 		}
+	},
+	"dungeon": {
+		"title": "Dungeon",
+		"exploration": "Dungeon-Erkundung",
+		"disclaimer": "**{dinoz}** erkundet gerade **{dungeonName}**. Dieser Dinoz kann den Dungeon nur verlassen, wenn er den Eingang oder Ausgang findet oder stirbt.",
+		"loading": "Dungeon wird geladen…",
+		"enterFromWorld": "Betritt den Dungeon am Zugangsort mit einer einsatzbereiten Gruppe.",
+		"entryValidated": "Der Server überprüft die Zugangsbedingungen und die Positionen der Dinoz.",
+		"enterReturn": "Zurück zu den Dinoz-Aktionen, um einzutreten",
+		"completed": "Dungeon abgeschlossen",
+		"explorationInfo": "Informationen zur Erkundung",
+		"allKo": "Alle Dinoz sind kampfunfähig. Die Gruppe muss den Dungeon verlassen, bevor sie wiederbelebt werden können.",
+		"leaderKo": "Der Gruppenanführer ist kampfunfähig: Vor der weiteren Erkundung muss die Gruppe evakuiert werden.",
+		"evacuate": "Kampfunfähige Gruppe evakuieren",
+		"loadingView": "Ansicht wird geladen…",
+		"refreshView": "Ansicht aktualisieren",
+		"noDiscoveries": "Noch keine Entdeckungen.",
+		"refreshDiscoveries": "Entdeckungen aktualisieren",
+		"diagnostics": "Originaltreue-Diagnose",
+		"journalUnavailable": "Tagebuch vorübergehend nicht verfügbar.",
+		"keys": {
+			"name": "Schlüssel {prefix} {suffix}",
+			"unknown": "Schlüssel Nr. {id}",
+			"pickup": "Du hast den {key} gefunden!",
+			"lockedDoor": "Diese Tür ist verschlossen. Du benötigst den {key}.",
+			"prefixes": {
+				"p0": "der Bäume",
+				"p1": "der Tintenfische",
+				"p2": "der Drachen",
+				"p3": "der Kabukis",
+				"p4": "von Romeo",
+				"p5": "der Goblins",
+				"p6": "der Engel",
+				"p7": "der Dornfresser"
+			},
+			"suffixes": {
+				"s0": "Magisch",
+				"s1": "Verzaubert",
+				"s2": "Tot",
+				"s3": "aus Plastik",
+				"s4": "Funkelnd",
+				"s5": "Rot",
+				"s6": "Geschminkt",
+				"s7": "aus Pappe"
+			}
+		},
+		"goldPickup": "Du hast {amount} Goldmünzen eingesammelt!",
+		"goldEmpty": "In diesem Schatz sind keine Goldmünzen mehr.",
+		"missingDoorKey": "Diese Tür ist verschlossen. Du musst den passenden Schlüssel im Dungeon finden.",
+		"moveRefused": "Der Server hat die Bewegung abgelehnt.",
+		"scenarioProcessed": "Ereignis vom Server verarbeitet.",
+		"controls": "Originale Dungeon-Steuerung",
+		"irmaRestore": "Mit einem Irma-Trank die Aktionen der Gruppe wiederherstellen",
+		"irmaRestoreShort": "Gruppenaktionen wiederherstellen",
+		"irmaPotion": "Irma-Trank",
+		"north": "Norden",
+		"south": "Süden",
+		"east": "Osten",
+		"west": "Westen",
+		"stairUp": "Treppe nach oben",
+		"stairDown": "Treppe nach unten",
+		"level": "Ebene -{level}",
+		"continue": "Weiter",
+		"discovery": "Entdeckung",
+		"encounterTitle": "Begegnung",
+		"readCollect": "Lesen / einsammeln",
+		"fight": "Kämpfen",
+		"later": "Später",
+		"serverError": "Server: {code}",
+		"requestFailed": "Anfrage fehlgeschlagen ({status}).",
+		"network": "Netzwerk",
+		"unexpectedError": "Unerwarteter Fehler.",
+		"viewOutdated": "Die Dungeon-Ansicht hat sich beim Laden geändert. Bitte aktualisieren.",
+		"sessionOutdated": "Die Sitzung hat sich während der Bewegung geändert. Bitte aktualisieren.",
+		"actionUnavailable": "Eine Aktion ist weiterhin nicht verfügbar. Überprüfe die Dinoz deiner Gruppe.",
+		"irmaUsedOne": "Du hast {count} Irma-Trank für deine Dinoz-Gruppe verwendet.",
+		"irmaUsedMany": "Du hast {count} Irma-Tränke für deine Dinoz-Gruppe verwendet."
 	}
 }

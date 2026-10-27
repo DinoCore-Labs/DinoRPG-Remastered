@@ -1,7 +1,7 @@
-import { RestHealInfos } from '@dinorpg/core/models/dinoz/dinozRest.js';
 import { Skill } from '@dinorpg/core/models/skills/skillList.js';
 
 import { Prisma } from '../../../../prisma/index.js';
+import { assertNoMtDungeonHealing } from '../../Dungeon/mtDungeonHealingGuard.js';
 import { calculateHealInfos, calculateRegeneration, ticksFromHours } from '../../utils/dinoz/restDinoz.js';
 
 export async function startRest(tx: Prisma.TransactionClient, dinozId: number) {
@@ -33,6 +33,7 @@ export async function applyRestIfNeeded(tx: Prisma.TransactionClient, dinozId: n
 		where: { id: dinozId },
 		select: {
 			id: true,
+			userId: true,
 			life: true,
 			maxLife: true,
 			state: true,
@@ -43,6 +44,7 @@ export async function applyRestIfNeeded(tx: Prisma.TransactionClient, dinozId: n
 	});
 
 	if (!d || d.state !== 'resting' || !d.stateTimer) return null;
+	await assertNoMtDungeonHealing(d.userId, dinozId, tx);
 
 	const skillSet = new Set(d.skills.map(s => s.skillId));
 

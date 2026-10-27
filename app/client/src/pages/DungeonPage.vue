@@ -1,0 +1,896 @@
+<template>
+	<TitleHeader :title="dungeonName" :header="dungeonName" />
+	<DZDisclaimer v-if="session" :content="'dungeon.disclaimer'" :params="{ dinoz: dinozName, dungeonName }" help />
+	<section class="mt-test" :aria-label="$t('dungeon.exploration')">
+		<!-- original eight-piece Motion Twin message box. -->
+		<MtDungeonMessageBox
+			v-if="activeMessage && !session"
+			:variant="
+				activeMessage.kind === 'entry' || activeMessage.kind === 'irma' || activeMessage.kind === 'pickup'
+					? 'notice'
+					: 'dialog'
+			"
+			:title="activeMessage.title"
+			:text="activeMessage.text"
+			:confirm-label="activeMessage.confirmLabel"
+			:cancel-label="activeMessage.cancelLabel"
+			:icon="activeMessage.icon"
+			:busy="busy"
+			@confirm="confirmMessage"
+			@close="closeMessage"
+		/>
+		<p v-if="errorMessage" class="mt-test__error" role="alert">{{ errorMessage }}</p>
+		<p v-if="notice" class="mt-test__notice" role="status">{{ notice }}</p>
+		<p v-if="loading && !session">{{ $t('dungeon.loading') }}</p>
+		<section v-if="!session && !loading" class="mt-test__panel">
+			<p>{{ $t('dungeon.enterFromWorld') }}</p>
+			<p>{{ $t('dungeon.entryValidated') }}</p>
+			<RouterLink :to="{ name: 'DinozPage', params: { id: leaderId } }">{{ $t('dungeon.enterReturn') }}</RouterLink>
+		</section>
+		<template v-if="session">
+			<section v-if="partyDefeated || partyLeaderDead" class="mt-test__panel" aria-live="polite">
+				<p v-if="partyDefeated">
+					{{ $t('dungeon.allKo') }}
+				</p>
+				<p v-else>{{ $t('dungeon.leaderKo') }}</p>
+				<button type="button" :disabled="busy" @click="evacuateDefeated">{{ $t('dungeon.evacuate') }}</button>
+			</section>
+			<div class="mt-test__viewport">
+				<MtOriginalDungeonCanvas
+					v-if="view"
+					:scene="view.scene"
+					:mask-strength="getDungeonSkin(view.skin)?.mask ?? 0"
+					:guardians="view.guardianSprites ?? []"
+					:stage-key="session.mapId"
+					:actors="visualParty"
+					:facing-right="facingRight"
+					:show-unverified-same-name-overlays="true"
+				/>
+				<div v-else class="mt-test__placeholder">{{ $t('dungeon.loadingView') }}</div>
+				<!-- dialogue visible directement sur le donjon. -->
+				<MtDungeonMessageBox
+					v-if="activeMessage"
+					placement="viewport"
+					:variant="
+						activeMessage.kind === 'entry' || activeMessage.kind === 'irma' || activeMessage.kind === 'pickup'
+							? 'notice'
+							: 'dialog'
+					"
+					:title="activeMessage.title"
+					:text="activeMessage.text"
+					:confirm-label="activeMessage.confirmLabel"
+					:cancel-label="activeMessage.cancelLabel"
+					:icon="activeMessage.icon"
+					:busy="busy"
+					@confirm="confirmMessage"
+					@close="closeMessage"
+				/>
+				<div v-if="view && !partyDefeated" class="mt-test__original-controls" :aria-label="$t('dungeon.controls')">
+					<button
+						v-if="partyNeedsIrma"
+						class="mt-test__original-irma"
+						type="button"
+						:disabled="busy || !partyActionsLoaded"
+						:aria-label="$t('dungeon.irmaRestore')"
+						:title="$t('dungeon.irmaRestoreShort')"
+						@click="restoreDungeonActions"
+					>
+						<img src="/dungeon/mt/interf_irma.png" :alt="$t('dungeon.irmaPotion')" />
+					</button>
+					<template v-else>
+						<button
+							class="mt-test__original-dir mt-test__original-up"
+							type="button"
+							:disabled="cannotMove"
+							:aria-label="$t('dungeon.north')"
+							@click="move('north')"
+						>
+							<img src="/dungeon/mt/interf_arrow.png" alt="" />
+						</button>
+						<button
+							class="mt-test__original-dir mt-test__original-left"
+							type="button"
+							:disabled="cannotMove"
+							:aria-label="$t('dungeon.west')"
+							@click="move('west')"
+						>
+							<img src="/dungeon/mt/interf_arrow.png" alt="" />
+						</button>
+						<button
+							class="mt-test__original-dir mt-test__original-right"
+							type="button"
+							:disabled="cannotMove"
+							:aria-label="$t('dungeon.east')"
+							@click="move('east')"
+						>
+							<img src="/dungeon/mt/interf_arrow.png" alt="" />
+						</button>
+						<button
+							class="mt-test__original-dir mt-test__original-down"
+							type="button"
+							:disabled="cannotMove"
+							:aria-label="$t('dungeon.south')"
+							@click="move('south')"
+						>
+							<img src="/dungeon/mt/interf_arrow.png" alt="" />
+						</button>
+						<button
+							v-if="stairDirections.includes('up')"
+							class="mt-test__original-stair mt-test__original-stair-up"
+							type="button"
+							:disabled="cannotMove"
+							:aria-label="$t('dungeon.stairUp')"
+							@click="move('up')"
+						>
+							<img src="/dungeon/mt/interf_stair_up.png" alt="" />
+						</button>
+						<button
+							v-if="stairDirections.includes('down')"
+							class="mt-test__original-stair mt-test__original-stair-down"
+							type="button"
+							:disabled="cannotMove"
+							:aria-label="$t('dungeon.stairDown')"
+							@click="move('down')"
+						>
+							<img src="/dungeon/mt/interf_stair_down.png" alt="" />
+						</button>
+					</template>
+				</div>
+				<div v-if="view" class="mt-test__original-level">
+					{{ $t('dungeon.level', { level: session.position.l + 1 }) }}
+				</div>
+			</div>
+		</template>
+	</section>
+</template>
+
+<script setup lang="ts">
+import axios from 'axios';
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
+import TitleHeader from '../components/utils/TitleHeader.vue';
+import DZDisclaimer from '../components/utils/DZDisclaimer.vue';
+import { useRoute, useRouter } from 'vue-router';
+import { mtDungeonCombatTrigger } from '../components/dungeon/mtDungeonCombatTrigger.js';
+import MtOriginalDungeonCanvas from '../components/dungeon/MtOriginalDungeonCanvas.vue';
+import { getDungeonSkin } from '@dinorpg/core/models/dungeon/dungeon.skins.js';
+import { MT_DUNGEON_DEFINITIONS } from '@dinorpg/core/models/dungeon/dungeon.mtData.js';
+import MtDungeonMessageBox from '../components/dungeon/MtDungeonMessageBox.vue';
+import { mtDungeonKeyPickupMessage, mtDungeonLockedDoorMessage } from '../components/dungeon/mtDungeonKeyNames.js';
+import { mtDungeonBoundaryAction } from '../components/dungeon/mtDungeonBoundaryAction.js';
+import { advanceMtTrail, mtFollowerPositions, type MtTrailPoint } from '../components/dungeon/dungeonPartyTrail.js';
+import { DinozService } from '../services/dinoz.service.js';
+import {
+	MtDungeonService,
+	type MtDungeonCurrentView,
+	type MtDungeonCatalogEntry,
+	type MtDungeonJournalEntry,
+	type MtDungeonEncounter
+} from '../services/mtDungeon.service.js';
+import { sessionStore } from '../store/sessionStore';
+import { localStore } from '../store/localStore';
+import { userStore } from '../store/userStore.js';
+import type { MtDungeonSession } from '@dinorpg/core/models/dungeon/dungeon.session.js';
+import type { DungeonCommand } from '@dinorpg/core/models/dungeon/dungeon.types.js';
+
+const { t } = useI18n();
+const route = useRoute();
+const router = useRouter();
+const leaderId = Number(route.params.id);
+// Always use the authoritative active session; route parameters never select map content.
+const session = ref<MtDungeonSession | null>(null);
+const view = ref<MtDungeonCurrentView | null>(null);
+const encounter = ref<MtDungeonEncounter | null>(null);
+const journalEntries = ref<MtDungeonJournalEntry[]>([]);
+const journalError = ref('');
+const errorMessage = ref('');
+const notice = ref('');
+const irmaMessage = ref<string | null>(null);
+const pickupMessage = ref<string | null>(null);
+const pickupIcon = ref<string | null>(null);
+const originalEntryText = ref<string | null>(null);
+const entryDismissed = ref(false);
+const scenarioDismissedRevision = ref('');
+const loading = ref(true);
+const busy = ref(false);
+const visualMembers = ref<{ id: number; display: string; life: number; fight: boolean; remaining: number }[]>([]);
+const partyActionsLoaded = ref(false);
+const movementTrail = ref<MtTrailPoint[]>([]);
+const facingRight = ref(true);
+function asTrailPoint(run: MtDungeonSession): MtTrailPoint {
+	return { mapId: run.mapId, x: run.position.x, y: run.position.y, l: run.position.l };
+}
+const visualParty = computed(() => {
+	const run = session.value;
+	const currentView = view.value;
+	if (!run || !currentView) return [];
+	const positions = [
+		asTrailPoint(run),
+		...mtFollowerPositions(movementTrail.value, asTrailPoint(run), visualMembers.value.length - 1)
+	];
+	// If the profile request fails, keep a neutral location marker for testing.
+	if (!visualMembers.value.length) return [{ id: leaderId, display: '', x: run.position.x, y: run.position.y }];
+	return visualMembers.value.flatMap((member, index) => {
+		const location = positions[index]!;
+		if (location.mapId !== run.mapId || location.l !== run.position.l) return [];
+		const x = location.x - currentView.scene.viewport.ix;
+		const y = location.y - currentView.scene.viewport.iy;
+		if (x < -2 || x > 10 || y < -2 || y > 10) return [];
+		return [{ id: member.id, display: member.display, x: location.x, y: location.y }];
+	});
+});
+async function loadVisualParty(): Promise<void> {
+	try {
+		const leader = await DinozService.getDinozFiche(leaderId, { silent: true });
+		dinozName.value = String(leader.name || leader.display || leaderId);
+		const followers = await Promise.all(
+			leader.followers.map(follower => DinozService.getDinozFiche(follower.id, { silent: true }))
+		);
+		visualMembers.value = [
+			{ id: leader.id, display: leader.display, life: leader.life, fight: leader.fight, remaining: leader.remaining },
+			...followers.map(follower => ({
+				id: follower.id,
+				display: follower.display,
+				life: follower.life,
+				fight: follower.fight,
+				remaining: follower.remaining
+			}))
+		];
+		partyActionsLoaded.value = true;
+	} catch {
+		// Navigation fails closed when the server-side party action state is unknown.
+		visualMembers.value = [];
+		partyActionsLoaded.value = false;
+	}
+}
+const dungeonId = computed(() => session.value?.mapId.replace(/_[0-9]+$/, '') ?? '');
+const dungeonName = computed(
+	() => catalog.value.find(entry => entry.id === dungeonId.value)?.name || dungeonId.value || t('dungeon.title')
+);
+const dinozName = ref('');
+const catalog = ref<MtDungeonCatalogEntry[]>([]);
+const partyLeaderDead = computed(() => visualMembers.value.some(member => member.id === leaderId && member.life <= 0));
+const partyDefeated = computed(
+	() => visualMembers.value.length > 0 && visualMembers.value.every(dinoz => dinoz.life <= 0)
+);
+const partyNeedsIrma = computed(
+	() => partyActionsLoaded.value && visualMembers.value.some(dinoz => dinoz.life > 0 && !dinoz.fight)
+);
+const cannotMove = computed(
+	() =>
+		partyDefeated.value ||
+		partyLeaderDead.value ||
+		partyNeedsIrma.value ||
+		!!activeMessage.value ||
+		!partyActionsLoaded.value ||
+		busy.value ||
+		loading.value ||
+		!session.value ||
+		!!session.value.pending ||
+		session.value.locked
+);
+const language = computed(() =>
+	String(localStore().getLanguage ?? 'fr')
+		.toLowerCase()
+		.slice(0, 2)
+);
+const isTowerDungeon = computed(() => MT_DUNGEON_DEFINITIONS.fr.find(d => d.id === dungeonId.value)?.tower ?? false);
+const stairDirections = computed(() => {
+	if (!view.value || !session.value) return [] as string[];
+	const here = session.value.position;
+	// stepp is not a tower: View.updateArrows() maps door.up=false to UP, true to DOWN.
+	return view.value.scene.features
+		.filter(f => f.kind === 'stair' && f.x === here.x && f.y === here.y)
+		.map(f => (f.kind === 'stair' ? (isTowerDungeon.value ? (f.up ? 'up' : 'down') : f.up ? 'down' : 'up') : ''));
+});
+
+type MtNarrativeKind = 'entry' | 'scenario' | 'scenario-combat' | 'irma' | 'pickup';
+type MtNarrative = {
+	kind: MtNarrativeKind;
+	title: string;
+	text: string;
+	confirmLabel: string;
+	cancelLabel?: string;
+	icon?: string | null;
+};
+const activeMessage = computed((): MtNarrative | null => {
+	if (session.value && originalEntryText.value && !entryDismissed.value) {
+		return {
+			kind: 'entry',
+			title: dungeonName.value,
+			text: originalEntryText.value,
+			confirmLabel: t('dungeon.continue')
+		};
+	}
+	if (session.value && pickupMessage.value)
+		return {
+			kind: 'pickup',
+			title: '',
+			text: pickupMessage.value,
+			confirmLabel: t('dungeon.continue'),
+			icon: pickupIcon.value
+		};
+	if (session.value && irmaMessage.value)
+		return { kind: 'irma', title: '', text: irmaMessage.value, confirmLabel: t('dungeon.continue') };
+	const run = session.value;
+	const current = encounter.value;
+	if (run?.pending?.kind === 'scenario' && current?.text) {
+		const key = run.mapId + ':' + run.revision;
+		if (scenarioDismissedRevision.value === key) return null;
+		if (current.kind === 'scenario') {
+			return {
+				kind: 'scenario',
+				title: t('dungeon.discovery'),
+				text: current.text,
+				icon: current.messageIcon ?? null,
+				confirmLabel: t('dungeon.readCollect'),
+				cancelLabel: t('dungeon.later')
+			};
+		}
+		if (current.kind === 'scenario-combat' && current.status === 'ready-for-combat') {
+			return {
+				kind: 'scenario-combat',
+				title: t('dungeon.encounterTitle'),
+				text: current.text,
+				icon: current.messageIcon ?? null,
+				confirmLabel: t('dungeon.fight'),
+				cancelLabel: t('dungeon.later')
+			};
+		}
+	}
+	return null;
+});
+function closeMessage(): void {
+	const kind = activeMessage.value?.kind;
+	if (kind === 'pickup') {
+		pickupMessage.value = null;
+		pickupIcon.value = null;
+	}
+	if (kind === 'irma') irmaMessage.value = null;
+	if (kind === 'entry') entryDismissed.value = true;
+	if ((kind === 'scenario' || kind === 'scenario-combat') && session.value)
+		scenarioDismissedRevision.value = session.value.mapId + ':' + session.value.revision;
+}
+function confirmMessage(): void {
+	const kind = activeMessage.value?.kind;
+	if (kind === 'pickup') {
+		pickupMessage.value = null;
+		pickupIcon.value = null;
+	}
+	if (kind === 'irma') irmaMessage.value = null;
+	if (kind === 'entry') entryDismissed.value = true;
+	if (kind === 'scenario') {
+		closeMessage();
+		resolveScenario();
+	}
+	if (kind === 'scenario-combat') {
+		closeMessage();
+		fight();
+	}
+}
+async function showOriginalEntryText(): Promise<void> {
+	try {
+		// Public metadata contain introduction and exit only; no hidden scenario leaks.
+		const definition = catalog.value.find(value => value.id === dungeonId.value);
+		if (definition?.enter.text) {
+			originalEntryText.value = definition.enter.text;
+			entryDismissed.value = false;
+		}
+	} catch (error) {
+		errorMessage.value = formatError(error);
+	}
+}
+
+function formatError(error: unknown): string {
+	if (axios.isAxiosError(error)) {
+		const code = (error.response?.data as { code?: string } | undefined)?.code;
+		return code
+			? t('dungeon.serverError', { code })
+			: t('dungeon.requestFailed', { status: error.response?.status ?? t('dungeon.network') });
+	}
+	return error instanceof Error ? error.message : t('dungeon.unexpectedError');
+}
+
+/** Read-only: an inaccessible journal must never block dungeon movement. */
+async function loadJournal(): Promise<void> {
+	try {
+		const result = await MtDungeonService.getJournal(leaderId, language.value);
+		journalEntries.value = result.entries;
+		journalError.value = '';
+	} catch {
+		journalError.value = t('dungeon.journalUnavailable');
+	}
+}
+
+async function refresh(): Promise<void> {
+	if (busy.value) return;
+	loading.value = true;
+	errorMessage.value = '';
+	try {
+		const current = await MtDungeonService.getSession(leaderId);
+		// Do not render actors from the new session on a view from the old revision.
+		// A rejected move or a browser-tab resync must not produce a fake walk.
+		const latestView = await MtDungeonService.getView(leaderId);
+		if (latestView && (latestView.revision !== current.revision || latestView.mapId !== current.mapId))
+			throw new Error(t('dungeon.viewOutdated'));
+		const latestEncounter =
+			current.pending && latestView ? (await MtDungeonService.getEncounter(leaderId, language.value)).encounter : null;
+		if (
+			session.value &&
+			(session.value.mapId !== current.mapId ||
+				JSON.stringify(session.value.position) !== JSON.stringify(current.position))
+		)
+			movementTrail.value = [];
+		session.value = current;
+		view.value = latestView;
+		encounter.value = latestEncounter;
+		await loadVisualParty();
+		if (latestView) await loadJournal();
+		// Recover a boundary from a previous refresh/browser tab without a second button.
+		if (mtDungeonBoundaryAction(current)) await settleMtBoundary(current);
+	} catch (error) {
+		if (axios.isAxiosError(error) && error.response?.status === 404) {
+			session.value = null;
+			view.value = null;
+			encounter.value = null;
+			journalEntries.value = [];
+			journalError.value = '';
+		} else errorMessage.value = formatError(error);
+	} finally {
+		loading.value = false;
+	}
+}
+async function afterMutation(next: MtDungeonSession): Promise<void> {
+	const latestView = await MtDungeonService.getView(leaderId);
+	if (latestView.revision !== next.revision || latestView.mapId !== next.mapId)
+		throw new Error(t('dungeon.sessionOutdated'));
+	const latestEncounter = next.pending
+		? (await MtDungeonService.getEncounter(leaderId, language.value)).encounter
+		: null;
+	// Commit both reactive values synchronously so Pixi receives a matching
+	// authoritative position and 9x9 viewport for the camera interpolation.
+	const journalChanged =
+		!session.value ||
+		session.value.mapId !== next.mapId ||
+		JSON.stringify(session.value.flags) !== JSON.stringify(next.flags);
+	session.value = next;
+	view.value = latestView;
+	encounter.value = latestEncounter;
+	await loadVisualParty();
+	if (journalChanged) await loadJournal();
+}
+async function execute(action: () => Promise<void>): Promise<void> {
+	if (busy.value) return;
+	busy.value = true;
+	errorMessage.value = '';
+	notice.value = '';
+	try {
+		await action();
+	} catch (error) {
+		const message = formatError(error);
+		// Revisions can change in another browser tab. Never retry a write blindly.
+		busy.value = false;
+		await refresh();
+		errorMessage.value = message;
+		return;
+	} finally {
+		busy.value = false;
+	}
+}
+function restoreDungeonActions(): void {
+	if (!session.value || !partyNeedsIrma.value || partyDefeated.value) return;
+	void execute(async () => {
+		const paid = await MtDungeonService.useDungeonIrma(leaderId, session.value!.revision);
+		await loadVisualParty();
+		if (!partyActionsLoaded.value || partyNeedsIrma.value) {
+			throw new Error(t('dungeon.actionUnavailable'));
+		}
+		// Confirmed server action: the MT notice only acknowledges its result.
+		const n = paid.used;
+		irmaMessage.value = t(n === 1 ? 'dungeon.irmaUsedOne' : 'dungeon.irmaUsedMany', { count: n });
+		notice.value = '';
+	});
+}
+function move(direction: 'north' | 'south' | 'west' | 'east' | 'up' | 'down') {
+	if (cannotMove.value || !session.value) return;
+	if ((direction === 'up' || direction === 'down') && !stairDirections.value.includes(direction)) return;
+	void execute(async () => {
+		const previous = session.value!;
+		const offsets = {
+			north: [0, -1, 0],
+			south: [0, 1, 0],
+			west: [-1, 0, 0],
+			east: [1, 0, 0],
+			up: [0, 0, -1],
+			down: [0, 0, 1]
+		} as const;
+		const [dx, dy, baseDl] = offsets[direction];
+		const dl = isTowerDungeon.value ? -baseDl : baseDl;
+		const command: DungeonCommand = { ...previous.position, dx, dy, dl };
+		const result = await MtDungeonService.move(leaderId, previous.revision, command);
+		if (!result.ok) {
+			notice.value = t('dungeon.moveRefused');
+			return;
+		}
+		if (result.blockedDoor === 'missing-key') {
+			pickupIcon.value = null;
+			// Consume the revision, but do not animate a fake movement.
+			await afterMutation(result.session);
+			pickupMessage.value = Number.isInteger(result.requiredKey)
+				? mtDungeonLockedDoorMessage(leaderId, result.session.mapId, result.requiredKey!, t)
+				: t('dungeon.missingDoorKey');
+			return;
+		}
+		if (direction === 'west') facingRight.value = false;
+		if (direction === 'east') facingRight.value = true;
+		movementTrail.value = advanceMtTrail(
+			movementTrail.value,
+			asTrailPoint(previous),
+			asTrailPoint(result.session),
+			Math.max(0, visualMembers.value.length - 1)
+		);
+		await afterMutation(result.session);
+		const collectedKeys = result.session.keys.flatMap((owned, id) => (owned && !previous.keys[id] ? [id] : []));
+		if (collectedKeys.length > 0) {
+			pickupIcon.value = 'key';
+			pickupMessage.value =
+				collectedKeys.length === 1
+					? mtDungeonKeyPickupMessage(leaderId, result.session.mapId, collectedKeys[0]!, t)
+					: collectedKeys.map(id => mtDungeonKeyPickupMessage(leaderId, result.session.mapId, id, t)).join('\n');
+		}
+		if (await settleMtBoundary(result.session)) return;
+		if (mtDungeonCombatTrigger(result.session.pending, encounter.value) === 'guardian') {
+			const { token } = await MtDungeonService.prepareGuardianFight(leaderId, result.session.revision);
+			const fightResult = await MtDungeonService.resolveGuardianFight(leaderId, token);
+			sessionStore().setFightResult(fightResult);
+			await router.push({
+				name: 'FightPage',
+				params: { dinozId: String(leaderId) },
+				query: { mtDungeonLeader: String(leaderId) }
+			});
+			return;
+		}
+		if (mtDungeonCombatTrigger(result.session.pending, encounter.value) === 'scenario') {
+			const { token } = await MtDungeonService.prepareFight(leaderId, result.session.revision);
+			const fightResult = await MtDungeonService.resolveFight(leaderId, token);
+			sessionStore().setFightResult(fightResult);
+			await router.push({
+				name: 'FightPage',
+				params: { dinozId: String(leaderId) },
+				query: { mtDungeonLeader: String(leaderId) }
+			});
+			return;
+		}
+		if (typeof result.goldAwarded === 'number') {
+			pickupIcon.value = 'gold';
+			if (typeof result.walletGold === 'number') userStore().setGold(result.walletGold);
+			pickupMessage.value =
+				result.goldAwarded > 0 ? t('dungeon.goldPickup', { amount: result.goldAwarded }) : t('dungeon.goldEmpty');
+		}
+	});
+}
+/** The server validates the pending boundary, revision and allowed next stage. */
+async function settleMtBoundary(current: MtDungeonSession): Promise<boolean> {
+	const action = mtDungeonBoundaryAction(current);
+	if (!action) return false;
+	if (action === 'forward' || action === 'backward') {
+		const next = await MtDungeonService.transition(leaderId, current.revision, action);
+		movementTrail.value = [];
+		await afterMutation(next);
+		return true;
+	}
+	const outcome = await MtDungeonService.worldExit(leaderId, current.revision, language.value);
+	// Commit the server exit before navigation.
+	// Carry the original MT message in Vue Router history state, never a URL parameter.
+	await router.replace({
+		name: 'DinozPage',
+		params: { id: String(leaderId) },
+		state: { mtDungeonExitMessage: outcome.text }
+	});
+	return true;
+}
+function resolveScenario() {
+	if (encounter.value?.kind !== 'scenario' || !session.value) return;
+	void execute(async () => {
+		const outcome = await MtDungeonService.resolveScenario(leaderId, session.value!.revision, language.value);
+		const previous = session.value!;
+		movementTrail.value = advanceMtTrail(
+			movementTrail.value,
+			asTrailPoint(previous),
+			asTrailPoint(outcome.session),
+			Math.max(0, visualMembers.value.length - 1)
+		);
+		await afterMutation(outcome.session);
+		notice.value = outcome.message ?? t('dungeon.scenarioProcessed');
+	});
+}
+function fight() {
+	if (encounter.value?.kind !== 'scenario-combat' || encounter.value.status !== 'ready-for-combat' || !session.value)
+		return;
+	void execute(async () => {
+		const { token } = await MtDungeonService.prepareFight(leaderId, session.value!.revision);
+		const result = await MtDungeonService.resolveFight(leaderId, token);
+		sessionStore().setFightResult(result);
+		await router.push({
+			name: 'FightPage',
+			params: { dinozId: String(leaderId) },
+			query: { mtDungeonLeader: String(leaderId) }
+		});
+	});
+}
+function evacuateDefeated(): void {
+	if (!session.value || (!partyDefeated.value && !partyLeaderDead.value)) return;
+	void execute(async () => {
+		await MtDungeonService.evacuateDefeatedGroup(leaderId, session.value!.revision);
+		session.value = null;
+		view.value = null;
+		encounter.value = null;
+		movementTrail.value = [];
+		await router.replace({ name: 'DinozPage', params: { id: String(leaderId) } });
+	});
+}
+function onKeyDown(event: KeyboardEvent): void {
+	if (event.altKey || event.ctrlKey || event.metaKey || cannotMove.value || !!activeMessage.value) return;
+	const el = event.target;
+	if (el instanceof HTMLElement && ['INPUT', 'TEXTAREA', 'SELECT', 'BUTTON'].includes(el.tagName)) return;
+	const key = event.key.toLowerCase();
+	const moveByKey: Record<string, 'north' | 'south' | 'west' | 'east'> = {
+		arrowup: 'north',
+		z: 'north',
+		w: 'north',
+		arrowdown: 'south',
+		s: 'south',
+		arrowleft: 'west',
+		q: 'west',
+		a: 'west',
+		arrowright: 'east',
+		d: 'east'
+	};
+	const direction = moveByKey[key];
+	if (!direction) return;
+	event.preventDefault();
+	move(direction);
+}
+onMounted(() => {
+	window.addEventListener('keydown', onKeyDown);
+	void (async () => {
+		await refresh();
+		try {
+			catalog.value = await MtDungeonService.getCatalog(language.value);
+		} catch {
+			/* API indisponible : afficher l'identifiant sans inventer de nom */
+		}
+		if (route.query.mtEntry === '1' && session.value) {
+			await showOriginalEntryText();
+			const query = { ...route.query };
+			delete query.mtEntry;
+			await router.replace({ query });
+		}
+	})();
+});
+onBeforeUnmount(() => window.removeEventListener('keydown', onKeyDown));
+</script>
+
+<style scoped>
+.mt-test {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	gap: 0.65rem;
+	width: 100%;
+	margin: 0 auto 1rem;
+	color: #37291b;
+}
+.mt-test__original-controls {
+	position: absolute;
+	z-index: 20;
+	left: 5px;
+	top: 5px;
+	width: 90px;
+	height: 92px;
+	pointer-events: none;
+}
+.mt-test__original-controls button {
+	position: absolute;
+	border: 0;
+	padding: 0;
+	background: transparent;
+	line-height: 0;
+	pointer-events: auto;
+	filter: drop-shadow(0 1px 2px #241c0a);
+}
+.mt-test__original-controls button:disabled {
+	opacity: 0.35;
+	cursor: not-allowed;
+}
+.mt-test__original-controls button:not(:disabled):hover {
+	filter: drop-shadow(0 0 5px #eee883);
+}
+.mt-test__original-dir {
+	width: 24px;
+	height: 24px;
+}
+.mt-test__original-dir img {
+	width: 24px;
+	height: 20px;
+}
+.mt-test__original-up {
+	top: 0;
+	left: 31px;
+}
+.mt-test__original-left {
+	top: 30px;
+	left: 0;
+}
+.mt-test__original-right {
+	top: 30px;
+	left: 62px;
+}
+.mt-test__original-down {
+	top: 58px;
+	left: 31px;
+}
+.mt-test__original-up img {
+	transform: rotate(-90deg);
+}
+.mt-test__original-left img {
+	transform: rotate(180deg);
+}
+.mt-test__original-right img {
+	transform: rotate(0deg);
+}
+.mt-test__original-down img {
+	transform: rotate(90deg);
+}
+.mt-test__original-stair {
+	top: 29px;
+}
+.mt-test__original-stair-up {
+	left: 33px;
+}
+.mt-test__original-stair-down {
+	left: 56px;
+}
+.mt-test__original-stair img {
+	width: 24px;
+	height: 28px;
+}
+.mt-test__original-irma {
+	top: 17px;
+	left: 27px;
+}
+.mt-test__original-irma img {
+	width: 24px;
+	height: 31px;
+	image-rendering: auto;
+}
+.mt-test__irma-hint {
+	position: absolute;
+	top: 84px;
+	left: 7px;
+	z-index: 20;
+	max-width: 170px;
+	padding: 3px 5px;
+	font-size: 11px;
+	background: #261f11df;
+	color: #fff0b3;
+	border-radius: 3px;
+}
+.mt-test__original-level {
+	position: absolute;
+	right: 8px;
+	bottom: 5px;
+	z-index: 20;
+	color: #f5eccb;
+	font-size: 17px;
+	font-weight: 600;
+	text-shadow:
+		1px 2px 2px #000,
+		-1px -1px 2px #000;
+	pointer-events: none;
+}
+.mt-test__refresh {
+	font-size: 0.72rem;
+}
+.mt-test__viewport {
+	position: relative;
+	container-type: inline-size;
+	width: 100%;
+	overflow: hidden;
+	background: #3d3325;
+	border: 5px solid #5f4123;
+	box-shadow: inset 0 0 10px #201a13;
+}
+.mt-test__placeholder {
+	text-align: center;
+	padding-top: 40%;
+}
+.mt-test__controls {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-wrap: wrap;
+	gap: 0.8rem;
+}
+.mt-test__arrows {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	gap: 0.2rem;
+}
+.mt-test__arrows div {
+	display: flex;
+	gap: 0.2rem;
+}
+.mt-test__arrows button {
+	width: 42px;
+	height: 35px;
+	font-size: 1.25rem;
+}
+.mt-test__stair-controls {
+	display: flex;
+	flex-direction: column;
+	gap: 0.25rem;
+}
+.mt-test button {
+	cursor: pointer;
+	padding: 0.4rem 0.7rem;
+}
+.mt-test button:disabled {
+	cursor: not-allowed;
+	opacity: 0.5;
+}
+.mt-test__caption {
+	font-size: 0.72rem;
+	line-height: 1.4;
+	text-align: center;
+	max-width: 360px;
+	margin: 0;
+}
+.mt-test__panel {
+	padding: 0.7rem 1rem;
+	border: 1px solid #a38b6c;
+	background: #efdfbd;
+	width: min(360px, 100%);
+	text-align: center;
+}
+.mt-test__panel h3 {
+	margin: 0.3rem 0;
+}
+.mt-test__notice,
+.mt-test__error {
+	padding: 0.5rem;
+	border: 1px solid #997452;
+	width: min(360px, 100%);
+	white-space: pre-wrap;
+}
+.mt-test__error {
+	color: #a52112;
+}
+.mt-test__details {
+	font-size: 0.75rem;
+	max-width: 360px;
+}
+.mt-test__journal {
+	width: min(420px, 100%);
+	max-width: 420px;
+	padding: 0.55rem 0.7rem;
+	border: 1px solid #a38b6c;
+	background: #efdfbd;
+}
+.mt-test__journal summary {
+	cursor: pointer;
+	font-weight: 700;
+}
+.mt-test__journal ol {
+	padding-left: 1.1rem;
+}
+.mt-test__journal li {
+	margin: 0.65rem 0;
+}
+.mt-test__journal li p {
+	margin: 0.25rem 0;
+	white-space: pre-wrap;
+	overflow-wrap: anywhere;
+}
+</style>

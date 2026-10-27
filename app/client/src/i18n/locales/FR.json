@@ -3234,7 +3234,10 @@
 			"tower_attack": "Un autre joueur contrôle déjà la Dévoreuse. Vous devrez combattre pour pouvoir en prendre le contrôle et récolter ses précieuses graînes.",
 			"tower_defend": "Personne n'a actuellement le contrôle de la dévoreuse. Profitez-en pour en prendre le contrôle !",
 			"stop_defend_tower": "Si vous relachez votre contrôle sur la Dévoreuse, il vous faudra à nouveau combattre pour le regagner. Et d'autres joueurs attendent sûrement cette occasion pour s'en emparer à leur tour !",
-			"build_dojo": "Construire votre Dojo"
+			"build_dojo": "Construire votre Dojo",
+			"dungeon_enter": "Vous pouvez explorer cet endroit, mais faites attention à ne pas vous y perdre !",
+			"dungeon": "Voir l'évolution de l'exploration actuelle...",
+			"dungeon_status": "Votre Dinoz est actuellement en exploration..."
 		},
 		"name": {
 			"fight": "Combattre",
@@ -3274,7 +3277,9 @@
 			"tower_attack": "Contrôler la Dévoreuse",
 			"tower_defend": "Défendre la Dévoreuse",
 			"stop_defend_tower": "Relacher le Contrôle",
-			"build_dojo": "Construire le Dojo"
+			"build_dojo": "Construire le Dojo",
+			"dungeon_enter": "Entrer",
+			"dungeon": "Accéder au Plan"
 		}
 	},
 	"fight": {
@@ -6785,5 +6790,82 @@
 			"title": "Les Piglous sont de retour dans Dinoville !",
 			"viewEvent": "Voir l'Event"
 		}
+	},
+	"dungeon": {
+		"title": "Donjon",
+		"exploration": "Exploration du donjon",
+		"disclaimer": "**{dinoz}** explore actuellement **{dungeonName}**. Ce Dinoz sera capable d’en sortir seulement s’il retrouve l’entrée, la sortie ou s’il meurt.",
+		"loading": "Chargement du donjon…",
+		"enterFromWorld": "Entre dans le donjon depuis son lieu d’accès avec un groupe disponible.",
+		"entryValidated": "Les conditions d’accès et la position des Dinoz sont vérifiées côté serveur.",
+		"enterReturn": "Retour aux actions du Dinoz pour entrer",
+		"completed": "Donjon terminé",
+		"explorationInfo": "Informations sur l’exploration",
+		"allKo": "Tous les Dinoz sont KO. Le groupe doit quitter le donjon pour pouvoir être ressuscité.",
+		"leaderKo": "Le chef du groupe est KO : évacuation nécessaire avant de reprendre l’exploration.",
+		"evacuate": "Évacuer le groupe KO",
+		"loadingView": "Chargement de la vue…",
+		"refreshView": "Actualiser la vue",
+		"noDiscoveries": "Aucun texte découvert pour le moment.",
+		"refreshDiscoveries": "Actualiser les découvertes",
+		"diagnostics": "Diagnostics de fidélité",
+		"journalUnavailable": "Journal momentanément indisponible.",
+		"keys": {
+			"name": "Clé {prefix} {suffix}",
+			"unknown": "Clé n°{id}",
+			"pickup": "Vous avez trouvé la {key} !",
+			"lockedDoor": "Cette porte est verrouillée. Il vous faut la {key}.",
+			"prefixes": {
+				"p0": "des Arbres",
+				"p1": "des Calmars",
+				"p2": "des Dragons",
+				"p3": "des Kabukis",
+				"p4": "des Roméo",
+				"p5": "des Gobelins",
+				"p6": "des Anges",
+				"p7": "des Roncivores"
+			},
+			"suffixes": {
+				"s0": "Magiques",
+				"s1": "Enchantés",
+				"s2": "Morts",
+				"s3": "en Plastique",
+				"s4": "Étincelants",
+				"s5": "Rouges",
+				"s6": "Maquillés",
+				"s7": "en Carton"
+			}
+		},
+		"goldPickup": "Vous avez récupéré {amount} pièces d'or !",
+		"goldEmpty": "Ce trésor ne contient plus de pièces d’or.",
+		"missingDoorKey": "Cette porte est verrouillée. Il faut trouver sa clé dans le donjon.",
+		"moveRefused": "Déplacement refusé par le serveur.",
+		"scenarioProcessed": "Événement traité par le serveur.",
+		"controls": "Commandes originales du donjon",
+		"irmaRestore": "Utiliser une potion d’Irma pour restaurer les actions du groupe",
+		"irmaRestoreShort": "Restaurer les actions du groupe",
+		"irmaPotion": "Potion d’Irma",
+		"north": "Nord",
+		"south": "Sud",
+		"east": "Est",
+		"west": "Ouest",
+		"stairUp": "Escalier vers le haut",
+		"stairDown": "Escalier vers le bas",
+		"level": "Niveau -{level}",
+		"continue": "Continuer",
+		"discovery": "Découverte",
+		"encounterTitle": "Rencontre",
+		"readCollect": "Lire / récupérer",
+		"fight": "Combattre",
+		"later": "Plus tard",
+		"serverError": "Serveur : {code}",
+		"requestFailed": "Requête impossible ({status}).",
+		"network": "réseau",
+		"unexpectedError": "Erreur inattendue.",
+		"viewOutdated": "La vue du donjon a changé pendant le chargement : actualise pour synchroniser.",
+		"sessionOutdated": "La session a changé pendant le déplacement : une actualisation est nécessaire.",
+		"actionUnavailable": "Une action reste indisponible : vérifiez les Dinoz du groupe.",
+		"irmaUsedOne": "Vous avez utilisé {count} potion d’Irma pour votre groupe de Dinoz.",
+		"irmaUsedMany": "Vous avez utilisé {count} potions d’Irma pour votre groupe de Dinoz."
 	}
 }

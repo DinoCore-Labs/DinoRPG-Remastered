@@ -20,6 +20,12 @@ import { actualPlace, getFollowableDinoz } from '@dinorpg/core/utils/dinozUtils.
 import { Dinoz, DinozConcentrationState, DinozSkills, DinozState, DinozStatus } from '../../../../prisma/index.js';
 import gameConfig from '../../config/game.config.js';
 import { listAvailableDialogs } from '../../Dialog/Service/dialog.service.js';
+import {
+	assertMtDungeonEntry,
+	getMtDungeonArchive,
+	MtDungeonEntryError,
+	resolveMtDungeonAtLeaderPlace
+} from '../../Dungeon/Service/mtDungeonRuntime.service.js'; // STEP_20P_ORIGINAL_MT_ACTIONS
 import { getSpecificSecret } from '../../jobs/controller/getSpecificSecret.js';
 import { type DinozMissionState, resolveCurrentMission } from '../../Mission/Service/missionCurrent.service.js';
 import { prisma } from '../../prisma.js';
@@ -199,6 +205,12 @@ export async function getAvailableActions(
 	preloadedContext: AvailableActionsPreloadedContext = {}
 ) {
 	const availableActions: ActionFiche[] = [];
+	// MT: all members of a run see only the map action; no ordinary actions.
+	const activeRun = await prisma.mtDungeonRun.findFirst({
+		where: { userId: user.id, leaderDinozId: dinoz.leaderId ?? dinoz.id },
+		select: { leaderDinozId: true }
+	});
+	if (activeRun) return [{ ...actionList[Action.DUNGEON], prop: activeRun.leaderDinozId }];
 
 	const concentration = await prisma.dinozConcentration.findUnique({
 		where: {
@@ -546,6 +558,17 @@ export async function getAvailableActions(
 		);
 		if (isDojoUnlocked) {
 			pushUniqueAction(availableActions, actionList[Action.BUILD_DOJO]);
+		}
+	}
+	// The authoritative start endpoint resolves again under the gameplay lock.
+	if (dinoz.leaderId === null && dinoz.life > 0 && dinoz.state === null) {
+		try {
+			const identity = { userId: user.id, leaderDinozId: dinoz.id };
+			const dungeonId = await resolveMtDungeonAtLeaderPlace(getMtDungeonArchive(), identity);
+			await assertMtDungeonEntry(getMtDungeonArchive(), identity, `${dungeonId}_0`);
+			pushUniqueAction(availableActions, actionList[Action.DUNGEON_ENTER]);
+		} catch (error) {
+			if (!(error instanceof MtDungeonEntryError)) throw error;
 		}
 	}
 	return availableActions;
