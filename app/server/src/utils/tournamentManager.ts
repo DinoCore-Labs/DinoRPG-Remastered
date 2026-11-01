@@ -29,7 +29,6 @@ import { FightOutcome } from '@dinorpg/core/models/fight/fightResult.js';
 import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
 import { NewsType } from '@dinorpg/core/models/news/news.js';
 import { NotificationType } from '@dinorpg/core/models/notif/notifType.js';
-import { Reward } from '@dinorpg/core/models/rewards/rewardList.js';
 import { Skill } from '@dinorpg/core/models/skills/skillList.js';
 
 import { getDinozForDojoFight } from '../Dojo/Service/dojoTest.service.js';
@@ -42,6 +41,7 @@ import { newNotif } from '../Notification/Service/notification.service.js';
 import { prisma } from '../prisma.js';
 import { addMoney } from '../User/Controller/money.controller.js';
 import type { FightRules } from '../utils/fight/fight.mapper.js';
+import { grantTournamentPrize } from './tournamentRewards.js';
 
 export function generateTournamentFormat(): {
 	teamSize: number;
@@ -408,6 +408,23 @@ export class TournamentManager {
 
 		const tournamentStep = FINALS_STEP_OFFSET + finalsRound;
 
+		// A failed reward payout must not replay a final already archived on a previous job run.
+		const archivedMatches = await prismaClient.fightArchive.findMany({
+			where: { tournamentId: tournament.id, tournamentStep },
+			select: { metadata: true }
+		});
+		const playedMatchNumbers = new Set(
+			archivedMatches.flatMap(fight => {
+				if (!fight.metadata) return [];
+				try {
+					const matchNumber = (JSON.parse(fight.metadata) as MetaData).matchNumber;
+					return typeof matchNumber === 'number' ? [matchNumber] : [];
+				} catch {
+					return [];
+				}
+			})
+		);
+
 		const dbTournament = await prismaClient.tournament.findUniqueOrThrow({
 			where: { id: tournament.id },
 			select: { poison: true, itemsAllowed: true }
@@ -433,6 +450,7 @@ export class TournamentManager {
 			const scheduledFor = new Date();
 
 			for (let i = 0; i < 16; i++) {
+				if (playedMatchNumbers.has(i)) continue;
 				const leftTeam = seededTeams.find(t => t.finalSeed === i + 1);
 				const rightTeam = seededTeams.find(t => t.finalSeed === 32 - i);
 
@@ -490,6 +508,7 @@ export class TournamentManager {
 		const scheduledFor = new Date();
 
 		for (let i = 0; i < numMatches; i++) {
+			if (playedMatchNumbers.has(i)) continue;
 			const left = getWinnerOfPrevMatch(2 * i);
 			const right = getWinnerOfPrevMatch(2 * i + 1);
 
@@ -1240,116 +1259,16 @@ export class TournamentManager {
 			if (user) users.push(user.userId);
 		}
 
-		let index = 1;
-		const promises: Promise<unknown>[] = [];
+		// Each player payment is committed atomically and exactly once per tournament.
+		// A retry resumes missing payments without granting duplicate gold, items or notifications.
+		const rewardedUsers = new Set<string>();
+		let rank = 0;
 		for (const userId of users) {
-			if (index === 1) {
-				await prismaClient.userRewards.create({
-					data: { userId: userId, rewardId: Reward.TID1 }
-				});
-				promises.push(addItemToInventory(userId, Item.TOUFUFU_BABY_RARE, 1));
-				promises.push(addItemToInventory(userId, Item.BOX_LEGENDARY, 1));
-				promises.push(addMoney(userId, Math.floor(tournament.cashPrice * 0.15)));
-				promises.push(
-					newNotif(
-						userId,
-						NotificationType.NEW_REWARD,
-						JSON.stringify([
-							{ rewardType: RewardEnum.EPIC, value: Reward.TID1 },
-							{ rewardType: RewardEnum.GOLD, value: Math.floor(tournament.cashPrice * 0.15) },
-							{ rewardType: RewardEnum.ITEM, value: Item.TOUFUFU_BABY_RARE, quantity: 1 },
-							{ rewardType: RewardEnum.ITEM, value: Item.BOX_LEGENDARY, quantity: 1 }
-						])
-					)
-				);
-			} else if (index === 2) {
-				promises.push(addItemToInventory(userId, Item.TOUFUFU_BABY, 1));
-				promises.push(addItemToInventory(userId, Item.BOX_LEGENDARY, 1));
-				promises.push(addMoney(userId, Math.floor(tournament.cashPrice * 0.1)));
-				promises.push(
-					newNotif(
-						userId,
-						NotificationType.NEW_REWARD,
-						JSON.stringify([
-							{ rewardType: RewardEnum.GOLD, value: Math.floor(tournament.cashPrice * 0.1) },
-							{ rewardType: RewardEnum.ITEM, value: Item.TOUFUFU_BABY, quantity: 1 },
-							{ rewardType: RewardEnum.ITEM, value: Item.BOX_LEGENDARY, quantity: 1 }
-						])
-					)
-				);
-			} else if (index <= 4) {
-				promises.push(addItemToInventory(userId, Item.TOUFUFU_BABY, 1));
-				promises.push(addItemToInventory(userId, Item.BOX_EPIC, 1));
-				promises.push(addMoney(userId, Math.floor(tournament.cashPrice * 0.075)));
-				promises.push(
-					newNotif(
-						userId,
-						NotificationType.NEW_REWARD,
-						JSON.stringify([
-							{ rewardType: RewardEnum.GOLD, value: Math.floor(tournament.cashPrice * 0.075) },
-							{ rewardType: RewardEnum.ITEM, value: Item.TOUFUFU_BABY, quantity: 1 },
-							{ rewardType: RewardEnum.ITEM, value: Item.BOX_EPIC, quantity: 1 }
-						])
-					)
-				);
-			} else if (index <= 8) {
-				promises.push(addItemToInventory(userId, Item.BOX_RARE, 1));
-				promises.push(addMoney(userId, Math.floor(tournament.cashPrice * 0.04)));
-				promises.push(
-					newNotif(
-						userId,
-						NotificationType.NEW_REWARD,
-						JSON.stringify([
-							{ rewardType: RewardEnum.GOLD, value: Math.floor(tournament.cashPrice * 0.04) },
-							{ rewardType: RewardEnum.ITEM, value: Item.BOX_RARE, quantity: 1 }
-						])
-					)
-				);
-			} else if (index <= 16) {
-				promises.push(addItemToInventory(userId, Item.BOX_RARE, 1));
-				promises.push(addMoney(userId, Math.floor(tournament.cashPrice * 0.02)));
-				promises.push(
-					newNotif(
-						userId,
-						NotificationType.NEW_REWARD,
-						JSON.stringify([
-							{ rewardType: RewardEnum.GOLD, value: Math.floor(tournament.cashPrice * 0.02) },
-							{ rewardType: RewardEnum.ITEM, value: Item.BOX_RARE, quantity: 1 }
-						])
-					)
-				);
-			} else if (index <= 32) {
-				promises.push(addMoney(userId, Math.floor(tournament.cashPrice * 0.01)));
-				promises.push(
-					newNotif(
-						userId,
-						NotificationType.NEW_REWARD,
-						JSON.stringify([{ rewardType: RewardEnum.GOLD, value: Math.floor(tournament.cashPrice * 0.01) }])
-					)
-				);
-			} else if (index <= 48) {
-				promises.push(addMoney(userId, Math.floor(tournament.cashPrice * 0.0075)));
-				promises.push(
-					newNotif(
-						userId,
-						NotificationType.NEW_REWARD,
-						JSON.stringify([{ rewardType: RewardEnum.GOLD, value: Math.floor(tournament.cashPrice * 0.0075) }])
-					)
-				);
-			} else {
-				promises.push(addMoney(userId, Math.floor(tournament.cashPrice * 0.00625)));
-				promises.push(
-					newNotif(
-						userId,
-						NotificationType.NEW_REWARD,
-						JSON.stringify([{ rewardType: RewardEnum.GOLD, value: Math.floor(tournament.cashPrice * 0.00625) }])
-					)
-				);
-			}
-			index++;
+			if (rewardedUsers.has(userId)) continue;
+			rewardedUsers.add(userId);
+			rank++;
+			await grantTournamentPrize({ tournamentId, userId, rank, cashPrice: tournament.cashPrice }, prismaClient);
 		}
-
-		await Promise.all(promises);
 	}
 }
 
