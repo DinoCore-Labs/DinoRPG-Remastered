@@ -7,6 +7,14 @@ import { distributeChristmasRewards } from '../../Events/Service/eventChristmasR
 import { getGameEventDateRange } from '../../GameEvent/Service/gameEvent.service.js';
 import { newsService } from '../../News/Service/news.service.js';
 
+// Seuls ces événements publient des actualités automatiquement.
+// Les autres (Halloween, Saint-Valentin, 1er avril) sont des thèmes visuels.
+const AUTOMATIC_NEWS_TYPES: Partial<Record<GameEvent, NewsType>> = {
+	[GameEvent.BIRTHDAY]: NewsType.EVENT_BIRTHDAY,
+	[GameEvent.CHRISTMAS]: NewsType.EVENT_CHRISTMAS,
+	[GameEvent.EASTER]: NewsType.EVENT_EASTER
+};
+
 export async function checkEventNews() {
 	const now = new Date();
 	const tz = gameConfig.general.gameTimeZone ?? 'UTC';
@@ -21,6 +29,9 @@ export async function checkEventNews() {
 	const month = parseInt(parts.find(p => p.type === 'month')!.value, 10);
 	const day = parseInt(parts.find(p => p.type === 'day')!.value, 10);
 	for (const event of gameConfig.events) {
+		const newsType = AUTOMATIC_NEWS_TYPES[event.event];
+		if (!newsType) continue;
+
 		const eventNameLower = event.event.toLowerCase();
 		const range = getGameEventDateRange(event, now);
 		if (!range) {
@@ -30,7 +41,6 @@ export async function checkEventNews() {
 		const isStartDay = range.start.year === year && range.start.month === month && range.start.day === day;
 		const isEndDay = range.end.year === year && range.end.month === month && range.end.day === day;
 		if (isStartDay) {
-			const newsType = (NewsType as any)[`EVENT_${event.event}`] || NewsType.ANNOUNCE;
 			const titleKey = `news.event.${eventNameLower}.start.title`;
 			const excerptKey = `news.event.${eventNameLower}.start.excerpt`;
 			const contentKey = `news.event.${eventNameLower}.start.content`;
@@ -74,7 +84,6 @@ export async function checkEventNews() {
 		 * There is no end ranking/news associated with Madame Urma.
 		 */
 		if (isEndDay && event.event !== GameEvent.EASTER && event.event !== GameEvent.BIRTHDAY) {
-			const newsType = (NewsType as any)[`EVENT_${event.event}`] || NewsType.ANNOUNCE;
 			const titleKey = `news.event.${eventNameLower}.end.title`;
 			const excerptKey = `news.event.${eventNameLower}.end.excerpt`;
 			const contentKey = `news.event.${eventNameLower}.end.content`;
