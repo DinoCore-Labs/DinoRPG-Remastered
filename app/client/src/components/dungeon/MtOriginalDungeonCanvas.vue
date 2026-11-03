@@ -680,123 +680,74 @@ onBeforeUnmount(() => {
 <style scoped>
 .mt-dungeon-renderer {
 	width: 100%;
-
 	height: 100%;
-
 	position: relative;
 }
-
 .mt-dungeon-renderer__stage {
 	width: 100%;
-
 	aspect-ratio: 1;
-
 	overflow: hidden;
 }
-
 .mt-dungeon-renderer__stage :deep(canvas) {
 	display: block;
-
 	width: 100%;
-
 	height: auto;
-
 	image-rendering: pixelated;
 }
-
 .mt-dungeon-renderer__tools {
 	position: absolute;
-
 	top: 3px;
-
 	right: 4px;
-
 	font-size: 0.65rem;
-
 	color: #f9e3be;
-
 	background: #211c19d9;
-
 	padding: 2px 4px;
-
 	border-radius: 3px;
 }
-
 .mt-dungeon-renderer__tools label {
 	cursor: pointer;
 }
-
 .mt-dungeon-renderer__diagnostics {
 	position: absolute;
-
 	left: 3px;
-
 	bottom: 3px;
-
 	right: 3px;
-
 	color: #f9e3be;
-
 	background: #211c19df;
-
 	font-size: 0.66rem;
-
 	line-height: 1.3;
-
 	max-height: 7rem;
-
 	overflow: auto;
 }
-
 .mt-dungeon-renderer__diagnostics ul {
 	padding-left: 1.2rem;
 }
-
 .mt-dungeon-renderer__calibration {
 	position: absolute;
-
 	top: 26px;
-
 	right: 4px;
-
 	z-index: 3;
-
 	background: #211c19ef;
-
 	color: #f9e3be;
-
 	padding: 5px;
-
 	font-size: 0.65rem;
-
 	display: flex;
-
 	flex-direction: column;
-
 	gap: 3px;
-
 	border-radius: 3px;
-
 	max-width: 220px;
 }
-
 .mt-dungeon-renderer__calibration select {
 	font-size: 0.72rem;
-
 	max-width: 205px;
 }
-
 .mt-dungeon-renderer__nudge {
 	display: flex;
-
 	gap: 2px;
 }
-
 .mt-dungeon-renderer__nudge button {
 	min-width: 28px;
-
 	padding: 2px;
-
 	cursor: pointer;
 }
 </style>
