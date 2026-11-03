@@ -3,6 +3,7 @@
 		<section
 			class="mt-msgbox"
 			:class="`mt-msgbox--${variant}`"
+			@click="confirmStoryOnFrame"
 			role="dialog"
 			:aria-modal="variant === 'dialog' ? 'true' : 'false'"
 			:aria-label="title || text"
@@ -27,6 +28,12 @@
 				>
 					<span class="mt-msgbox__text">{{ text }}</span>
 				</button>
+				<template v-else-if="variant === 'story'">
+					<button type="button" class="mt-msgbox__story-button" :disabled="busy" @click.stop="emit('confirm')">
+						<span v-if="title" class="mt-msgbox__title mt-msgbox__story-title">{{ title }}</span>
+						<span class="mt-msgbox__text">{{ text }}</span>
+					</button>
+				</template>
 				<template v-else>
 					<h3 v-if="title" class="mt-msgbox__title">{{ title }}</h3>
 					<p class="mt-msgbox__text">{{ text }}</p>
@@ -60,7 +67,7 @@ const props = withDefaults(
 		confirmLabel: string;
 		cancelLabel?: string;
 		busy?: boolean;
-		variant?: 'notice' | 'dialog';
+		variant?: 'notice' | 'dialog' | 'story';
 		placement?: 'screen' | 'viewport';
 		icon?: string | null;
 	}>(),
@@ -72,6 +79,10 @@ const iconUrl = computed(() => {
 });
 const emit = defineEmits<{ confirm: []; close: [] }>();
 const pieces = ['topleft', 'top', 'topright', 'left', 'right', 'bottomleft', 'bottom', 'bottomright'] as const;
+
+function confirmStoryOnFrame(): void {
+	if (props.variant === 'story' && !props.busy) emit('confirm');
+}
 
 function dismissOutside(): void {
 	// Narrative rewards must never be settled by a click outside the window.
@@ -223,12 +234,31 @@ function dismissOutside(): void {
 	cursor: pointer;
 }
 .mt-msgbox__notice-button:focus-visible,
+.mt-msgbox__story-button:focus-visible,
 .mt-msgbox__actions button:focus-visible {
 	outline: 2px solid #ffe2a0;
 	outline-offset: 2px;
 }
 .mt-msgbox__notice-button:disabled {
 	cursor: progress;
+}
+.mt-msgbox__story-button {
+	display: block;
+	width: 100%;
+	padding: 0;
+	border: 0;
+	background: transparent;
+	color: inherit;
+	font: inherit;
+	text-align: center;
+	cursor: pointer;
+}
+.mt-msgbox__story-button:disabled {
+	cursor: progress;
+}
+.mt-msgbox__story-title,
+.mt-msgbox__story-button .mt-msgbox__text {
+	display: block;
 }
 .mt-msgbox__title {
 	margin: 0 0 7px;
