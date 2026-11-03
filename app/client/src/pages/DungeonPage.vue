@@ -8,7 +8,7 @@
 			:variant="
 				activeMessage.kind === 'entry' || activeMessage.kind === 'irma' || activeMessage.kind === 'pickup'
 					? 'notice'
-					: 'dialog'
+					: 'story'
 			"
 			:title="activeMessage.title"
 			:text="activeMessage.text"
@@ -20,7 +20,7 @@
 			@close="closeMessage"
 		/>
 		<p v-if="errorMessage" class="mt-test__error" role="alert">{{ errorMessage }}</p>
-		<p v-if="notice" class="mt-test__notice" role="status">{{ notice }}</p>
+
 		<p v-if="loading && !session">{{ $t('dungeon.loading') }}</p>
 		<section v-if="!session && !loading" class="mt-test__panel">
 			<p>{{ $t('dungeon.enterFromWorld') }}</p>
@@ -54,7 +54,7 @@
 					:variant="
 						activeMessage.kind === 'entry' || activeMessage.kind === 'irma' || activeMessage.kind === 'pickup'
 							? 'notice'
-							: 'dialog'
+							: 'story'
 					"
 					:title="activeMessage.title"
 					:text="activeMessage.text"
@@ -156,6 +156,7 @@ import MtOriginalDungeonCanvas from '../components/dungeon/MtOriginalDungeonCanv
 import { getDungeonSkin } from '@dinorpg/core/models/dungeon/dungeon.skins.js';
 import { MT_DUNGEON_DEFINITIONS } from '@dinorpg/core/models/dungeon/dungeon.mtData.js';
 import MtDungeonMessageBox from '../components/dungeon/MtDungeonMessageBox.vue';
+import { mtDungeonScenarioMessageIcon } from '../components/dungeon/mtDungeonScenarioMessageIcon.js';
 import { mtDungeonKeyPickupMessage, mtDungeonLockedDoorMessage } from '../components/dungeon/mtDungeonKeyNames.js';
 import { mtDungeonBoundaryAction } from '../components/dungeon/mtDungeonBoundaryAction.js';
 import { advanceMtTrail, mtFollowerPositions, type MtTrailPoint } from '../components/dungeon/dungeonPartyTrail.js';
@@ -184,13 +185,13 @@ const encounter = ref<MtDungeonEncounter | null>(null);
 const journalEntries = ref<MtDungeonJournalEntry[]>([]);
 const journalError = ref('');
 const errorMessage = ref('');
-const notice = ref('');
+
 const irmaMessage = ref<string | null>(null);
 const pickupMessage = ref<string | null>(null);
 const pickupIcon = ref<string | null>(null);
 const originalEntryText = ref<string | null>(null);
 const entryDismissed = ref(false);
-const scenarioDismissedRevision = ref('');
+
 const loading = ref(true);
 const busy = ref(false);
 const visualMembers = ref<{ id: number; display: string; life: number; fight: boolean; remaining: number }[]>([]);
@@ -315,16 +316,13 @@ const activeMessage = computed((): MtNarrative | null => {
 	const run = session.value;
 	const current = encounter.value;
 	if (run?.pending?.kind === 'scenario' && current?.text) {
-		const key = run.mapId + ':' + run.revision;
-		if (scenarioDismissedRevision.value === key) return null;
 		if (current.kind === 'scenario') {
 			return {
 				kind: 'scenario',
 				title: t('dungeon.discovery'),
 				text: current.text,
-				icon: current.messageIcon ?? null,
-				confirmLabel: t('dungeon.readCollect'),
-				cancelLabel: t('dungeon.later')
+				icon: mtDungeonScenarioMessageIcon(run.mapId, run.pending.itemValue, current.messageIcon),
+				confirmLabel: t('dungeon.readCollect')
 			};
 		}
 		if (current.kind === 'scenario-combat' && current.status === 'ready-for-combat') {
@@ -332,9 +330,8 @@ const activeMessage = computed((): MtNarrative | null => {
 				kind: 'scenario-combat',
 				title: t('dungeon.encounterTitle'),
 				text: current.text,
-				icon: current.messageIcon ?? null,
-				confirmLabel: t('dungeon.fight'),
-				cancelLabel: t('dungeon.later')
+				icon: mtDungeonScenarioMessageIcon(run.mapId, run.pending.itemValue, current.messageIcon),
+				confirmLabel: t('dungeon.fight')
 			};
 		}
 	}
@@ -348,8 +345,6 @@ function closeMessage(): void {
 	}
 	if (kind === 'irma') irmaMessage.value = null;
 	if (kind === 'entry') entryDismissed.value = true;
-	if ((kind === 'scenario' || kind === 'scenario-combat') && session.value)
-		scenarioDismissedRevision.value = session.value.mapId + ':' + session.value.revision;
 }
 function confirmMessage(): void {
 	const kind = activeMessage.value?.kind;
@@ -359,14 +354,8 @@ function confirmMessage(): void {
 	}
 	if (kind === 'irma') irmaMessage.value = null;
 	if (kind === 'entry') entryDismissed.value = true;
-	if (kind === 'scenario') {
-		closeMessage();
-		resolveScenario();
-	}
-	if (kind === 'scenario-combat') {
-		closeMessage();
-		fight();
-	}
+	if (kind === 'scenario') resolveScenario();
+	if (kind === 'scenario-combat') fight();
 }
 async function showOriginalEntryText(): Promise<void> {
 	try {
@@ -463,7 +452,7 @@ async function execute(action: () => Promise<void>): Promise<void> {
 	if (busy.value) return;
 	busy.value = true;
 	errorMessage.value = '';
-	notice.value = '';
+
 	try {
 		await action();
 	} catch (error) {
@@ -488,7 +477,6 @@ function restoreDungeonActions(): void {
 		// Confirmed server action: the MT notice only acknowledges its result.
 		const n = paid.used;
 		irmaMessage.value = t(n === 1 ? 'dungeon.irmaUsedOne' : 'dungeon.irmaUsedMany', { count: n });
-		notice.value = '';
 	});
 }
 function move(direction: 'north' | 'south' | 'west' | 'east' | 'up' | 'down') {
@@ -509,7 +497,7 @@ function move(direction: 'north' | 'south' | 'west' | 'east' | 'up' | 'down') {
 		const command: DungeonCommand = { ...previous.position, dx, dy, dl };
 		const result = await MtDungeonService.move(leaderId, previous.revision, command);
 		if (!result.ok) {
-			notice.value = t('dungeon.moveRefused');
+			errorMessage.value = t('dungeon.moveRefused');
 			return;
 		}
 		if (result.blockedDoor === 'missing-key') {
@@ -601,7 +589,6 @@ function resolveScenario() {
 			Math.max(0, visualMembers.value.length - 1)
 		);
 		await afterMutation(outcome.session);
-		notice.value = outcome.message ?? t('dungeon.scenarioProcessed');
 	});
 }
 function fight() {
@@ -857,7 +844,6 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKeyDown));
 .mt-test__panel h3 {
 	margin: 0.3rem 0;
 }
-.mt-test__notice,
 .mt-test__error {
 	padding: 0.5rem;
 	border: 1px solid #997452;

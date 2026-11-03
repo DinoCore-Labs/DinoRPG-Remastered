@@ -46,6 +46,29 @@ describe('Original MT message box (native msgbox sprites)', () => {
 		expect(wrapper.emitted('confirm')).toHaveLength(1);
 	});
 
+	it('renders long scenario text and its icon without a button footer', async () => {
+		const wrapper = mount(MtDungeonMessageBox, {
+			props: { ...props, variant: 'story', placement: 'viewport', icon: 'scroll' }
+		});
+		expect(wrapper.get('.mt-msgbox__tab').attributes('src')).toBe('/dungeon/mt/item_scroll.png');
+		expect(wrapper.get('.mt-msgbox__story-button').text()).toContain(props.text);
+		expect(wrapper.get('.mt-msgbox__title').text()).toBe(props.title);
+		expect(wrapper.find('.mt-msgbox__actions').exists()).toBe(false);
+		await wrapper.get('.mt-msgbox__story-button').trigger('click');
+		expect(wrapper.emitted('confirm')).toHaveLength(1);
+		await wrapper.get('.mt-msgbox').trigger('click');
+		expect(wrapper.emitted('confirm')).toHaveLength(2);
+	});
+
+	it('does not settle a scenario while the request is busy', async () => {
+		const wrapper = mount(MtDungeonMessageBox, {
+			props: { ...props, variant: 'story', busy: true }
+		});
+		await wrapper.get('.mt-msgbox__story-button').trigger('click');
+		await wrapper.get('.mt-msgbox').trigger('click');
+		expect(wrapper.emitted('confirm')).toBeUndefined();
+	});
+
 	it('allows an explicit cancel without confirming a scenario', async () => {
 		const wrapper = mount(MtDungeonMessageBox, { props: { ...props, cancelLabel: 'Plus tard' } });
 		await wrapper.findAll('.mt-msgbox__actions button')[1]!.trigger('click');
