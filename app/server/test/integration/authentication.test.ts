@@ -118,6 +118,8 @@ describe('authentication', () => {
 			id: user.id,
 			name: user.name,
 			role: 'PLAYER',
+			keepSeedReincarnationCount: 0,
+			maxKeepSeedReincarnations: 5,
 			gameRules: {
 				currentVersion: GAME_RULES_VERSION,
 				acceptedVersion: GAME_RULES_VERSION,

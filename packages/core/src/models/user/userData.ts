@@ -17,4 +17,6 @@ export interface UserData {
 	gameRules: GameRulesAcceptance;
 	lastLogin?: Date | string;
 	userEventTrackings?: { total: number; daily: number }[];
+	keepSeedReincarnationCount: number;
+	maxKeepSeedReincarnations: number;
 }

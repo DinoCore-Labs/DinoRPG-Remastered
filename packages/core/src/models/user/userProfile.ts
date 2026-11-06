@@ -21,6 +21,8 @@ export interface UserProfile {
 	rewards: Reward[];
 	stats: UserStats[];
 	completion: number;
+	keepSeedReincarnationCount?: number;
+	maxKeepSeedReincarnations?: number;
 }
 
 export interface UserProfileUpdate {

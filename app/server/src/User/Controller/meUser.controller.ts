@@ -9,6 +9,7 @@ import { FastifyReply, FastifyRequest } from 'fastify';
 
 import { GameLogType } from '../../../../prisma/index.js';
 import { ACCESS_TOKEN_COOKIE, authCookieOptions } from '../../config/cookie.js';
+import gameConfig from '../../config/game.config.js';
 import { getUserMaxDinoz } from '../../Dinoz/Controller/getActiveDinoz.js';
 import { getActiveGameEvents } from '../../GameEvent/Service/gameEvent.service.js';
 import { safeCreateGameLog } from '../../Gamelog/Controller/gamelog.controller.js';
@@ -180,6 +181,7 @@ export async function meUser(req: FastifyRequest, reply: FastifyReply) {
 				},
 				rewards: true,
 				discoveredSkills: true,
+				keepSeedReincarnationCount: true,
 				gameRulesAcceptedVersion: true,
 				gameRulesAcceptedAt: true
 			}
@@ -252,6 +254,8 @@ export async function meUser(req: FastifyRequest, reply: FastifyReply) {
 			),
 			rewards: user.rewards.map(reward => reward.rewardId),
 			discoveredSkills: user.discoveredSkills,
+			keepSeedReincarnationCount: user.keepSeedReincarnationCount,
+			maxKeepSeedReincarnations: gameConfig.dinoz.maxKeepSeedReincarnations,
 			gameRules: {
 				currentVersion: GAME_RULES_VERSION,
 				acceptedVersion: user.gameRulesAcceptedVersion,
