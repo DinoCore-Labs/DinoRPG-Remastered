@@ -20,7 +20,9 @@ export const userStore = defineStore('userStore', {
 		discoveredSkills: [],
 		clanId: null,
 		dojoId: null,
-		gameRules: null
+		gameRules: null,
+		keepSeedReincarnationCount: 0,
+		maxKeepSeedReincarnations: 5
 	}),
 	getters: {
 		isLogged: state => !!state.id,
@@ -46,7 +48,10 @@ export const userStore = defineStore('userStore', {
 		},
 		hasDiscoveredSkill: state => (skillId: number) => state.discoveredSkills.includes(skillId),
 		canAccessSkillsPage: state => state.rewards.includes(Reward.PAC),
-		mustAcceptGameRules: state => state.gameRules?.required === true
+		mustAcceptGameRules: state => state.gameRules?.required === true,
+		remainingKeepSeedReincarnations: (state: UserStore) =>
+			Math.max(0, state.maxKeepSeedReincarnations - state.keepSeedReincarnationCount),
+		hasReachedKeepSeedLimit: (state: UserStore) => state.keepSeedReincarnationCount >= state.maxKeepSeedReincarnations
 	},
 	actions: {
 		setUser(data: UserData) {
@@ -61,6 +66,8 @@ export const userStore = defineStore('userStore', {
 			this.clanId = data.clanId ?? null;
 			this.dojoId = data.dojoId ?? null;
 			this.gameRules = data.gameRules;
+			this.keepSeedReincarnationCount = data.keepSeedReincarnationCount ?? 0;
+			this.maxKeepSeedReincarnations = data.maxKeepSeedReincarnations ?? 5;
 		},
 		setGold(gold: number) {
 			this.gold = gold;
@@ -102,6 +109,9 @@ export const userStore = defineStore('userStore', {
 		setGameRules(gameRules: GameRulesAcceptance) {
 			this.gameRules = gameRules;
 		},
+		incrementKeepSeedReincarnationCount() {
+			this.keepSeedReincarnationCount++;
+		},
 		clearUser() {
 			this.id = null;
 			this.name = null;
@@ -117,6 +127,8 @@ export const userStore = defineStore('userStore', {
 			this.clanId = null;
 			this.dojoId = null;
 			this.gameRules = null;
+			this.keepSeedReincarnationCount = 0;
+			this.maxKeepSeedReincarnations = 5;
 		}
 	},
 	persist: {

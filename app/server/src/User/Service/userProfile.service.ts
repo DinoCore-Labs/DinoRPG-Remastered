@@ -1,5 +1,6 @@
 import { custom } from 'zod';
 
+import gameConfig from '../../config/game.config.js';
 import { prisma } from '../../prisma.js';
 import { toDinozPublicFiche } from '../../utils/dinoz/dinozFiche.mapper.js';
 import { UpdateUserProfileInput } from '../Schema/user.schema.js';
@@ -69,7 +70,9 @@ export async function getOwnProfileService(userId: string) {
 			});
 		}),
 		rewards: user.rewards.map(r => r.rewardId),
-		stats: user.statsTracking.map(s => ({ stat: s.stat, quantity: s.quantity }))
+		stats: user.statsTracking.map(s => ({ stat: s.stat, quantity: s.quantity })),
+		keepSeedReincarnationCount: user.keepSeedReincarnationCount,
+		maxKeepSeedReincarnations: gameConfig.dinoz.maxKeepSeedReincarnations
 	};
 }
 
@@ -138,7 +141,9 @@ export async function getUserProfileService(id: string) {
 			});
 		}),
 		rewards: user.rewards.map(r => r.rewardId),
-		stats: user.statsTracking.map(s => ({ stat: s.stat, quantity: s.quantity }))
+		stats: user.statsTracking.map(s => ({ stat: s.stat, quantity: s.quantity })),
+		keepSeedReincarnationCount: user.keepSeedReincarnationCount,
+		maxKeepSeedReincarnations: gameConfig.dinoz.maxKeepSeedReincarnations
 	};
 }
 

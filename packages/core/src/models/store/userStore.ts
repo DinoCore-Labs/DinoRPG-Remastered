@@ -16,4 +16,6 @@ export interface UserStore {
 	clanId: number | null;
 	dojoId: string | null;
 	gameRules: GameRulesAcceptance | null;
+	keepSeedReincarnationCount: number;
+	maxKeepSeedReincarnations: number;
 }

@@ -108,18 +108,16 @@ async function reincarnateUnlocked(req: ReincarnateRequest) {
 	}
 	if (keepSeed) {
 		await removeMoney(authed.id, Math.round(race.price * dinoz.level ** 0.5));
-		if (user.role !== Role.ADMIN) {
-			await prisma.user.update({
-				where: {
-					id: authed.id
-				},
-				data: {
-					keepSeedReincarnationCount: {
-						increment: 1
-					}
+		await prisma.user.update({
+			where: {
+				id: authed.id
+			},
+			data: {
+				keepSeedReincarnationCount: {
+					increment: 1
 				}
-			});
-		}
+			}
+		});
 	}
 	/*
 	 * À partir d'ici la réincarnation
