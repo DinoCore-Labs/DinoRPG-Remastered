@@ -65,6 +65,12 @@
 					{{ profile.completion.toFixed(2) }}
 					%
 				</dd>
+				<dt v-if="isMyAccount()">
+					{{ $t(`accountPage.keepSeedReincarnation`) }}
+				</dt>
+				<dd v-if="isMyAccount()">
+					{{ keepSeedReincarnationDisplay }}
+				</dd>
 			</dl>
 			<div class="profilContent" v-if="!isEditOn">
 				<div class="contentTexte">{{ customText }}</div>
@@ -340,6 +346,11 @@ export default defineComponent({
 	computed: {
 		canEditProfileDescription(): boolean {
 			return this.isMyAccount() && this.uStore.canEditProfileDescription;
+		},
+		keepSeedReincarnationDisplay(): string {
+			const count = this.profile.keepSeedReincarnationCount ?? this.uStore.keepSeedReincarnationCount ?? 0;
+			const max = this.profile.maxKeepSeedReincarnations ?? this.uStore.maxKeepSeedReincarnations ?? 5;
+			return `${count} / ${max}`;
 		}
 	},
 	watch: {

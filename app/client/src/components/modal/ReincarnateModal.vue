@@ -29,13 +29,33 @@
 							"
 						/>
 					</div>
-					<a class="button" @click="reincarnate(true)">{{ $t(`reincarnate.choice1.action`) }}</a>
+					<a
+						class="button"
+						:class="{ 'button--disabled': isKeepSeedLimitReached }"
+						@click="!isKeepSeedLimitReached && reincarnate(true)"
+					>
+						{{ $t(`reincarnate.choice1.action`) }}
+					</a>
 					<p>
 						{{ $t(`reincarnate.choice1.explanation`) }}
 					</p>
 					<ul>
 						<li>{{ $t(`reincarnate.choice1.list1`) }}</li>
 						<li>{{ $t(`reincarnate.choice1.list2`) }}</li>
+						<li
+							:class="{ 'quota-limit': isKeepSeedLimitReached }"
+							v-html="
+								formatContent(
+									isKeepSeedLimitReached
+										? $t('reincarnate.choice1.limitReached', { max: maxKeepSeed })
+										: $t('reincarnate.choice1.quota', {
+												count: keepSeedCount,
+												max: maxKeepSeed,
+												remaining: remainingKeepSeed
+											})
+								)
+							"
+						/>
 					</ul>
 					<p></p>
 				</div>
@@ -66,6 +86,7 @@ import { errorHandler } from '../../utils/errorHandler.js';
 import eventBus from '../../events/index.js';
 import { getImgURL } from '../../utils/getImgURL.js';
 import type { DinozFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
+import { userStore } from '../../store/userStore.js';
 
 export default defineComponent({
 	name: 'Reincarnate',
@@ -77,13 +98,30 @@ export default defineComponent({
 			default: 1
 		}
 	},
+	setup() {
+		const uStore = userStore();
+		return { uStore };
+	},
 	computed: {
 		Price(): number {
 			return Math.round(this.dinoz.race.price * this.dinoz.level ** 0.5);
+		},
+		keepSeedCount(): number {
+			return this.uStore.keepSeedReincarnationCount;
+		},
+		maxKeepSeed(): number {
+			return this.uStore.maxKeepSeedReincarnations;
+		},
+		remainingKeepSeed(): number {
+			return this.uStore.remainingKeepSeedReincarnations;
+		},
+		isKeepSeedLimitReached(): boolean {
+			return this.uStore.hasReachedKeepSeedLimit && !this.uStore.isAdmin;
 		}
 	},
 	methods: {
 		async reincarnate(keepSeed: boolean): Promise<void> {
+			if (keepSeed && this.isKeepSeedLimitReached) return;
 			const dinozId = parseInt(this.$route.params.id as string);
 
 			const confirmFinal = await this.$confirm({
@@ -96,6 +134,9 @@ export default defineComponent({
 
 			try {
 				await DinozService.reincarnate(dinozId, keepSeed);
+				if (keepSeed) {
+					this.uStore.incrementKeepSeedReincarnationCount();
+				}
 				this.$toast.open({
 					message: this.$t('toast.reincarnation'),
 					type: 'info'
@@ -119,7 +160,7 @@ export default defineComponent({
 	float: left;
 	position: relative;
 	width: 260px;
-	height: 220px;
+	min-height: 235px;
 	padding: 5px;
 	background-color: #bc683c;
 	font-size: 10pt;
@@ -141,7 +182,13 @@ export default defineComponent({
 	}
 	.button {
 		position: absolute;
-		margin-top: 130px;
+		margin-top: 155px;
+		&.button--disabled {
+			opacity: 0.5;
+			cursor: not-allowed;
+			pointer-events: none;
+			filter: grayscale(1);
+		}
 	}
 	ul {
 		list-style: square;
@@ -149,6 +196,10 @@ export default defineComponent({
 		padding: 0px;
 		padding-left: 30px;
 		color: #fce3bc;
+		.quota-limit {
+			color: #ffd2d2;
+			font-weight: bold;
+		}
 	}
 }
 .details {
