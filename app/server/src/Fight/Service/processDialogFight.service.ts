@@ -200,7 +200,15 @@ export async function processDialogFightUnlocked(
 	/**
 	 * Traitement générique des autres combats de dialogue.
 	 */
-	const team = [dinozData];
+	const isKabukiFight =
+		dialogId === 'yakuzi_forges' || dialogId === 'yakuzi_gorges' || dialogId.startsWith('igor_kabuki');
+	const followers = isKabukiFight
+		? user.dinoz.filter(
+				dinoz =>
+					dinoz.leaderId === dinozId && dinoz.life > 0 && dinoz.state === null && dinoz.placeId === dinozData.placeId
+			)
+		: [];
+	const team = [dinozData, ...followers];
 	const scriptedEncounter: 'kabuki_yakuzi_forges' | 'kabuki_yakuzi_gorges' | 'kabuki_igor_corail' | undefined =
 		dialogId === 'yakuzi_forges' && phaseId === 'ready'
 			? 'kabuki_yakuzi_forges'
