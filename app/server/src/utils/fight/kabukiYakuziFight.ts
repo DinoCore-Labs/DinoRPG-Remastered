@@ -1,6 +1,8 @@
 import { DetailedFighter } from '@dinorpg/core/models/fight/detailedFighter.js';
 import { FighterType } from '@dinorpg/core/models/fight/fighterType.js';
+import { FightOutcome } from '@dinorpg/core/models/fight/fightResult.js';
 import { FightStep } from '@dinorpg/core/models/fight/fightStep.js';
+import { LifeEffect } from '@dinorpg/core/models/fight/transpiler.js';
 import { Monster, monsterList } from '@dinorpg/core/models/monster/monsterList.js';
 import { Skill } from '@dinorpg/core/models/skills/skillList.js';
 
@@ -49,6 +51,12 @@ export function summonKabukiAtGorges(fightData: DetailedFight): boolean {
 	);
 	if (!yakuzi || yakuzi.hp > 0) return false;
 
+	// MT Scenario.hx: m.text(Data.TEXT.kabuki_defend, y)
+	fightData.steps.push({
+		action: 'fightText',
+		text: { type: 'talk', text: KABUKI_FIGHT_TEXT.kabukiDefend, speakerFid: yakuzi.id }
+	});
+
 	const count = fightData.fighters.filter(f => f.type !== FighterType.DINOZ).length;
 	const renfortApplied = fightData.fighters.filter(f => f.skills.some(skill => skill.id === Skill.M_RENFORTS)).length;
 	const wormCalls = fightData.fighters.filter(f => f.skills.some(skill => skill.id === Skill.M_WORM_CALL)).length;
@@ -79,4 +87,61 @@ export function summonKabukiAtGorges(fightData: DetailedFight): boolean {
 		}
 	});
 	return true;
+}
+
+/** Original Motion Twin text: xml/fr/scenarios.xml, <s id="kabuki">. */
+export const KABUKI_FIGHT_TEXT = {
+	yakuziRun: "Profitant d'un instant d'inattention, Yakuzi se relève et s'enfuit !",
+	kabukiDefend: "A l'aide !!!!",
+	strangeDinoz: 'Mais quel était donc cet étrange dinoz ?!?'
+} as const;
+
+/**
+ * MT src/fight/Scenario.hx, kabuki phases 4 and 5.
+ * Must run after the engine has determined the outcome but BEFORE fighter result
+ * HP losses are calculated: otherwise resurrected Dinoz would remain dead in DB.
+ * No scenario rewards/progression here: existing dialog fight_win handles those.
+ */
+export function completeKabukiYakuziFight(
+	fightData: DetailedFight,
+	encounter: 'kabuki_yakuzi_forges' | 'kabuki_yakuzi_gorges' | undefined
+): number {
+	if (fightData.outcome !== FightOutcome.AttackerWin) return 0;
+
+	if (encounter === 'kabuki_yakuzi_forges') {
+		fightData.steps.push({
+			action: 'fightText',
+			text: { type: 'message', text: KABUKI_FIGHT_TEXT.yakuziRun }
+		});
+
+		let revived = 0;
+		for (const fighter of fightData.fighters) {
+			if (!fighter.attacker || fighter.type !== FighterType.DINOZ || fighter.hp > 0) continue;
+			// Original scenario heals dead Dinoz to exactly one HP after victory.
+			// Set combat HP before FightProcessResult.attackers is built.
+			const hpToRestore = 1 - fighter.hp;
+			fighter.hp = 1;
+			fightData.steps.push({
+				action: 'heal',
+				fighter: {
+					id: fighter.id,
+					name: fighter.name,
+					type: fighter.type,
+					attacker: fighter.attacker
+				},
+				hp: hpToRestore,
+				fx: LifeEffect.Heal
+			});
+			revived++;
+		}
+		return revived;
+	}
+
+	if (encounter === 'kabuki_yakuzi_gorges') {
+		fightData.steps.push({
+			action: 'fightText',
+			text: { type: 'message', text: KABUKI_FIGHT_TEXT.strangeDinoz }
+		});
+	}
+	return 0;
 }
