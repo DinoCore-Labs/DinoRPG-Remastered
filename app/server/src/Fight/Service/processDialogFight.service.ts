@@ -201,7 +201,11 @@ export async function processDialogFightUnlocked(
 	 * Traitement générique des autres combats de dialogue.
 	 */
 	const team = [dinozData];
-	const fightResult = calculateFightVsMonsters(team, user, dinozData.placeId, monsters, undefined, allies);
+	const scriptedEncounter =
+		dialogId === 'yakuzi_forges' && phaseId === 'ready' ? ('kabuki_yakuzi_forges' as const) : undefined;
+	const fightResult = calculateFightVsMonsters(team, user, dinozData.placeId, monsters, undefined, allies, {
+		scriptedEncounter
+	});
 	const result = await rewardFightVsMonsters(team, monsters, fightResult, dinozData.placeId, user, {
 		xpMultiplier: isIntroFight ? 0 : 1,
 		autoReequip: autoReequip
