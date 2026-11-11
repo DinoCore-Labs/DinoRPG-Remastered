@@ -6866,6 +6866,13 @@
 		},
 		"intro": {
 			"name": "Taurus the Magnificent"
+		},
+		"kabuki": {
+			"texts": {
+				"totemLost": "As expected, your Dinoz gets lost on the way to Totem Island. Yakuzi and his two Kabukis come to the rescue!",
+				"totemFinalStart": "You finally reach Totem Island... but what could be happening here?",
+				"totemFinalEnd": "You defeated Igor and his minions! You also recovered the Kabuki Aura!"
+			}
 		}
 	},
 	"reportModal": {

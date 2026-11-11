@@ -6737,6 +6737,13 @@
 		},
 		"intro": {
 			"name": "Taurus le Magnifique"
+		},
+		"kabuki": {
+			"texts": {
+				"totemLost": "Como era de esperar, tu Dinoz se pierde camino a la Isla del Tótem. ¡Yakuzi y sus dos Kabukis acuden a ayudarlo!",
+				"totemFinalStart": "Por fin llegas a la Isla del Tótem... ¿qué estará pasando aquí?",
+				"totemFinalEnd": "¡Has derrotado a Igor y sus secuaces! ¡También has recuperado el Aura Kabuki!"
+			}
 		}
 	},
 	"reportModal": {

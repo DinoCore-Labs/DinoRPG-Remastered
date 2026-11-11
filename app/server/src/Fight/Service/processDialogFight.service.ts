@@ -220,6 +220,23 @@ export async function processDialogFightUnlocked(
 	const fightResult = calculateFightVsMonsters(team, user, dinozData.placeId, monsters, undefined, allies, {
 		scriptedEncounter
 	});
+	for (const attacker of fightResult.attackers) {
+		const fighter = fightResult.fighters.find(f => f.id === attacker.dinozId);
+
+		req.log.info(
+			{
+				category: 'fight',
+				action: 'kabuki_fight_debug',
+				dialogId,
+				phaseId,
+				dinozId: attacker.dinozId,
+				hpLost: attacker.hpLost,
+				startingHp: fighter?.startingHp,
+				hpLostIsFinite: Number.isFinite(attacker.hpLost)
+			},
+			'Kabuki fight HP diagnostics'
+		);
+	}
 	const result = await rewardFightVsMonsters(team, monsters, fightResult, dinozData.placeId, user, {
 		xpMultiplier: isIntroFight ? 0 : 1,
 		autoReequip: autoReequip
