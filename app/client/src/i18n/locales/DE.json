@@ -4888,6 +4888,17 @@
 					"i4": "Autsch! Ich habe mich gestochen. Diese Silex sind WIRKLICH gut geschliffen! Schnell, zeig mir, was du sonst noch hast!",
 					"i5": "Diese Luft-Energie ist besonders rein! Noch eine letzte Zutat, dann bin ich in der Lage, die Aura herzustellen!",
 					"i6": "SUPER! DU HAST ES GESCHAFFT!!! Ich muss jetzt bloß noch ein paar Vorbereitungen treffen und noch jemanden kontakti... äh... ich meine, ich muss noch alles für die Herstellung der Aura vorbereiten! Besuch mich wieder, sobald ich fertig bin!"
+				},
+				"igor_kabuki_aura": {
+					"begin": "Voila, voila! Ich überreiche dir hiermit die Kabuki-Aura, die ich soeben hergestellt habe!",
+					"aura": "Ich bin etwas spät dran mit meinen Vorbereitungen zu den... zu den Studien über die Kabukis. Verstehst du, sobald wir vor Ort sind... Und VOR ALLEM, benutze die Aura nicht, bevor wir die Korallenminen erreicht haben! Ist das klar?! Wir sind PART-NER! Ist das klar?",
+					"ok": "Nachdem der Professor verschwunden ist, öffnest du die Schachtel, die er dir gegeben hat: Sie ist leer! Professor Igor hat sicher nur vergessen, die Aura reinzulegen, bevor er sie dir gegeben hat... Es sei denn..."
+				},
+				"igor_kabuki_betrayal": {
+					"begin": "Junge, Junge! Hast dich ja richtig beeilt, um hierher zu kommen! Tja, schade für dich! Du warst mir bis hierher ganz nützlich, aber jetzt habe ich keine Zeit mehr zu verlieren: Reichtümer warten auf mich! Ha ha ha ha ha!",
+					"why": "Du bist ganz schön grün hinter den Ohren, mein Freund! Fremden so blind zu vertrauen! Ha, wenn ich erst das Monopol über die Kabukis auf dem Marktplatz erlangt habe, werde ich ein reicher Mann sein! Aber-Millionen von Schatzgutscheinen!!! Ha ha ha ha! AAANGRIFFF, meine treuen Verbündeten!",
+					"attack": "Willst du Igor auf die Totem-Insel folgen? Pass bloß auf, ohne die Kabuki-Aura könnte dein Dinoz mehrere Jahre ziellos umherirren!",
+					"attack_win": "Willst du Igor auf die Totem-Insel folgen? Pass bloß auf, ohne die Kabuki-Aura könnte dein Dinoz mehrere Jahre ziellos umherirren!"
 				}
 			},
 			"choice": {
@@ -4920,6 +4931,14 @@
 					"i4": "2 Geschliffene Silex überreichen",
 					"i5": "1 Luft-Energie überreichen",
 					"i6": "1 Wasser-Energie überreichen"
+				},
+				"igor_kabuki_aura": {
+					"aura": "Die Aura annehmen.",
+					"ok": "Ja."
+				},
+				"igor_kabuki_betrayal": {
+					"why": "???",
+					"attack": "Sich verteidigen."
 				}
 			}
 		}
