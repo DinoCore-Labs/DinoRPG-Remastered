@@ -33,6 +33,7 @@ import {
 	TIME_FACTOR
 } from '@dinorpg/core/utils/fightConstants.js';
 
+import { stageKabukiTotemOpening } from '../../Scenario/Controller/kabukiTotemOpening.js';
 import { SeededRandom } from '../prng.js';
 import { DinozToGetFighter, FightConfiguration, FightRules } from './fight.mapper.js';
 import {
@@ -296,6 +297,11 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: Seeded
 
 	// Prepare the fight: fighters arrive, some special skills and items are handled *before* the start of the fight
 	prepareFight(fightData);
+
+	// MT onStartFight: actors arrive before the first attack, not in prepare.
+	if (config.kabukiTotemOpening) {
+		stageKabukiTotemOpening(fightData);
+	}
 
 	// Start the fight: handle skills and items that trigger at the beginning of the fight
 	startFight(fightData);
