@@ -96,7 +96,9 @@ export function stageKabukiTotemOpening(fight: Pick<DetailedFight, 'fighters' | 
 	// Validation complete: apply the staged entrance atomically to in-memory state.
 	prepare.monsterList = initialMonsterList;
 	prepare.dinozList = initialDinozList;
-	fight.fighters = initial.filter(fighter => !uniqueIds.has(fighter.id));
+	// Preserve the original array: generateFight serializes from config.fighters.
+	// Later summoned fighters must be visible in the final recap as well.
+	initial.splice(0, initial.length, ...initial.filter(fighter => !uniqueIds.has(fighter.id)));
 	for (const step of introductions) {
 		if (step.action === 'arrive') {
 			const actor = reserve.get(step.fid);

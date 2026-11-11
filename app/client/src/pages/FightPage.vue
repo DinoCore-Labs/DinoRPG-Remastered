@@ -13,7 +13,7 @@
 -->
 <template>
 	<TitleHeader :title="$t('pageTitle.fight')" :header="$t(`fight.pageName`)" />
-	<div v-if="loaded && fightTransformed?.history?.length" class="content">
+	<div v-if="loaded" class="content">
 		<Suspense v-if="fightTransformed && (!localStore.getSkipFightAnimation || showFightAnimation)">
 			<FightAnimation :fight="fightTransformed" @animationEnded="onFightEnd" />
 			<template #fallback>
@@ -127,14 +127,15 @@ export default defineComponent({
 			fightResult.bothStand
 		);
 		if (!nextFight?.length) {
-			this.$toast.open({
-				message: this.$t('toast.viewFight'),
-				type: 'error'
+			// Server rewards have already been resolved: show the recap if replay fails.
+			console.error('[fight] Replay could not be generated', {
+				dinozId: this.dinozId,
+				scenario: fightResult.scenario,
+				fighterCount: fighters.length,
+				stepCount: fightSteps.length
 			});
-			this.$router.replace({
-				name: 'DinozPage',
-				params: { id: this.dinozId }
-			});
+			this.fightEnded = true;
+			this.loaded = true;
 			return;
 		}
 		const initPlace = resolveFightingPlace(this.fight.place, this.fight.background);

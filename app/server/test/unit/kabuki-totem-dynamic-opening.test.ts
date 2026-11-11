@@ -56,6 +56,15 @@ describe('Kabuki Totem: real onStartFight reinforcement staging', () => {
 		expect(fight.steps[1]).toMatchObject({ action: 'fightText', text: { speakerFid: 100 } });
 		expect(fight.steps.at(-1)).toMatchObject({ action: 'fightText', text: { speakerFid: 104 } });
 	});
+	it('preserves the shared fighters array used by the engine recap', () => {
+		const fight = fixture();
+		const recapFighters = fight.fighters;
+		stageKabukiTotemOpening(fight);
+		expect(fight.fighters).toBe(recapFighters);
+		const summoned = { id: 999, name: 'Summoned', attacker: true };
+		fight.fighters.push(summoned as (typeof fight.fighters)[number]);
+		expect(recapFighters.some(f => f.id === 999)).toBe(true);
+	});
 	it('refuses missing fighters before mutating the prepare roster', () => {
 		const fight = fixture();
 		fight.fighters.pop();

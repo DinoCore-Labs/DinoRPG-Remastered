@@ -1,4 +1,5 @@
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
+import { StatTracking } from '@dinorpg/core/models/enums/StatsTracking.js';
 import { FightOutcome, type FightResult } from '@dinorpg/core/models/fight/fightResult.js';
 import { Boss, bossList } from '@dinorpg/core/models/monster/bossList.js';
 import { Monster, monsterList } from '@dinorpg/core/models/monster/monsterList.js';
@@ -134,6 +135,24 @@ async function processFinalFight(input: ScenarioMoveFightInput): Promise<FightRe
 			await tx.userRewards.createMany({
 				data: [{ userId: input.user.id, rewardId: Reward.KAURA }],
 				skipDuplicates: true
+			});
+			await tx.userTracking.upsert({
+				where: {
+					stat_userId: {
+						stat: StatTracking.KAURA,
+						userId: input.user.id
+					}
+				},
+				update: {
+					quantity: {
+						increment: 1
+					}
+				},
+				create: {
+					stat: StatTracking.KAURA,
+					quantity: 1,
+					userId: input.user.id
+				}
 			});
 			return true;
 		});
