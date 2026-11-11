@@ -1667,7 +1667,9 @@
 			"Stinger": "Dard",
 			"PoisonedPicks": "Pics empoisonnées",
 			"Contamination": "Contamination",
-			"WormCall": "Appel"
+			"WormCall": "Appel",
+			"Invisibility": "Invisibilité",
+			"Yakuzi": "Yakuzi!!!"
 		},
 		"description": {
 			"GriffesEnflammees": "Augmente la puissance de tous les **assauts** de Feu de 7",
@@ -3410,8 +3412,8 @@
 			"mimic3": "Mimic",
 			"yakuzi": "Yakuzi",
 			"???": "???",
-			"yakkb2": "Ninjutsu",
-			"yakkb3": "Kage",
+			"Ninjutsu": "Ninjutsu",
+			"Kage": "Kage",
 			"igor": "Pr.Igor",
 			"Barbara": "Barbara",
 			"Choupette": "Choupette",
