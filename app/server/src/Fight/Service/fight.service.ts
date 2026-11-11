@@ -273,7 +273,7 @@ export function calculateFightVsMonsters(
 	options?: {
 		timeout?: number;
 		timeoutVisible?: boolean;
-		scriptedEncounter?: 'kabuki_yakuzi_forges';
+		scriptedEncounter?: 'kabuki_yakuzi_forges' | 'kabuki_yakuzi_gorges';
 	}
 ): FightProcessResult {
 	const rng_seed = seed ?? generateString(20);
