@@ -1301,5 +1301,27 @@ export const placeList: Array<PlaceDisplayed> = [
 		map: MapZone.DARKWORLD,
 		xFactor: 10,
 		yFactor: 10
+	},
+	{
+		placeId: 120,
+		name: 'itlost',
+		hidden: false,
+		posLeft: 580,
+		posTop: 233,
+		icon: PlaceIcon.DEFAULT,
+		map: MapZone.ILES,
+		xFactor: 10,
+		yFactor: 10
+	},
+	{
+		placeId: 121,
+		name: 'itotem',
+		hidden: false,
+		posLeft: 580,
+		posTop: 233,
+		icon: PlaceIcon.DEFAULT,
+		map: MapZone.ILES,
+		xFactor: 10,
+		yFactor: 10
 	}
 ];

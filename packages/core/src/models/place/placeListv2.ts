@@ -407,7 +407,8 @@ export const placeListv2 = definePlaces({
 		name: 'itlost',
 		map: MapZone.ILES,
 		moves: [],
-		gotoPlaceId: PlaceEnum.MINES_DE_CORAIL
+		gotoPlaceId: PlaceEnum.MINES_DE_CORAIL,
+		background: 'swp_clear'
 	},
 	[PlaceEnum.BAO_BOB]: {
 		placeId: PlaceEnum.BAO_BOB,
@@ -459,7 +460,8 @@ export const placeListv2 = definePlaces({
 		placeId: PlaceEnum.ITOTEM,
 		name: 'itotem',
 		map: MapZone.ILES,
-		moves: [{ target: PlaceEnum.MINES_DE_CORAIL }]
+		moves: [{ target: PlaceEnum.MINES_DE_CORAIL }],
+		background: 's_totem'
 	},
 	[PlaceEnum.GO_TO_PORT_DE_PRECHE]: {
 		placeId: PlaceEnum.GO_TO_PORT_DE_PRECHE,

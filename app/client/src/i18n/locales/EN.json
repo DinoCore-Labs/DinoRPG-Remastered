@@ -6871,7 +6871,11 @@
 			"texts": {
 				"totemLost": "As expected, your Dinoz gets lost on the way to Totem Island. Yakuzi and his two Kabukis come to the rescue!",
 				"totemFinalStart": "You finally reach Totem Island... but what could be happening here?",
-				"totemFinalEnd": "You defeated Igor and his minions! You also recovered the Kabuki Aura!"
+				"totemFinalEnd": "You defeated Igor and his minions! You also recovered the Kabuki Aura!",
+				"igorFinalTalk": "WHAT?? How have you been able to follow me here without an Aura?!?",
+				"igorFinalAttack": "Attaaaaaaack!!!",
+				"yakuziFinalWait": "Wait!",
+				"yakuziFinalHelp": "We are going to help you!!!"
 			}
 		}
 	},
