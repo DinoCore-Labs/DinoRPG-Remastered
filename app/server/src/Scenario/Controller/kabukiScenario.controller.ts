@@ -3,6 +3,7 @@ import { FightOutcome, type FightResult } from '@dinorpg/core/models/fight/fight
 import { Boss, bossList } from '@dinorpg/core/models/monster/bossList.js';
 import { Monster, monsterList } from '@dinorpg/core/models/monster/monsterList.js';
 import { Reward } from '@dinorpg/core/models/rewards/rewardList.js';
+import { Skill } from '@dinorpg/core/models/skills/skillList.js';
 
 import { updateMultipleDinoz } from '../../Dinoz/Controller/updateDinoz.controller.js';
 import { calculateFightVsMonsters, rewardFightVsMonsters } from '../../Fight/Service/fight.service.js';
@@ -28,16 +29,25 @@ export function getKabukiMovePhase(
 /** MT XML monsters.xml: yakkb2 Ninjutsu and yakkb3 Kage. */
 const NINJUTSU = {
 	...monsterList[Monster.KABUKI_YAKUZI],
+	skills: [Skill.INSAISISSABLE, Skill.DISQUE_VACUUM, Skill.PERCEPTION, Skill.AGILITE],
 	name: 'Ninjutsu',
-	display: 'E9ERKdJzrAYd5P00',
+	display: 'dinoz:E9ERKdJzrAYd5P00',
 	level: 10,
 	hp: 100,
 	elements: { fire: 0, wood: 1, water: 5, lightning: 2, air: 7 }
 };
 const KAGE = {
 	...monsterList[Monster.KABUKI_YAKUZI],
+	skills: [
+		Skill.INSAISISSABLE,
+		Skill.DISQUE_VACUUM,
+		Skill.DISQUE_VACUUM,
+		Skill.NUAGE_TOXIQUE,
+		Skill.PERCEPTION,
+		Skill.AGILITE
+	],
 	name: 'Kage',
-	display: 'E9OI0HBqXBb9dH00',
+	display: 'dinoz:E9OI0HBqXBb9dH00',
 	level: 15,
 	hp: 100,
 	elements: { fire: 0, wood: 1, water: 7, lightning: 2, air: 8 }
