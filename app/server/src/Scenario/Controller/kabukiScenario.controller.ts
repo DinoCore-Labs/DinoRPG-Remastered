@@ -9,6 +9,7 @@ import { updateMultipleDinoz } from '../../Dinoz/Controller/updateDinoz.controll
 import { calculateFightVsMonsters, rewardFightVsMonsters } from '../../Fight/Service/fight.service.js';
 import { prisma } from '../../prisma.js';
 import type { ScenarioMoveFightInput } from '../Service/scenarioMoveFight.service.js';
+import { applyKabukiTotemOpening } from './kabukiTotemOpening.js';
 import { getUserScenarioProgression } from './scenarioProgress.controller.js';
 
 const SCENARIO = 'kabuki';
@@ -112,6 +113,7 @@ async function processFinalFight(input: ScenarioMoveFightInput): Promise<FightRe
 		undefined,
 		KABUKI_TOTEM_ALLIES
 	);
+	applyKabukiTotemOpening(fightProcess);
 	const result = await rewardFightVsMonsters(
 		input.team,
 		KABUKI_TOTEM_OPPONENTS,

@@ -6742,7 +6742,11 @@
 			"texts": {
 				"totemLost": "Wie erwartet verirrt sich dein Dinoz auf dem Weg zur Toteminsel. Yakuzi und seine beiden Kabukis kommen zur Hilfe!",
 				"totemFinalStart": "Endlich erreichst du die Toteminsel ... aber was geschieht hier?",
-				"totemFinalEnd": "Du hast Igor und seine Gefolgsleute besiegt und die Kabuki-Aura zurückerhalten!"
+				"totemFinalEnd": "Du hast Igor und seine Gefolgsleute besiegt und die Kabuki-Aura zurückerhalten!",
+				"igorFinalTalk": "WIE BITTE?? WIE zum Teufel konntest du mir bis hierher ohne Kabuki-Aura folgen?!?",
+				"igorFinalAttack": "Aaaannngriiifff!!!",
+				"yakuziFinalWait": "Warte!",
+				"yakuziFinalHelp": "Wir werden dir helfen!!!"
 			}
 		}
 	},
