@@ -579,6 +579,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		size: 150
 	},
 	[Boss.IGOR_BARBARA]: {
+		skills: [Skill.TORNADE],
 		id: Boss.IGOR_BARBARA,
 		boss: true,
 		name: 'Barbara',
@@ -594,6 +595,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		display: 'dinoz:C9twtwj1Qnx1rU00'
 	},
 	[Boss.IGOR_CHOUPETTE]: {
+		skills: [Skill.TORNADE],
 		id: Boss.IGOR_CHOUPETTE,
 		boss: true,
 		name: 'Choupette',
@@ -609,6 +611,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		display: 'dinoz:C9Sk5SB6gUNcIh00'
 	},
 	[Boss.IGOR_POUPOULE]: {
+		skills: [Skill.PRINTEMPS_PRECOCE],
 		id: Boss.IGOR_POUPOULE,
 		boss: true,
 		name: 'Poupoule',
