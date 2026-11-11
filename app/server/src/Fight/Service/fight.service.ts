@@ -273,6 +273,7 @@ export function calculateFightVsMonsters(
 	options?: {
 		timeout?: number;
 		timeoutVisible?: boolean;
+		scriptedEncounter?: 'kabuki_yakuzi_forges';
 	}
 ): FightProcessResult {
 	const rng_seed = seed ?? generateString(20);
@@ -295,6 +296,7 @@ export function calculateFightVsMonsters(
 		seed: rng_seed,
 		timeout: options?.timeout,
 		timeoutVisible: options?.timeoutVisible,
+		scriptedEncounter: options?.scriptedEncounter,
 
 		// Flags
 		rules: MONSTER_FIGHT_RULES,
