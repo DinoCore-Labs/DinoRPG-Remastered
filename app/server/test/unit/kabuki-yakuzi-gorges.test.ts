@@ -62,7 +62,7 @@ describe('Kabuki MT — Gorges', () => {
 		expect(kabuki.escaped).not.toBe(true);
 		expect(yakuzi.escaped).toBe(true);
 		expect(yakuzi.hp).toBe(100);
-		expect(fight.steps.map(step => step.action)).toEqual(['arrive', 'leave']);
+		expect(fight.steps.map(step => step.action)).toEqual(['fightText', 'arrive', 'leave']);
 		expect(summonKabukiAtGorges(fight)).toBe(false);
 		expect(fight.fighters).toHaveLength(2);
 	});
