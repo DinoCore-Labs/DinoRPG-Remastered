@@ -33,14 +33,12 @@
 		"@dinorpg/core": "workspace:^*",
 		"@types/sanitize-html": "^2.16.1",
 		"@vitejs/plugin-vue": "^6.0.9",
-		"@vitest/coverage-v8": "^5.0.0",
 		"@vue/test-utils": "^2.5.1",
 		"@vue/tsconfig": "^0.9.1",
 		"jsdom": "^30.0.1",
 		"sass": "^1.103.1",
 		"vite": "^8.2.4",
 		"vite-plugin-vue-devtools": "^8.2.1",
-		"vitest": "^5.0.0",
 		"vue-tsc": "^3.3.13"
 	}
 }

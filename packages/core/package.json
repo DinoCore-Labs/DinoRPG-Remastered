@@ -20,9 +20,5 @@
 		"test:unit:watch": "vitest",
 		"test:coverage": "vitest run --coverage"
 	},
-	"packageManager": "pnpm@10.12.1",
-	"devDependencies": {
-		"@vitest/coverage-v8": "^5.0.0",
-		"vitest": "^5.0.0"
-	}
+	"packageManager": "pnpm@10.12.1"
 }
