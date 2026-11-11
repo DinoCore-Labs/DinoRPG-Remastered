@@ -4745,6 +4745,85 @@
 		"dialog": {
 			"exit": "À bientôt.",
 			"leave": "Quitter"
+		},
+		"yakuzi": {
+			"names": {
+				"port0": "Punk misterioso",
+				"port1": "Yakuzi",
+				"port2": "Yakuzi"
+			},
+			"dialog": {
+				"port0": {
+					"begin": "¡Ey! Psssst... ¡por aquí!",
+					"welcome": "Escucha, tengo un tema interesante que proponerte...",
+					"hear": "¡¡¡Ssssss!!! ¡No tan fuerte! Vas a hacer que nos oigan...",
+					"ref": "¡¡¡Shhhh!!! ¡No tan fuerte! Vas a hacer que nos vean...",
+					"mission": "Muy bien, así. Poseo un pasaporte para la Isla del Tótem. Te propongo un desafío. Apuesta 10.000 monedas de oro. Si ganas, te llevas el pasaporte y la pasta. Si no, el pasaporte se queda en mi bolsillo y me deberás 10.000 monedas. Bueno, ¿qué me dices?",
+					"ok": "Ok. Ahora escucha atentamente las reglas: Cada moneda está compuesta de dos lados diferentes. El lado que indica el valor de la moneda se le llama \"cruz\". El segundo representa una cabeza de Moueffe y se llama \"cara\". Solo tienes que elegir uno de los lados. Luego se echa al aire la moneda, y el que haya elegido el lado que salga, gana. ¿Lo has entendido?",
+					"no": "Lástima... Vuelve a verme si cambias de opinión. ¡De aquí no me muevo!",
+					"compris": "Ajá, ¿ya lo conocías? Veo que estás habituado a los negocios, ¡chaval! Entonces, ¿\"cara\" o \"cruz\"?",
+					"not": "Cada moneda está compuesta de dos lados diferentes. El lado que indica el valor de la moneda es llamado \"pila\". El segundo representa una cabeza de moueffe y se llama \"cara\". Eliges uno de los dos, se lanza la moneda y vemos cuál de los dos lados sale. Entonces, ¿\"cara\" o \"cruz\"?",
+					"pile": "¡Has perdido! ¡ja ja ja! Soy imbatible. Me debes 10.000 monedas de oro.",
+					"suite": "Tú lo que tienes es un problema... el dinero es demasiado preciado para jugar con él. Por cierto, no estaba en las reglas que hubieses aceptado... Si me traes mis 10.000 monedas de oro, te haré otra propuesta... y esta vez, lanzando una moneda.",
+					"end": "¡Je, je! Encuentra la pasta y vuelve a verme. Mi alias es \"Yakuzi\". No me moveré de aquí.",
+					"face": "¡Perdiste! ¡Ja, ja, ja! Soy invencible. Me debes 10.000 monedas de oro.",
+					"quit": "A pesar de sus llamadas, te alejas de él... quizás tenía algo importante que decirte."
+				},
+				"port1": {
+					"begin": "¡Hey! Psssst... ¡por aquí!",
+					"welcome": "¿Tienes el dinero?",
+					"yes": "Je, je. Gracias, gracias, gracias. Vuelve a verme cuando quieras.",
+					"quit": "Eh, ¡espera!"
+				},
+				"port2": {
+					"begin": "¡Oye tú! Psssst... ¡por aquí!",
+					"welcome": "Presta atención a mi proposición: nos apostamos 100.000 esta vez. Si ganas, te lo llevas todo: dinero y pasaporte. Si no, me quedo con el pasaporte y me deberás 100.000 monedas de oro. Si aceptas, dame una moneda para lanzarla...",
+					"give": "Vale. \"Cara\" o \"cruz\" ?",
+					"start": "¡Clin! Yakuzi lanza la moneda. Cae en el suelo y rueda sobre sí misma. El suspense es enorme.",
+					"nop": "Como quieras... Elijo esto... cruz... no, ¡cara! ¡cara!",
+					"lance": "¡Clin! Lanzas la pieza al aire y la observas caer y botar en el suelo.",
+					"end": "Imposible... He... He perdido... ¡pues no! Es mi AURA después de todo. ¡Es mía! Adiós, ¡ja, ja, ja!",
+					"reend": "Yakuzi huye con tu recompensa: quizás puedas correr tras él...",
+					"quit": "Eh, ¡espera!",
+					"lock": "Eh tú, ¡espera!"
+				}
+			},
+			"choice": {
+				"port0": {
+					"welcome": "Aproximarse para ver lo que quiere.",
+					"quit": "Ignorar a este tipo... ya estoy harto de gente rara...",
+					"hear": "¡Te escucho!",
+					"ref": "Me recuerdas a alguien...",
+					"leave": "Oh lo siento, ¡creía que me hablabas a mí! Adiós.",
+					"mission": "Uy, perdón... ¿entonces?",
+					"ok": "Por qué no, me parece equitativo.",
+					"no": "¡¿Quée?! ¿Cómo dices? ¿Y de dónde voy a sacar ese dinero?",
+					"compris": "Claro, un \"cara o cruz\"...",
+					"not": "Esto... creo que se me ha escapado algo... ¿tengo que elegir qué?",
+					"pile": "Cruz",
+					"face": "Cara",
+					"suite": "Pero... ¡no has lanzado ninguna moneda!",
+					"end": "Si quiero ese pasaporte, no tengo otra opción..."
+				},
+				"port1": {
+					"welcome": "Ir a verlo",
+					"quit": "Pasar por su lado sin decir nada",
+					"yes": "Sí, 10.000 monedas de oro.",
+					"leave": "Sí, ¡pero no se lo daré a un tramposo como tú!"
+				},
+				"port2": {
+					"welcome": "Ir a verlo",
+					"quit": "Pasar por el lado sin decir nada",
+					"give": "Vale, ten... ¡¡Pero sin líos esta vez!!",
+					"nop": "Acepto, ¡pero lanzaré la moneda yo mismo!",
+					"lock": "¡Ni lo sueñes! No confío en ti. Me voy de aquí. Adiós.",
+					"pile": "Cruz",
+					"face": "Cara",
+					"lance": "Lanzar la moneda",
+					"end": "(CONTINUACIÓN)",
+					"reend": "¿Tu Aura?... ¡hey! ¡espera!"
+				}
+			}
 		}
 	},
 	"missions": {

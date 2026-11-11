@@ -4745,6 +4745,85 @@
 		"dialog": {
 			"exit": "À bientôt.",
 			"leave": "Quitter"
+		},
+		"yakuzi": {
+			"names": {
+				"port0": "Geheimnisvoller Punk",
+				"port1": "Yakuzi",
+				"port2": "Yakuzi"
+			},
+			"dialog": {
+				"port0": {
+					"begin": "Hey! Psssst... Komm doch mal her!",
+					"welcome": "Hör mal, ich möchte dir einen guten Deal vorschlagen...",
+					"hear": "Schhhht!! Nicht so laut! Deinetwegen wird man uns noch entdecken...",
+					"ref": "Schhhht!! Nicht so laut! Deinetwegen wird man uns noch entdecken...",
+					"mission": "Folgendes: Ich besitze einen Reisepass für die Totem-Insel. Ich schlage dir eine kleine Wette vor, bei der du ihn gewinnen kannst. Du setzt 10.000 Goldstücke. Wenn du gewinnst, bekommst du den Reisepass und die Goldstücke. Wenn du aber verlierst, behalte ich den Reisepass und du schuldest mir 10.000 Goldstücke. Na, was hältst du davon?",
+					"ok": "Ok. Jetzt hör gut zu. Das sind die Regeln: Jede Münze hat zwei verschiedene Seiten. Die eine Seite zeigt den Wert einer Münze an - diese Seite heißt \"Zahl\". Die andere Seite zeigt einen Moueffe-Kopf - diese Seite nennt sich \"Kopf\". Klar soweit? Wähle eine Seite. Danach sehen wir, wer gewonnen hat. Also, \"Kopf\" oder \"Zahl\"? Alles klar?",
+					"no": "Schade... Schau wieder vorbei, wenn du deine Meinung geändert hast. Du findest mich hier.",
+					"compris": "Hah! Dann kennst du es? Ich sehe schon, dass du Stammgast bist! Also, \"Kopf\" oder \"Zahl\"?",
+					"not": "Jede Münze hat zwei verschiedene Seiten. Die eine Seite zeigt den Wert einer Münze an - diese Seite heißt \"Zahl\". Die andere Seite zeigt einen Moueffe-Kopf - diese Seite nennt sich \"Kopf\". Klar soweit? Wähle eine Seite. Danach sehen wir, wer gewonnen hat. Also, \"Kopf\" oder \"Zahl\"?",
+					"pile": "Verloren! Ha ha ha! Ich bin unschlagbar. Du schuldest mir 10.000 Goldstücke.",
+					"suite": "Geht`s noch?! Geld ist zu wertvoll, um damit zu spielen! Und überhaupt, das war nicht Bestandteil der Regeln, denen DU zugestimmt hast... Wenn du mir meine 10.000 Goldstücke bringst, schlag ich dir vielleicht noch ein anderes Geschäft vor... und dieses Mal werde ich eine Münze werfen.",
+					"end": "He he! Hol die Kohle und schau wieder vorbei. Mein Codename ist \"Yakuzi\". Ich gehe nicht von hier fort.",
+					"face": "Verloren! Ha ha ha! Ich bin unschlagbar. Du schuldest mir 10.000 Goldstücke.",
+					"quit": "Du ignorierst den Typen und gehst weiter... So eine Gestalt hat doch sicher nicht Wichtiges zu sagen. Oder vielleicht doch?"
+				},
+				"port1": {
+					"begin": "Hey! Psssst... Komm mal her!",
+					"welcome": "Na, was ist? Hast du das Geld?",
+					"yes": "He he! Danke, danke, danke. Such mich auf, wann immer du willst!",
+					"quit": "Hey warte!"
+				},
+				"port2": {
+					"begin": "Hey! Psssst... Komm mal her!",
+					"welcome": "Also, ich schlage dir Folgendes vor: Wir wetten diesmal 100.000 Goldstücke. Wenn du gewinnst, sackst du alles ein - das Geld und den Reisepass. Wenn nicht, behalte ich ihn und du schuldest mir 100.000 Goldstücke. Wenn du einwilligst, gib mir eine Münze, damit ich sie werfen kann...",
+					"give": "Ok. \"Kopf\" oder \"Zahl\"?",
+					"start": "Kling! Yakuzi wirft die Münze in die Luft. Sie fällt auf den Boden und dreht sich um ihre eigene Achse. Die Spannung ist unerträglich.",
+					"nop": "Wie du willst... Ich wähle... äh... Zahl... nein, Kopf! Kopf!",
+					"lance": "Kling! Du wirfst die Münze in die Luft und schaust angespannt zu, wie sie auf den Boden fällt.",
+					"end": "Unmöglich... ich.... ich habe verloren.... Ah, nein!! Es ist immerhin MEINE AURA. Sie gehört mir! Auf Wiedersehen, ha ha ha ha!",
+					"reend": "Yakuzi flüchtet mit deiner Belohnung. Vielleicht solltest du ihm hinterherlaufen...",
+					"quit": "Hey warte!",
+					"lock": "Hey! Warte!"
+				}
+			},
+			"choice": {
+				"port0": {
+					"welcome": "Hingehen, um zu sehen, was er will.",
+					"quit": "Den Typen ignorieren (mit solchen dubiosen Gestalten willst du nichts zu tun haben...)",
+					"hear": "Ich bin ganz Ohr!",
+					"ref": "Sie erinnern mich vage an jemanden...",
+					"leave": "Huch, entschuldigen Sie bitte! Ich dachte, Sie reden mit mir. Auf Wiedersehen...",
+					"mission": "Ups, Verzeihung... Was ist denn?",
+					"ok": "Warum nicht. Hört sich fair an.",
+					"no": "Hey, geht`s noch?! Wo soll ich denn soviel Geld auftreiben?",
+					"compris": "\"Kopf oder Zahl\" halt...",
+					"not": "Äh, ich bin nicht ganz mitgekommen... was muss ich wählen?",
+					"pile": "Zahl",
+					"face": "Kopf",
+					"suite": "Aber... Du hast ja gar keine Münze geworfen!",
+					"end": "Wenn ich diesen Reisepass haben will, habe ich wohl keine Wahl..."
+				},
+				"port1": {
+					"welcome": "Zu ihm hingehen.",
+					"quit": "Vorbeigehen, ohne etwas zu sagen.",
+					"yes": "Ja, hier 10.000 Goldstücke.",
+					"leave": "Ja, aber ich werde sie nicht einem Betrüger wie dir geben!"
+				},
+				"port2": {
+					"welcome": "Zu ihm hingehen.",
+					"quit": "Vorbeigehen, ohne etwas zu sagen.",
+					"give": "Einverstanden, hier... Aber aufgepasst, diesmal keinen Beschiss!",
+					"nop": "Ok, einverstanden, aber dieses Mal werfe ich die Münze!",
+					"lock": "Kommt nicht in Frage! Ich trau Ihnen nicht mehr. Auf Wiedersehen.",
+					"pile": "Zahl",
+					"face": "Kopf",
+					"lance": "Die Münze werfen.",
+					"end": "(WEITER)",
+					"reend": "Ihre Aura... ? Hey, warte!"
+				}
+			}
 		}
 	},
 	"missions": {

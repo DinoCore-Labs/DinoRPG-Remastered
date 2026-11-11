@@ -143,6 +143,11 @@ export function checkDialogCondition(condition: Condition | null | undefined, co
 			return isAdminRole(context.user.role);
 		case 'time':
 			return (context.user.stats.get(StatTracking.P_DAYS) ?? 0) >= condition.value;
+		case 'swait': {
+			const scenario = context.user.scenarios.get(condition.key);
+			if (!scenario) return false;
+			return context.now.getTime() - scenario.updatedAt.getTime() >= condition.hours * 60 * 60 * 1000;
+		}
 		case 'active':
 			return context.world.activeFeatures.has(condition.key);
 		case 'hour':
@@ -156,7 +161,6 @@ export function checkDialogCondition(condition: Condition | null | undefined, co
 		case 'random':
 		case 'gvar':
 		case 'race':
-		case 'swait':
 		case 'dungeon':
 		case 'clanact':
 		case 'friend':
