@@ -11,6 +11,7 @@ import { guideMichelDialog } from './guideMichel.dialog.js';
 import { nicolasHulotDialog } from './hulot.dialog.js';
 import { hydargolDialog } from './hydargol.dialog.js';
 import { igorKabukiDecodedDialog, igorKabukiIngredientsDialog, igorKabukiIntroDialog } from './igorKabuki.dialog.js';
+import { igorKabukiAuraDialog, igorKabukiBetrayalDialog } from './igorKabukiEpilogue.dialog.js';
 import {
 	introFallsBaoDialog,
 	introFallsTaurusDialog,
@@ -114,6 +115,9 @@ export const dialogDefinitions = [
 	baoBobDialog,
 	starquestBaoBobDialog,
 	baoFanDialog,
+	// Quête Kabuki — Aura
+	igorKabukiAuraDialog,
+	igorKabukiBetrayalDialog,
 	// Kabuki chase encounters
 	yakuziForgesDialog,
 	yakuziGorgesDialog,

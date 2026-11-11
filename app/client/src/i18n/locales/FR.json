@@ -5017,6 +5017,17 @@
 					"i4": "Ouch ! Je me suis piqué tellement ces silex sont bien taillés ! Vite, passons à la suite !",
 					"i5": "Cette énergie air est particulièrement pure ! Encore un dernier ingrédient et je pourrais fabriquer l'Aura !",
 					"i6": "PARFAIT ! TU AS REUSSI !!! Je dois maintenant faire quelques préparatifs et contacter... euh... je veux dire préparer tout ce qu'il faut pour l'Aura ! Reviens me voir dès que j'aurai terminé !"
+				},
+				"igor_kabuki_aura": {
+					"begin": "Voilà, voilà, voilà ! Je te confie l'Aura Kabuki que je viens de terminer !",
+					"aura": "J'ai eu quelques retards dans mes préparatifs... d'étude des Kabukis. Tu comprends, une fois que nous arriverons sur place... Et donc SURTOUT ne te sert pas de l'Aura avant que l'on se rejoigne aux Mines de Corail ! C'est bien compris ??! On est AS-SO-CIES ! C'est clair ?",
+					"ok": "Après le départ du Professeur Igor, vous ouvrez la boite qu'il vous a confié : elle est vide ! Le professeur Igor a dû certainement oublier de ranger l'Aura avant de vous la donner... à moins que..."
+				},
+				"igor_kabuki_betrayal": {
+					"begin": "Pffiou ! Et bien, tu as fait vite pour arriver ici ! Bon, tant pis pour toi ! Tu m'as bien servi jusqu'ici, mais je n'ai pas de temps à perdre : la richesse m'attend ! Ah ah ah ah ah !",
+					"why": "Tu es bien innocent mon ami ! Faire ainsi confiance à des inconnus ! Sache qu'une fois que j'aurai obtenu le monopole des Kabukis sur la Place du Marché, ma fortune se comptera en millions de bons du trésor ! Ah ah ah ah ah ! A L'ATTAAAAAQUE, fidèles alliés !!!",
+					"attack": "Allez vous choisir de poursuivre Igor sur l'Ile du Totem ? Attention, car sans Aura Kabuki, votre Dinoz pourrait s'y perdre pendant de nombreuses années !",
+					"attack_win": "Allez vous choisir de poursuivre Igor sur l'Ile du Totem ? Attention, car sans Aura Kabuki, votre Dinoz pourrait s'y perdre pendant de nombreuses années !"
 				}
 			},
 			"choice": {
@@ -5049,6 +5060,14 @@
 					"i4": "Donner 2 Silex Taillés",
 					"i5": "Donner 1 Energie Air",
 					"i6": "Donner 1 Energie Eau"
+				},
+				"igor_kabuki_aura": {
+					"aura": "Prendre l'Aura",
+					"ok": "Oui"
+				},
+				"igor_kabuki_betrayal": {
+					"why": "???",
+					"attack": "Se défendre"
 				}
 			}
 		}
