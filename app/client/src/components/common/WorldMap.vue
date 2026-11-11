@@ -85,6 +85,7 @@ import { errorHandler } from '../../utils/errorHandler.js';
 import { DinozService } from '../../services/dinoz.service.js';
 import { UserService } from '../../services/user.service.js';
 import { userStore } from '../../store/userStore.js';
+import eventBus from '../../events';
 import { useTutorialStore } from '../../store/tutorialStore.js';
 
 export default defineComponent({
@@ -254,6 +255,9 @@ export default defineComponent({
 						user.setUser(refreshedUser);
 						dinoz.setDinozList(refreshedUser.dinoz);
 					}
+					// La fiche Dinoz possède son propre état local : le menu seul
+					// ne suffit pas à réafficher la Potion d'Irma après itlost.
+					eventBus.emit('refreshDinoz', true);
 					/**
 					 * Ne pas enregistrer ce résultat comme un combat
 					 * et ne pas ouvrir FightPage.
