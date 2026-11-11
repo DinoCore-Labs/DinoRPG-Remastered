@@ -126,7 +126,8 @@ export const monsterKeys = [
 	'garou2',
 	'amanp3',
 	'mimic3',
-	'any'
+	'any',
+	'yakkb1'
 ] as const;
 
 export type MonsterKey = (typeof monsterKeys)[number];

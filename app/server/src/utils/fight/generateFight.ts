@@ -51,7 +51,7 @@ import {
 	updateStat
 } from './fightMethods.js';
 import { initializeMonster } from './getFighters.js';
-import { escapeYakuziAfterDefeat } from './kabukiYakuziFight.js';
+import { escapeYakuziAfterDefeat, setGorgesYakuziInitialLife, summonKabukiAtGorges } from './kabukiYakuziFight.js';
 import { randomBetweenSeeded } from './randomBetween.js';
 
 export type DetailedFight = {
@@ -276,6 +276,10 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: Seeded
 		});
 	}
 
+	if (config.scriptedEncounter === 'kabuki_yakuzi_gorges') {
+		setGorgesYakuziInitialLife(fightData.fighters);
+	}
+
 	// Prepare the fight: fighters arrive, some special skills and items are handled *before* the start of the fight
 	prepareFight(fightData);
 
@@ -413,6 +417,8 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: Seeded
 		playFighterTurn(fightData);
 		if (config.scriptedEncounter === 'kabuki_yakuzi_forges') {
 			escapeYakuziAfterDefeat(fightData.fighters, fightData.steps);
+		} else if (config.scriptedEncounter === 'kabuki_yakuzi_gorges') {
+			summonKabukiAtGorges(fightData);
 		}
 		checkDeaths(fightData);
 
