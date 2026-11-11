@@ -4750,7 +4750,9 @@
 			"names": {
 				"port0": "Geheimnisvoller Punk",
 				"port1": "Yakuzi",
-				"port2": "Yakuzi"
+				"port2": "Yakuzi",
+				"chase0": "Verkleideter Yakuzi",
+				"chase1": "Eingefrorener Yakuzi"
 			},
 			"dialog": {
 				"port0": {
@@ -4786,6 +4788,21 @@
 					"reend": "Yakuzi flüchtet mit deiner Belohnung. Vielleicht solltest du ihm hinterherlaufen...",
 					"quit": "Hey warte!",
 					"lock": "Hey! Warte!"
+				},
+				"chase0": {
+					"begin": "Du triffst einen Mann, der dich entfernt an jemanden erinnert...",
+					"hello": "Ich, eh... Entsuldigen Sie. Isch glaube, dass Sie sich täusen. Isch heise Benedito Pacifico Juan Maria Ramirez. Entsuldigung, isch mus gehen. Eh... isch abe noch eine Topf in der Küsche...",
+					"block": "Sehr gut... Sieht so aus, als ob ich keine Wahl hätte. En garde!",
+					"ready": "Yakuzi ist vor dem Ende des Kampfes verschwunden. Zahlreiche Spuren verlieren sich in alle Himmelsrichtungen...",
+					"burn": "Äh... ja. Auf Wiedersehen!"
+				},
+				"chase1": {
+					"begin": "Ich.....bin...ver....eist....",
+					"hello": "Ich...bin...eine....x....beliebige....Person....total...vereist...Sie....können....ge....hen...",
+					"block": "Nein! Passt schon! Ok, ok, ok... ich habe nur gespielt. Also wirklich, du bist nicht leicht zu foppen, was?",
+					"fight": "Nicht so schnell! Ich muss mich noch rächen. Halte deine verfluchten Dinoz bereit! Diesmal werde ich es ihnen zeigen!",
+					"help": "Äh, ja danke... äh, ich meine: dan... ke... Frem... der...",
+					"combat": "Yakuzi ist dir einmal mehr entwischt... Beim Wegrennen hat er allerdings eine seltsame Pergamentrolle verloren! Vielleicht findest du ja jemanden, der in der Lage ist, sie zu entziffern..."
 				}
 			},
 			"choice": {
@@ -4822,6 +4839,19 @@
 					"lance": "Die Münze werfen.",
 					"end": "(WEITER)",
 					"reend": "Ihre Aura... ? Hey, warte!"
+				},
+				"chase0": {
+					"hello": "Yakuzi! Ich habe dich erkannt! Gib mir meine Belohnung!",
+					"block": "Diesmal entkommenst du mir nicht! Meine Dinoz haben dich umzingelt!",
+					"burn": "Ha, ich muss mich wohl getäuscht haben... Beeilen Sie sich, bevor es anbrennt.",
+					"ready": "Greift an, Dinoz!"
+				},
+				"chase1": {
+					"hello": "Echt komisch. Man könnte denken, dass du nur so tust als ob...",
+					"block": "Gib mir meine Belohnung oder ich sage meinen Dinoz, dass sie dir einheizen sollen!",
+					"help": "Bewege dich nicht, ich werde Hilfe holen!",
+					"fight": "Jetzt gib mir endlich meinen Gewinn!",
+					"combat": "Auf geht`s!"
 				}
 			}
 		}

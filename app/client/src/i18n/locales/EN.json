@@ -4879,7 +4879,9 @@
 			"names": {
 				"port0": "Mysterious Punk",
 				"port1": "Yakuzi",
-				"port2": "Yakuzi"
+				"port2": "Yakuzi",
+				"chase0": "Disguised Yakuzi",
+				"chase1": "Frozen Yakuzi"
 			},
 			"dialog": {
 				"port0": {
@@ -4915,6 +4917,21 @@
 					"reend": "Yakuzi has run away with your reward, maybe you should run after him....",
 					"quit": "Hey wait!",
 					"lock": "Hey you! Wait!"
+				},
+				"chase0": {
+					"begin": "You pass someone who you think you recognise....",
+					"hello": "Sorry? I think that you've made a mistake. My name is Benedito Pacifico Juan Mawia Ramirez. Excuse me, I have to leave. I have urgent things to attend to.",
+					"block": "Very well ... it seems I have no choice. En garde!",
+					"ready": "Yakuzi has disappeared before the end of the fight. There are too many tracks to see which way he has gone.",
+					"burn": "See you again soon Yakuzi! Grrrr!"
+				},
+				"chase1": {
+					"begin": "I'm ... fro ... zen....",
+					"hello": "I ... am ... an ... ordinary ... person ... complet ... ely ... frozen ... ... You ... can ... lea... ve...",
+					"block": "No, don't worry. I was only pretending to be frozen. You're hard to convince aren't you aren't you?",
+					"fight": "Not so fast! First I have to take revenge. Prepare your Dinoz, I will defeat them this time!",
+					"help": "Uh, yea thanks ... hmm, I wanted to say: than ... ks ... stran ... ger....",
+					"combat": "Once more Yakuzi has fled ... but whilst escaping he dropped a strange scroll! Maybe you can find someone who can decipher it for you...."
 				}
 			},
 			"choice": {
@@ -4951,6 +4968,19 @@
 					"lance": "Toss the coin",
 					"end": "(Next)",
 					"reend": "Hey! Wait!"
+				},
+				"chase0": {
+					"hello": "Hey Yakuzi! I thought I recognised you. Give me my reward!",
+					"block": "You won't esacpe this time! My Dinoz have surrounded you",
+					"burn": "Ha, seems that I made a mistake ... Hurry up, or you'll miss it",
+					"ready": "Dinoz! Attack!"
+				},
+				"chase1": {
+					"hello": "That's strange, it sounds like you're...",
+					"block": "Give me my reward, or I'll ask my Dinoz to melt you!",
+					"help": "Don't move, I'm going to go and get some help!",
+					"fight": "Give me my reward!",
+					"combat": "Let's fight!"
 				}
 			}
 		}

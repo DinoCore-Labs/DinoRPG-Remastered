@@ -13,6 +13,10 @@ export function resolveDialogReturnPhase(phaseId: string, won: boolean): string 
 			return 'show_win';
 		case 'fight':
 			return 'fight_win';
+		case 'ready':
+			return 'ready_win';
+		case 'combat':
+			return 'combat_win';
 		default:
 			return undefined;
 	}
