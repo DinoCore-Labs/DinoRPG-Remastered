@@ -35,7 +35,7 @@ describe('Kabuki MT — Gorges', () => {
 		const monster = monsterList[Monster.KABUKI_YAKUZI];
 		expect(monster.hp).toBe(100);
 		expect(monster.level).toBe(10);
-		expect(monster.display).toBe('E9ERKdJzrAYd5P00');
+		expect(monster.display).toBe('dinoz:E9ERKdJzrAYd5P00');
 		expect(monster.canBeCaptured).toBe(false);
 	});
 	it('starts Yakuzi at 30 HP without changing maxHP', () => {

@@ -591,7 +591,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		gold: 0,
 		zones: [],
 		canBeCaptured: false,
-		display: 'C9twtwj1Qnx1rU00'
+		display: 'dinoz:C9twtwj1Qnx1rU00'
 	},
 	[Boss.IGOR_CHOUPETTE]: {
 		id: Boss.IGOR_CHOUPETTE,
@@ -606,7 +606,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		gold: 0,
 		zones: [],
 		canBeCaptured: false,
-		display: 'C9Sk5SB6gUNcIh00'
+		display: 'dinoz:C9Sk5SB6gUNcIh00'
 	},
 	[Boss.IGOR_POUPOULE]: {
 		id: Boss.IGOR_POUPOULE,
@@ -621,7 +621,7 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		gold: 0,
 		zones: [],
 		canBeCaptured: false,
-		display: 'A9vt0tsX7DwlRS00'
+		display: 'dinoz:A9vt0tsX7DwlRS00'
 	},
 	[Boss.PR_IGOR]: {
 		id: Boss.PR_IGOR,
