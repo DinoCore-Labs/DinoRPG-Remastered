@@ -51,7 +51,12 @@ import {
 	updateStat
 } from './fightMethods.js';
 import { initializeMonster } from './getFighters.js';
-import { escapeYakuziAfterDefeat, setGorgesYakuziInitialLife, summonKabukiAtGorges } from './kabukiYakuziFight.js';
+import {
+	completeKabukiYakuziFight,
+	escapeYakuziAfterDefeat,
+	setGorgesYakuziInitialLife,
+	summonKabukiAtGorges
+} from './kabukiYakuziFight.js';
 import { randomBetweenSeeded } from './randomBetween.js';
 
 export type DetailedFight = {
@@ -430,6 +435,9 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: Seeded
 	if (fightOutcome === null) {
 		throw new Error('Fight ended without outcome.');
 	}
+
+	// Apply MT post-battle story effects before HP losses are calculated.
+	completeKabukiYakuziFight(fightData, config.scriptedEncounter);
 
 	const baoExists = fightData.fighters.some(
 		fighter => fighter.type === FighterType.MONSTER && fighter.name === monsterList[Monster.BAOBOB].name
