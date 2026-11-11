@@ -1,6 +1,7 @@
 import { dojoScenario } from './data/dojoScenario.js';
 import { introScenario } from './data/introScenario.js';
 import { jeromeTraderScenario } from './data/jeromeTraderScenario.js';
+import { kabukiEggScenario, kabukiScenario } from './data/kabukiScenario.js';
 import { magnetiteScenario } from './data/magnetiteScenario.js';
 import { merguezScenario } from './data/merguezScenario.js';
 import { pacScenario } from './data/pacScenario.js';
@@ -13,7 +14,9 @@ export const scenarioList = {
 	magnet: magnetiteScenario,
 	jerome_trader: jeromeTraderScenario,
 	dojo: dojoScenario,
-	intro: introScenario
+	intro: introScenario,
+	kabuki: kabukiScenario,
+	kabegg: kabukiEggScenario
 } as const;
 
 export type ScenarioKey = keyof typeof scenarioList;
