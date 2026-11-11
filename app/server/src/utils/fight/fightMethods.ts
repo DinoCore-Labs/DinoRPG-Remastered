@@ -1624,31 +1624,19 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				break;
 			}
 			case Skill.M_YAKUZI: {
+				// createMonster already pushes the fighter AND its arrive step.
+				// Never reassign the ID or push the same clone a second time:
+				// the history must reference the fighter returned in the recap.
 				const clone = createMonster(fightData, fighter, bossList.YAKUZI);
-
-				// Count monsters
-				const monsterCount = fightData.fighters.filter(f => f.type !== FighterType.DINOZ).length;
-
 				clone.level = 1;
 				clone.hp = 1;
+				clone.startingHp = 1;
+				clone.maxHp = 1;
 				clone.type = FighterType.CLONE;
 				clone.master = fighter.id;
-				clone.id = -monsterCount - 1;
 
 				applyStrategy(fightData, clone);
-
-				// Set the clone's time to the fighter's time
 				clone.time = fighter.time;
-
-				// Add clone to fighters
-				fightData.fighters.push(clone);
-
-				// Add arrive step
-				fightData.steps.push({
-					action: 'arrive',
-					fid: clone.id
-				});
-
 				break;
 			}
 			case Skill.M_CURSED_WAND: {
