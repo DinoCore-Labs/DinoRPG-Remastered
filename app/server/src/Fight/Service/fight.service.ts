@@ -273,6 +273,7 @@ export function calculateFightVsMonsters(
 	options?: {
 		timeout?: number;
 		timeoutVisible?: boolean;
+		kabukiTotemOpening?: boolean;
 		scriptedEncounter?: 'kabuki_yakuzi_forges' | 'kabuki_yakuzi_gorges' | 'kabuki_igor_corail';
 	}
 ): FightProcessResult {
@@ -296,6 +297,7 @@ export function calculateFightVsMonsters(
 		seed: rng_seed,
 		timeout: options?.timeout,
 		timeoutVisible: options?.timeoutVisible,
+		kabukiTotemOpening: options?.kabukiTotemOpening,
 		scriptedEncounter: options?.scriptedEncounter,
 
 		// Flags

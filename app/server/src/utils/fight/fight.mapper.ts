@@ -91,6 +91,8 @@ export interface FightConfiguration {
 	// Fighters
 	initialDinozList: DinozToGetFighter[];
 	fighters: DetailedFighter[];
+	/** Dynamic MT onStartFight entrance for Totem Island only. */
+	kabukiTotemOpening?: boolean;
 	// Place
 	place: PlaceEnum;
 }
