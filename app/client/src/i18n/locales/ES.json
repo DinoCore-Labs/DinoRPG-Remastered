@@ -4888,6 +4888,17 @@
 					"i4": "¡Ouch! Me he pinchado de lo buenos que son estos sílex. Rápido, ¡pasemos al siguiente!",
 					"i5": "¡Esta energía aire es particularmente pura! ¡Solo un ingrediente más y ya podré fabricar el Aura!",
 					"i6": "¡PERFECTO! ¡¡¡LO CONSEGUISTE!!! Debo hacer algunos preparativos y contactar con... esto.. quiero decir, preparar todo lo que hace falta para el Aura. ¡Vuelve a verme cuando haya terminado!"
+				},
+				"igor_kabuki_aura": {
+					"begin": "¡Ya está! ¡Te confío el Aura Kabuki que acabo de terminar!",
+					"aura": "He sufrido retrasos en los preparativos... de estudio de Kabukis. Ya sabes, para cuando lleguemos al lugar... recuerda que NO DEBES usar el Aura antes de que nos veamos en las Minas de Coral. ¿Lo has entendido bien? ¡Somos SO-CIOS! ¿Ha quedado claro?",
+					"ok": "Tras la partida del Profesor Igor, abres la caja que te ha dado: ¡está vacía! El profesor Igor habrá olvidado introducir el Aura en la caja... a menos que..."
+				},
+				"igor_kabuki_betrayal": {
+					"begin": "¡Ffiuu! Pues bien, te las has arreglado rápidamente para llegar aquí! Bueno, ¡pues peor para ti! Me has sido útil hasta ahora, pero no tengo tiempo que perder: ¡la riqueza me espera! ¡ja, ja, ja!",
+					"why": "¡Qué inocente eres, amigo! ¡Confiar en desconocidos de esa manera! ¡Que sepas que una vez que obtenga el monopolio de los Kabukis en la Plaza del Mercado, mi fortuna se contará en millones de bonos del tesoro! ¡Ja, ja, ja! ¡¡AL ATAQUE, fieles aliados!!",
+					"attack": "¿Vas a elegir seguir a Igor hasta la Isla del Tótem? Ten cuidado, pues sin el Aura Kabuki, ¡tu Dino podría perderse durante años!",
+					"attack_win": "¿Vas a elegir seguir a Igor hasta la Isla del Tótem? Ten cuidado, pues sin el Aura Kabuki, ¡tu Dino podría perderse durante años!"
 				}
 			},
 			"choice": {
@@ -4920,6 +4931,14 @@
 					"i4": "Dar 2 Sílex Tallados",
 					"i5": "Dar 1 Energía Aire",
 					"i6": "Dar 1 Energía Agua"
+				},
+				"igor_kabuki_aura": {
+					"aura": "Coger el Aura",
+					"ok": "Sí"
+				},
+				"igor_kabuki_betrayal": {
+					"why": "???",
+					"attack": "Defenderse"
 				}
 			}
 		}

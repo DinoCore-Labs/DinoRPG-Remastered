@@ -5017,6 +5017,17 @@
 					"i4": "Ouch! I cut myself, these flints are very sharp! Next one!",
 					"i5": "This air energy is very pure! Just one more ingredient and I'll be able to make the Aura!",
 					"i6": "PERFECT! You've done it! All I need to do now is make some preparations ... mmmm ... I wanted to say prepare all the requirements for the Aura! Come back once I've finished!"
+				},
+				"igor_kabuki_aura": {
+					"begin": "Here, here, here! Take this! I'm entrusting you with this Kabuki Aura!",
+					"aura": "I had some delays whilst preparing the Kabuki aura. It's extremely important that you don't use the Aura before we get to the Coral Mines! You got it??! We're PARTNERS! Have I made myself clear?",
+					"ok": "After Professor Igor has left, you open the box, to your surprise it's EMPTY! Professor Igor must have forgotten to put the Aura inside before he gave it to you ... unless...."
+				},
+				"igor_kabuki_betrayal": {
+					"begin": "Pffeww! Well, you made it here quickly! Too bad though! You've served me well until now, but I don't need you anymore: Money and Fame await me!",
+					"why": "You're too naive my young friend! Who trusts strangers? Idiot! I want you to know that once I monopolise the Kabuki market, I'll be rich beyond my wildest dreams, Ah ah ah ah ah! ATTAAACCKK, loyal allies!!!",
+					"attack": "Will you choose to pursue Igor on Totem Island? Beware, without the Kabuki Aura, your Dinoz will be lost for years!",
+					"attack_win": "Will you choose to pursue Igor on Totem Island? Beware, without the Kabuki Aura, your Dinoz will be lost for years!"
 				}
 			},
 			"choice": {
@@ -5049,6 +5060,14 @@
 					"i4": "Give 2 Sharpened Flints",
 					"i5": "Give 1 Air Energy",
 					"i6": "Give 1 Water Energy"
+				},
+				"igor_kabuki_aura": {
+					"aura": "Take the Aura",
+					"ok": "Yes"
+				},
+				"igor_kabuki_betrayal": {
+					"why": "???",
+					"attack": "Defend yourself"
 				}
 			}
 		}
