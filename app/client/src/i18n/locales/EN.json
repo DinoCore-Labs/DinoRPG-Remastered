@@ -5070,6 +5070,68 @@
 					"attack": "Defend yourself"
 				}
 			}
+		},
+		"yakuziTotem": {
+			"name": "Yakuzi",
+			"dialog": {
+				"yakuzi_totem_reward": {
+					"begin": "Phew! What a fight! Professor Igor was really strong!",
+					"know": "Yup, but it's a long story ... Where do I begin....",
+					"start": "Indeed, that's a good idea! On my 18th birthday, I received the heirloom of my Grandfather, which had been passed down through generation to generation in my family. Until then, I was only a little thug, but this heirloom changed everything for me!",
+					"herit": "Yes. It wasn't about the money, but a unique item that we call the Kabuki Aura, as well as a scroll showing how to build another one.",
+					"parch": "Yup, I lost it fighting against you, and Professor Igor apparently used it to build an Aura and travel to the Totem Island...",
+					"totem": "It's simple: many centuries ago, my ancestor the Grand Judoki saved a group of Kabukis at the moment of the Huge Cataclysm. He then moved to the island and built a Totem that protected it from intruders....",
+					"why": "Although they are great fighters, the Kabukis can only give birth in a very quiet place. As they're so rare, my ancestor wanted to them to survive here in peace....",
+					"ok": "When I inherited my grandfather's possessions, Professor Igor came to me and offered me millions of gold coins in exchange for the Aura of the scroll. Fearing the worst, I refused. He seemed very strange and I knew his intentions weren't good....",
+					"see": "So I went to Totem Island myself and discovered the Kabukis. They're so likeable that I decided to rear two of them myself. They're the same ones which helped me during our fights!",
+					"nice": "Yes, I'm very proud of them! But to raise them, I had to become a thug again, organising some scam....sorry, games of chance, so that the pig... sorry, tourists can relax a bit, you see?",
+					"see2": "In any case, take this. Thanks to you, I was able to prevent a disaster. I don't know how to thank you....",
+					"end": "Really? But let me give you this Kabuki Egg as reward! Take care of it, it's a very rare item! Unlike other Dinoz, the Kabukis only produce a small amount of eggs!",
+					"no": "Ah ... Well ... Come back if you change your mind....",
+					"yes": "Here, it's yours! You can keep the Kabuki Aura that the Professor Igor have made, it'll help you to come back here from time to time. See you soon my friend!"
+				},
+				"yakuzi_totem_wait": {
+					"begin": "Hello my friend! How are you?",
+					"noegg": "Nothing to report! But come back later, maybe I'll have something for you!",
+					"egg": "I've already given you one Kabuki Egg, please come back later to get another one!"
+				},
+				"yakuzi_totem_eggs": {
+					"begin": "Hello my friend! How are you?",
+					"noegg": "Nothing to report! But come back later, maybe I'll have something for you!",
+					"egg": "Oh! A new Kabuki Egg is available, I'm selling it for 50.000 coins if you're interested! The money isn't for me though, it's for a good deed ... this fund will allow me to continue to help the surviving Kabukis!",
+					"no": "I understand, but if you change your mind, come back soon as this kind of offer won't last long!",
+					"buy": "THANKS! Here you go! Don't forget to take good care of it!",
+					"maxegg": "Kabukis are close to extinction because so many Dinoz Masters buy their eggs. I'm really sorry but I can't give you any more eggs ... I have to protect their future!"
+				}
+			},
+			"choice": {
+				"yakuzi_totem_reward": {
+					"know": "You know him?",
+					"start": "Why not at the beginning?",
+					"herit": "Heirloom?",
+					"parch": "A scroll...",
+					"totem": "What happens on this island?",
+					"why": "Why did he do that?",
+					"ok": "I understand...",
+					"see": "Mmmm, I understand",
+					"nice": "They're beautiful!",
+					"see2": "... I think so",
+					"end": "Oh! You don't need to thank me!",
+					"yes": "Take the Egg",
+					"no": "I can't accept this..."
+				},
+				"yakuzi_totem_wait": {
+					"egg": "What's up?",
+					"noegg": "What's up?"
+				},
+				"yakuzi_totem_eggs": {
+					"egg": "What's up?",
+					"noegg": "What's up?",
+					"maxegg": "What's up?",
+					"buy": "OK!",
+					"no": "It's too expensive for me...sorry"
+				}
+			}
 		}
 	},
 	"missions": {

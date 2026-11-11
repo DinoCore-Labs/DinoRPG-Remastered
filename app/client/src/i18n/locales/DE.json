@@ -4941,6 +4941,68 @@
 					"attack": "Sich verteidigen."
 				}
 			}
+		},
+		"yakuziTotem": {
+			"name": "Yakuzi",
+			"dialog": {
+				"yakuzi_totem_reward": {
+					"begin": "Uff! Was für ein Kampf! Dieser Professor Igor war wirklich zäh!",
+					"know": "Ja, aber das ist eine lange Geschichte... Wo soll ich anfangen?",
+					"start": "Das ist in der Tat eine gute Idee! An meinem achtzehnten Geburtstag habe ich das Erbe meines Großvaters angetreten, das in meiner Familie von Generation zu Generation weitergegeben wurde. Bis zu diesem Zeitpunkt war ich nur ein kleiner Bengel, aber dieses Erbe hat mein ganzes Leben verändert!",
+					"herit": "Ja. Es handelte sich nicht um Geld, sondern um einen einzigartigen Gegenstand, den man \"Kabuki-Aura\" nennt. Dazu kam eine Pergamentrolle, in der drin steht, wie man \"im Falle größeren Schwierigkeiten\" eine neue Aura herstellen kann.",
+					"parch": "Ja. Ich habe sie verloren, als ich gegen dich gekämpft habe, und Professor Igor hat sich ihrer offensichtlich bedient, um eine Aura herzustellen und so auf die Totem-Insel zu gelangen...",
+					"totem": "Das ist einfach: Vor einigen hundert Jahren hat mein Vorfahre, der Große Judoki, bei der Großen Naturkatastrophe eine Gruppe Kabukis gerettet. Er hat sie auf dieser Insel angesiedelt und dieses Totem hergestellt, das die Insel vor Eindringlingen schützt...",
+					"why": "Trotz ihrer großen Kämpferqualitäten können sich Kabukis nur an einem sehr ruhigen Ort fortpflanzen. Da sie zudem sehr selten sind, wollte mein Vorfahre ihnen hier ein Überleben in Frieden ermöglichen...",
+					"ok": "Kaum dass ich das Erbe meines Großvaters angetreten hatte, bekam ich sofort Besuch von Professor Igor. Er bot mir mehrere Millionen Goldmünzen für die Aura oder die Pergamentrolle. Ich habe ihm aber nicht getraut und selbstverständlich sofort abgelehnt. Dieser Typ sah WIRKLICH dubios aus, wenn du verstehst was ich meine...",
+					"see": "Ich bin dann auf eigene Faust zur Totem-Insel losgezogen und habe dort die Kabukis entdeckt. Sie sind so anhänglich, dass ich beschloss, zwei von Ihnen selbst aufzuziehen. Die beiden haben mir auch in den Kämpfen geholfen, die wir ausgetragen haben...",
+					"nice": "Ja, sie sind mein ganzer Stolz! Damit ich mich aber um sie kümmern konnte, musste ich erneut zum Gauner werden. Ich mache Betr... Glücksspiele, damit sich die Idio... äh, Touristen ein wenig entspannen können, verstehst du?",
+					"see2": "Na ja, auf jeden Fall konnte ich dank dir eine Katastrophe abwenden. Ich weiß nicht wie ich dir danken soll...",
+					"end": "Wirklich? Dann erlaube mir wenigstens, dir dieses Kabuki-Ei als Dankeschön zu geben! Pass gut darauf auf, es ist ein sehr seltener Gegenstand! Im Gegensatz zu den anderen Dinoz, legen die Kabukis nur wenige Eier!",
+					"no": "Ah... Ok... Schau einfach wieder vorbei, wenn du eines Tages deine Meinung änderst...",
+					"yes": "Hier, es gehört jetzt dir! Die Kabuki-Aura, die Professor Igor hergestellt hat, kannst du meinetwegen auch behalten. Damit kannst du mich hin und wieder mal besuchen kommen. Bis bald, mein Freund!"
+				},
+				"yakuzi_totem_wait": {
+					"begin": "Hallo mein Freund! Wie geht's dir?",
+					"noegg": "Nichts Neues zu berichten! Aber besuch mich später wieder, vielleicht habe ich dann etwas für dich!",
+					"egg": "Ich habe dir erst vor kurzem ein Kabuki-Ei gegeben. Schau einfach später nochmal vorbei, dann werde ich dir ein weiteres geben!"
+				},
+				"yakuzi_totem_eggs": {
+					"begin": "Hallo mein Freund! Wie geht es dir?",
+					"noegg": "Diesmal kann ich dir nichts anbieten. Aber schau doch später nochmal vorbei. Vielleicht habe ich dann ja was für dich!",
+					"egg": "Oh! Ich hätte da ein neues Kabuki-Ei. Wenn du Interesse daran hast, verkaufe ich es dir für 50.000 Goldstücke! Du verstehst schon, ist für einen guten Zweck... Mit dem Geld kann ich dafür sorgen, dass die Kabukis auch weiterhin überleben werden!",
+					"no": "Das verstehe ich. Aber wenn du deine Meinung änderst, dann komm schnell wieder vorbei. ...solche Angebote sind nicht lange gültig!",
+					"buy": "DANKE! Hier, das ist für dich! Und pass ja gut auf ihn auf!",
+					"maxegg": "Die Kabukis sind vom Aussterben bedroht, da eine wachsende Anzahl von Dinozmeistern versucht, an ihre Eier heranzukommen. Ich kann dir deswegen kein weiteres Ei mehr geben... Das Überleben der Kabukis steht auf dem Spiel!"
+				}
+			},
+			"choice": {
+				"yakuzi_totem_reward": {
+					"know": "Du kennst ihn?",
+					"start": "Warum nicht einfach von vorn?",
+					"herit": "Eine Erbschaft?",
+					"parch": "Eine Pergamentrolle...",
+					"totem": "Was geht auf dieser Insel vor sich?",
+					"why": "Warum hat er das getan?",
+					"ok": "Ich verstehe...",
+					"see": "....ich glaube, ich verstehe was du meinst, ja.",
+					"nice": "Die sind wunderbar!",
+					"see2": "....ich glaube, ich verstehe was du meinst, ja.",
+					"end": "Ach! Ich brauche nichts!",
+					"yes": "Das Ei nehmen.",
+					"no": "Das kann ich nicht annehmen..."
+				},
+				"yakuzi_totem_wait": {
+					"egg": "Was gibt`s Neues?",
+					"noegg": "Was gibt`s Neues?"
+				},
+				"yakuzi_totem_eggs": {
+					"egg": "Was gibt`s Neues?",
+					"noegg": "Was gibt`s Neues?",
+					"maxegg": "Was gibt`s Neues?",
+					"buy": "OK!",
+					"no": "Das ist mir viel zu teuer..."
+				}
+			}
 		}
 	},
 	"missions": {
