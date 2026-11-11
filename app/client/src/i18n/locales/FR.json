@@ -4879,7 +4879,9 @@
 			"names": {
 				"port0": "Punk mystérieux",
 				"port1": "Yakuzi",
-				"port2": "Yakuzi"
+				"port2": "Yakuzi",
+				"chase0": "Yakuzi déguisé",
+				"chase1": "Yakuzi gelé"
 			},
 			"dialog": {
 				"port0": {
@@ -4915,6 +4917,21 @@
 					"reend": "Yakuzi s'enfuit avec votre récompense : peut-être devriez vous lui courir après...",
 					"quit": "Hé Attends !",
 					"lock": "Hé vous ! Attendez !"
+				},
+				"chase0": {
+					"begin": "Vous rencontrez un homme qui vous rapelle étrangement quelqu'un...",
+					"hello": "Je, heu... Yé vous démande pardon ? Yé crois qué vous fait' z'erreur. Yé m'apelle Bénédito Pacifico Juan Maria Ramirez. Escousez-moi yé dois vous laisser. Heu... yé quelqué choz' sur lé feu...",
+					"block": "Très bien... Je n'ai pas le choix on dirait. En garde !",
+					"ready": "Yakuzi a disparu avant la fin du combat. De nombreuses traces s'éloignent dans toutes les directions à la fois...",
+					"burn": "heu... oui. Au Révoir !"
+				},
+				"chase1": {
+					"begin": "Je... suis... con... gelé...",
+					"hello": "Je... suis... une... personne... quelconque... complêt...tement... gelée... ... Vous... pouvez... par... tir...",
+					"block": "Non !! Ca va ! Bon bon, ok... je faisais semblant. Décidément, t'es pas facile à berner toi, hein ?",
+					"fight": "Pas si vite ! J'ai une revanche à prendre. Prépare tes maudits Dinoz, je les aurai cette fois !",
+					"help": "Heu, oui merci... hum, Je veux dire : mer... ci... étran... ger...",
+					"combat": "Une fois de plus Yakuzi s'est enfuit... Mais dans sa course il a égaré un étrange Parchemin ! Peut-être pourrez-vous trouver quelqu'un capable de le déchiffrer pour vous..."
 				}
 			},
 			"choice": {
@@ -4951,6 +4968,19 @@
 					"lance": "Lancer la pièce",
 					"end": "(SUITE)",
 					"reend": "Votre Aura ?... Hey ! Attendez !"
+				},
+				"chase0": {
+					"hello": "Yakuzi ! Je vous ai reconnu, donnez-moi ma récompense !",
+					"block": "Vous ne vous enfuirez pas cette fois ! Mes dinoz vous encerclent",
+					"burn": "Ha, j'ai dû me tromper... Dépêchez vous, ça va cramer",
+					"ready": "Dinoz ! A l'attaque !"
+				},
+				"chase1": {
+					"hello": "C'est bizarre, on dirait que vous faites semblant...",
+					"block": "Donnez moi ma récompense, ou je demande à mes dinoz de vous réchauffer !",
+					"help": "Ne bougez pas, je vais chercher de l'aide !",
+					"fight": "Maintenant donnez moi ce que j'ai gagné !",
+					"combat": "C'est parti !"
 				}
 			}
 		}
