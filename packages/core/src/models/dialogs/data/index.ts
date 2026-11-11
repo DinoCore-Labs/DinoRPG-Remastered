@@ -65,6 +65,7 @@ import { weirdManDialog } from './weirdMan.dialog.js';
 import { woundedSoldierDialog } from './woundedSoldier.dialog.js';
 import { yakuziPortDebtDialog, yakuziPortIntroDialog, yakuziPortSecondBetDialog } from './yakuzi.dialog.js';
 import { yakuziForgesDialog, yakuziGorgesDialog } from './yakuziChase.dialog.js';
+import { yakuziTotemEggsDialog, yakuziTotemRewardDialog, yakuziTotemWaitDialog } from './yakuziKabukiTotem.dialog.js';
 import { maitrZenitDialog } from './zenit.dialog.js';
 
 export const dialogDefinitions = [
@@ -153,5 +154,8 @@ export const dialogDefinitions = [
 	rockyKingMagnetiteRewardDialog,
 	magnetiteStrangeRangerEpilogueDialog,
 	jeromeKSteppesDialog,
-	requestOfficeDialog
+	requestOfficeDialog,
+	yakuziTotemRewardDialog,
+	yakuziTotemWaitDialog,
+	yakuziTotemEggsDialog
 ];
