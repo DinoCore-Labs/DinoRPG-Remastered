@@ -51,6 +51,7 @@ import {
 	updateStat
 } from './fightMethods.js';
 import { initializeMonster } from './getFighters.js';
+import { escapeYakuziAfterDefeat } from './kabukiYakuziFight.js';
 import { randomBetweenSeeded } from './randomBetween.js';
 
 export type DetailedFight = {
@@ -410,6 +411,9 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: Seeded
 		}
 
 		playFighterTurn(fightData);
+		if (config.scriptedEncounter === 'kabuki_yakuzi_forges') {
+			escapeYakuziAfterDefeat(fightData.fighters, fightData.steps);
+		}
 		checkDeaths(fightData);
 
 		turn += 1;

@@ -75,6 +75,8 @@ export const STANDARD_PVP_RULES: FightRules = {
 };
 
 export interface FightConfiguration {
+	/** Historical MT story encounter; intentionally opt-in. */
+	scriptedEncounter?: 'kabuki_yakuzi_forges';
 	// Seed
 	seed: string;
 	// (Optional) Timeout, forces the fight to end after some time has elapsed
