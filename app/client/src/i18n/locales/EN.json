@@ -4874,6 +4874,85 @@
 		"dialog": {
 			"exit": "See you soon.",
 			"leave": "Quit"
+		},
+		"yakuzi": {
+			"names": {
+				"port0": "Mysterious Punk",
+				"port1": "Yakuzi",
+				"port2": "Yakuzi"
+			},
+			"dialog": {
+				"port0": {
+					"begin": "Hey! Psssst... Come here!",
+					"welcome": "Listen, I've got an interesting proposition for you.",
+					"hear": "Shhhht!!! Not so loud! Someone might hear us....",
+					"ref": "Shhhht!!! Not so loud! Someone might see us....",
+					"mission": "Ok. I have a passport for Totem Island. What do you say to a little bet to see if you can win it from me? You must bet 10.000 gold coins. If you win, you can leave with passport and your money. If you lose, I keep the passport and you'll owe me 10.000 gold coins. What do you say?",
+					"ok": "Ok. Listen carefully the rules: Each coin has two different sides. The side with the value on it is called \"tails\". The second with the head of a moueffe on it is called \"heads\". All you have to do is choose a side. Do you understand?",
+					"no": "Too bad ... Come back if you change your mind, I'll stay here.",
+					"compris": "Ha, you understand? It seems that you've played this kind of game before. So, which side do you choose, \"heads\" or \"tails\"?",
+					"not": "Each coin has two different sides. The side with the value is called \"tails\". The second representing a moueffe face is called \"heads\". You just have to choose one side. After we toss the coin, we'll check who has won. So, \"heads\" or \"tails\"?",
+					"pile": "You lose! Ha ha ha! I'm unbeatable. You owe me 10.000 gold coins.",
+					"suite": "Don't be so mad? Money is far too precious to play with! If you bring me my 10.000 gold coins, maybe I'll offer you another deal ... and next time, maybe we'll toss a coin.",
+					"end": "Ha ha! Find the money and then come back. My code name is \"Yakuzi\", I'll stay here and wait for you.",
+					"face": "You lose! Ha ha ha! I'm unbeatable. You owe me 10.000 gold coins.",
+					"quit": "You disregard his calls and move away ... maybe he had something important to tell you."
+				},
+				"port1": {
+					"begin": "Hey! Psssst ... Come here!",
+					"welcome": "So? You have the money?",
+					"yes": "Ha ha! Thanks, come back whenever you want!",
+					"quit": "Hey, wait. Where do you think you're going!"
+				},
+				"port2": {
+					"begin": "Hey! Psssst ... Come here!",
+					"welcome": "Here's my deal, we bet 100.000 this time. If you win, you can take all my money and the passport. If you lose, I'll keep it and you'll owe me 100.000 gold coins. If you accept the deal, give me a coin that I can toss....",
+					"give": "Ok, \"Heads\" or \"Tails\"?",
+					"start": "Ting! Yakuzi tosses the coin up in the air. It falls on the ground, still spinning. The suspense is unbearable.",
+					"nop": "Ok, I choose tails, no wait! heads!",
+					"lance": "Ting! You toss the coin up in the air. It falls on the ground, still spinning. The suspense is unbearable.",
+					"end": "Impossible ... I've lost ... Oh no! It's mine! You'll never catch me, ha ha ha ha!",
+					"reend": "Yakuzi has run away with your reward, maybe you should run after him....",
+					"quit": "Hey wait!",
+					"lock": "Hey you! Wait!"
+				}
+			},
+			"choice": {
+				"port0": {
+					"welcome": "Approach the punk and see what he wants",
+					"quit": "Ignore him, better to stay away from strangers.",
+					"hear": "I'm listening!",
+					"ref": "You remind me of someone...",
+					"leave": "Excuse me! I thought you were talking to me! Goodbye",
+					"mission": "Ooops, sorry? Why does it matter if someone hears us?",
+					"ok": "Why not. It seems like a fair deal.",
+					"no": "What!? Are you crazy! Where will I get all that money from?",
+					"compris": "All I have to do is choose heads or tails?",
+					"not": "Uh, I didn't understand anything, what do I have to do?",
+					"pile": "Tails",
+					"face": "Heads",
+					"suite": "But ... you didn't even toss the coin!",
+					"end": "If I want this passport, it seems I don't have much of a choice"
+				},
+				"port1": {
+					"welcome": "Approach him and see what he wants",
+					"quit": "Ignore him, and run away quickly.",
+					"yes": "Yep, 10.000 gold coins.",
+					"leave": "Yes, but I'll never give it to a cheater like you!"
+				},
+				"port2": {
+					"welcome": "Approach him",
+					"quit": "Ignore him, and run away quickly.",
+					"give": "Ok, here's a coin, but no tricks this time!",
+					"nop": "Ok, I accept the bet, but I want to toss the coin myself!",
+					"lock": "No way! I don't trust you anymore. Goodbye.",
+					"pile": "Tails",
+					"face": "Heads",
+					"lance": "Toss the coin",
+					"end": "(Next)",
+					"reend": "Hey! Wait!"
+				}
+			}
 		}
 	},
 	"missions": {

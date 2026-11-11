@@ -10,6 +10,7 @@ import { getActiveGameEvents } from '../../GameEvent/Service/gameEvent.service.j
 type DialogTransaction = Prisma.TransactionClient;
 
 export type DialogScenarioState = {
+	updatedAt: Date;
 	progression: number;
 	tracking: number;
 };
@@ -161,13 +162,15 @@ function buildScenarioMap(
 		scenarioKey: string;
 		progression: number;
 		tracking: number;
+		updatedAt: Date;
 	}>
 ): Map<string, DialogScenarioState> {
 	const map = new Map<string, DialogScenarioState>();
 	for (const entry of entries) {
 		map.set(entry.scenarioKey, {
 			progression: entry.progression,
-			tracking: entry.tracking
+			tracking: entry.tracking,
+			updatedAt: entry.updatedAt
 		});
 	}
 	return map;
@@ -250,7 +253,8 @@ export async function buildDialogContext(
 		select: {
 			scenarioKey: true,
 			progression: true,
-			tracking: true
+			tracking: true,
+			updatedAt: true
 		}
 	});
 	const userStats = await tx.userTracking.findMany({

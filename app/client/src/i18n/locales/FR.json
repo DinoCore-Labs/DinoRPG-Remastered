@@ -4874,6 +4874,85 @@
 		"dialog": {
 			"exit": "À bientôt.",
 			"leave": "Quitter"
+		},
+		"yakuzi": {
+			"names": {
+				"port0": "Punk mystérieux",
+				"port1": "Yakuzi",
+				"port2": "Yakuzi"
+			},
+			"dialog": {
+				"port0": {
+					"begin": "Hey ! Psssst... Par ici !",
+					"welcome": "Ecoute, j'ai une affaire intéressante à te proposer...",
+					"hear": "Chhhht !!! Pas si fort ! Tu vas nous faire repérer...",
+					"ref": "Chhhht !!! Pas si fort ! Tu vas nous faire repérer...",
+					"mission": "Voilà. Je possède un passeport pour l'Ile du Totem. Je te propose un petit pari pour le gagner, Tu paries 10.000 pièces d'or. Si tu gagnes, tu repars avec le passeport et le fric. Sinon, le passeport reste dans ma poche, et tu me devras 10.000 pièces. Alors, qu'est ce que t'en dis ?",
+					"ok": "Ok. Maintenant écoute attentivement les règles : Chaque pièce est composé de deux cotés différents. Le coté indiquant la valeur de la pièce est appelé \"pile\". Le second représentant une tête de moueffe s'apelle \"face\". Tu n'as qu'à choisir un des cotés. Ensuite, on regarde qui a gagné. C'est compris ?",
+					"no": "Dommage... Reviens me voir si tu changes d'avis, je bougerai pas d'ici.",
+					"compris": "Ha, tu connais ? Je vois que t'es habitué aux affaires toi ! Alors, \"pile\" ou \"face\" ?",
+					"not": "Chaque pièce est composé de deux cotés différents. Le coté indiquant la valeur de la pièce est appelé \"pile\". Le second représentant une tête de moueffe s'apelle \"face\". Tu n'as qu'à choisir un des cotés. Ensuite, on regarde qui a gagné. Alors, \"pile\" ou \"face\" ?",
+					"pile": "Perdu ! Ha ha ha ! Je suis imbattable. Tu me dois 10.000 pièces d'or.",
+					"suite": "Ca va pas non ? L'argent, c'est trop précieux pour jouer avec ! Et d'ailleur, ce n'était pas dans les règles que TU as accepté... Si tu me ramènes mes 10.000 pièces d'or, je te proposerai peut-être une autre affaire... et cette fois, en lançant une pièce.",
+					"end": "Hé hé ! Trouve le fric, et reviens me voir. Mon nom de code est \"Yakuzi\", je bougerai pas d'ici.",
+					"face": "Perdu ! Ha ha ha ! Je suis imbattable. Tu me dois 10.000 pièces d'or.",
+					"quit": "Malgré ses appels, vous vous éloignez un peu plus loin... Peut-être avait-il quelque chose d'important à vous dire."
+				},
+				"port1": {
+					"begin": "Hey ! Psssst... Par ici !",
+					"welcome": "Alors ? T'as l'argent ?",
+					"yes": "Hé hé ! Merci, merci merci, reviens me voir quand tu veux !",
+					"quit": "Hé Attends !"
+				},
+				"port2": {
+					"begin": "Hey ! Psssst... Par ici !",
+					"welcome": "Alors voilà ce que je te propose : on parie 100.000 cette fois. Si tu gagnes, t'empoches tout, argent et passeport. Sinon, je le garde et tu me devras 100.000 pièces d'or. Si tu acceptes, donne-moi une pièce que je la lance...",
+					"give": "Ok. \"Pile\" ou \"Face\" ?",
+					"start": "Ting ! Yakuzi lance la pièce en l'air. Elle retombe sur le sol en tournoyant sur elle même. Le suspense est insoutenable.",
+					"nop": "Comme tu veux... Je choisi heu... pile... non, face ! Face !",
+					"lance": "Ting ! Vous lancez la pièce en l'air, et la regardez tomber au sol avec un suspense insoutenable.",
+					"end": "Impossible... j'ai... j'ai perdu... Ha non ! C'est MON AURA après tout. Elle est à moi ! Adieu, ha ha ha ha !",
+					"reend": "Yakuzi s'enfuit avec votre récompense : peut-être devriez vous lui courir après...",
+					"quit": "Hé Attends !",
+					"lock": "Hé vous ! Attendez !"
+				}
+			},
+			"choice": {
+				"port0": {
+					"welcome": "S'approcher pour voir ce qu'il veut",
+					"quit": "Ignorer ce type... Ras-le-bol des bonhommes louches...",
+					"hear": "Je vous écoute !",
+					"ref": "Vous me rappelez vaguement quelqu'un...",
+					"leave": "Ho excusez-moi, je croyais que c'était à moi que vous parliez ! Au revoir.",
+					"mission": "Oups, pardon... Alors ?",
+					"ok": "Pourquoi pas, ça me paraît équitable.",
+					"no": "Hein !? Ca va pas la tête ! Ou est-ce que je vais trouver tout cet argent ?",
+					"compris": "Un \"pile ou face\" quoi...",
+					"not": "Heu j'ai pas tout suivi... je dois choisir quoi ?",
+					"pile": "Pile",
+					"face": "Face",
+					"suite": "Mais... vous n'avez pas lancé de pièce !",
+					"end": "Si je veux ce passeport, j'ai pas vraiment le choix..."
+				},
+				"port1": {
+					"welcome": "Aller le voir",
+					"quit": "Passer à coté sans rien dire",
+					"yes": "Oui, 10.000 pièces d'or.",
+					"leave": "Oui, mais je ne le donnerai pas à un tricheur comme vous !"
+				},
+				"port2": {
+					"welcome": "Aller le voir",
+					"quit": "Passer à coté sans rien dire",
+					"give": "D'accord, tenez... Mais attention, pas d'entourloupe cette fois !",
+					"nop": "J'accepte, mais je lancerai la pièce moi même !",
+					"lock": "Pas question ! Je n'ai plus confiance en vous. Au revoir.",
+					"pile": "Pile",
+					"face": "Face",
+					"lance": "Lancer la pièce",
+					"end": "(SUITE)",
+					"reend": "Votre Aura ?... Hey ! Attendez !"
+				}
+			}
 		}
 	},
 	"missions": {

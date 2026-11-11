@@ -61,6 +61,7 @@ import { urmaDialog } from './urma.dialog.js';
 import { venerableDialog, venerableHurtDialog } from './venerable.dialog.js';
 import { weirdManDialog } from './weirdMan.dialog.js';
 import { woundedSoldierDialog } from './woundedSoldier.dialog.js';
+import { yakuziPortDebtDialog, yakuziPortIntroDialog, yakuziPortSecondBetDialog } from './yakuzi.dialog.js';
 import { maitrZenitDialog } from './zenit.dialog.js';
 
 export const dialogDefinitions = [
@@ -93,6 +94,10 @@ export const dialogDefinitions = [
 	jeromeKDinovilleDialog,
 	guideMichelDialog,
 	urmaDialog,
+	// Quête Kabuki — Port de Prêche
+	yakuziPortIntroDialog,
+	yakuziPortDebtDialog,
+	yakuziPortSecondBetDialog,
 	// Iles Atlantéinées
 	strangeHippoDialog,
 	coralMinerDialog,
