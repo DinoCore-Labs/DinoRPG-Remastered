@@ -52,6 +52,11 @@ import {
 } from './fightMethods.js';
 import { initializeMonster } from './getFighters.js';
 import {
+	finishIgorKabukiCoralFight,
+	releaseIgorKabukiCompanions,
+	reserveIgorKabukiCompanions
+} from './igorKabukiFight.js';
+import {
 	completeKabukiYakuziFight,
 	escapeYakuziAfterDefeat,
 	setGorgesYakuziInitialLife,
@@ -285,11 +290,18 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: Seeded
 		setGorgesYakuziInitialLife(fightData.fighters);
 	}
 
+	// MT kabuki phase 19: companions join after the opening announcement.
+	const reservedIgorCompanions =
+		config.scriptedEncounter === 'kabuki_igor_corail' ? reserveIgorKabukiCompanions(fightData) : [];
+
 	// Prepare the fight: fighters arrive, some special skills and items are handled *before* the start of the fight
 	prepareFight(fightData);
 
 	// Start the fight: handle skills and items that trigger at the beginning of the fight
 	startFight(fightData);
+	if (config.scriptedEncounter === 'kabuki_igor_corail') {
+		releaseIgorKabukiCompanions(fightData, reservedIgorCompanions, updateStat);
+	}
 
 	// Order a first time fighters by initiative (random if equal)
 	orderFighters(fightData);
@@ -430,6 +442,10 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: Seeded
 		turn += 1;
 	}
 
+	if (config.scriptedEncounter === 'kabuki_igor_corail') {
+		finishIgorKabukiCoralFight(fightData);
+	}
+
 	const fightOutcome = fightData.outcome;
 
 	if (fightOutcome === null) {
@@ -437,7 +453,9 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: Seeded
 	}
 
 	// Apply MT post-battle story effects before HP losses are calculated.
-	completeKabukiYakuziFight(fightData, config.scriptedEncounter);
+	if (config.scriptedEncounter !== 'kabuki_igor_corail') {
+		completeKabukiYakuziFight(fightData, config.scriptedEncounter);
+	}
 
 	const baoExists = fightData.fighters.some(
 		fighter => fighter.type === FighterType.MONSTER && fighter.name === monsterList[Monster.BAOBOB].name
