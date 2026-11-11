@@ -122,6 +122,7 @@ export enum Monster {
 	LAPOUF = 'LAPOUF',
 	MONSTER_HUNT_AMENPENNE = 'MONSTER_HUNT_AMENPENNE',
 	MONSTER_HUNT_MARCANGLIER = 'MONSTER_HUNT_MARCANGLIER',
+	KABUKI_YAKUZI = 'KABUKI_YAKUZI',
 	ANY = 'ANY'
 }
 
@@ -129,6 +130,22 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 	/* -------------------------------------------------
 	 * DINOVILLE
 	 * ------------------------------------------------- */
+	/** MT monsters.xml: yakkb1 (the anonymous Kabuki summoned at the Gorges). */
+	[Monster.KABUKI_YAKUZI]: {
+		id: Monster.KABUKI_YAKUZI,
+		name: '???',
+		level: 10,
+		hp: 100,
+		elements: { fire: 0, wood: 1, water: 4, lightning: 2, air: 4 },
+		bonus_attack: 0,
+		bonus_defense: 0,
+		resilience: 40,
+		odds: 0,
+		skills: [], // MT ninja skill is not implemented yet; not silently substituted.
+		zones: [],
+		canBeCaptured: false,
+		display: 'E9ERKdJzrAYd5P00'
+	},
 	[Monster.GOUPIGNON]: {
 		id: Monster.GOUPIGNON,
 		name: 'goupignon',

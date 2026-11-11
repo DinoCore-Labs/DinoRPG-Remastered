@@ -201,8 +201,12 @@ export async function processDialogFightUnlocked(
 	 * Traitement générique des autres combats de dialogue.
 	 */
 	const team = [dinozData];
-	const scriptedEncounter =
-		dialogId === 'yakuzi_forges' && phaseId === 'ready' ? ('kabuki_yakuzi_forges' as const) : undefined;
+	const scriptedEncounter: 'kabuki_yakuzi_forges' | 'kabuki_yakuzi_gorges' | undefined =
+		dialogId === 'yakuzi_forges' && phaseId === 'ready'
+			? 'kabuki_yakuzi_forges'
+			: dialogId === 'yakuzi_gorges' && phaseId === 'combat'
+				? 'kabuki_yakuzi_gorges'
+				: undefined;
 	const fightResult = calculateFightVsMonsters(team, user, dinozData.placeId, monsters, undefined, allies, {
 		scriptedEncounter
 	});
