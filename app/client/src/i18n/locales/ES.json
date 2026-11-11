@@ -4750,7 +4750,9 @@
 			"names": {
 				"port0": "Punk misterioso",
 				"port1": "Yakuzi",
-				"port2": "Yakuzi"
+				"port2": "Yakuzi",
+				"chase0": "Yakuzi disfrazado",
+				"chase1": "Yakuzi congelado"
 			},
 			"dialog": {
 				"port0": {
@@ -4786,6 +4788,21 @@
 					"reend": "Yakuzi huye con tu recompensa: quizás puedas correr tras él...",
 					"quit": "Eh, ¡espera!",
 					"lock": "Eh tú, ¡espera!"
+				},
+				"chase0": {
+					"begin": "Te encuentras con un hombre que te recuerda extrañamente a alguien...",
+					"hello": "Yo... esto... ¿Perdone? Creo que uzted se equivoca. Me yamo Benedito Pacifico Juan María Ramírez. Peldone pero tengo que dejarle. Tengo una coza ahí, en el fuego...",
+					"block": "Muy bien... no me dejas otra opción. ¡En guardia!",
+					"ready": "Yakuzi ha desaparecido antes del fin del combate. Deja numerosos rastros, pero están en todas direcciones...",
+					"burn": "Heeee... sí. ¡Hasta la próxima!"
+				},
+				"chase1": {
+					"begin": "Estoy... con... ge... lado...",
+					"hello": "Soy... una... persona... cualquiera... total...mente... congelada... ... Te... puedes... ir...",
+					"block": "¡¡No!! De acuerdo, ¡está bien! Estaba pretendiendo ser otra persona. ¡Está claro que no es fácil engañarte!",
+					"fight": "No tan rápido. Tengo que vengarme... prepara tus malditos Dinos, ¡esta vez los aplastaré!",
+					"help": "Eh... sí gracias. Quiero decir: gra...cias, extran... gero...",
+					"combat": "Una vez de más Yakuzi ha huido... ¡pero mientras escapaba se le ha caído un extraño pergamino! Quizás puedas encontrar a alguien capaz de descifrarlo por ti..."
 				}
 			},
 			"choice": {
@@ -4822,6 +4839,19 @@
 					"lance": "Lanzar la moneda",
 					"end": "(CONTINUACIÓN)",
 					"reend": "¿Tu Aura?... ¡hey! ¡espera!"
+				},
+				"chase0": {
+					"hello": "¡Yakuzi! Te he reconocido, ¡mal bicho! ¡Dame mi recompensa!",
+					"block": "¡No huirás esta vez! Mis dinos te rodean",
+					"burn": "Ah, creo que me he equivocado de persona... dése prisa, se le va a quemar",
+					"ready": "¡Dinos! ¡Al ataque!"
+				},
+				"chase1": {
+					"hello": "Qué raro, diría que te pareces a...",
+					"block": "¡Dame mi recompensa o le ordeno a mis Dinos que te den una paliza!",
+					"help": "No se mueva, ¡voy a buscar ayuda!",
+					"fight": "Y ahora, ¡dame lo que me debes!",
+					"combat": "¡Allá vamos, pues!"
 				}
 			}
 		}

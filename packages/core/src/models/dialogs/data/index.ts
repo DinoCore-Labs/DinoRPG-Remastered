@@ -62,6 +62,7 @@ import { venerableDialog, venerableHurtDialog } from './venerable.dialog.js';
 import { weirdManDialog } from './weirdMan.dialog.js';
 import { woundedSoldierDialog } from './woundedSoldier.dialog.js';
 import { yakuziPortDebtDialog, yakuziPortIntroDialog, yakuziPortSecondBetDialog } from './yakuzi.dialog.js';
+import { yakuziForgesDialog, yakuziGorgesDialog } from './yakuziChase.dialog.js';
 import { maitrZenitDialog } from './zenit.dialog.js';
 
 export const dialogDefinitions = [
@@ -107,6 +108,9 @@ export const dialogDefinitions = [
 	baoBobDialog,
 	starquestBaoBobDialog,
 	baoFanDialog,
+	// Kabuki chase encounters
+	yakuziForgesDialog,
+	yakuziGorgesDialog,
 	// GTC
 	strangePterozDialog,
 	merguezSellerDialog,
