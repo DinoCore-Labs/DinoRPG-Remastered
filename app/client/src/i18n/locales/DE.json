@@ -4854,6 +4854,74 @@
 					"combat": "Auf geht`s!"
 				}
 			}
+		},
+		"igorKabuki": {
+			"name": "Professor Igor",
+			"dialog": {
+				"igor_kabuki_intro": {
+					"begin": "Als er dich bemerkt, nähert sich dir ein Universitäts-Professor. Er macht den Eindruck, als wolle er mit dir über etwas Wichtiges reden...",
+					"bye": "Du hast schon recht. Wenn du mit Jedem ein Gespräch beginnst, wirst du niemals deine Aufgabe zu Ende bringen...",
+					"speak": "Guten Tag, werter Dinozmeister! Mein Name ist Professor Igor! Ich erforsche seit Jahren die Geheimnisse und Legenden des Dinolandes...",
+					"legend": "Ja, ganz genau! Es gibt zahlreiche Legenden in unserer Welt. Einige sind komplett erfunden, andere jedoch sind äußerst verwirrend und werden wohl für immer ein Geheimnis bleiben... Was mich betrifft, so habe ich mich auf das Zeitalter des Präkataklysmus spezialisiert...",
+					"cata": "Prä-ka-ta-klys-mus! Das bedeutet: \"Vor der Großen Naturkatastrophe\". Falls du es vergessen hast: Vor hunderten von Jahren löste der Untergang der Jazz-Insel einen riesigen Tsunami aus, der einen Großteil von Dinoland zerstörte... Nur wenige höher gelegene Orte sollen dabei verschont geblieben sein...",
+					"next": "Mein besonderes Interesse gilt nach wie vor den Dinoz, die VOR dieser Großen Katastrophe lebten. Die Korgonen zum Beispiel... Sie sind vollständig in ihren wilden Zustand zurückverfallen und können nicht mehr von den Dinozmeistern domestiziert werden. Im Herzen des Grumhel-Waldes sollen auch sonderbare, affenähnliche Dinoz überlebt haben... Aber die sonderbarsten und geheimnisvollsten aller Dinoz, das sind zweifelsohne die Kabukis!",
+					"kabuki": "Genau. Das ist ein Dinoz, der ursprünglich aus Caushemesh stammt. Man munkelt, dass es dort auch noch zahlreiche von ihnen geben soll. Allerdings sollen sie sich an die Berge gewöhnt haben, darum kommen sie sich nicht mehr wie einst hinunter ins Flachland. Man erzählt sich jedoch auch, dass eine kleine Gruppe der ursprünglichen Kabukis auf einer der Atlantinischen Inseln überlebt haben soll...",
+					"oh": "Hör zu! Ich werde EHRLICH zu dir sein: Ich WEISS, dass du eine Pergamentrolle besitzt. Und wenn es mir gelingt, sie zu entziffern, da bin ich mir sicher, wird sie uns Zugang zu dieser Kabuki-Insel verschaffen. Uns beiden! Wir 2 könnten R...BERÜHMT werden! Die Entdecker der Kabukis! Die Entdecker der Kabukis einer verschwundenen Rasse!! Na, was ist? Nimmst du meine Hilfe an?",
+					"no": "Überrascht von deiner Ablehnung, verfinstert sich der Gesichtsausdruck von Professor Igor kurz... sicherlich nur aus Enttäuschung. Nichtsdestotrotz zwingt er sich zu einem breiten Lächeln und bittet dich, so schnell wie möglich zu ihm zurückzukehren, sobald du dich entschieden hast.",
+					"yes": "SUPER! Na dann... Also... GIB MIR diese Pergamentrolle...",
+					"show": "Hmm... das ist wirklich ein verzwickter Text. Ich werde eine Weile brauchen, um ihn zu entziffern. Könntest Du etwas später wiederkommen? Ich werde hier auf dich warten, sobald ich fertig bin!"
+				},
+				"igor_kabuki_decoded": {
+					"begin": "AH!! Das bist du ja ENDLICH! Ich habe auf dich gewartet!!",
+					"next": "Es ist mir gelungen, die Pergamentrolle zu entziffern. Es gibt da aber ein kleines Problem... Um auf die Kabuki-Insel zu gelangen, werden wir zunächst eine Kabuki-Aura herstellen müssen!",
+					"aura": "Ja. Schau, das ist so: Derjenige, der die Kabukis bei der Großen Naturkatastrophe gerettet hat, hat den Zugang zu ihrer Insel mit einem mächtigen Fluch belegt. Wer versucht, sich der Insel zu nähern, wird sich im Nebel verlieren und dann jahrelang darin umherirren... Darum musst du dir eine Kabuki-Aura besorgen, um dich gegen den Fluch zu schützen...",
+					"how": "Das ist ganz einfach: Die Anleitung dazu steht auf der Pergamentrolle. Die einzige Schwierigkeit wird sein, die verschiedenen Zutaten zu finden, die für die Herstellung der Aura vonnöten sind...",
+					"ingr": "Ja, hör mir gut zu, die Liste ist lang... 5 Lutanische Zackenbarsche, 5 Blätter der Pelinae, 5 Pelzbüschel, 2 Geschliffene Silex, eine Luft-Energie und eine Wasser-Energie! Schaff mir das alles herbei und ich werde es in eine Kabuki-Aura verwandeln!",
+					"ingr2": "Das ist doch ganz einfach. Es gibt zwei Möglichkeiten, an diese Zutaten heranzukommen: Entweder du bringst deinen Dinoz die unterschiedlichen Sammelfähigkeiten bei und lässt sie dann danach suchen. Das kann allerdings eine ganze Weile dauern, denn alle fünf verschiedenen Sammelfähigkeiten werden benötigt. Oder aber du besorgst dir die Zutaten von anderen Dinomeistern auf dem Marktplatz!",
+					"ok": "Perfekt! Besuch mich wieder, sobald du die ersten Zutaten zusammen hast!"
+				},
+				"igor_kabuki_ingredients": {
+					"begin": "Also, lass doch mal sehen... Wie weit sind wir denn mit den Zutaten?",
+					"i1": "Oh, das sind schöne Zackenbarsche! Schnell, zeigt mir, was du sonst noch hast!",
+					"i2": "Diese Blätter sind wunderschön! Schnell, zeig mir, was du sonst noch hast!",
+					"i3": "Was für seidenweiche Pelze... Ist das Raubtierfledermaus? Schnell, zeig mir, was du sonst noch hast!",
+					"i4": "Autsch! Ich habe mich gestochen. Diese Silex sind WIRKLICH gut geschliffen! Schnell, zeig mir, was du sonst noch hast!",
+					"i5": "Diese Luft-Energie ist besonders rein! Noch eine letzte Zutat, dann bin ich in der Lage, die Aura herzustellen!",
+					"i6": "SUPER! DU HAST ES GESCHAFFT!!! Ich muss jetzt bloß noch ein paar Vorbereitungen treffen und noch jemanden kontakti... äh... ich meine, ich muss noch alles für die Herstellung der Aura vorbereiten! Besuch mich wieder, sobald ich fertig bin!"
+				}
+			},
+			"choice": {
+				"igor_kabuki_intro": {
+					"speak": "Mit ihm reden.",
+					"bye": "Weggehen.",
+					"legend": "Die Legenden?",
+					"cata": "Prä-was?",
+					"next": "...",
+					"kabuki": "Die Kabukis?",
+					"oh": "Ohhhh!",
+					"yes": "OK!",
+					"no": "Ich möchte kurz darüber nachdenken...",
+					"show": "Geben."
+				},
+				"igor_kabuki_decoded": {
+					"next": "...",
+					"aura": "Eine Aura?",
+					"how": "Und wie mache ich das?",
+					"ingr": "Welche Zutaten?",
+					"ingr2": "Und wie soll ich das alles finden?",
+					"again": "Könntest du das bitte wiederholen?",
+					"ok": "Ok, ich habe alles verstanden!"
+				},
+				"igor_kabuki_ingredients": {
+					"begin": "Weiter",
+					"i1": "5 Lutanische Zackenbarsche überreichen",
+					"i2": "5 Blätter der Pelinae überreichen",
+					"i3": "5 Pelzbüschel überreichen",
+					"i4": "2 Geschliffene Silex überreichen",
+					"i5": "1 Luft-Energie überreichen",
+					"i6": "1 Wasser-Energie überreichen"
+				}
+			}
 		}
 	},
 	"missions": {

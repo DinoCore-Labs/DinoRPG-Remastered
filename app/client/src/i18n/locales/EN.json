@@ -4983,6 +4983,74 @@
 					"combat": "Let's fight!"
 				}
 			}
+		},
+		"igorKabuki": {
+			"name": "Professor Igor",
+			"dialog": {
+				"igor_kabuki_intro": {
+					"begin": "The Professor approaches after spotting you. It seems he wants to talk to you about something important....",
+					"bye": "You're right, if you start to talk with everyone you'll never finish your quest....",
+					"speak": "Hello young Dinoz master! Let me introduce myself. My name is Professor Igor! I've spent years studying various Dinoland mysteries and legends.",
+					"legend": "Yes, there are hundreds of Dinoland legends. Certainly some are completely made up, but others are particularly unsettling and remain real mysteries ... As for me, I specialise in the pre-cataclysmic period....",
+					"cata": "Pre-Ca-ta-cly-sm-ic! That means, \"before the Huge Cataclysm\" ... I'm only telling you in case you didn't know already. Many centuries ago, Jazz Island collapsed and created an enormous tsunami that destroyed large parts of Dinoland ... only a few places up on high could be saved.",
+					"next": "I'm also interested in Dinoz which lived BEFORE this Huge Cataclysm. The Korgons for example returned to their wild state, and can no longer be tamed by Dinoz Masters. Some strange ape-like dinoz survived in the Grumhel ... but the strangest are certainly the Kabukis!",
+					"kabuki": "Yes. They're native to Caushemesh, and word has it that there are a lot of them there. It seems that the Korgons have become too accustomed to living in the mountains, as they no longer venture down onto the plains. People also say that a small group of ancient Kabukis managed to survive on the Atlanteid Islands....",
+					"oh": "Listen! I'll be honest with you: I know full well that you're in possession of a scroll. If I decipher it, I think we'll be able to gain access to Kabuki Island! Both of us! Together! We'll become famous for sure! The Kabuki Discoverers! What do you think of my idea, are you in?",
+					"no": "The Professor seems to be surprised by your refusal and looks at you with, disappointment. He forces himself to smile and asks you to come back as soon as possible, once you have decided.",
+					"yes": "Fantastic! You better give me the scroll then.....",
+					"show": "Mmmm ... the text is very complicated, I'll need some time to decipher it. Can you come back later? I'll wait you here once I've finished!"
+				},
+				"igor_kabuki_decoded": {
+					"begin": "AH! You've arrived at last! I've been waiting for you!!",
+					"next": "I've successfully deciphered the scroll, but there's a small problem ... in order to access Kabuki Island, we first need to construct a Kabuki Aura!",
+					"aura": "It's a long story.........you see, the person that saved the Kabukis from the Huge Cataclysm, protected the Island with a powerful spell. Whoever tries to approach the Island will be lost in the mist and end up going round in circles for years ... we must get a Kabuki Aura to be protected from the spell....",
+					"how": "It's really easy: the instructions are written on the scroll. The only difficulty will be to gather the various ingredients needed to create the Aura.",
+					"ingr": "Listen carefully, the list is very, very long... 5 Lujidanee Groupers, 5 Leaves of Pelinae, 5 Fur Tufts, 2 Sharpened Flints, one Air Energy and one Water Energy! Bring all these ingredients to me and then I'll know how to transform them into the Kabuki Aura!",
+					"ingr2": "It's easy, there are two ways to get the ingredients: the first one is to teach your Dinoz all the various harvesting skills. As there are five harvesting skills, this can often take a lot of time. The other solution is to trade the ingredients with other Dinoz Masters at the Market Place!",
+					"ok": "Perfect! Come back once you've gathered the first few ingredients!"
+				},
+				"igor_kabuki_ingredients": {
+					"begin": "So let see ... How are you getting along with gathering the ingredients?",
+					"i1": "Oh nice groupers! Quick, next one!",
+					"i2": "These leaves are beautiful! Next one!",
+					"i3": "These furs are so silky ... they're from a Tawny-Bat you say? Quick, next one!",
+					"i4": "Ouch! I cut myself, these flints are very sharp! Next one!",
+					"i5": "This air energy is very pure! Just one more ingredient and I'll be able to make the Aura!",
+					"i6": "PERFECT! You've done it! All I need to do now is make some preparations ... mmmm ... I wanted to say prepare all the requirements for the Aura! Come back once I've finished!"
+				}
+			},
+			"choice": {
+				"igor_kabuki_intro": {
+					"speak": "Talk to him",
+					"bye": "Walk away",
+					"legend": "Legends?",
+					"cata": "Pre-what?",
+					"next": "...",
+					"kabuki": "Kabukis?",
+					"oh": "Ohhhhh",
+					"yes": "Ok, let's do it!",
+					"no": "Let me think about it, I'll get back to you",
+					"show": "Give the scroll to the professor"
+				},
+				"igor_kabuki_decoded": {
+					"next": "...",
+					"aura": "What's an Aura?",
+					"how": "And how do we do it?",
+					"ingr": "The ingredients?",
+					"ingr2": "How do I find all these ingredients?",
+					"again": "Can you repeat that for me?",
+					"ok": "Ok, I understand!"
+				},
+				"igor_kabuki_ingredients": {
+					"begin": "Next",
+					"i1": "Give 5 Lujidanee Groupers",
+					"i2": "Give 5 Leaves of Pelinae",
+					"i3": "Give 5 Fur Tufts",
+					"i4": "Give 2 Sharpened Flints",
+					"i5": "Give 1 Air Energy",
+					"i6": "Give 1 Water Energy"
+				}
+			}
 		}
 	},
 	"missions": {

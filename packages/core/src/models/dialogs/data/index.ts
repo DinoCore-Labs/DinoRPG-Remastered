@@ -10,6 +10,7 @@ import { forestGuardianDialog } from './forestGuardian.dialog.js';
 import { guideMichelDialog } from './guideMichel.dialog.js';
 import { nicolasHulotDialog } from './hulot.dialog.js';
 import { hydargolDialog } from './hydargol.dialog.js';
+import { igorKabukiDecodedDialog, igorKabukiIngredientsDialog, igorKabukiIntroDialog } from './igorKabuki.dialog.js';
 import {
 	introFallsBaoDialog,
 	introFallsTaurusDialog,
@@ -86,6 +87,7 @@ export const dialogDefinitions = [
 	skullyEndDialog,
 	madameXDialog,
 	maitrZenitDialog,
+	// Quête Être étrange
 	starquestSkullyDialog,
 	starquestIntroDialog,
 	starquestMegawolfHintDialog,
@@ -99,6 +101,10 @@ export const dialogDefinitions = [
 	yakuziPortIntroDialog,
 	yakuziPortDebtDialog,
 	yakuziPortSecondBetDialog,
+	// Quête Kabuki — Université
+	igorKabukiIntroDialog,
+	igorKabukiDecodedDialog,
+	igorKabukiIngredientsDialog,
 	// Iles Atlantéinées
 	strangeHippoDialog,
 	coralMinerDialog,
@@ -131,6 +137,7 @@ export const dialogDefinitions = [
 	nicolasHulotDialog,
 	forestGuardianDialog,
 	// Steppes
+	// Quête Magnétite
 	sGardeMagnetFirstDialog,
 	rockyKingMagnetiteIntroDialog,
 	magnetiteStrangeRangerDialog,
