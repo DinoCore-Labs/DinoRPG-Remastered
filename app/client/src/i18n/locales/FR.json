@@ -3405,7 +3405,7 @@
 			"amanp3": "Amenpenne",
 			"mimic3": "Mimic",
 			"yakuzi": "Yakuzi",
-			"yakkb1": "???",
+			"???": "???",
 			"yakkb2": "Ninjutsu",
 			"yakkb3": "Kage",
 			"igor": "Pr.Igor",
@@ -6874,6 +6874,13 @@
 		},
 		"intro": {
 			"name": "Taurus le Magnifique"
+		},
+		"kabuki": {
+			"texts": {
+				"totemLost": "Comme prévu, votre Dinoz s'est perdu sur la route de l'île du Totem. Yakuzi et ses deux Kabukis viennent à sa rescousse !",
+				"totemFinalStart": "Vous arrivez enfin à l'Ile du Totem... mais qu'est-ce qui peut bien se passer ici ?",
+				"totemFinalEnd": "Vous avez vaincu Igor et ses sbires ! Vous avez par la même occasion récupéré l'Aura Kabuki !"
+			}
 		}
 	},
 	"reportModal": {

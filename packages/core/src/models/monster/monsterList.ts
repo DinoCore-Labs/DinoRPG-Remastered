@@ -413,7 +413,7 @@ export const monsterList: Readonly<Record<Monster, MonsterFiche>> = {
 		skills: [Skill.INSAISISSABLE],
 		zones: [],
 		canBeCaptured: false,
-		display: 'E9ERKdJzrAYd5P00'
+		display: 'dinoz:E9ERKdJzrAYd5P00'
 	},
 	/* -------------------------------------------------
 	 * ILES ATLANTEINEES

@@ -3,6 +3,7 @@ import type { FightResult } from '@dinorpg/core/models/fight/fightResult.js';
 
 import type { DinozToRewardFight } from '../../Fight/Service/fight.service.js';
 import type { DinozToGetFighter } from '../../utils/fight/fight.mapper.js';
+import { processKabukiScenarioMoveFight } from '../Controller/kabukiScenario.controller.js';
 import { processMagnetiteScenarioMoveFight } from '../Controller/magnetiteScenario.controller.js';
 import { processStarScenarioMoveFight } from '../Controller/starScenario.controller.js';
 
@@ -59,6 +60,8 @@ export type ScenarioMoveFightInput = {
  * - false lorsqu'aucun scénario ne correspond.
  */
 export async function processScenarioMoveFight(input: ScenarioMoveFightInput): Promise<FightResult | false> {
+	const kabukiFight = await processKabukiScenarioMoveFight(input);
+	if (kabukiFight !== false) return kabukiFight;
 	const starFight = await processStarScenarioMoveFight(input);
 	/**
 	 * Ne pas tester starFight.result ici.
