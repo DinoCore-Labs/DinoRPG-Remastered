@@ -3403,7 +3403,15 @@
 			"pirao3": "Pirhan-os",
 			"garou2": "Garouzore",
 			"amanp3": "Amenpenne",
-			"mimic3": "Mimic"
+			"mimic3": "Mimic",
+			"yakuzi": "Yakuzi",
+			"yakkb1": "???",
+			"yakkb2": "Ninjutsu",
+			"yakkb3": "Kage",
+			"igor": "Pr.Igor",
+			"tigor1": "Barbara",
+			"tigor2": "Choupette",
+			"tigor3": "Poupoule"
 		},
 		"status": {
 			"asleep": "endormi",
@@ -5068,6 +5076,68 @@
 				"igor_kabuki_betrayal": {
 					"why": "???",
 					"attack": "Se défendre"
+				}
+			}
+		},
+		"yakuziTotem": {
+			"name": "Yakuzi",
+			"dialog": {
+				"yakuzi_totem_reward": {
+					"begin": "Ouf ! Quel combat ! Ce Professeur Igor était vraiment coriace !",
+					"know": "Oui, mais c'est une longue histoire... Par où commencer...",
+					"start": "C'est effectivement une bonne idée ! Le jour de mes dix-huit ans, j'ai reçu l'héritage de mon Grand-Père, qui avait été transmis de génération en génération dans ma famille. Jusque là, je n'étais qu'un petit voyou, mais cet héritage a tout changé pour moi !",
+					"herit": "Oui. Il ne s'agissait pas d'argent, mais d'un objet unique que l'on nomme l'Aura Kabuki, ainsi que d'un Parchemin indiquant en cas de problème majeur comment en fabriquer une autre.",
+					"parch": "Oui, je l'ai perdu en combattant contre toi, et le Professeur Igor s'en est apparemment servi pour fabriquer une Aura et se rendre sur l'Ile du Totem...",
+					"totem": "C'est simple : il y a de cela des centaines d'années, mon ancêtre le Grand Judoki a sauvé lors du Grand Cataclysme un groupe de Kabukis. Il les a installé sur cette île et a construit ce Totem qui la protège des intrusions...",
+					"why": "Malgré leurs grandes capacités de combattants, les Kabukis ne peuvent donner naissance à des petits que dans un endroit très calme. Comme ils sont très rares, mon ancêtre voulait leur permettre de survivre en paix ici...",
+					"ok": "Quand j'ai hérité de mon grand père, le professeur Igor est venu me voir et m'a proposé plusieurs millions de pièces d'or en échange de l'Aura ou du parchemin. Redoutant une embrouille, j'ai bien entendu refusé. Ce type avait VRAIMENT l'air loûche, si tu vois ce que je veux dire...",
+					"see": "Je me suis donc rendu sur l'Ile du Totem par mes propres moyens, et j'y ai découvert les Kabukis. Ils sont tellement attachants que j'ai décidé d'en élever deux moi-même. Ce sont eux qui sont venus m'aider dans les combats que nous avons menés...",
+					"nice": "Oui, ils sont ma grande fierté ! Mais pour pouvoir m'occuper d'eux, j'ai dû à nouveau devenir un délinquant, en organisant des arn... jeux de hasard, pour que les pig... touristes puissent se détendre un peu, tu vois ?",
+					"see2": "En tout cas, voilà, grâce à toi j'ai pu empecher une catastrophe. Je ne sais comment te remercier...",
+					"end": "Vraiment ? Mais laisse moi au moins de donner cet Oeuf de Kabuki en récompense ! Fais-y bien attention, c'est un objet très rare ! Contrairement aux autres Dinoz, les Kabukis ne donnent que peu d'oeufs !",
+					"no": "Ah... Bien... Reviens me voir si un jour tu changes d'avis...",
+					"yes": "Voilà, il est à toi ! Tu peux aussi garder l'Aura Kabuki que le Professeur Igor avait fabriquée, elle te serra utile pour revenir ici me voir de temps en temps. A bientôt mon ami !"
+				},
+				"yakuzi_totem_wait": {
+					"begin": "Salut mon ami ! Comment vas-tu ?",
+					"noegg": "Rien à signaler ! Mais reviens me voir plus tard, j'aurai peut-être quelque chose pour toi !",
+					"egg": "Je t'ai déjà donné un oeuf de Kabuki récemment, il faudra revenir me voir plus tard pour pouvoir en avoir un autre !"
+				},
+				"yakuzi_totem_eggs": {
+					"begin": "Salut mon ami ! Comment vas-tu ?",
+					"noegg": "Rien à signaler ! Mais reviens me voir plus tard, j'aurai peut-être quelque chose pour toi !",
+					"egg": "Oh ! Un nouvel Oeuf de Kabuki est disponible, si ça t'interesse je te le vends pour 50.000 pièces ! Tu comprends, c'est pour la bonne cause... ces fonds me permettront de continuer à aider les survivants Kabukis !",
+					"no": "Je comprends, mais si tu change d'avis reviens vite car ce genre d'offre ne tient pas longtemps !",
+					"buy": "MERCI ! Voilà pour toi ! Et surtout occupe-toi bien de lui !",
+					"maxegg": "Les Kabukis sont menacés d'extinction par le nombre croissant de Maîtres Dinoz qui cherchent à obtenir leurs oeufs, et je ne pourrai donc plus te donner d'oeuf supplémentaire.... La survie des Kabukis en dépend !"
+				}
+			},
+			"choice": {
+				"yakuzi_totem_reward": {
+					"know": "Vous le connaissiez ?",
+					"start": "Pourquoi pas par le début ?",
+					"herit": "Un héritage ?",
+					"parch": "Un parchemin...",
+					"totem": "Que se passe-t-il sur cette île ?",
+					"why": "Pourquoi faire cela ?",
+					"ok": "Je comprends...",
+					"see": "... je crois que je vois oui",
+					"nice": "Ils sont magnifiques !",
+					"see2": "... je crois que je vois oui",
+					"end": "Oh ! Je n'ai besoin de rien !",
+					"yes": "Prendre l'Oeuf",
+					"no": "Je ne peux pas accepter..."
+				},
+				"yakuzi_totem_wait": {
+					"egg": "Quoi de neuf ?",
+					"noegg": "Quoi de neuf ?"
+				},
+				"yakuzi_totem_eggs": {
+					"egg": "Quoi de neuf ?",
+					"noegg": "Quoi de neuf ?",
+					"maxegg": "Quoi de neuf ?",
+					"buy": "OK !",
+					"no": "C'est bien trop cher pour moi..."
 				}
 			}
 		}

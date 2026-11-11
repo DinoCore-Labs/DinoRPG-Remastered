@@ -642,7 +642,8 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		odds: 100,
 		skills: [Skill.M_RESISTANCE, Skill.M_INVISIBILITY],
 		zones: [],
-		canBeCaptured: false
+		canBeCaptured: false,
+		display: 'igor'
 	},
 	[Boss.VENERABLE]: {
 		id: Boss.VENERABLE,
@@ -798,7 +799,8 @@ export const bossList: Readonly<Record<Boss, MonsterFiche>> = {
 		odds: 100,
 		skills: [Skill.M_YAKUZI, Skill.PERCEPTION],
 		zones: [],
-		canBeCaptured: false
+		canBeCaptured: false,
+		display: 'yakuzi'
 	},
 	[Boss.DARK_MEGASHROOM]: {
 		id: Boss.DARK_MEGASHROOM,

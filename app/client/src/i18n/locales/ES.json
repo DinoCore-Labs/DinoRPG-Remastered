@@ -4941,6 +4941,68 @@
 					"attack": "Defenderse"
 				}
 			}
+		},
+		"yakuziTotem": {
+			"name": "Yakuzi",
+			"dialog": {
+				"yakuzi_totem_reward": {
+					"begin": "¡Uf! ¡Menudo combate! ¡Este profesor Igor era realmente tenaz!",
+					"know": "Sí, pero es una historia muy larga... Por dónde empiezo...",
+					"start": "¡Buena idea! El día que cumplí 18 años, recibí la herencia de mi abuelo, la cual había sido transmitida de generación en generación en mi familia. Hasta ese momento, yo no era más que un golfillo rufián, ¡pero esto lo cambió todo para mí!",
+					"herit": "Sí. No se trataba de dinero, sino de un objeto llamado Aura Kabuki y un Pergamino que indica cómo fabricar otro Aura en caso de problemas.",
+					"parch": "Sí, lo he perdido combatiendo contra ti y el Profesor Igor ha aprovechado para fabricar un Aura y dirigirse a la Isla del Tótem...",
+					"totem": "Hace cientos de años, mi ancestro el Gran Judoki salvó del gran cataclismo a un grupo de Kabukis. Los instaló en esta isla y construyó este tótem que la protege de intrusos...",
+					"why": "A pesar de su gran capacidad como guerreros, los Kabukis solo pueden tener crías en un lugar muy tranquilo. Como además son muy escasos y raros, mi ancestro quería asegurarles la supervivencia en un lugar pacífico.",
+					"ok": "Cuando recibí la herencia de mi abuelo, el profesor Igor vino a verme y me propuso millones de monedas de oro a cambio del Aura o del pergamino. Sospechaba de él, así que rechacé su propuesta. Este tipo me parecía realmente RARO, sabes lo que quiero decir...",
+					"see": "Me di cuenta del asunto de la Isla del Tótem por mis propios medios, y fue entonces cuando descubrí los Kabukis. Son tan apasionantes, que decidí criar un par. Son ellos los que vinieron a ayudarme en los combates en los que nos hemos enfrentado...",
+					"nice": "Sí, ¡estoy orgulloso de ellos! Pero para ocuparme de ellos, tuve que hacerme delincuente. Organicé estaf... juegos de azar, para que los tont... turistas pudieran entretenerse un poco, ¿sabes?",
+					"see2": "De todos modos, gracias a ti he podido impedir una auténtica catástrofe. No sé cómo agradecértelo...",
+					"end": "¿De veras? Pero déjame al menos darte este Huevo de Kabuki como recompensa. Cuídalo bien, es un objeto muy raro. Contrariamente a los otros Dinos, los Kabukis dan muy pocos huevos.",
+					"no": "Ah... Bien... Vuelve a verme si cambias de idea...",
+					"yes": "¡Aquí tienes! Puedes también guardar el Aura de Kabuki que el Profesor Igor había fabricado. Te será útil para volver a verme de vez en cuando. ¡Hasta pronto!"
+				},
+				"yakuzi_totem_wait": {
+					"begin": "Hola chico, ¿qué tal?",
+					"noegg": "¡Nada especial! Pero vuelve a verme más tarde, ¡quizás tenga algo para ti!",
+					"egg": "Ya te di un huevo de Kabuki. ¡Tendrás que venir más tarde para tener otro!"
+				},
+				"yakuzi_totem_eggs": {
+					"begin": "¡Hola amigo! ¿Cómo te va?",
+					"noegg": "¡Nada en especial! Pero vente más tarde, ¡quizás tenga algo para ti!",
+					"egg": "¡Oh! Un nuevo Huevo de Kabuki está disponible. ¡Si te interesa te lo vendo por 50.000 monedas! Ya sabes, es por la buena causa... ¡estos fondos me permitirán seguir ayudando a los supervivientes Kabukis!",
+					"no": "Entiendo, ¡pero si cambias de opinión vuelve rápido pues esta oferta no va a durar mucho!",
+					"buy": "¡GRACIAS! Ten, ¡para ti! Cuídalo bien.",
+					"maxegg": "Los Kabukis están en peligro de extinción debido al número creciente de Maestros de Dinos que buscan sus huevos. No puedo darte más huevos... ¡la supervivencia de los Kabukis depende de ello!"
+				}
+			},
+			"choice": {
+				"yakuzi_totem_reward": {
+					"know": "¿Lo conoces?",
+					"start": "¿Por qué no desde el principio?",
+					"herit": "¿Una herencia?",
+					"parch": "Un pergamino...",
+					"totem": "¿Qué hay en esa Isla?",
+					"why": "¿Por qué lo hizo?",
+					"ok": "Entiendo...",
+					"see": "... sí, creo que sí.",
+					"nice": "¡Son magníficos!",
+					"see2": "... sí, ya veo.",
+					"end": "¡Ah! ¡Pero si no necesito nada!",
+					"yes": "Coger el huevo",
+					"no": "No puedo aceptarlo..."
+				},
+				"yakuzi_totem_wait": {
+					"egg": "¿Qué hay de nuevo?",
+					"noegg": "¿Qué hay de nuevo?"
+				},
+				"yakuzi_totem_eggs": {
+					"egg": "¿Qué hay de nuevo?",
+					"noegg": "¿Qué hay de nuevo?",
+					"maxegg": "¿Qué hay de nuevo?",
+					"buy": "¡OK!",
+					"no": "Demasiado caro para mí..."
+				}
+			}
 		}
 	},
 	"missions": {
