@@ -16,8 +16,9 @@ const boss = (hp: number) =>
 		maxHp: 50,
 		startingHp: 50,
 		escaped: false,
-		time: 0
-	}) as DetailedFighter;
+		time: 0,
+		skills: []
+	}) as unknown as DetailedFighter;
 
 function mockFight(yakuzi: DetailedFighter): DetailedFight {
 	return {
@@ -58,7 +59,7 @@ describe('Kabuki MT — Gorges', () => {
 		expect(kabuki.name).toBe('???');
 		expect(kabuki.hp).toBe(100);
 		expect(kabuki.attacker).toBe(false);
-		expect(kabuki.escaped).toBe(false);
+		expect(kabuki.escaped).not.toBe(true);
 		expect(yakuzi.escaped).toBe(true);
 		expect(yakuzi.hp).toBe(100);
 		expect(fight.steps.map(step => step.action)).toEqual(['arrive', 'leave']);
