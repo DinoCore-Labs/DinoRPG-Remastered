@@ -2572,7 +2572,9 @@
 			"fake": "???",
 			"fake2": "????",
 			"gotow": "Entrer dans la Tour Sombre",
-			"rechut": "Retourner vers la surface"
+			"rechut": "Retourner vers la surface",
+			"itlost": "Se lancer à la poursuite d'Igor",
+			"itotem": "Ile du Totem"
 		},
 		"description": {
 			"port": "Créé par des moines quelques dizaines d'années auparavant, le Port de Prêche est rapidement devenu florissant grâce aux échanges avec les Iles Atlantéinées. Comme le poisson s'y trouve en grande quantité, aucun bateau n'est jamais disponible pour emmener les Dinoz jusqu'à la première île. Il vous faudra donc soit apprendre à nager à votre Dinoz soit au moins lui trouver une bouée avant de pouvoir traverser.",
@@ -2669,7 +2671,9 @@
 			"dktows": "Dernier donjon de la tour sombre, son accès vient de se révèler, le monde sombre est toujours en constante évolution...",
 			"fake": "Une île déserte communément appelé l'île de la damnation, où quelques âmes en peine viennent s'échouer. Il fait particulièrement sombre par ici...",
 			"fake2": "Une île déserte communément appelé l'île des feu-follets, ces esprits errants sèment le désespoir et la mort. Il fait particulièrement sombre par ici...",
-			"rechut": "Grâce au morceau d'Orbe Sombre que votre Dinoz possède, vous pouvez revenir à la surface. La lumière omniprésente vous aveugle quelques minutes, il vaut mieux ne pas rester trop longtemps dans le Monde Sombre."
+			"rechut": "Grâce au morceau d'Orbe Sombre que votre Dinoz possède, vous pouvez revenir à la surface. La lumière omniprésente vous aveugle quelques minutes, il vaut mieux ne pas rester trop longtemps dans le Monde Sombre.",
+			"itlost": "Grâce à l'Aura de Yakuzi, vous pouvez retourner aux Mines de Corail. Vite ! Il faut rejoindre l'Ile du Totem cette fois !",
+			"itotem": "L'Ile du Totem est un lieu où survit un groupe de Kabukis ayant été miraculeusement sauvés par un homme étrange lors du Grand Cataclysme. Leur bienfaiteur a ensuite dressé un immense Totem au centre de l'île, qui empêche les personnes ne possédant pas l'Aura Kabuki d'y accéder..."
 		},
 		"hint": {
 			"marais": {
@@ -3409,9 +3413,9 @@
 			"yakkb2": "Ninjutsu",
 			"yakkb3": "Kage",
 			"igor": "Pr.Igor",
-			"tigor1": "Barbara",
-			"tigor2": "Choupette",
-			"tigor3": "Poupoule"
+			"Barbara": "Barbara",
+			"Choupette": "Choupette",
+			"Poupoule": "Poupoule"
 		},
 		"status": {
 			"asleep": "endormi",
@@ -6879,7 +6883,11 @@
 			"texts": {
 				"totemLost": "Comme prévu, votre Dinoz s'est perdu sur la route de l'île du Totem. Yakuzi et ses deux Kabukis viennent à sa rescousse !",
 				"totemFinalStart": "Vous arrivez enfin à l'Ile du Totem... mais qu'est-ce qui peut bien se passer ici ?",
-				"totemFinalEnd": "Vous avez vaincu Igor et ses sbires ! Vous avez par la même occasion récupéré l'Aura Kabuki !"
+				"totemFinalEnd": "Vous avez vaincu Igor et ses sbires ! Vous avez par la même occasion récupéré l'Aura Kabuki !",
+				"igorFinalTalk": "QUOI ?? COMMENT as-tu pu me suivre ici sans Aura ?!?",
+				"igorFinalAttack": "Aaa l'aatttaaqquuee !!!",
+				"yakuziFinalWait": "Attends !",
+				"yakuziFinalHelp": "Nous allons t'aider !!!"
 			}
 		}
 	},
