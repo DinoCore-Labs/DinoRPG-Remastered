@@ -492,6 +492,22 @@ describe('evalCondition', () => {
 		).toBe(false);
 	});
 
+	it('uses a stable hourly roll for utime, scoped to the user rather than the Dinoz', () => {
+		const context = createContext();
+		const condition = { type: 'time', value: 6, user: true } as const;
+		context.now = new Date('2026-11-12T03:00:00.000Z');
+		expect(evalCondition(context, condition)).toBe(true);
+		context.now = new Date('2026-11-12T03:59:00.000Z');
+		expect(evalCondition(context, condition)).toBe(true);
+		context.dinoz.id = 999;
+		expect(evalCondition(context, condition)).toBe(true);
+		context.user.id = 'user-2';
+		expect(evalCondition(context, condition)).toBe(false);
+		context.user.id = 'user-1';
+		context.now = new Date('2026-11-12T00:00:00.000Z');
+		expect(evalCondition(context, condition)).toBe(false);
+	});
+
 	it('checks scenario waiting time', () => {
 		const context = createContext();
 		context.now = new Date('2026-09-20T12:00:00Z');

@@ -5,6 +5,7 @@ import { ingredientList } from '@dinorpg/core/models/ingredients/ingredientList.
 import { resolveItemIdFromKey } from '@dinorpg/core/models/items/itemIdByKey.js';
 import { placeListv2 } from '@dinorpg/core/models/place/placeListv2.js';
 import { UserRole } from '@dinorpg/core/models/user/userRole.js';
+import { evalTimedRandomCondition } from '@dinorpg/core/models/utils/conditions/evalConditions.js';
 
 import { Role } from '../../../../prisma/index.js';
 import {
@@ -142,7 +143,11 @@ export function checkDialogCondition(condition: Condition | null | undefined, co
 		case 'admin':
 			return isAdminRole(context.user.role);
 		case 'time':
-			return (context.user.stats.get(StatTracking.P_DAYS) ?? 0) >= condition.value;
+			// utime is a per-player hourly roll, not the accumulated days-present statistic.
+			// Preserve time() attendance-day behavior for existing scenario gates.
+			return condition.user
+				? evalTimedRandomCondition(context.now, condition.value, context.user.id)
+				: (context.user.stats.get(StatTracking.P_DAYS) ?? 0) >= condition.value;
 		case 'swait': {
 			const scenario = context.user.scenarios.get(condition.key);
 			if (!scenario) return false;

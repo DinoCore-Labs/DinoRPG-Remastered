@@ -1,11 +1,11 @@
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
-import { StatTracking } from '@dinorpg/core/models/enums/StatsTracking.js';
 import { Ingredient } from '@dinorpg/core/models/ingredients/ingredientList.js';
 import { Item } from '@dinorpg/core/models/items/itemList.js';
+import { evalTimedRandomCondition } from '@dinorpg/core/models/utils/conditions/evalConditions.js';
 import { beforeAll, beforeEach, describe, expect, it } from 'vitest';
 
 import { loadDialogs } from '../../src/Dialog/Controller/dialog.registry.js';
-import { selectDialogLink, startDialog } from '../../src/Dialog/Service/dialog.service.js';
+import { listAvailableDialogs, selectDialogLink, startDialog } from '../../src/Dialog/Service/dialog.service.js';
 import { prisma } from '../../src/prisma.js';
 import { cleanDatabase } from '../helpers/database.js';
 import { createTestDinoz } from '../helpers/factories/dinoz.factory.js';
@@ -25,14 +25,14 @@ async function player(placeId: PlaceEnum, progression: number) {
 	return { user, dinoz };
 }
 
-async function phase(userId: string, dinozId: number, dialogId: string, links: string[]) {
-	let current = await startDialog({ userId, dinozId, dialogId });
+async function phase(userId: string, dinozId: number, dialogId: string, links: string[], now?: Date) {
+	let current = await startDialog({ userId, dinozId, dialogId, now });
 	for (const linkId of links) {
 		expect(
 			current.links.map(link => link.id),
 			`${dialogId}:${current.phaseId} should offer ${linkId}`
 		).toContain(linkId);
-		current = await selectDialogLink({ userId, dinozId, dialogId, phaseId: current.phaseId, linkId });
+		current = await selectDialogLink({ userId, dinozId, dialogId, phaseId: current.phaseId, linkId, now });
 	}
 	return current;
 }
@@ -76,12 +76,13 @@ async function gold(userId: string) {
 	).amount;
 }
 
-async function grantGameDays(userId: string, quantity: number) {
-	await prisma.userTracking.upsert({
-		where: { stat_userId: { userId, stat: StatTracking.P_DAYS } },
-		create: { userId, stat: StatTracking.P_DAYS, quantity },
-		update: { quantity }
-	});
+function findUserHour(userId: string, chance: number, eligible: boolean): Date {
+	const epoch = Date.parse('2026-11-12T00:00:00.000Z');
+	for (let offset = 0; offset < 2000; offset++) {
+		const now = new Date(epoch + offset * 60 * 60 * 1000);
+		if (evalTimedRandomCondition(now, chance, userId) === eligible) return now;
+	}
+	throw new Error(`Could not find a user-specific utime(${chance}) window`);
 }
 
 const ingredientChain = [
@@ -94,6 +95,15 @@ const ingredientChain = [
 ] as const;
 
 describe('Kabuki: Igor ingredient chain and Totem egg shop (integration)', () => {
+	it('shows Yakuzi at the Port de Prêche during a valid user-specific time window', async () => {
+		const { user, dinoz } = await player(PlaceEnum.PORT_DE_PRECHE, 0);
+		const hiddenAt = findUserHour(user.id, 6, false);
+		const visibleAt = findUserHour(user.id, 6, true);
+		const hidden = await listAvailableDialogs({ userId: user.id, dinozId: dinoz.id, now: hiddenAt });
+		const visible = await listAvailableDialogs({ userId: user.id, dinozId: dinoz.id, now: visibleAt });
+		expect(hidden.map(dialog => dialog.id)).not.toContain('yakuzi_port_intro');
+		expect(visible.map(dialog => dialog.id)).toContain('yakuzi_port_intro');
+	});
 	it('completes Igor introduction, then unlocks the decoded parchment only after 35 hours', async () => {
 		const { user, dinoz } = await player(PlaceEnum.UNIVERSITE, 5);
 		await phase(user.id, dinoz.id, 'igor_kabuki_intro', [
@@ -166,21 +176,22 @@ describe('Kabuki: Igor ingredient chain and Totem egg shop (integration)', () =>
 		expect(await progression(user.id)).toBe(18);
 	});
 
-	it('blocks an egg purchase before 100 game-days and preserves gold', async () => {
+	it('blocks an egg purchase outside its utime window and preserves gold', async () => {
 		const { user, dinoz } = await player(PlaceEnum.ITOTEM, 23);
 		await setGold(user.id, 80_000);
-		const opened = await startDialog({ userId: user.id, dinozId: dinoz.id, dialogId: 'yakuzi_totem_eggs' });
+		const now = findUserHour(user.id, 100, false);
+		const opened = await startDialog({ userId: user.id, dinozId: dinoz.id, dialogId: 'yakuzi_totem_eggs', now });
 		expect(opened.links.map(link => link.id)).toContain('noegg');
 		expect(opened.links.map(link => link.id)).not.toContain('egg');
 		expect(await gold(user.id)).toBe(80_000);
 		expect(await eggs(user.id)).toBe(0);
 	});
 
-	it('purchases a Kabuki egg for 50,000 gold once 100 game-days are reached', async () => {
+	it('purchases a Kabuki egg for 50,000 gold during an eligible utime window', async () => {
 		const { user, dinoz } = await player(PlaceEnum.ITOTEM, 23);
-		await grantGameDays(user.id, 100);
+		const now = findUserHour(user.id, 100, true);
 		await setGold(user.id, 80_000);
-		const bought = await phase(user.id, dinoz.id, 'yakuzi_totem_eggs', ['egg', 'buy']);
+		const bought = await phase(user.id, dinoz.id, 'yakuzi_totem_eggs', ['egg', 'buy'], now);
 		expect(bought.phaseId).toBe('buy');
 		expect(await gold(user.id)).toBe(30_000);
 		expect(await eggs(user.id)).toBe(1);
@@ -190,9 +201,9 @@ describe('Kabuki: Igor ingredient chain and Totem egg shop (integration)', () =>
 
 	it('rejects insufficient funds atomically without granting an egg', async () => {
 		const { user, dinoz } = await player(PlaceEnum.ITOTEM, 23);
-		await grantGameDays(user.id, 100);
+		const now = findUserHour(user.id, 100, true);
 		await setGold(user.id, 49_999);
-		await expect(phase(user.id, dinoz.id, 'yakuzi_totem_eggs', ['egg', 'buy'])).rejects.toThrow();
+		await expect(phase(user.id, dinoz.id, 'yakuzi_totem_eggs', ['egg', 'buy'], now)).rejects.toThrow();
 		expect(await gold(user.id)).toBe(49_999);
 		expect(await eggs(user.id)).toBe(0);
 		expect(await progression(user.id)).toBe(23);
@@ -201,12 +212,12 @@ describe('Kabuki: Igor ingredient chain and Totem egg shop (integration)', () =>
 
 	it('blocks further purchases after two purchased eggs even if gold is available', async () => {
 		const { user, dinoz } = await player(PlaceEnum.ITOTEM, 23);
-		await grantGameDays(user.id, 150);
+		const now = findUserHour(user.id, 100, true);
 		await setGold(user.id, 200_000);
 		await prisma.userScenario.create({
 			data: { userId: user.id, scenarioKey: 'kabegg', progression: 2, tracking: 0 }
 		});
-		const opened = await startDialog({ userId: user.id, dinozId: dinoz.id, dialogId: 'yakuzi_totem_eggs' });
+		const opened = await startDialog({ userId: user.id, dinozId: dinoz.id, dialogId: 'yakuzi_totem_eggs', now });
 		expect(opened.links.map(link => link.id)).toContain('maxegg');
 		expect(opened.links.map(link => link.id)).not.toContain('egg');
 		expect(await gold(user.id)).toBe(200_000);

@@ -37,6 +37,17 @@ function seededRandom(seed: number, max: number): number {
 	return Math.abs(state) % max;
 }
 
+/**
+ * Stable hourly roll used by time()/utime() conditions.
+ * utime is seeded with the player ID; time is seeded with the Dinoz ID.
+ */
+export function evalTimedRandomCondition(now: Date, max: number, subject: string | number): boolean {
+	if (max <= 0) return false;
+	const hourSeed = Math.floor(now.getTime() / (1000 * 60 * 60));
+	const seed = hourSeed + (typeof subject === 'string' ? hashString(subject) : subject);
+	return seededRandom(seed, max) === 0;
+}
+
 function getRandomSeed(context: ConditionsContext, basis: RandomBasis): number {
 	switch (basis) {
 		case 'day':
@@ -110,11 +121,8 @@ export function evalCondition(context: ConditionsContext, condition: Condition):
 		}
 		case 'collection':
 			return context.user.collectionKeys.has(condition.key);
-		case 'time': {
-			const hourSeed = Math.floor(context.now.getTime() / (1000 * 60 * 60));
-			const seed = hourSeed + (condition.user ? hashString(context.user.id) : context.dinoz.id);
-			return seededRandom(seed, condition.value) === 0;
-		}
+		case 'time':
+			return evalTimedRandomCondition(context.now, condition.value, condition.user ? context.user.id : context.dinoz.id);
 		case 'mission':
 			if (condition.status.type === 'done') {
 				return context.missions.finishedMissionKeys.has(condition.key);
