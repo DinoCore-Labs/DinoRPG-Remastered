@@ -140,12 +140,12 @@ function parseCommand(command: string, state: ParserState): Condition {
 		case 'time': {
 			const value = parseIntValue(state);
 			expect(state, ')');
-			return { type: 'time', value, user: false };
+			return { type: 'time', value };
 		}
 		case 'utime': {
 			const value = parseIntValue(state);
 			expect(state, ')');
-			return { type: 'time', value, user: true };
+			return { type: 'utime', value };
 		}
 		case 'mission': {
 			const key = parseIdent(state);

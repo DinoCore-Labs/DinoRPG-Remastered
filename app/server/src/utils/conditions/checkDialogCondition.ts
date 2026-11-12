@@ -143,11 +143,11 @@ export function checkDialogCondition(condition: Condition | null | undefined, co
 		case 'admin':
 			return isAdminRole(context.user.role);
 		case 'time':
-			// utime is a per-player hourly roll, not the accumulated days-present statistic.
-			// Preserve time() attendance-day behavior for existing scenario gates.
-			return condition.user
-				? evalTimedRandomCondition(context.now, condition.value, context.user.id)
-				: (context.user.stats.get(StatTracking.P_DAYS) ?? 0) >= condition.value;
+			// Existing dialog time() gates are based on recorded attendance days.
+			return (context.user.stats.get(StatTracking.P_DAYS) ?? 0) >= condition.value;
+		case 'utime':
+			// A deterministic player-specific hourly roll, not an attendance-day threshold.
+			return evalTimedRandomCondition(context.now, condition.value, context.user.id);
 		case 'swait': {
 			const scenario = context.user.scenarios.get(condition.key);
 			if (!scenario) return false;
