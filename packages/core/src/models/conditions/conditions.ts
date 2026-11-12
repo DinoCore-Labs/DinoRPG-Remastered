@@ -19,7 +19,8 @@ export type Condition =
 	| { type: 'effect'; key: string }
 	| { type: 'userEffect'; key: string }
 	| { type: 'collection'; key: string }
-	| { type: 'time'; value: number; user: boolean }
+	| { type: 'time'; value: number }
+	| { type: 'utime'; value: number }
 	| { type: 'mission'; key: string; status: MissionConditionStatus }
 	| { type: 'skill'; key: string }
 	| { type: 'canfight'; key: string }

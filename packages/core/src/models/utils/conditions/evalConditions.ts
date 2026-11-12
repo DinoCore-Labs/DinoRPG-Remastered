@@ -122,7 +122,9 @@ export function evalCondition(context: ConditionsContext, condition: Condition):
 		case 'collection':
 			return context.user.collectionKeys.has(condition.key);
 		case 'time':
-			return evalTimedRandomCondition(context.now, condition.value, condition.user ? context.user.id : context.dinoz.id);
+			return evalTimedRandomCondition(context.now, condition.value, context.dinoz.id);
+		case 'utime':
+			return evalTimedRandomCondition(context.now, condition.value, context.user.id);
 		case 'mission':
 			if (condition.status.type === 'done') {
 				return context.missions.finishedMissionKeys.has(condition.key);

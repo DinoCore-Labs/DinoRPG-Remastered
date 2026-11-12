@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest';
 import type { ConditionsContext } from '../../src/models/conditions/conditionsContext.js';
 import { dinozStatusIdByKey } from '../../src/models/dinoz/statusKeyMap.js';
 import { evalCondition } from '../../src/models/utils/conditions/evalConditions.js';
+import { parseCondition } from '../../src/models/utils/conditions/parseConditions.js';
 
 function createContext(): ConditionsContext {
 	return {
@@ -492,9 +493,23 @@ describe('evalCondition', () => {
 		).toBe(false);
 	});
 
+	it('parses time() and utime() as separate conditions', () => {
+		expect(parseCondition('time(30)')).toEqual({ type: 'time', value: 30 });
+		expect(parseCondition('utime(6)')).toEqual({ type: 'utime', value: 6 });
+	});
+
+	it('keeps time() rolls scoped to the active Dinoz in core evaluation', () => {
+		const context = createContext();
+		const condition = { type: 'time', value: 6 } as const;
+		context.now = new Date('2026-11-12T03:00:00.000Z');
+		const first = evalCondition(context, condition);
+		context.user.id = 'another-player';
+		expect(evalCondition(context, condition)).toBe(first);
+	});
+
 	it('uses a stable hourly roll for utime, scoped to the user rather than the Dinoz', () => {
 		const context = createContext();
-		const condition = { type: 'time', value: 6, user: true } as const;
+		const condition = { type: 'utime', value: 6 } as const;
 		context.now = new Date('2026-11-12T03:00:00.000Z');
 		expect(evalCondition(context, condition)).toBe(true);
 		context.now = new Date('2026-11-12T03:59:00.000Z');
