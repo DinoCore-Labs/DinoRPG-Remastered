@@ -21,6 +21,7 @@ type OpenDialogParams = {
 	userId: string;
 	dinozId: number;
 	dialogId: string;
+	now?: Date;
 };
 
 type SelectDialogLinkParams = {
@@ -29,6 +30,7 @@ type SelectDialogLinkParams = {
 	dialogId: string;
 	phaseId: string;
 	linkId: string;
+	now?: Date;
 };
 
 export type AvailableDialogSummary = {
@@ -43,6 +45,7 @@ type EnterDialogPhaseOptions = {
 	applySpecials?: boolean;
 	applyEffects?: boolean;
 	advanceTalkMission?: boolean;
+	now?: Date;
 };
 
 export function getDialogPhase(dialog: RuntimeDialog, phaseId: string): RuntimeDialogPhase {
@@ -113,7 +116,8 @@ export async function enterDialogPhase(
 	const beforeContext = await buildDialogContext(tx, {
 		userId,
 		dinozId,
-		dialog
+		dialog,
+		now: options.now
 	});
 	const phaseResult = await applyDialogPhaseEffects(tx, {
 		context: beforeContext,
@@ -131,7 +135,8 @@ export async function enterDialogPhase(
 	const afterContext = await buildDialogContext(tx, {
 		userId,
 		dinozId,
-		dialog
+		dialog,
+		now: options.now
 	});
 	const links = resolveVisibleLinks(dialog, phase, afterContext);
 	return {
@@ -150,12 +155,14 @@ export async function assertDialogAvailability(
 	tx: DialogTransaction,
 	dialog: RuntimeDialog,
 	userId: string,
-	dinozId: number
+	dinozId: number,
+	now?: Date
 ) {
 	const context = await buildDialogContext(tx, {
 		userId,
 		dinozId,
-		dialog
+		dialog,
+		now
 	});
 	if (dialog.cond && !checkDialogCondition(dialog.cond, context)) {
 		throw new ExpectedError('dialogNotAvailable');
@@ -240,9 +247,9 @@ export async function startDialog(params: OpenDialogParams): Promise<DialogPhase
 	return prisma.$transaction(async tx => {
 		const dialog = getDialogById(params.dialogId);
 		await lockDialogInteraction(tx, params.userId, params.dinozId, dialog.id);
-		await assertDialogAvailability(tx, dialog, params.userId, params.dinozId);
+		await assertDialogAvailability(tx, dialog, params.userId, params.dinozId, params.now);
 		const phase = getDialogPhase(dialog, dialog.first);
-		return enterDialogPhase(tx, dialog, phase, params.userId, params.dinozId);
+		return enterDialogPhase(tx, dialog, phase, params.userId, params.dinozId, { now: params.now });
 	});
 }
 
@@ -254,7 +261,8 @@ export async function selectDialogLink(params: SelectDialogLinkParams): Promise<
 		const currentContext = await buildDialogContext(tx, {
 			userId: params.userId,
 			dinozId: params.dinozId,
-			dialog
+			dialog,
+			now: params.now
 		});
 		const postFightState = getPostFightContinuationState(dialog, currentPhase, currentContext);
 		if (postFightState === false) {
@@ -270,7 +278,7 @@ export async function selectDialogLink(params: SelectDialogLinkParams): Promise<
 		 * volontairement par fight_win.
 		 */
 		if (postFightState !== true) {
-			await assertDialogAvailability(tx, dialog, params.userId, params.dinozId);
+			await assertDialogAvailability(tx, dialog, params.userId, params.dinozId, params.now);
 		}
 		const selectedLink = getDialogLink(dialog, params.linkId);
 		ensurePhaseContainsLink(currentPhase, selectedLink.id, dialog.id);
@@ -278,7 +286,7 @@ export async function selectDialogLink(params: SelectDialogLinkParams): Promise<
 			throw new Error(`Link "${selectedLink.id}" is not currently available in dialog "${dialog.id}"`);
 		}
 		const targetPhase = getDialogPhase(dialog, selectedLink.target);
-		return enterDialogPhase(tx, dialog, targetPhase, params.userId, params.dinozId);
+		return enterDialogPhase(tx, dialog, targetPhase, params.userId, params.dinozId, { now: params.now });
 	});
 }
 

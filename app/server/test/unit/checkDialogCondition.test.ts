@@ -5,6 +5,7 @@ import { StatTracking } from '@dinorpg/core/models/enums/StatsTracking.js';
 import { Ingredient, ingredientList } from '@dinorpg/core/models/ingredients/ingredientList.js';
 import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
 import { placeListv2 } from '@dinorpg/core/models/place/placeListv2.js';
+import { parseCondition } from '@dinorpg/core/models/utils/conditions/parseConditions.js';
 import { describe, expect, it } from 'vitest';
 
 import { Role } from '../../../prisma/index.js';
@@ -480,22 +481,36 @@ describe('checkDialogCondition', () => {
 		).toBe(true);
 	});
 
-	it('checks player age through the time condition', () => {
+	it('keeps time() tied to recorded player days for existing scenario gates', () => {
 		const context = createContext();
-		expect(
-			check(context, {
-				type: 'time',
-				value: 30,
-				user: true
-			})
-		).toBe(true);
-		expect(
-			check(context, {
-				type: 'time',
-				value: 31,
-				user: true
-			})
-		).toBe(false);
+		expect(check(context, parseCondition('time(30)'))).toBe(true);
+		expect(check(context, parseCondition('time(31)'))).toBe(false);
+	});
+
+	it('uses player-specific hourly windows for utime(), regardless of attendance days', () => {
+		const context = createContext();
+		context.user.stats.set(StatTracking.P_DAYS, 0);
+		context.now = new Date('2026-11-12T03:00:00.000Z');
+		expect(check(context, parseCondition('utime(6)'))).toBe(true);
+		context.now = new Date('2026-11-12T03:45:00.000Z');
+		expect(check(context, parseCondition('utime(6)'))).toBe(true);
+		context.now = new Date('2026-11-12T00:00:00.000Z');
+		expect(check(context, parseCondition('utime(6)'))).toBe(false);
+		context.user.stats.set(StatTracking.P_DAYS, 200);
+		expect(check(context, parseCondition('utime(6)'))).toBe(false);
+	});
+
+	it('reveals the first Kabuki dialog only in a valid utime window or for admins', () => {
+		const context = createContext();
+		const kabukiCondition = parseCondition('scenario(kabuki,0)+(admin()|utime(6))+active(kabuki)');
+		context.world.activeFeatures.add('kabuki');
+		context.now = new Date('2026-11-12T00:00:00.000Z');
+		expect(check(context, kabukiCondition)).toBe(false);
+		context.now = new Date('2026-11-12T03:00:00.000Z');
+		expect(check(context, kabukiCondition)).toBe(true);
+		context.now = new Date('2026-11-12T00:00:00.000Z');
+		context.user.role = Role.ADMIN;
+		expect(check(context, kabukiCondition)).toBe(true);
 	});
 
 	it('checks active game features', () => {
