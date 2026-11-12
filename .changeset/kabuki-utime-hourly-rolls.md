@@ -1,6 +1,10 @@
 ---
-"@dinorpg/core": patch
-"@dinorpg/server": patch
+'@dinorpg/core': patch
+'@dinorpg/server': patch
 ---
 
-Fix `utime()` dialog availability by evaluating deterministic player-specific hourly windows instead of accumulated presence days. Restore intermittent Yakuzi appearances and Kabuki egg offers while preserving existing `time()` gates.
+Restore `utime()` as a player-specific hourly roll for dialog availability.
+
+Yakuzi appearances and Kabuki egg offers now use these hourly windows rather than accumulated presence days.
+
+Existing `time()` gates remain unchanged.
