@@ -1,5 +1,15 @@
 # @dinorpg/core
 
+## 0.45.1
+
+### Patch Changes
+
+- f9f4991: Restore `utime()` as a player-specific hourly roll for dialog availability.
+
+  Yakuzi appearances and Kabuki egg offers now use these hourly windows rather than accumulated presence days.
+
+  Existing `time()` gates remain unchanged.
+
 ## 0.45.0
 
 ### Minor Changes
