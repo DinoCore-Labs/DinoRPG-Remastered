@@ -2,6 +2,42 @@
 
 ## 🔹 Core
 
+## 0.45.0
+
+### Minor Changes
+
+- 44abb79: ### Added
+
+  - Implemented the complete **Kabuki Aura questline**, faithfully based on the original Motion Twin scenario.
+  - Added Yakuzi and Professor Igor's dialogues, quests, ingredient deliveries, and progression requirements.
+  - Introduced scripted encounters, including Yakuzi's Kabuki reinforcements and Igor's final battle on Totem Island.
+  - Added the Kabuki Aura collection reward and Kabuki Egg acquisition system.
+  - Restored original character abilities, combat reinforcements, and multilingual dialogue support.
+
+  ### Fixed
+  - Fixed grouped Dinoz participation in scripted battles.
+  - Fixed reinforcement and Yakuzi clone synchronization during combat animations.
+  - Fixed Dinoz state refresh after getting lost on the way to Totem Island.
+  - Prevented duplicate rewards and unintended scenario progression.
+
+  ### Tests
+  - Added integration tests covering quest progression, ingredient requirements, dialogue interactions, combat outcomes, rewards, and retry scenarios.
+
+## 0.44.0
+
+### Minor Changes
+
+- 1451729: ### Motion Twin Dungeons
+
+  - Introduced all 6 original Motion Twin dungeons and their 11 maps.
+  - Implemented the dungeon exploration engine with movement, stairs, fog of war, and original environment rendering.
+  - Added support for doors, keys, guardians, treasures, and scenario events.
+  - Integrated dungeon encounters with the existing combat engine.
+  - Implemented Irma's Potions, healing zones, and party defeat handling.
+  - Added persistent dungeon progression, including discovered areas, collected items, opened doors, and stage transitions.
+  - Introduced the dungeon interface with support for French, English, Spanish, and German.
+  - Expanded automated test coverage for dungeon exploration, interactions, persistence, and combat lifecycle.
+
 ## 0.43.0
 
 ### Minor Changes
@@ -734,6 +770,52 @@
 - [ab4441c](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/ab4441c): configure bot discord
 
 ## 🔹 Server
+
+## 0.48.0
+
+### Minor Changes
+
+- 44abb79: ### Added
+
+  - Implemented the complete **Kabuki Aura questline**, faithfully based on the original Motion Twin scenario.
+  - Added Yakuzi and Professor Igor's dialogues, quests, ingredient deliveries, and progression requirements.
+  - Introduced scripted encounters, including Yakuzi's Kabuki reinforcements and Igor's final battle on Totem Island.
+  - Added the Kabuki Aura collection reward and Kabuki Egg acquisition system.
+  - Restored original character abilities, combat reinforcements, and multilingual dialogue support.
+
+  ### Fixed
+  - Fixed grouped Dinoz participation in scripted battles.
+  - Fixed reinforcement and Yakuzi clone synchronization during combat animations.
+  - Fixed Dinoz state refresh after getting lost on the way to Totem Island.
+  - Prevented duplicate rewards and unintended scenario progression.
+
+  ### Tests
+  - Added integration tests covering quest progression, ingredient requirements, dialogue interactions, combat outcomes, rewards, and retry scenarios.
+
+### Patch Changes
+
+- Updated dependencies [44abb79]
+  - @dinorpg/core@0.45.0
+
+## 0.47.0
+
+### Minor Changes
+
+- 1451729: ### Motion Twin Dungeons
+
+  - Introduced all 6 original Motion Twin dungeons and their 11 maps.
+  - Implemented the dungeon exploration engine with movement, stairs, fog of war, and original environment rendering.
+  - Added support for doors, keys, guardians, treasures, and scenario events.
+  - Integrated dungeon encounters with the existing combat engine.
+  - Implemented Irma's Potions, healing zones, and party defeat handling.
+  - Added persistent dungeon progression, including discovered areas, collected items, opened doors, and stage transitions.
+  - Introduced the dungeon interface with support for French, English, Spanish, and German.
+  - Expanded automated test coverage for dungeon exploration, interactions, persistence, and combat lifecycle.
+
+### Patch Changes
+
+- Updated dependencies [1451729]
+  - @dinorpg/core@0.44.0
 
 ## 0.46.0
 
@@ -1730,6 +1812,42 @@
 - [26f9f95](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/26f9f95): initialize server package with Fastify, TypeScript, tsc-watch, and dev/start scripts
 
 ## 🔹 Client
+
+## 0.46.0
+
+### Minor Changes
+
+- 44abb79: ### Added
+
+  - Implemented the complete **Kabuki Aura questline**, faithfully based on the original Motion Twin scenario.
+  - Added Yakuzi and Professor Igor's dialogues, quests, ingredient deliveries, and progression requirements.
+  - Introduced scripted encounters, including Yakuzi's Kabuki reinforcements and Igor's final battle on Totem Island.
+  - Added the Kabuki Aura collection reward and Kabuki Egg acquisition system.
+  - Restored original character abilities, combat reinforcements, and multilingual dialogue support.
+
+  ### Fixed
+  - Fixed grouped Dinoz participation in scripted battles.
+  - Fixed reinforcement and Yakuzi clone synchronization during combat animations.
+  - Fixed Dinoz state refresh after getting lost on the way to Totem Island.
+  - Prevented duplicate rewards and unintended scenario progression.
+
+  ### Tests
+  - Added integration tests covering quest progression, ingredient requirements, dialogue interactions, combat outcomes, rewards, and retry scenarios.
+
+## 0.45.0
+
+### Minor Changes
+
+- 1451729: ### Motion Twin Dungeons
+
+  - Introduced all 6 original Motion Twin dungeons and their 11 maps.
+  - Implemented the dungeon exploration engine with movement, stairs, fog of war, and original environment rendering.
+  - Added support for doors, keys, guardians, treasures, and scenario events.
+  - Integrated dungeon encounters with the existing combat engine.
+  - Implemented Irma's Potions, healing zones, and party defeat handling.
+  - Added persistent dungeon progression, including discovered areas, collected items, opened doors, and stage transitions.
+  - Introduced the dungeon interface with support for French, English, Spanish, and German.
+  - Expanded automated test coverage for dungeon exploration, interactions, persistence, and combat lifecycle.
 
 ## 0.44.0
 
