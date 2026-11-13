@@ -2,6 +2,16 @@
 
 ## 🔹 Core
 
+## 0.45.1
+
+### Patch Changes
+
+- f9f4991: Restore `utime()` as a player-specific hourly roll for dialog availability.
+
+  Yakuzi appearances and Kabuki egg offers now use these hourly windows rather than accumulated presence days.
+
+  Existing `time()` gates remain unchanged.
+
 ## 0.45.0
 
 ### Minor Changes
@@ -770,6 +780,19 @@
 - [ab4441c](https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/ab4441c): configure bot discord
 
 ## 🔹 Server
+
+## 0.48.1
+
+### Patch Changes
+
+- f9f4991: Restore `utime()` as a player-specific hourly roll for dialog availability.
+
+  Yakuzi appearances and Kabuki egg offers now use these hourly windows rather than accumulated presence days.
+
+  Existing `time()` gates remain unchanged.
+
+- Updated dependencies [f9f4991]
+  - @dinorpg/core@0.45.1
 
 ## 0.48.0
 
