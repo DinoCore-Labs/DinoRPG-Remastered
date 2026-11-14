@@ -168,6 +168,7 @@ export default defineComponent({
 				mmex: 'madameX',
 				papy_joe: 'papyJoe',
 				dquest: 'requestOffice',
+				infirmiere: 'clinic',
 				rodeur: 'rodeur',
 				shaman: 'shamanMou',
 				skull: 'skully'

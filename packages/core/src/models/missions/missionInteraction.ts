@@ -21,6 +21,7 @@ export type MissionInteractionStartResponse =
 			dialogId: string;
 			textKey: string;
 			gfx?: string | null;
+			background?: string | null;
 			dialect?: MissionDialectKey | null;
 	  }
 	| {

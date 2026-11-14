@@ -3509,13 +3509,23 @@
 			"name": "Anna Tomie",
 			"dialog": {
 				"services": {
+					"liste": "Hast du noch Zeit? Ich hätte einige Aufträge, damit die Klinik gut läuft.",
+					"quit": "Du machst dich davon, bevor Anna dir noch mehr Arbeit gibt.",
+					"go": "",
 					"begin": "Hallo, Dinoz-Meister! Ich kann einen deiner Dinoz vollständig heilen. Lass ihn eine Stunde bei mir. Diese kostenlose Behandlung ist alle 20 Stunden möglich.",
 					"soinok": "Geschafft! Komm in einer Stunde zurück, dann ist er wieder wie neu!",
 					"soinok2": "Da bist du ja wieder! Ich hoffe, die Wartezeit war nicht zu lang.",
 					"soinko": "Tut mir leid, du kannst nur alle 20 Stunden einen Dinoz behandeln lassen. Komm später wieder."
 				}
 			},
-			"choice": { "services": { "offre": "Deinen erschöpften Dinoz behandeln lassen." } }
+			"choice": {
+				"services": {
+					"liste": "Kann ich sonst noch helfen?",
+					"go": "Ich bin bereit!",
+					"quit": "Heute nicht, ich muss los!",
+					"offre": "Deinen erschöpften Dinoz behandeln lassen."
+				}
+			}
 		},
 		"description": "Vous pouvez discuter avec cette personne.",
 		"leave": "Arrêter la discussion",
@@ -5035,6 +5045,57 @@
 		}
 	},
 	"missions": {
+		"clinic": {
+			"ingr1": {
+				"name": "Das erste Rezept",
+				"begin": "Wir benötigen zehn Pelinae-Blätter für unsere Heilmittel. Kannst du sie uns bringen?",
+				"end": "Vielen Dank! Diese Blätter werden uns sehr helfen.",
+				"deliver": "Anna 10 Pelinae-Blätter übergeben"
+			},
+			"ingr2": {
+				"name": "Ein besonderer Pilz",
+				"begin": "Unsere Heilpilze gehen zur Neige. Bitte bring mir fünf weiße Phalisk-Röhrlinge.",
+				"end": "Wunderbar! Dank dir können wir unsere Patienten besser behandeln.",
+				"deliver": "Anna 5 weiße Phalisk-Röhrlinge übergeben"
+			},
+			"ingr3": {
+				"name": "Seltsame Pflanzenheilkunde",
+				"begin": "Eine fantastische Orchidee würde unsere Heilmittel vervollständigen. Kannst du eine finden?",
+				"end": "Großartig! Jetzt haben wir auch für schwierige Fälle ein Mittel.",
+				"deliver": "Anna 1 fantastische Orchidee übergeben"
+			},
+			"kill1": {
+				"name": "Ungebetene Nachbarn",
+				"begin": "Die Bauarbeiten haben Monster aufgeschreckt. Besiege zehn Gropignons in Dinowest.",
+				"end": "Was für eine Erleichterung! Das Klinikviertel ist jetzt sicherer.",
+				"target": "10 Gropignons in Dinowest besiegen"
+			},
+			"kill2": {
+				"name": "Monsterinvasion",
+				"begin": "Stärkere Monster verschrecken unsere Patienten. Besiege zehn Coqdurs in Dinowest.",
+				"end": "Sehr gut! Endlich kann die Klinik in Ruhe arbeiten.",
+				"target": "10 Coqdurs in Dinowest besiegen"
+			},
+			"bless1": {
+				"name": "Erste Hilfe",
+				"begin": "Verletzte Dinoz brauchen Hilfe. Suche an der Soulaflotte-Kuppel nach einem Trainer mit einem verwundeten Dinoz.",
+				"end": "Du hast uns einen verletzten Dinoz gebracht. Wir kümmern uns gut um ihn!",
+				"participant": {
+					"name": "Teilnehmer",
+					"text": "Mein Dinoz hat gerade einen Kampf verloren und ich bin völlig erschöpft. Kannst du uns zur Klinik bringen?"
+				}
+			},
+			"bless2": {
+				"name": "Neugier hat ihren Preis!",
+				"begin": "Wir behandeln auch Reisende! In der Nähe des Großen Ehrwürdigen soll ein Tourist verunglückt sein.",
+				"end": "Danke, dass du den Reisenden begleitet hast. Die Klinik läuft jetzt ausgezeichnet! Anna verabschiedet sich herzlich von deinen Dinoz.",
+				"tourist": {
+					"name": "Versengter Tourist",
+					"vener": "Ähem… Den Großen Ehrwürdigen zu fotografieren war keine gute Idee. Wo könnte ich behandelt werden?",
+					"clinik": "Danke fürs Herbringen! Was für eine nette Krankenschwester. Hier bleibe ich gerne."
+				}
+			}
+		},
 		"header": "Liste des missions",
 		"th": {
 			"status": "Statut"

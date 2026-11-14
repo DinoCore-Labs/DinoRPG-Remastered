@@ -3,6 +3,7 @@ import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
 import type { Prisma } from '../../../../prisma/index.js';
 import { refreshTutorialProgressTx } from '../../Tutorial/Controller/tutorial.controller.js';
+import { assertClinicMissionAccess } from './clinicMission.access.js';
 import { assertOwnedDinoz } from './mission.access.js';
 import { getMissionDefinitionByKey } from './mission.registry.js';
 import { assertMissionStartCondition } from './mission.startConditions.js';
@@ -19,6 +20,9 @@ export async function startDinozMissionService(
 ): Promise<StartDinozMissionResponse> {
 	const dinoz = await assertOwnedDinoz(tx, params.userId, params.dinozId);
 	const missionDefinition = getMissionDefinitionByKey(params.missionKey);
+	if (missionDefinition.group === 'infirmiere') {
+		await assertClinicMissionAccess(tx, params);
+	}
 	const existingMission = await tx.dinozMissions.findUnique({
 		where: {
 			missionKey_dinozId: {

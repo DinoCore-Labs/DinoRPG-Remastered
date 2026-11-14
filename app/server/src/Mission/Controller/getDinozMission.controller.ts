@@ -1,6 +1,7 @@
 import type { DinozMissionGroupResponse, DinozMissionStatus } from '@dinorpg/core/models/missions/missionResponse.js';
 
 import type { Prisma } from '../../../../prisma/index.js';
+import { assertClinicMissionAccess } from './clinicMission.access.js';
 import { assertOwnedDinoz } from './mission.access.js';
 import { getMissionDefinitionsByGroup } from './mission.registry.js';
 import { checkMissionStartCondition } from './mission.startConditions.js';
@@ -17,6 +18,9 @@ export async function getDinozMissionGroup(
 ): Promise<DinozMissionGroupResponse> {
 	const dinoz = await assertOwnedDinoz(tx, params.userId, params.dinozId);
 
+	if (params.group === 'infirmiere') {
+		await assertClinicMissionAccess(tx, params);
+	}
 	const definitions = getMissionDefinitionsByGroup(params.group);
 
 	const savedMissions = await tx.dinozMissions.findMany({
