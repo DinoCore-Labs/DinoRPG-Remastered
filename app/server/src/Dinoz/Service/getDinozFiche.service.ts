@@ -1,6 +1,7 @@
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import type { FastifyReply, FastifyRequest } from 'fastify';
 
+import { getCompletedClanActionKeys } from '../../Clan/Service/completedClanActionKeys.service.js';
 import { advanceDinozMissionOnWait } from '../../Mission/Controller/mission.progress.js';
 import { prisma } from '../../prisma.js';
 import { toDinozFiche } from '../../utils/dinoz/dinozFiche.mapper.js';
@@ -78,7 +79,8 @@ export async function getDinozFiche(req: FastifyRequest<{ Params: Params }>, rep
 	}
 	const currentTournament = await TournamentManager.getCurrentTournamentState(prisma);
 	// Create the answer that will be sent back
-	const ret = toDinozFiche(playerData, dinozId, ficheRest, currentTournament);
+	const completedClanActionKeys = await getCompletedClanActionKeys(prisma, authedId);
+	const ret = toDinozFiche(playerData, dinozId, ficheRest, currentTournament, completedClanActionKeys);
 	ret.actions = await getAvailableActions(myDinoz, playerData);
 	return reply.send(ret);
 }

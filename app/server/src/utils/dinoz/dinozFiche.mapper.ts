@@ -78,7 +78,8 @@ export const toDinozFiche = (
 	},
 	activeDinoz: number,
 	restInfos?: DinozRestInfos | null,
-	currentTournament?: { id: string; levelLimit: number } | null
+	currentTournament?: { id: string; levelLimit: number } | null,
+	completedClanActionKeys: string[] = []
 ): DinozFiche => {
 	const userForCondition = structuredClone(user);
 	const dinoz = user.dinoz.find(d => d.id === activeDinoz);
@@ -86,7 +87,9 @@ export const toDinozFiche = (
 		throw new ExpectedError('Inexistant dinoz');
 	}
 	userForCondition.dinoz = [dinoz];
-	const conditionContext = buildConditionContext(userForCondition, dinoz.id, defaultConditionKeyMaps);
+	const conditionContext = buildConditionContext(userForCondition, dinoz.id, defaultConditionKeyMaps, {
+		completedClanActionKeys
+	});
 	return {
 		id: dinoz.id,
 		name: dinoz.name,
@@ -262,8 +265,15 @@ export const calculateXPBonus = (
 	return Math.round(xp * f);
 };
 
-export const canGoToThisPlace = (user: UserForConditionCheck, condition: Condition, activeDinoz: number) => {
-	const context = buildConditionContext(user, activeDinoz, defaultConditionKeyMaps);
+export const canGoToThisPlace = (
+	user: UserForConditionCheck,
+	condition: Condition,
+	activeDinoz: number,
+	completedClanActionKeys: string[] = []
+) => {
+	const context = buildConditionContext(user, activeDinoz, defaultConditionKeyMaps, {
+		completedClanActionKeys
+	});
 	return evalCondition(context, condition);
 };
 

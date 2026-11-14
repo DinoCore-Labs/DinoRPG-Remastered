@@ -1,4 +1,3 @@
-import { DinozStatusId } from '@dinorpg/core/models/dinoz/statusList.js';
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
 import { StatTracking } from '@dinorpg/core/models/enums/StatsTracking.js';
 import { FighterType } from '@dinorpg/core/models/fight/fighterType.js';
@@ -9,10 +8,12 @@ import { actualPlace } from '@dinorpg/core/utils/dinozUtils.js';
 import type { FastifyReply, FastifyRequest } from 'fastify';
 
 import { GameLogType } from '../../../../prisma/index.js';
+import { getCompletedClanActionKeys } from '../../Clan/Service/completedClanActionKeys.service.js';
 import gameConfig from '../../config/game.config.js';
 import { fightMonstersAtPlace } from '../../Fight/Service/fight.service.js';
 import { movementListener } from '../../Fight/Service/movementListener.service.js';
 import { safeCreateGameLog } from '../../Gamelog/Controller/gamelog.controller.js';
+import { prisma } from '../../prisma.js';
 import { processScenarioMoveFight } from '../../Scenario/Service/scenarioMoveFight.service.js';
 import { incrementUserStat } from '../../Stats/stats.service.js';
 import { refreshTutorialProgress } from '../../Tutorial/Controller/tutorial.controller.js';
@@ -84,13 +85,14 @@ export async function moveDinozUnlocked(req: Req, _reply: FastifyReply) {
 	});
 	// Check if condition to go to desired place are fulfilled for dinoz and followers
 	if (moveToDesiredPlace.condition) {
+		const completedClanActionKeys = await getCompletedClanActionKeys(prisma, authedId);
 		for (const member of team) {
 			const memberToTest: UserForConditionCheck = {
 				...user,
 				dinoz: [member]
 			};
 
-			if (!canGoToThisPlace(memberToTest, moveToDesiredPlace.condition, member.id)) {
+			if (!canGoToThisPlace(memberToTest, moveToDesiredPlace.condition, member.id, completedClanActionKeys)) {
 				throw new ExpectedError('missingStatus');
 			}
 		}

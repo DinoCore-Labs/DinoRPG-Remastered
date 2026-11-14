@@ -21,7 +21,6 @@ export interface ClanMember {
 	rights: string[];
 	donation: number;
 	userId: string;
-
 	clan?: any;
 	user?: any;
 }

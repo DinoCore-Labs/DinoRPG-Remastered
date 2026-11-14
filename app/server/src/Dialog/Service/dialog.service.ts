@@ -158,6 +158,9 @@ export async function assertDialogAvailability(
 	dinozId: number,
 	now?: Date
 ) {
+	if (dialog.inject.length > 0) {
+		throw new ExpectedError('dialogNotAvailable');
+	}
 	const context = await buildDialogContext(tx, {
 		userId,
 		dinozId,
@@ -203,6 +206,7 @@ export async function listAvailableDialogs(params: {
 			now: params.now
 		});
 		for (const dialog of dialogs) {
+			if (dialog.inject.length > 0) continue;
 			if (baseContext.dinoz.placeId !== dialog.place) {
 				continue;
 			}

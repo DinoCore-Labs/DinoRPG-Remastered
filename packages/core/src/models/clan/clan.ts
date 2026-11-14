@@ -19,7 +19,6 @@ import { ClanIngredient } from './clanIngredient.js';
 import { ClanJoinRequest } from './clanJoinRequest.js';
 import { ClanMember } from './clanMember.js';
 import { ClanPage } from './clanPage.js';
-// import { ClanMessage } from './clanMessage.js';
 
 export interface Clan {
 	id: number;
@@ -36,7 +35,6 @@ export interface Clan {
 	members?: ClanMember[];
 	pages?: ClanPage[];
 	ingredients?: ClanIngredient[];
-	// discussion?: ClanMessage[];
 	users?: UserData[];
 	eventRank?: number | null;
 }

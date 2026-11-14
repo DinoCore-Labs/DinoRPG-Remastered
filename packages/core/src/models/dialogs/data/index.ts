@@ -2,6 +2,17 @@ import { archisageDialog } from './archisage.dialog.js';
 import { atlanteGuardDialog } from './atlanteGuard.dialog.js';
 import { baoBobDialog } from './baoBob.dialog.js';
 import { baoFanDialog } from './baoFan.dialog.js';
+import {
+	clinicAnnaFinishedDialog,
+	clinicAnnaIntroDialog,
+	clinicAnnaNewClanDialog,
+	clinicAnnaOpeningDialog,
+	clinicAnnaReturnDialog,
+	clinicAnnaSiteDialog,
+	clinicEugeneInjectionDialog,
+	clinicMichelInjectionDialog,
+	clinicWineSellerDialog
+} from './clinic.dialog.js';
 import { coralMinerDialog } from './coralMiner.dialog.js';
 import { dianKorgseyDialog } from './dianKorgsey.dialog.js';
 import { elementalMasterDialog } from './elementalMaster.dialog.js';
@@ -76,6 +87,16 @@ export const dialogDefinitions = [
 	introPortEscortDialog,
 	introSwampDialog,
 	introWaikikiDialog,
+	// Clinique de Dinoville (dialogues MT)
+	clinicAnnaIntroDialog,
+	clinicEugeneInjectionDialog,
+	clinicMichelInjectionDialog,
+	clinicWineSellerDialog,
+	clinicAnnaReturnDialog,
+	clinicAnnaSiteDialog,
+	clinicAnnaFinishedDialog,
+	clinicAnnaOpeningDialog,
+	clinicAnnaNewClanDialog,
 	// Dinoville
 	professorEugeneDialog,
 	jovebozeDialog,

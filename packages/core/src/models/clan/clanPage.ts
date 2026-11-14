@@ -7,6 +7,5 @@ export interface ClanPage {
 	name: string;
 	content: string;
 	clanId: number;
-
 	Clan?: Clan;
 }
