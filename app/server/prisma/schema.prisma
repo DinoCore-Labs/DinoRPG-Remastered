@@ -2,8 +2,7 @@
 // Eternaltwin DinoRPG
 // Upstream file: https://gitlab.com/eternaltwin/dinorpg/dinorpg/-/blob/3a73bbc6d751e4916cc5fd2e5f23bc2cfd42fc6d/ed-be/prisma/schema.prisma
 //
-// Copyright in the original contributions remains with the respective
-// authors and contributors.
+// Copyright in the original contributions remains with the respective authors and contributors.
 //
 // Modified by DinoRPG Remastered contributors.
 // Modifications include substantial expansion and restructuring of the
@@ -13,8 +12,6 @@
 // See NOTICE.md and the Git history for provenance and modification details.
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
-
-
 
 generator client {
   provider        = "prisma-client-js"
@@ -29,143 +26,74 @@ datasource db {
 
 model BankSaving {
   id String @id @default(uuid()) @db.Uuid
-
   amount          Int
   durationDays    Int
   interestRateBps Int
-
   unlockAt        DateTime  @db.Timestamptz(3)
   claimedAt       DateTime? @db.Timestamptz(3)
-
-
   userId String @db.Uuid
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-
   createdAt DateTime @default(now()) @db.Timestamptz(3)
   updatedAt DateTime @updatedAt @db.Timestamptz(3)
-
   @@index([userId])
   @@index([userId, claimedAt])
   @@index([unlockAt])
   @@map("bank_saving")
 }
-
 model Dinoz {
-
-  id                 Int         @id @default(autoincrement())
-
-  name               String      @db.VarChar(32)
-
-  canRename          Boolean     @default(false)
-
+  id                 Int                  @id @default(autoincrement())
+  name               String               @db.VarChar(32)
+  canRename          Boolean              @default(false)
   raceId             Int
-
-  display            String      @db.VarChar
-
-  level              Int         @default(1)
-
+  display            String               @db.VarChar
+  level              Int                  @default(1)
   life               Int
-
   maxLife            Int
-
   experience         Int
-
   nbrUpFire          Int
-
   nbrUpWood          Int
-
   nbrUpWater         Int
-
   nbrUpLightning     Int
-
   nbrUpAir           Int
-
   nextUpElementId    Int
-
   nextUpAltElementId Int
-
   placeId            Int
-
-  remaining          Int         @default(3)
-
+  remaining          Int                   @default(3)
   order              Int?
-
-  createdDate        DateTime    @default(now()) @db.Timestamptz(3)
-
-  updatedDate        DateTime    @updatedAt @db.Timestamptz(3)
-
-  seed               String      @db.Uuid
-
+  createdDate        DateTime              @default(now()) @db.Timestamptz(3)
+  updatedDate        DateTime              @updatedAt @db.Timestamptz(3)
+  seed               String                @db.Uuid
   state              DinozState?
-
-  stateTimer         DateTime?   @db.Timestamptz(3)
-
-
-
-  catches          DinozCatch[]
-
-  concentration    DinozConcentration?
-
-  fight            Boolean                 @default(true)
-
-  gather           Boolean                 @default(true)
-
-  leaderId         Int?                    @map("following")
-
-  leader           Dinoz?                  @relation("DinozFollowers", fields: [leaderId], references: [id])
-
-  followers        Dinoz[]                 @relation("DinozFollowers")
-
-  items            DinozItems[]
-
-  skills           DinozSkills[]
-
-  unlockableSkills DinozSkillsUnlockable[]
-
-  status           DinozStatus[]
-
-  missions         DinozMissions[]
-
-  marketOffers     Offer[]                 @relation("OfferDinoz")
-
-  FBTournamentStep Int                     @default(0)
-
-
-
-  DojoOpponents  DojoOpponents[]
-
-  DojoTeam       DojoTeam[]
-
-  TournamentTeam TournamentTeam[]
-
-
-
-  userId String @db.Uuid
-
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
-
-
-
+  stateTimer         DateTime?             @db.Timestamptz(3)
+  catches            DinozCatch[]
+  concentration      DinozConcentration?
+  fight              Boolean               @default(true)
+  gather             Boolean               @default(true)
+  leaderId           Int?                  @map("following")
+  leader             Dinoz?                @relation("DinozFollowers", fields: [leaderId], references: [id])
+  followers          Dinoz[]               @relation("DinozFollowers")
+  items              DinozItems[]
+  skills             DinozSkills[]
+  unlockableSkills   DinozSkillsUnlockable[]
+  status             DinozStatus[]
+  missions           DinozMissions[]
+  marketOffers       Offer[]               @relation("OfferDinoz")
+  FBTournamentStep   Int                   @default(0)
+  DojoOpponents      DojoOpponents[]
+  DojoTeam           DojoTeam[]
+  TournamentTeam     TournamentTeam[]
+  userId             String                @db.Uuid
+  user               User                  @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction)
   devourerDefendedId Int?
-
-  devourerDefended   DevourerControl? @relation("DevourerDinoz", fields: [devourerDefendedId], references: [id], onDelete: SetNull)
-
-
-
-  logs    GameLog[] @relation("GameLogDinoz")
-
-  reports Report[]  @relation("ReportReportedDinoz")
-
-
+  devourerDefended   DevourerControl?      @relation("DevourerDinoz", fields: [devourerDefendedId], references: [id], onDelete: SetNull)
+  logs               GameLog[]             @relation("GameLogDinoz")
+  reports            Report[]              @relation("ReportReportedDinoz")
+  mtDungeonRuns      MtDungeonRun[]
+  mtDungeonProgress  MtDungeonProgress[]
+  clinicTreatments   ClinicTreatment[]
 
   @@index([userId])
-
   @@index([leaderId])
-
-  mtDungeonRuns MtDungeonRun[]
-
-  mtDungeonProgress MtDungeonProgress[]
-
 }
 
 
@@ -1586,6 +1514,7 @@ model User {
 
   mtDungeonProgress MtDungeonProgress[]
 
+  clinicTreatment ClinicTreatment?
 }
 
 
@@ -1751,6 +1680,20 @@ model UserRewards {
 }
 
 
+
+model ClinicTreatment {
+  userId     String    @id @db.Uuid
+  dinozId    Int
+  startedAt  DateTime  @db.Timestamptz(3)
+  readyAt    DateTime  @db.Timestamptz(3)
+  finishedAt DateTime? @db.Timestamptz(3)
+
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  dinoz Dinoz @relation(fields: [dinozId], references: [id], onDelete: Cascade)
+
+  @@index([dinozId])
+  @@map("clinic_treatment")
+}
 
 model UserScenario {
 
@@ -2570,6 +2513,8 @@ enum DinozState {
 
   unfreezing
 
+
+  clinic
 }
 
 

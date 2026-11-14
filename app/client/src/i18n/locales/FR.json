@@ -3646,6 +3646,12 @@
 			"eugeneName": "Professeur Eugène",
 			"michelName": "Guide Michel",
 			"dialog": {
+				"services": {
+					"begin": "Bonjour Maître Dinoz, je peux soigner complètement un de vos Dinoz. Laissez-le-moi une heure. Vous ne pouvez bénéficier de ce service gratuit qu’une fois toutes les 20 heures.",
+					"soinok": "Et voilà. Revenez dans une heure, il sera comme neuf !",
+					"soinok2": "Ça va ? L’attente n’a pas été trop longue ?",
+					"soinko": "Désolée, vous ne pouvez soigner qu’un seul Dinoz toutes les 20 heures. Revenez plus tard."
+				},
 				"intro": {
 					"begin": "En traversant les rues de Dinoville, vous apercevez une personne qui vous fait signe de venir vers elle...",
 					"salut": "Bonjour Maître dinoz, je m’appelle Anna Tomie, je viens d’arriver en ville et j’aurais besoin de votre aide.",
@@ -3701,6 +3707,7 @@
 				}
 			},
 			"choice": {
+				"services": { "offre": "Faire soigner votre Dinoz ! Il est au bout du rouleau." },
 				"intro": {
 					"salut": "Bonjour mademoiselle... (Waouh) !",
 					"aide": "Bien sûr, que puis-je faire pour vous ?",
@@ -6956,6 +6963,10 @@
 				"end": "Félicitations ! Tu as su te servir correctement de la boutique, elle est accessible à n'importe quel endroit du jeu, n'hésite pas à l'utiliser en cas de besoin !"
 			}
 		}
+	},
+	"clinicTreatment": {
+		"waiting": "Votre Dinoz est soigné par Anna Tomie. Il sera disponible dans {time}.",
+		"ready": "Le traitement est terminé ! La fiche de votre Dinoz est en cours d’actualisation."
 	},
 	"scenarios": {
 		"clinik": { "name": "Clinique de Dinoland" },

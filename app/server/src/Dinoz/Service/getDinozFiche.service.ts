@@ -4,6 +4,7 @@ import type { FastifyReply, FastifyRequest } from 'fastify';
 
 import { getAvailableClanActionsForDinoz } from '../../Clan/Service/clanActionDinoz.service.js';
 import { getCompletedClanActionKeys } from '../../Clan/Service/completedClanActionKeys.service.js';
+import { finishClinicTreatmentIfReady } from '../../Clinic/Service/clinicTreatment.service.js';
 import { advanceDinozMissionOnWait } from '../../Mission/Controller/mission.progress.js';
 import { prisma } from '../../prisma.js';
 import { toDinozFiche } from '../../utils/dinoz/dinozFiche.mapper.js';
@@ -55,6 +56,7 @@ export async function getDinozFiche(req: FastifyRequest<{ Params: Params }>, rep
 	// 1) apply resting and check if mission wait time is over
 	const restInfos = await prisma.$transaction(async tx => {
 		await applyUnfreezeIfNeeded(tx, dinozId);
+		await finishClinicTreatmentIfReady(tx, authedId, dinozId);
 		await advanceDinozMissionOnWait(tx, dinozId);
 		return applyRestIfNeeded(tx, dinozId);
 	});
@@ -90,7 +92,7 @@ export async function getDinozFiche(req: FastifyRequest<{ Params: Params }>, rep
 		action =>
 			action.name === Action.DUNGEON || action.name === Action.ENTER_PORTAL || action.name === Action.STOP_CONCEN
 	);
-	if (!inExclusiveActivity) {
+	if (!inExclusiveActivity && myDinoz.state === null) {
 		ret.actions.push(...(await getAvailableClanActionsForDinoz(authedId, myDinoz.placeId)));
 	}
 	return reply.send(ret);

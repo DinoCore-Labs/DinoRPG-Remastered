@@ -36,6 +36,16 @@
 			<p>{{ $t('common.actions') }}</p>
 		</div>
 		<div class="action_content">
+			<DZDisclaimer
+				v-if="dinoz.state === DINOZ_STATE.clinic && clinicSecondsLeft > 0"
+				:content="$t('clinicTreatment.waiting', { time: clinicCountdown })"
+				timer
+			/>
+			<DZDisclaimer
+				v-if="dinoz.state === DINOZ_STATE.clinic && clinicSecondsLeft === 0"
+				:content="$t('clinicTreatment.ready')"
+				help
+			/>
 			<DZDisclaimer v-if="dinozInDungeon" :content="$t('action.description.dungeon_status')" help />
 			<template v-for="didi in dinozFullParty" :key="didi.id">
 				<DinozMissionHUD
@@ -217,6 +227,8 @@ export default defineComponent({
 			uStore: userStore(),
 			unfreezeSecondsLeft: 0,
 			restSecondsLeft: 0,
+			clinicSecondsLeft: 0,
+			clinicTimerRefreshed: false,
 			intervals: [] as number[],
 			DINOZ_STATE,
 			missionTalkTextKey: null as string | null,
@@ -265,6 +277,18 @@ export default defineComponent({
 			this.unfreezeSecondsLeft = diff;
 			if (diff === 0) {
 				this.refreshDinoz();
+			}
+		},
+		updateClinicCountdown() {
+			if (this.dinoz.state !== DINOZ_STATE.clinic || !this.dinoz.stateTimer) {
+				this.clinicSecondsLeft = 0;
+				this.clinicTimerRefreshed = false;
+				return;
+			}
+			this.clinicSecondsLeft = Math.max(0, Math.ceil((new Date(this.dinoz.stateTimer).getTime() - Date.now()) / 1000));
+			if (this.clinicSecondsLeft === 0 && !this.clinicTimerRefreshed) {
+				this.clinicTimerRefreshed = true;
+				void this.refreshDinoz();
 			}
 		},
 		updateRestCountdown() {
@@ -1064,6 +1088,9 @@ export default defineComponent({
 		},
 		restCountdown(): string {
 			return this.formatMMSS(this.restSecondsLeft);
+		},
+		clinicCountdown(): string {
+			return this.formatHHMMSS(this.clinicSecondsLeft);
 		}
 	},
 	watch: {
@@ -1081,6 +1108,7 @@ export default defineComponent({
 				this.dinozId = this.dinoz.id;
 				this.updateRestCountdown();
 				this.updateUnfreezeCountdown();
+				this.updateClinicCountdown();
 			},
 			deep: false,
 			immediate: true
@@ -1089,7 +1117,8 @@ export default defineComponent({
 	async mounted() {
 		const intervalId = window.setInterval(() => this.updateUnfreezeCountdown(), 1000);
 		const intervalId2 = window.setInterval(() => this.updateRestCountdown(), 1000);
-		this.intervals.push(intervalId, intervalId2);
+		const clinicIntervalId = window.setInterval(() => this.updateClinicCountdown(), 1000);
+		this.intervals.push(intervalId, intervalId2, clinicIntervalId);
 	},
 	unmounted() {
 		this.intervals.forEach(clearInterval);
