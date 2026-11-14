@@ -35,6 +35,8 @@ export interface DinozFiche {
 	maxExperience: number;
 	race: DinozRace;
 	placeId: number;
+	/** MT clini2 (129) is visual only; placeId remains clinik (38). */
+	displayPlaceId?: number;
 	actions: ActionFiche[];
 	items: number[];
 	lockedMagicItems?: { itemId: number; equippedAt: string }[];
