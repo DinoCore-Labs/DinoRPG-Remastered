@@ -3094,6 +3094,21 @@
 		}
 	},
 	"action": {
+		"clanAction": {
+			"names": {
+				"hopita": "Construir la Clínica {percentage} %",
+				"tour": "Construir la Torre {percentage} %",
+				"pompe": "Bombear la niebla {percentage} %",
+				"labora": "Construir el laboratorio {percentage} %"
+			},
+			"count": "{progress} / {total} acciones",
+			"description": "Tu clan ha realizado {progress} de {total} acciones. Cada contribución consume una acción de este Dinoz.",
+			"confirm": "¿Contribuir a esta construcción? Consumirá una acción disponible de tu Dinoz.",
+			"success": "¡Gracias por tu ayuda! Quedan {remaining} acciones.",
+			"finished": "¡La obra ha terminado! Tu clan lo ha conseguido.",
+			"noAction": "Este Dinoz no puede actuar. Recupera su acción para participar.",
+			"working": "Contribuyendo…"
+		},
 		"popupConfirm": "Confirmez-vous l'action {action} pour votre Dinoz ?",
 		"confirm": {
 			"stop_concen": "Votre Dinoz peut essayer d'arrêter de se concentrer à tout moment.",
