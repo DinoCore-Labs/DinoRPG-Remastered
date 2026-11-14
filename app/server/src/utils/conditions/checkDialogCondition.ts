@@ -155,6 +155,8 @@ export function checkDialogCondition(condition: Condition | null | undefined, co
 		}
 		case 'active':
 			return context.world.activeFeatures.has(condition.key);
+		case 'clanact':
+			return context.world.completedClanActionKeys.has(condition.key);
 		case 'hour':
 			return compareNumber(getGameHour(context.now), condition.value, condition.compare);
 		case 'event':
@@ -167,7 +169,6 @@ export function checkDialogCondition(condition: Condition | null | undefined, co
 		case 'gvar':
 		case 'race':
 		case 'dungeon':
-		case 'clanact':
 		case 'friend':
 		case 'promo':
 		case 'war':

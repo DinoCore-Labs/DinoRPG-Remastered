@@ -21,7 +21,6 @@ export interface ClanJoinRequest {
 	clanId: number;
 	date: Date;
 	userId: string;
-
 	clan?: Clan;
 	user?: UserData;
 }

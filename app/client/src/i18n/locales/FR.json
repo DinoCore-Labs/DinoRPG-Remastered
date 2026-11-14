@@ -3622,6 +3622,118 @@
 		}
 	},
 	"npc": {
+		"clinic": {
+			"name": "Anna Tomie",
+			"nurseName": "Infirmière",
+			"sellerName": "Vendeur de vin",
+			"eugeneName": "Professeur Eugène",
+			"michelName": "Guide Michel",
+			"dialog": {
+				"intro": {
+					"begin": "En traversant les rues de Dinoville, vous apercevez une personne qui vous fait signe de venir vers elle...",
+					"salut": "Bonjour Maître dinoz, je m’appelle Anna Tomie, je viens d’arriver en ville et j’aurais besoin de votre aide.",
+					"aide": "Eh bien, figurez-vous que je viens m’installer à Dinoville pour y pratiquer mon métier. J’aimerais construire une clinique... J’ai l’autorisation du Roi, mais je ne trouve pas d’endroit où la bâtir.",
+					"info": "Je viens d’une contrée plus au Nord. Anna Tomie n’est pas mon vrai nom, je voulais faire plus couleur locale... Mais vous m’écoutiez, au moins ?",
+					"blabla": "Si vous aviez la bonté de faire le tour de Dinoville, afin de demander aux habitants où trouver un endroit isolé pour construire ce bâtiment, vous seriez un chou.",
+					"end": "Anna Tomie est déjà partie s’adresser à quelqu’un d’autre. Si vous voulez l’impressionner, dépêchez-vous !",
+					"quit": "Je vois que vous n’êtes pas la personne que je recherche... Tant pis."
+				},
+				"eugene": {
+					"avis": "Ah ? Toi aussi, tu t’es laissé embobiner par cette infirmière ? Je refuse d’avoir un voisin aussi bruyant : nous avons besoin de calme pour nos recherches.",
+					"non": "N’insiste pas, il y a déjà trop d’endroits à Dinoville. Cherche ailleurs.",
+					"end": "Vous vous éloignez, un peu dépité. Qui pourrait vous en dire davantage ?"
+				},
+				"michel": {
+					"avis": "Une clinique ? Bonne idée ! Il te faut un endroit un peu isolé pour un édifice de cette envergure. Peut-être trouveras-tu ton bonheur dans la partie ouest de la ville ? Va voir là-bas.",
+					"super": "Vous vous éloignez, satisfait, en direction de Dinoplaza."
+				},
+				"sommelier": {
+					"begin": "Bonyour, amateur de bonnes choses ! Laissez-moi vous guider parmi nos meilleurs crus. Le château Moulinsart 128 est succulent, le Pet-Sec l’Oignon 142 devient rare...",
+					"ou": "Une clinique ? Qu’est-ce que cela peut bien me faire ? Je ne pense pas que les patients boivent du vin.",
+					"oue": "Ah oui ? Et qui me dit que cette infirmière connaît suffisamment le vin pour en vendre ?",
+					"truc": "Ma foi, je pourrais sacrifier une partie des vignes de Dinoville... Ce ne serait pas une grande perte. Hum, je n’ai rien dit !",
+					"end": "Le vendeur de vin accepte de céder une partie de ses vignes pour la construction de la clinique.",
+					"quit": "Je me suis trompé à votre sujet. Nous n’avons pas les mêmes valeurs ! Disparaissez !"
+				},
+				"return": {
+					"begin": "Ah, enfin des nouvelles de mon champion !",
+					"suite": "J’en suis très heureuse ! Dites-moi vite où se trouve cet endroit merveilleux.",
+					"vin": "Le vendeur de vin ? Comme il est mignon ! Allons voir le terrain. Je vais le remercier comme il se doit.",
+					"end": "Anna Tomie est déjà partie sans vous attendre."
+				},
+				"site": {
+					"begin": "Voilà un endroit convenable pour la clinique, mais il faut maintenant trouver de la main-d’œuvre...",
+					"cool": "Je ne suis qu’une faible infirmière. Vous pensiez me laisser tout construire de mes petites mains ?",
+					"snif": "Demandez à vos amis de vous aider. Fort comme vous êtes, vous appartenez sûrement à un clan !",
+					"dinoz": "Plus vous serez nombreux, plus ce sera rapide. L’idéal serait de réunir le plus grand nombre de maîtres Dinoz.",
+					"voir": "Merci ! Je savais que je pouvais compter sur une personne aussi généreuse !",
+					"merci": "Il vous faut réunir un maximum de Dinoz avec votre clan pour construire la clinique."
+				},
+				"finished": {
+					"begin": "Comment ? Vous avez déjà terminé ? Faites-moi voir ça !",
+					"ok": "Vous dévoilez à Anna le résultat de ces heures de travail. Votre esprit d’équipe a triomphé de la difficulté !"
+				},
+				"opening": {
+					"begin": "Bravo ! Vous et vos amis avez construit une magnifique clinique ! Bon, j’ai déjà vu mieux, mais on fera avec...",
+					"ok": "Allons, personne ne dira que je suis ingrate. Revenez me voir de temps en temps, je vous offrirai mes services gratuitement !",
+					"merci": "En fait c’est Madame, désolée mon grand..."
+				},
+				"lost": {
+					"begin": "Maître Dinoz, vous ne deviez pas nous aider à construire la clinique ? Votre nouveau clan n’a pas accès à ses services : reconstruisez-la avec lui.",
+					"end": "Allez, allez, au travail !"
+				}
+			},
+			"choice": {
+				"intro": {
+					"salut": "Bonjour mademoiselle... (Waouh) !",
+					"aide": "Bien sûr, que puis-je faire pour vous ?",
+					"beat": "Rester à la regarder béatement...",
+					"blabla": "C’est problématique, en effet, mais pour la bonne cause.",
+					"info": "Vous n’êtes pas d’ici, je me trompe ?",
+					"bref": "Désolé de vous avoir interrompue, donc vous disiez ?",
+					"end": "Je cours, je vole, je fonce... mais où, au fait ?"
+				},
+				"eugene": {
+					"avis": "Je cherche un endroit pour construire une clinique !",
+					"non": "C’est embêtant, il y a pourtant de la place ici.",
+					"end": "Bon, je vais demander à quelqu’un d’autre."
+				},
+				"michel": {
+					"avis": "Où pourrait-on construire une clinique ?",
+					"super": "Merci, encore une fois, tu m’es d’une aide précieuse !"
+				},
+				"sommelier": {
+					"ou": "En fait, je cherche un endroit pour construire une clinique.",
+					"et": "On m’a dit que votre Cru Dinoville avait un goût affreux !",
+					"oue": "Une fois guéris, les patients viendront acheter du vin ! L’infirmière pourra vous aider à la boutique.",
+					"truc": "Avec tous ces maîtres Dinoz, nul besoin d’être un expert en vin...",
+					"end": "Je n’ai rien entendu !"
+				},
+				"return": {
+					"suite": "Je vous ai trouvé un endroit idéal pour construire votre clinique !",
+					"vin": "Le vendeur de vin accepte de sacrifier une partie de ses vignes.",
+					"end": "Mais j’ai fait tout le boulot !",
+					"end2": "Oui, c’est grâce à lui qu’on construira une superbe clinique."
+				},
+				"site": {
+					"cool": "Ah ?",
+					"snif": "Comment allons-nous faire ? À deux, c’est impossible !",
+					"dinoz": "Combien de Dinoz exactement ?",
+					"voir": "Je vais voir ce que je peux faire...",
+					"merci": "Je reviendrai avec des Dinoz en plus !"
+				},
+				"finished": {
+					"ok": "D’accord, un... deux... trois... TADAM !"
+				},
+				"opening": {
+					"ok": "Huff, huff... Mais j’ai tout donné, moi !",
+					"merci": "Merci beaucoup, mademoiselle !"
+				},
+				"lost": {
+					"end": "Mais..."
+				}
+			}
+		},
 		"description": "Vous pouvez discuter avec cette personne.",
 		"leave": "Arrêter la discussion",
 		"openLink": "Ouvrir le lien",
