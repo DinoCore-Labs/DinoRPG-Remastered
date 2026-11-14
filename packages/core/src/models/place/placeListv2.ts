@@ -1062,12 +1062,12 @@ export const placeListv2 = definePlaces({
 
 	[PlaceEnum.CLINI2]: {
 		placeId: PlaceEnum.CLINI2,
-		name: 'clini2',
+		name: 'clinik2',
 		map: MapZone.DINOWEST,
 		moves: [],
 		gotoPlaceId: PlaceEnum.CLINIQUE,
 		realPlaceId: PlaceEnum.CLINIQUE,
-		background: 'dw_clini2'
+		background: 'clinique2'
 	},
 
 	[PlaceEnum.GO_TO_DINOVILLE]: {

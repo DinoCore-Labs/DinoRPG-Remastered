@@ -119,6 +119,11 @@ export default defineComponent({
 			return new Date(date.getTime() - diff); // needs to substract
 		},
 		getPlaceName(placeId: number): string {
+			// MT real="clinik", goto="clinik": un seul lieu sur la carte,
+			// deux variantes visuelles selon le chantier du clan actuel.
+			if (placeId === PlaceEnum.CLINIQUE && this.dinozData.displayPlaceId === PlaceEnum.CLINI2) {
+				return 'clini2';
+			}
 			const place = placeList.find(place => place.placeId === placeId);
 			if (!place) return '';
 			const today = this.changeTimezone(new Date(), 'GMT');

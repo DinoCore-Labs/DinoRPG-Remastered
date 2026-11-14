@@ -6,6 +6,7 @@ import { DinozStatusId } from '@dinorpg/core/models/dinoz/statusList.js';
 import { ItemType } from '@dinorpg/core/models/enums/ItemType.js';
 import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
 import { DinozCurrentMission } from '@dinorpg/core/models/missions/missionCurrent.js';
+import { getClinicDisplayPlaceId } from '@dinorpg/core/models/place/clinicPlace.js';
 import { placeListv2 } from '@dinorpg/core/models/place/placeListv2.js';
 import { Skill, skillList } from '@dinorpg/core/models/skills/skillList.js';
 import { evalCondition } from '@dinorpg/core/models/utils/conditions/evalConditions.js';
@@ -71,9 +72,7 @@ export const toDinozFiche = (
 			status: Pick<DinozStatus, 'statusId'>[];
 			skills: Pick<DinozSkills, 'skillId' | 'state'>[];
 			followers: Pick<Dinoz, 'id' | 'fight' | 'remaining' | 'gather' | 'name'>[];
-			//concentration: Concentration | null;
 			TournamentTeam?: { tournamentId: string | null }[];
-			//build: DinozBuild | null;
 		})[];
 	},
 	activeDinoz: number,
@@ -106,6 +105,7 @@ export const toDinozFiche = (
 		maxExperience: getMaxXp(dinoz),
 		race: getRace(dinoz.raceId),
 		placeId: dinoz.placeId,
+		displayPlaceId: getClinicDisplayPlaceId(dinoz.placeId, completedClanActionKeys),
 		items: dinoz.items?.map(item => item.itemId),
 		lockedMagicItems: dinoz.items
 			?.filter(item => {
@@ -135,7 +135,6 @@ export const toDinozFiche = (
 		nbrUpWater: dinoz.nbrUpWater,
 		nbrUpLightning: dinoz.nbrUpLightning,
 		nbrUpAir: dinoz.nbrUpAir,
-		//missionHUD: getHUDObjective(dinoz),
 		actions: [],
 		skills: dinoz.skills,
 		order: dinoz.order,
