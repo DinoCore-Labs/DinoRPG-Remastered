@@ -23,7 +23,7 @@ describe('clinic scenario and MT place aliases', () => {
 			placeId: 129,
 			gotoPlaceId: PlaceEnum.CLINIQUE,
 			realPlaceId: PlaceEnum.CLINIQUE,
-			background: 'dw_clini2'
+			background: 'clinique2'
 		});
 	});
 
