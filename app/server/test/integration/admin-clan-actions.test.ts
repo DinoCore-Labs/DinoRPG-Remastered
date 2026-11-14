@@ -23,7 +23,13 @@ afterAll(async () => {
 });
 
 async function setupClan(user: TestUser) {
-	const clan = await prisma.clan.create({ data: { name: 'Clan clinique', leaderId: user.id, langs: [] } });
+	const clan = await prisma.clan.create({
+		data: {
+			name: `Clan-${user.id}`,
+			leaderId: user.id,
+			langs: []
+		}
+	});
 	await prisma.clanMember.create({ data: { userId: user.id, clanId: clan.id } });
 	await prisma.user.update({ where: { id: user.id }, data: { clanId: clan.id } });
 	return clan;
