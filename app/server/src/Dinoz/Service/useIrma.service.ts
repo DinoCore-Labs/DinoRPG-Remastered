@@ -4,6 +4,7 @@ import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import type { FastifyReply, FastifyRequest } from 'fastify';
 
+import { DinozState } from '../../../../prisma/index.js';
 import { removeItem } from '../../Inventory/Controller/removeItem.controller.js';
 import { prisma } from '../../prisma.js';
 import { incrementUserStat } from '../../Stats/stats.service.js';
@@ -36,10 +37,11 @@ export async function useIrma(req: FastifyRequest<{ Params: UseIrmaParams }>, re
 		select: {
 			id: true,
 			leaderId: true,
+			state: true,
 			remaining: true,
 			fight: true,
 			gather: true,
-			followers: { select: { id: true, remaining: true, fight: true, gather: true } },
+			followers: { select: { id: true, state: true, remaining: true, fight: true, gather: true } },
 			user: {
 				select: {
 					id: true,
@@ -62,6 +64,9 @@ export async function useIrma(req: FastifyRequest<{ Params: UseIrmaParams }>, re
 	});
 	if (activeMtDungeon) throw new ExpectedError('useDungeonIrma', { statusCode: 409 });
 	const team = [dinoz, ...(dinoz.followers ?? [])];
+	if (team.some(member => member.state === DinozState.clinic)) {
+		throw new ExpectedError('clinic.treatmentInProgress', { statusCode: 409 });
+	}
 	for (const teamDinoz of team) {
 		await assertDinozNotConcentrating(teamDinoz.id);
 	}

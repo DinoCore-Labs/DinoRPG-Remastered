@@ -13,6 +13,7 @@ import {
 	clinicMichelInjectionDialog,
 	clinicWineSellerDialog
 } from './clinic.dialog.js';
+import { clinicAnnaServicesDialog } from './clinicServices.dialog.js';
 import { coralMinerDialog } from './coralMiner.dialog.js';
 import { dianKorgseyDialog } from './dianKorgsey.dialog.js';
 import { elementalMasterDialog } from './elementalMaster.dialog.js';
@@ -119,6 +120,7 @@ export const dialogDefinitions = [
 	forcebrutOrganizerDialog,
 	jeromeKDinovilleDialog,
 	guideMichelDialog,
+	clinicAnnaServicesDialog,
 	urmaDialog,
 	// Quête Kabuki — Port de Prêche
 	yakuziPortIntroDialog,

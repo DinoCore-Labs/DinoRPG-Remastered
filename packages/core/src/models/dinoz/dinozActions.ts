@@ -245,13 +245,13 @@ export const actionList: Readonly<Record<Action, ActionFiche>> = {
 	},
 	[Action.STOP_DEFEND_TOWER]: {
 		name: Action.STOP_DEFEND_TOWER,
-		imgName: 'act_default',
+		imgName: 'act_castle_sdefend',
 		confirm: true,
 		confirmMessageKey: 'action.confirm.stop_defend_tower'
 	},
 	[Action.DEFENDING_DEVOURER]: {
 		name: Action.DEFENDING_DEVOURER,
-		imgName: 'act_default'
+		imgName: 'act_castle_defend'
 	},
 	[Action.BUILD_DOJO]: {
 		name: Action.BUILD_DOJO,

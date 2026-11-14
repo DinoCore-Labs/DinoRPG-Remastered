@@ -205,6 +205,9 @@ export async function getAvailableActions(
 	preloadedContext: AvailableActionsPreloadedContext = {}
 ) {
 	const availableActions: ActionFiche[] = [];
+	// MT status="soin" : immobilisé durant l'heure de traitement.
+	// Le GET fiche/menu termine automatiquement le soin dès que l'échéance est passée.
+	if (dinoz.state === DinozState.clinic) return [];
 	// MT: all members of a run see only the map action; no ordinary actions.
 	const activeRun = await prisma.mtDungeonRun.findFirst({
 		where: { userId: user.id, leaderDinozId: dinoz.leaderId ?? dinoz.id },

@@ -4,7 +4,8 @@ export const DINOZ_STATE = {
 	selling: 'selling',
 	superdom: 'superdom',
 	resting: 'resting',
-	unfreezing: 'unfreezing'
+	unfreezing: 'unfreezing',
+	clinic: 'clinic'
 } as const;
 
 export type DinozState = (typeof DINOZ_STATE)[keyof typeof DINOZ_STATE];

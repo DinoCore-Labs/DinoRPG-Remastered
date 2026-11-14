@@ -27,4 +27,5 @@ export type DialogEffect =
 	| { type: 'userVar'; variable: string; qty: number }
 	| { type: 'giveIngredient'; ingredientId: number; count: number }
 	| { type: 'giveMoney'; moneyType: DialogMoneyType; amount: number }
-	| { type: 'startConcentration' };
+	| { type: 'startConcentration' }
+	| { type: 'clinicTreatment' };
