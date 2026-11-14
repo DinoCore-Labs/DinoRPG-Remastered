@@ -5,6 +5,7 @@ import { getRace } from '@dinorpg/core/utils/dinozUtils.js';
 import type { FastifyReply, FastifyRequest } from 'fastify';
 
 import { Role } from '../../../../prisma/client.js';
+import { DinozState } from '../../../../prisma/index.js';
 import gameConfig from '../../config/game.config.js';
 import { addItemToInventory } from '../../Inventory/Controller/addItem.controller.js';
 import { removeItemFromDinoz } from '../../Inventory/Controller/removeItemFromDinoz.controller.js';
@@ -60,6 +61,10 @@ async function reincarnateUnlocked(req: ReincarnateRequest) {
 				userId: authed.id
 			}
 		});
+	}
+	const currentState = await prisma.dinoz.findUnique({ where: { id: dinozId }, select: { state: true } });
+	if (currentState?.state === DinozState.clinic) {
+		throw new ExpectedError('clinic.treatmentInProgress', { statusCode: 409 });
 	}
 	if (
 		!dinoz.skills.some(s => s.skillId === Skill.REINCARNATION) ||

@@ -7,7 +7,7 @@ import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { actualPlace } from '@dinorpg/core/utils/dinozUtils.js';
 import type { FastifyReply, FastifyRequest } from 'fastify';
 
-import { GameLogType } from '../../../../prisma/index.js';
+import { DinozState, GameLogType } from '../../../../prisma/index.js';
 import { getCompletedClanActionKeys } from '../../Clan/Service/completedClanActionKeys.service.js';
 import gameConfig from '../../config/game.config.js';
 import { fightMonstersAtPlace } from '../../Fight/Service/fight.service.js';
@@ -35,6 +35,7 @@ export async function moveDinozUnlocked(req: Req, _reply: FastifyReply) {
 	if (!user) throw new ExpectedError('userNotFound', { params: { authedId } });
 	const dinoz = user.dinoz.find(d => d.id === dinozId);
 	if (!dinoz) throw new ExpectedError('dinozNotFound', { params: { dinozId } });
+	if (dinoz.state === DinozState.clinic) throw new ExpectedError('clinic.treatmentInProgress', { statusCode: 409 });
 	if (dinoz.canRename) throw new ExpectedError(`Dinoz has to be named`);
 	if (dinoz.leaderId) {
 		throw new ExpectedError('notLeader', { params: { dinozId } });

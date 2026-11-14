@@ -3,7 +3,7 @@ import { RuntimeDialog, RuntimeDialogLink, RuntimeDialogPhase } from '@dinorpg/c
 import { dinozStatusIdByKey } from '@dinorpg/core/models/dinoz/statusKeyMap.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
-import { Prisma } from '../../../../prisma/index.js';
+import { DinozState, Prisma } from '../../../../prisma/index.js';
 import { advanceDinozMissionOnTalk } from '../../Mission/Controller/mission.progress.js';
 import { prisma } from '../../prisma.js';
 import { checkDialogCondition } from '../../utils/conditions/checkDialogCondition.js';
@@ -158,6 +158,10 @@ export async function assertDialogAvailability(
 	dinozId: number,
 	now?: Date
 ) {
+	const dinoz = await tx.dinoz.findUnique({ where: { id: dinozId }, select: { state: true } });
+	if (dinoz?.state === DinozState.clinic) {
+		throw new ExpectedError('clinic.treatmentInProgress', { statusCode: 409 });
+	}
 	if (dialog.inject.length > 0) {
 		throw new ExpectedError('dialogNotAvailable');
 	}

@@ -3505,6 +3505,18 @@
 		}
 	},
 	"npc": {
+		"clinic": {
+			"name": "Anna Tomie",
+			"dialog": {
+				"services": {
+					"begin": "Hallo, Dinoz-Meister! Ich kann einen deiner Dinoz vollständig heilen. Lass ihn eine Stunde bei mir. Diese kostenlose Behandlung ist alle 20 Stunden möglich.",
+					"soinok": "Geschafft! Komm in einer Stunde zurück, dann ist er wieder wie neu!",
+					"soinok2": "Da bist du ja wieder! Ich hoffe, die Wartezeit war nicht zu lang.",
+					"soinko": "Tut mir leid, du kannst nur alle 20 Stunden einen Dinoz behandeln lassen. Komm später wieder."
+				}
+			},
+			"choice": { "services": { "offre": "Deinen erschöpften Dinoz behandeln lassen." } }
+		},
 		"description": "Vous pouvez discuter avec cette personne.",
 		"leave": "Arrêter la discussion",
 		"openLink": "Ouvrir le lien",
@@ -6686,6 +6698,10 @@
 				"end": "Félicitations ! Tu as su te servir correctement de la boutique, elle est accessible à n'importe quel endroit du jeu, n'hésite pas à l'utiliser en cas de besoin !"
 			}
 		}
+	},
+	"clinicTreatment": {
+		"waiting": "Anna Tomie behandelt deinen Dinoz. In {time} ist er wieder verfügbar.",
+		"ready": "Behandlung abgeschlossen! Dein Dinoz wird aktualisiert."
 	},
 	"scenarios": {
 		"clinik": { "name": "Klinik von Dinoland" },

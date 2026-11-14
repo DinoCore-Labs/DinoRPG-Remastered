@@ -487,7 +487,7 @@ export const clinicAnnaNewClanDialog = defineDialog({
 	id: 'clinic_anna_new_clan',
 	place: PlaceEnum.CLINIQUE,
 	name: 'npc.clinic.name',
-	cond: parseCondition('!clanact(hopita)+scenario(clinik,8+)'),
+	cond: parseCondition('!clanact(hopita)+scenario(clinik,7+)'),
 	first: 'begin',
 	pnj: {
 		image: false,
