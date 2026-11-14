@@ -1,98 +1,54 @@
 // This file contains code derived from or adapted from:
-
 // Eternaltwin DinoRPG
-
 // Upstream file: https://gitlab.com/eternaltwin/dinorpg/dinorpg/-/blob/3a73bbc6d751e4916cc5fd2e5f23bc2cfd42fc6d/ed-be/prisma/schema.prisma
-
 //
-
 // Copyright in the original contributions remains with the respective
-
 // authors and contributors.
-
 //
-
 // Modified by DinoRPG Remastered contributors.
-
 // Modifications include substantial expansion and restructuring of the
-
 // database schema, models, relations, identifiers, indexes, constraints,
-
 // and game systems.
-
 //
-
 // See NOTICE.md and the Git history for provenance and modification details.
-
 //
-
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 
 
 generator client {
-
   provider        = "prisma-client-js"
-
   output          = "../../prisma"
-
   previewFeatures = ["nativeDistinct", "relationJoins"]
-
   binaryTargets   = ["native", "debian-openssl-3.0.x", "debian-openssl-1.1.x"]
-
 }
-
-
 
 datasource db {
-
   provider = "postgresql"
-
 }
 
-
-
 model BankSaving {
-
   id String @id @default(uuid()) @db.Uuid
 
-
-
   amount          Int
-
   durationDays    Int
-
   interestRateBps Int
 
   unlockAt        DateTime  @db.Timestamptz(3)
-
   claimedAt       DateTime? @db.Timestamptz(3)
 
 
-
   userId String @db.Uuid
-
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-
-
   createdAt DateTime @default(now()) @db.Timestamptz(3)
-
   updatedAt DateTime @updatedAt @db.Timestamptz(3)
 
-
-
   @@index([userId])
-
   @@index([userId, claimedAt])
-
   @@index([unlockAt])
-
   @@map("bank_saving")
-
 }
-
-
 
 model Dinoz {
 
@@ -2070,6 +2026,8 @@ model Clan {
 
   discussion    ClanMessage[]
 
+  actions       ClanActionProgress[]
+
   users         User[]
 
 
@@ -3578,4 +3536,19 @@ model MtDungeonGoldPool {
   remainingGold Int
   createdAt     DateTime @default(now()) @db.Timestamptz(3)
   updatedAt     DateTime @updatedAt @db.Timestamptz(3)
+}
+
+
+// Progression collective, persistée par clan.
+model ClanActionProgress {
+  clanId      Int
+  actionKey   String    @db.VarChar(64)
+  progress    Int       @default(0)
+  completedAt DateTime? @db.Timestamptz(3)
+  createdAt   DateTime  @default(now()) @db.Timestamptz(3)
+  updatedAt   DateTime  @updatedAt @db.Timestamptz(3)
+
+  clan Clan @relation(fields: [clanId], references: [id], onDelete: Cascade)
+
+  @@id([clanId, actionKey])
 }
