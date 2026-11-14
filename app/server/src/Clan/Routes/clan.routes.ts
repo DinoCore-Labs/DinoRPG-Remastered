@@ -22,6 +22,7 @@ import {
 	updateClanMemberRequestBodySchema,
 	updateClanPageSchema
 } from '../Schema/clan.schema.js';
+import { clanActionContributionSchema, clanActionParamsSchema } from '../Schema/clanAction.schema.js';
 import {
 	createClan,
 	deleteClan,
@@ -33,6 +34,7 @@ import {
 	updateClanLangs,
 	updateClanName
 } from '../Service/clan.service.js';
+import { contributeClanAction, getClanActions } from '../Service/clanAction.service.js';
 import {
 	createClanMessage,
 	deleteClanMessage,
@@ -441,5 +443,25 @@ export async function clanRoutes(app: FastifyInstance) {
 			}
 		},
 		deleteClanMessage
+	);
+	app.get(
+		'/:clanId/actions',
+		{
+			preHandler: app.authenticate,
+			schema: { tags: ['Clan'], params: clanIdParamSchema }
+		},
+		getClanActions
+	);
+	app.post(
+		'/:clanId/actions/:actionKey/contribute',
+		{
+			preHandler: app.authenticate,
+			schema: {
+				tags: ['Clan'],
+				params: clanActionParamsSchema,
+				body: clanActionContributionSchema
+			}
+		},
+		contributeClanAction
 	);
 }
