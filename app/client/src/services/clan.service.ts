@@ -13,7 +13,32 @@ import type { ShopDTO } from '@dinorpg/core/models/shop/shopFiche.js';
 
 import { api } from '../utils/http';
 
+export type ClanActionResult = {
+	clanId: number;
+	actionKey: string;
+	progress: number;
+	total: number;
+	remaining: number;
+	percentage: number;
+	completed: boolean;
+};
+
+export type ClanActionSummary = ClanActionResult & {
+	placeId: number;
+	available: boolean;
+};
+
 export const ClanService = {
+	// MT clan actions (shared across current clan members).
+	async getClanActions(clanId: number): Promise<{ actions: ClanActionSummary[] }> {
+		return api.get<{ actions: ClanActionSummary[] }>(`/clan/${clanId}/actions`);
+	},
+	async contributeClanAction(clanId: number, actionKey: string, dinozId: number): Promise<ClanActionResult> {
+		return api.post<ClanActionResult>(`/clan/${clanId}/actions/${encodeURIComponent(actionKey)}/contribute`, {
+			dinozId
+		});
+	},
+
 	//Clan
 
 	async createClan(name: string, description: string, languages: Language[]): Promise<ClanLite> {

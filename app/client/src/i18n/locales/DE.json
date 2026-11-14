@@ -3094,6 +3094,21 @@
 		}
 	},
 	"action": {
+		"clanAction": {
+			"names": {
+				"hopita": "Klinik bauen {percentage} %",
+				"tour": "Turm bauen {percentage} %",
+				"pompe": "Nebel abpumpen {percentage} %",
+				"labora": "Labor bauen {percentage} %"
+			},
+			"count": "{progress} / {total} Aktionen",
+			"description": "Dein Clan hat {progress} von {total} Aktionen abgeschlossen. Jeder Beitrag verbraucht eine Aktion dieses Dinoz.",
+			"confirm": "An diesem Bauprojekt mitarbeiten? Dies verbraucht eine verfügbare Aktion deines Dinoz.",
+			"success": "Danke für deine Hilfe! Noch {remaining} Aktionen fehlen.",
+			"finished": "Das Bauprojekt ist abgeschlossen! Dein Clan hat es geschafft.",
+			"noAction": "Dieses Dinoz kann gerade nicht handeln. Stelle seine Aktion wieder her, um mitzuhelfen.",
+			"working": "Beitrag wird ausgeführt…"
+		},
 		"popupConfirm": "Confirmez-vous l'action {action} pour votre Dinoz ?",
 		"confirm": {
 			"stop_concen": "Votre Dinoz peut essayer d'arrêter de se concentrer à tout moment.",
