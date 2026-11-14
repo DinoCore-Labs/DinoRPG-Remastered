@@ -5,6 +5,5 @@ export interface ClanIngredient {
 	ingredientId: number;
 	quantity: number;
 	clanId: number;
-
 	clan?: Clan;
 }

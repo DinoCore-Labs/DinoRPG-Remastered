@@ -3,6 +3,7 @@ import { rewardKeyById } from '@dinorpg/core/models/rewards/rewardsKeyMap.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
 import { Prisma, Role } from '../../../../prisma/index.js';
+import { getCompletedClanActionKeys } from '../../Clan/Service/completedClanActionKeys.service.js';
 import gameConfig from '../../config/game.config.js';
 import { getUrmaEdition, getUrmaTrackingKey } from '../../Events/Service/easterUrma.service.js';
 import { getActiveGameEvents } from '../../GameEvent/Service/gameEvent.service.js';
@@ -55,6 +56,7 @@ export type DialogContext = {
 	world: {
 		activeFeatures: Set<string>;
 		activeEvents: Set<string>;
+		completedClanActionKeys: Set<string>;
 	};
 	now: Date;
 };
@@ -330,6 +332,7 @@ export async function buildDialogContext(
 			}
 		});
 	}
+	const completedClanActionKeys = await getCompletedClanActionKeys(tx, params.userId);
 	const now = params.now ?? new Date();
 	const urmaEdition = getUrmaEdition(now);
 	const urmaTracking = await tx.userEventTracking.findUnique({
@@ -391,7 +394,8 @@ export async function buildDialogContext(
 		},
 		world: {
 			activeFeatures: new Set(gameConfig.world.activeFeatures),
-			activeEvents: new Set(getActiveGameEvents(params.now ?? new Date()).map(event => event.event))
+			activeEvents: new Set(getActiveGameEvents(params.now ?? new Date()).map(event => event.event)),
+			completedClanActionKeys: new Set(completedClanActionKeys)
 		},
 		now: now
 	};
