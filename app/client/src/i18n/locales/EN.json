@@ -3614,13 +3614,23 @@
 			"name": "Anna Tomie",
 			"dialog": {
 				"services": {
+					"liste": "Still have time? I have a few assignments to help keep the clinic running.",
+					"quit": "You hurry away before Anna can give you another job.",
+					"go": "",
 					"begin": "Hello, Dinoz Master! I can restore one of your Dinoz to full health. Leave it with me for one hour. This free service is available once every 20 hours.",
 					"soinok": "All done! Come back in an hour; your Dinoz will be as good as new!",
 					"soinok2": "Hello again! I hope the wait was not too long.",
 					"soinko": "Sorry, only one Dinoz can receive treatment every 20 hours. Please come back later."
 				}
 			},
-			"choice": { "services": { "offre": "Have your exhausted Dinoz treated." } }
+			"choice": {
+				"services": {
+					"liste": "Is there anything else I can do?",
+					"go": "I’m ready to help!",
+					"quit": "Not today. I have to go!",
+					"offre": "Have your exhausted Dinoz treated."
+				}
+			}
 		},
 		"description": "You can talk to this person.",
 		"leave": "Stop chatting",
@@ -5164,6 +5174,57 @@
 		}
 	},
 	"missions": {
+		"clinic": {
+			"ingr1": {
+				"name": "First prescription",
+				"begin": "We need ten Pelinae Leaves to prepare remedies for our patients. Could you bring some?",
+				"end": "Thank you! These leaves will be extremely useful.",
+				"deliver": "Deliver 10 Pelinae Leaves to Anna"
+			},
+			"ingr2": {
+				"name": "The finest mushroom",
+				"begin": "Our mushroom supplies are running low. Please bring five White Phalisk Boletes.",
+				"end": "Perfect! Our patients will be in better hands thanks to you.",
+				"deliver": "Deliver 5 White Phalisk Boletes to Anna"
+			},
+			"ingr3": {
+				"name": "Unusual herbal medicine",
+				"begin": "A Fantastical Orchid would complete our range of medicines. Can you find one?",
+				"end": "Wonderful! We can now prepare remedies for even the trickiest ailments.",
+				"deliver": "Deliver 1 Fantastical Orchid to Anna"
+			},
+			"kill1": {
+				"name": "Unwelcome neighbours",
+				"begin": "Monsters disturbed by the building works are attacking the surrounding area. Defeat ten Gropignons in Dinowest.",
+				"end": "What a relief! The clinic’s neighbourhood is safer.",
+				"target": "Defeat 10 Gropignons in Dinowest"
+			},
+			"kill2": {
+				"name": "Monster invasion",
+				"begin": "Tougher monsters are frightening our patients. Please defeat ten Coqdurs in Dinowest.",
+				"end": "Well done! The clinic can finally work in peace.",
+				"target": "Defeat 10 Coqdurs in Dinowest"
+			},
+			"bless1": {
+				"name": "First aid",
+				"begin": "We need to help injured Dinoz. Visit the Soulaflotte Dome and find a trainer whose Dinoz needs treatment.",
+				"end": "You brought us an injured Dinoz. We will take good care of it!",
+				"participant": {
+					"name": "Participant",
+					"text": "My Dinoz has just lost a fight and I’m exhausted. Could you help me get it to the clinic?"
+				}
+			},
+			"bless2": {
+				"name": "Curiosity comes at a price!",
+				"begin": "We treat travellers too! Someone near the Great Venerable has reportedly had an unfortunate accident.",
+				"end": "Thank you for escorting this visitor. The clinic is thriving now! Anna gives your Dinoz a fond goodbye.",
+				"tourist": {
+					"name": "Scorched tourist",
+					"vener": "Ahem… Trying to photograph the Great Venerable was a terrible idea. Do you know somewhere I could get treatment?",
+					"clinik": "Thank you for bringing me here! What a lovely nurse. I think I’ll enjoy my stay."
+				}
+			}
+		},
 		"header": "Missions list",
 		"th": {
 			"status": "Status"

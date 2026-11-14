@@ -453,6 +453,7 @@ export default defineComponent({
 							missionNameKey: result.nameKey,
 							missionTextKey: result.textKey,
 							missionGfx: result.gfx ?? '',
+							missionBackground: result.background ?? '1',
 							missionNpcNameKey: result.npcNameKey ?? ''
 						}
 					});

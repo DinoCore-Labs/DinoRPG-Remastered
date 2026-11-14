@@ -291,6 +291,7 @@ export async function startMissionInteraction(
 					dialogId: goal.dialogId,
 					textKey: goal.textKey,
 					gfx: goal.gfx ?? null,
+					background: goal.background ?? null,
 					dialect: goal.dialect ?? null
 				};
 			}

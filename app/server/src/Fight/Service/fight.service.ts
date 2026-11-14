@@ -937,7 +937,10 @@ export async function generateMonsterList(
 		if (monster.events && monster.events.length > 0 && !monster.events.some(event => activeEventNames.has(event))) {
 			return false;
 		}
-		return monster.zones.includes(place.map);
+		// MT : certaines missions forcent des monstres hors de leur zone habituelle
+		// (ex. Coqdur en zone 6 pour la clinique). Seule une mission active,
+		// admissible sur cette carte et marquée force=true peut déroger à la zone.
+		return monster.zones.includes(place.map) || (missionKillForce && isLeaderMissionMonster(monster));
 	});
 	const availableMonsterHuntMonsters =
 		dungeonRoster !== null
