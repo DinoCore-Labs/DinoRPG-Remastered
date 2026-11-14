@@ -5,6 +5,7 @@ import { elementalMasterMissions } from './elementalMaster.missions.js';
 import { forestGuardianMissions } from './forestGuardian.missions.js';
 import { guideMichelMissions } from './guideMichel.missions.js';
 import { hulotMissions } from './hulot.missions.js';
+import { infirmiereMissions } from './infirmiere.missions.js';
 import { madameXMissions } from './madameX.missions.js';
 import { papyJoeMissions } from './papyJoe.missions.js';
 import { requestOfficeMissions } from './requestOffice.missions.js';
@@ -24,5 +25,6 @@ export const missionList: MissionDefinition[] = [
 	...madameXMissions,
 	...elementalMasterMissions,
 	...requestOfficeMissions,
-	...guideMichelMissions
+	...guideMichelMissions,
+	...infirmiereMissions
 ];

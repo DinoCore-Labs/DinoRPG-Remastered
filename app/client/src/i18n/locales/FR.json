@@ -3647,6 +3647,9 @@
 			"michelName": "Guide Michel",
 			"dialog": {
 				"services": {
+					"liste": "Vous avez encore du temps ? J’ai quelques missions utiles au fonctionnement de la clinique !",
+					"quit": "Vous prenez la fuite avant qu’Anna ne vous confie davantage de travail.",
+					"go": "",
 					"begin": "Bonjour Maître Dinoz, je peux soigner complètement un de vos Dinoz. Laissez-le-moi une heure. Vous ne pouvez bénéficier de ce service gratuit qu’une fois toutes les 20 heures.",
 					"soinok": "Et voilà. Revenez dans une heure, il sera comme neuf !",
 					"soinok2": "Ça va ? L’attente n’a pas été trop longue ?",
@@ -3707,7 +3710,12 @@
 				}
 			},
 			"choice": {
-				"services": { "offre": "Faire soigner votre Dinoz ! Il est au bout du rouleau." },
+				"services": {
+					"liste": "Puis-je encore vous aider ?",
+					"go": "Dites-moi ce qu’il faut faire !",
+					"quit": "Pas aujourd’hui, je dois filer !",
+					"offre": "Faire soigner votre Dinoz ! Il est au bout du rouleau."
+				},
 				"intro": {
 					"salut": "Bonjour mademoiselle... (Waouh) !",
 					"aide": "Bien sûr, que puis-je faire pour vous ?",
@@ -5300,6 +5308,57 @@
 		}
 	},
 	"missions": {
+		"clinic": {
+			"ingr1": {
+				"name": "Première ordonnance",
+				"begin": "Il nous faut dix feuilles de Pelinae pour préparer les remèdes de la clinique. Pouvez-vous nous en apporter ?",
+				"end": "Merci ! Ces feuilles vont beaucoup nous aider.",
+				"deliver": "Remettre 10 feuilles de Pelinae à Anna"
+			},
+			"ingr2": {
+				"name": "Bolet à beau pied",
+				"begin": "Nos réserves de champignons sont presque vides. J’aurais besoin de cinq Bolets Phalisk Blanc.",
+				"end": "Parfait ! Nos patients seront mieux soignés grâce à vous.",
+				"deliver": "Remettre 5 Bolets Phalisk Blanc à Anna"
+			},
+			"ingr3": {
+				"name": "Phytothérapie farfelue",
+				"begin": "Une Orchidée Fantasque nous permettrait de compléter nos traitements. Saurez-vous en trouver une ?",
+				"end": "Merveilleux ! Nous avons désormais de quoi préparer les remèdes les plus délicats.",
+				"deliver": "Remettre 1 Orchidée Fantasque à Anna"
+			},
+			"kill1": {
+				"name": "Voisins récalcitrants",
+				"begin": "Les monstres dérangés par le chantier attaquent notre voisinage. Éloignez dix Gropignons de Dinowest.",
+				"end": "Quel soulagement ! Les environs de la clinique sont plus sûrs.",
+				"target": "Vaincre 10 Gropignons à Dinowest"
+			},
+			"kill2": {
+				"name": "Invasion de monstres",
+				"begin": "De nouveaux monstres, plus dangereux, terrorisent nos patients. Il faut vaincre dix Coqdurs à Dinowest.",
+				"end": "Bravo ! Avec vous, la clinique peut enfin travailler sereinement.",
+				"target": "Vaincre 10 Coqdurs à Dinowest"
+			},
+			"bless1": {
+				"name": "Premier secours",
+				"begin": "Nous avons besoin de nouveaux patients. Au Dôme Soulaflotte, vous devriez rencontrer un maître dont le Dinoz a besoin de soins.",
+				"end": "Vous nous avez amené un blessé qui recevra toute notre attention !",
+				"participant": {
+					"name": "Participant",
+					"text": "Mon Dinoz a perdu son dernier combat et je suis épuisé. Pourriez-vous l’accompagner à la clinique ?"
+				}
+			},
+			"bless2": {
+				"name": "La curiosité est un vilain défaut !",
+				"begin": "Nous soignons aussi les voyageurs ! Près du Grand Vénérable, un touriste imprudent aurait bien besoin d’aide.",
+				"end": "Merci d’avoir accompagné ce voyageur jusqu’ici. Notre clinique est désormais bien lancée ! Anna remercie affectueusement vos Dinoz.",
+				"tourist": {
+					"name": "Touriste grillé",
+					"vener": "Ahem… Une photo du Grand Vénérable a failli me coûter cher. Vous connaissez un endroit où je pourrais me faire soigner ?",
+					"clinik": "Ah, merci pour l’escorte ! Et quelle charmante infirmière ! Je crois que je vais me plaire ici."
+				}
+			}
+		},
 		"header": "Liste des missions",
 		"th": {
 			"status": "Statut"

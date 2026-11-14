@@ -77,6 +77,10 @@ const missionGfx = computed(() =>
 	typeof route.query.missionGfx === 'string' && route.query.missionGfx.length > 0 ? route.query.missionGfx : ''
 );
 
+const missionBackground = computed(() =>
+	typeof route.query.missionBackground === 'string' ? route.query.missionBackground : '1'
+);
+
 const missionNpcNameKey = computed(() =>
 	typeof route.query.missionNpcNameKey === 'string' ? route.query.missionNpcNameKey : ''
 );
@@ -132,7 +136,7 @@ function buildInlineMissionDialogState(): DialogPhaseResponse {
 			image: false,
 			gfx: missionGfx.value,
 			frame: 'speak',
-			background: '1'
+			background: missionBackground.value
 		},
 		links: [],
 		actions: {
@@ -297,7 +301,8 @@ watch(
 		route.query.missionTextKey,
 		route.query.missionNameKey,
 		route.query.missionNpcNameKey,
-		route.query.missionGfx
+		route.query.missionGfx,
+		route.query.missionBackground
 	],
 	() => {
 		void loadDialog();

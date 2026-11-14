@@ -49,6 +49,7 @@ export type MissionTalkDialogGoal = MissionTalkGoalBase & {
 	textKey: string;
 	npcNameKey: string;
 	gfx?: string;
+	background?: string;
 };
 
 export type MissionTalkGoal = MissionTalkModalGoal | MissionTalkDialogGoal;

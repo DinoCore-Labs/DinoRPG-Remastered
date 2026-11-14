@@ -3509,13 +3509,23 @@
 			"name": "Anna Tomie",
 			"dialog": {
 				"services": {
+					"liste": "¿Aún tienes tiempo? Tengo algunas misiones para que la clínica siga funcionando.",
+					"quit": "Te marchas antes de que Anna te encargue más trabajo.",
+					"go": "",
 					"begin": "¡Hola, Maestro Dinoz! Puedo curar por completo a uno de tus Dinoz. Déjamelo durante una hora. Este servicio gratuito se puede utilizar una vez cada 20 horas.",
 					"soinok": "¡Ya está! Vuelve dentro de una hora y estará como nuevo.",
 					"soinok2": "¡Hola de nuevo! Espero que la espera no haya sido demasiado larga.",
 					"soinko": "Lo siento, solo puedes curar a un Dinoz cada 20 horas. Vuelve más tarde."
 				}
 			},
-			"choice": { "services": { "offre": "Curar a tu Dinoz, que está agotado." } }
+			"choice": {
+				"services": {
+					"liste": "¿Puedo ayudarte en algo más?",
+					"go": "¡Cuenta conmigo!",
+					"quit": "¡Hoy no, tengo que irme!",
+					"offre": "Curar a tu Dinoz, que está agotado."
+				}
+			}
 		},
 		"description": "Vous pouvez discuter avec cette personne.",
 		"leave": "Arrêter la discussion",
@@ -5035,6 +5045,57 @@
 		}
 	},
 	"missions": {
+		"clinic": {
+			"ingr1": {
+				"name": "Primera receta",
+				"begin": "Necesitamos diez hojas de Pelinae para preparar remedios. ¿Puedes traerlas?",
+				"end": "¡Gracias! Estas hojas nos serán de gran ayuda.",
+				"deliver": "Entregar 10 hojas de Pelinae a Anna"
+			},
+			"ingr2": {
+				"name": "Una seta de primera",
+				"begin": "Se nos están acabando las setas medicinales. Necesito cinco Boletos Phalisk Blancos.",
+				"end": "¡Perfecto! Nuestros pacientes estarán mejor cuidados gracias a ti.",
+				"deliver": "Entregar 5 Boletos Phalisk Blancos a Anna"
+			},
+			"ingr3": {
+				"name": "Fitoterapia extravagante",
+				"begin": "Una Orquídea Fantástica completaría nuestras medicinas. ¿Podrías conseguir una?",
+				"end": "¡Maravilloso! Ya podemos preparar nuestros remedios más especiales.",
+				"deliver": "Entregar 1 Orquídea Fantástica a Anna"
+			},
+			"kill1": {
+				"name": "Vecinos molestos",
+				"begin": "Los monstruos, alterados por las obras, atacan los alrededores. Derrota a diez Gropiñones en Dinowest.",
+				"end": "¡Qué alivio! Los alrededores de la clínica son más seguros.",
+				"target": "Derrotar a 10 Gropiñones en Dinowest"
+			},
+			"kill2": {
+				"name": "Invasión de monstruos",
+				"begin": "Unos monstruos más duros aterrorizan a nuestros pacientes. Derrota a diez Coqdurs en Dinowest.",
+				"end": "¡Bien hecho! Ahora podemos trabajar tranquilos.",
+				"target": "Derrotar a 10 Coqdurs en Dinowest"
+			},
+			"bless1": {
+				"name": "Primeros auxilios",
+				"begin": "Hay Dinoz heridos que necesitan ayuda. Busca a un entrenador en la Cúpula Soulaflotte.",
+				"end": "¡Nos has traído un Dinoz herido! Lo cuidaremos bien.",
+				"participant": {
+					"name": "Participante",
+					"text": "Mi Dinoz ha perdido una batalla y estoy agotado. ¿Podrías acompañarlo a la clínica?"
+				}
+			},
+			"bless2": {
+				"name": "¡La curiosidad es peligrosa!",
+				"begin": "¡También curamos viajeros! Cerca del Gran Venerable, un turista ha sufrido un accidente.",
+				"end": "Gracias por acompañar al viajero. ¡La clínica marcha de maravilla! Anna se despide cariñosamente de tus Dinoz.",
+				"tourist": {
+					"name": "Turista chamuscado",
+					"vener": "Ejem… Fotografiar al Gran Venerable fue una mala idea. ¿Conoces algún lugar donde puedan curarme?",
+					"clinik": "¡Gracias por traerme! Qué enfermera tan encantadora. Creo que aquí estaré a gusto."
+				}
+			}
+		},
 		"header": "Liste des missions",
 		"th": {
 			"status": "Statut"
