@@ -1,6 +1,8 @@
+import { Action } from '@dinorpg/core/models/dinoz/dinozActions.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import type { FastifyReply, FastifyRequest } from 'fastify';
 
+import { getAvailableClanActionsForDinoz } from '../../Clan/Service/clanActionDinoz.service.js';
 import { getCompletedClanActionKeys } from '../../Clan/Service/completedClanActionKeys.service.js';
 import { advanceDinozMissionOnWait } from '../../Mission/Controller/mission.progress.js';
 import { prisma } from '../../prisma.js';
@@ -82,5 +84,14 @@ export async function getDinozFiche(req: FastifyRequest<{ Params: Params }>, rep
 	const completedClanActionKeys = await getCompletedClanActionKeys(prisma, authedId);
 	const ret = toDinozFiche(playerData, dinozId, ficheRest, currentTournament, completedClanActionKeys);
 	ret.actions = await getAvailableActions(myDinoz, playerData);
+	// Les actions de chantier ne doivent pas être proposées à l'intérieur d'un donjon
+	// ni pendant une concentration (dont la liste d'actions est exclusive).
+	const inExclusiveActivity = ret.actions.some(
+		action =>
+			action.name === Action.DUNGEON || action.name === Action.ENTER_PORTAL || action.name === Action.STOP_CONCEN
+	);
+	if (!inExclusiveActivity) {
+		ret.actions.push(...(await getAvailableClanActionsForDinoz(authedId, myDinoz.placeId)));
+	}
 	return reply.send(ret);
 }

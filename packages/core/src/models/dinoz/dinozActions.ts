@@ -55,7 +55,8 @@ export enum Action {
 	DEFENDING_DEVOURER = 'defending_devourer',
 	BUILD_DOJO = 'build_dojo',
 	DUNGEON_ENTER = 'dungeon_enter',
-	DUNGEON = 'dungeon'
+	DUNGEON = 'dungeon',
+	CLAN_ACTION = 'clan_action'
 }
 
 export interface ActionFiche {
@@ -73,6 +74,14 @@ export interface ActionFiche {
 	 * post-combat.
 	 */
 	dialogPhaseId?: string;
+	clanAction?: {
+		clanId: number;
+		actionKey: string;
+		progress: number;
+		total: number;
+		percentage: number;
+		completed: boolean;
+	};
 }
 
 export const actionList: Readonly<Record<Action, ActionFiche>> = {
@@ -257,5 +266,11 @@ export const actionList: Readonly<Record<Action, ActionFiche>> = {
 	[Action.DUNGEON]: {
 		name: Action.DUNGEON,
 		imgName: 'act_train'
+	},
+	[Action.CLAN_ACTION]: {
+		name: Action.CLAN_ACTION,
+		imgName: 'act_construct',
+		confirm: true,
+		confirmMessageKey: 'action.clanAction.confirm'
 	}
 };

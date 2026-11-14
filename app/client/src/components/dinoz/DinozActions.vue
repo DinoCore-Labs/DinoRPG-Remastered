@@ -86,7 +86,13 @@
 				tag="div"
 				theme="normal"
 				class="action"
-				:class="{ 'long-text': isLongAction(action) }"
+				:class="{
+					'long-text': isLongAction(action),
+					'clan-action': action.name === Action.CLAN_ACTION,
+					'disabled-action':
+						action.name === Action.CLAN_ACTION &&
+						(action.clanAction?.completed || !dinoz.fight || dinoz.state !== null || dinoz.life <= 0)
+				}"
 				v-for="(action, index) in dinoz.actions?.filter(
 					a => a.name !== Action.FOLLOW && a.name !== Action.DEFENDING_DEVOURER
 				)"
@@ -103,6 +109,12 @@
 				<p v-else-if="action.name === Action.MISSION">
 					{{ getMissionActionName(action) }}
 				</p>
+				<p v-else-if="action.name === Action.CLAN_ACTION && action.clanAction" class="clan-action-label">
+					{{ getActionLabel(action) }}
+					<small>{{
+						$t('action.clanAction.count', { progress: action.clanAction.progress, total: action.clanAction.total })
+					}}</small>
+				</p>
 				<p v-else>
 					{{ action.forDinoz ? `${dinoz.followers.find(f => f.id === action.forDinoz)?.name}: ` : '' }}
 					{{ $t(`action.name.${action.name}`) }}
@@ -118,6 +130,7 @@
 					<h1 v-else-if="action.name === Action.MISSION">
 						{{ getMissionActionName(action) }}
 					</h1>
+					<h1 v-else-if="action.name === Action.CLAN_ACTION">{{ getActionLabel(action) }}</h1>
 					<h1 v-else v-html="formatContent($t(`action.name.${action.name}`))" />
 					<!-- DESCRIPTION ACTIONS -->
 					<p
@@ -126,6 +139,14 @@
 					/>
 					<p v-else-if="action.name === Action.NPC" v-html="formatContent($t(`npc.description`))" />
 					<p v-else-if="action.name === Action.MISSION" v-html="formatContent(getMissionActionDescription())" />
+					<p v-else-if="action.name === Action.CLAN_ACTION && action.clanAction">
+						{{
+							$t('action.clanAction.description', {
+								progress: action.clanAction.progress,
+								total: action.clanAction.total
+							})
+						}}
+					</p>
 					<p v-else v-html="formatContent($t(`action.description.${action.name}`))" />
 				</template>
 			</Tippy>
@@ -152,6 +173,7 @@ import Resurrect from '../modal/ResurrectModal.vue';
 import Reincarnate from '../modal/ReincarnateModal.vue';
 import { FightService } from '../../services';
 import { DinozService } from '../../services';
+import { ClanService } from '../../services/clan.service.js';
 import { dinozStore } from '../../store/dinozStore';
 import { sessionStore } from '../../store/sessionStore';
 import { userStore } from '../../store/userStore';
@@ -203,7 +225,8 @@ export default defineComponent({
 			reincarnate: false as boolean,
 			fastGatherOver: false,
 			fastGatherResult: null as GatherResult | null,
-			dungeonEntryMessage: null as { title: string; text: string } | null
+			dungeonEntryMessage: null as { title: string; text: string } | null,
+			clanActionBusy: false
 		};
 	},
 	components: {
@@ -302,6 +325,11 @@ export default defineComponent({
 			return this.$t('action.name.mission').toString();
 		},
 		getActionLabel(action: ActionFiche): string {
+			if (action.name === Action.CLAN_ACTION && action.clanAction) {
+				return this.$t(`action.clanAction.names.${action.clanAction.actionKey}`, {
+					percentage: action.clanAction.percentage
+				}).toString();
+			}
 			if (action.name === 'shop') {
 				const shopName = this.getShopNameFromAction(action);
 				return shopName ? this.$t(`shop.item.${shopName}.name`).toString() : '';
@@ -415,6 +443,13 @@ export default defineComponent({
 			}
 		},
 		async launch(action: ActionFiche) {
+			if (action.name === Action.CLAN_ACTION) {
+				if (!action.clanAction || action.clanAction.completed || this.clanActionBusy) return;
+				if (!this.dinoz.fight || this.dinoz.state !== null || this.dinoz.life <= 0) {
+					this.$toast.open({ message: this.$t('action.clanAction.noAction'), type: 'warning' });
+					return;
+				}
+			}
 			if (action.confirm) {
 				const message = action.confirmMessageKey
 					? this.$t(action.confirmMessageKey)
@@ -432,6 +467,26 @@ export default defineComponent({
 				if (!res) return;
 			}
 			switch (action.name) {
+				case Action.CLAN_ACTION: {
+					const info = action.clanAction;
+					if (!info || this.clanActionBusy) break;
+					this.clanActionBusy = true;
+					try {
+						const result = await ClanService.contributeClanAction(info.clanId, info.actionKey, this.dinozId);
+						this.$toast.success(
+							this.$t(result.completed ? 'action.clanAction.finished' : 'action.clanAction.success', {
+								remaining: result.remaining
+							}).toString()
+						);
+						await this.refreshDinoz();
+					} catch (error) {
+						errorHandler.handle(error, this.$toast);
+						await this.refreshDinoz();
+					} finally {
+						this.clanActionBusy = false;
+					}
+					break;
+				}
 				case Action.DUNGEON_ENTER:
 					try {
 						// Charger la phrase d'origine AVANT la création : une réponse vide ne doit pas créer une session silencieuse.
@@ -1108,6 +1163,27 @@ export default defineComponent({
 			}
 		}
 		.action {
+			&.clan-action {
+				min-height: 46px;
+				height: auto;
+			}
+			&.disabled-action {
+				opacity: 0.65;
+				&:hover {
+					cursor: default;
+					background-color: transparent;
+				}
+			}
+			.clan-action-label {
+				display: flex;
+				flex-direction: column;
+				font-size: 9pt;
+				small {
+					font-size: 8pt;
+					font-variant: normal;
+					font-weight: 400;
+				}
+			}
 			display: flex;
 			flex-direction: row;
 			align-items: center;

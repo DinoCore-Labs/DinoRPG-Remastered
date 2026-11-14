@@ -1056,7 +1056,7 @@ export const placeListv2 = definePlaces({
 		map: MapZone.DINOWEST,
 		moves: [{ target: PlaceEnum.DINOPLAZA }, { target: PlaceEnum.CINEMA_PARADINO, condition: 'active(cinema)' }],
 		ground: GroundEnum.NONE,
-		background: 'dw_clini1',
+		background: 'clinique1',
 		top: 110
 	},
 

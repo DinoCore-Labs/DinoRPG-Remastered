@@ -3189,6 +3189,21 @@
 		}
 	},
 	"action": {
+		"clanAction": {
+			"names": {
+				"hopita": "Build the Clinic {percentage}%",
+				"tour": "Build the Tower {percentage}%",
+				"pompe": "Pump out the Mist {percentage}%",
+				"labora": "Build the Laboratory {percentage}%"
+			},
+			"count": "{progress} / {total} actions",
+			"description": "Your clan has completed {progress} of {total} actions. Each contribution uses one action from this Dinoz.",
+			"confirm": "Contribute to this project? This will use one available action from your Dinoz.",
+			"success": "Thank you for helping! {remaining} actions remain.",
+			"finished": "The project is finished! Your clan succeeded.",
+			"noAction": "This Dinoz cannot act right now. Restore its action to contribute.",
+			"working": "Contributing…"
+		},
 		"popupConfirm": "Do you confirm the action {action} for your Dinoz?",
 		"confirm": {
 			"stop_concen": "Your Dinoz may try to stop concentrating at any time.",
