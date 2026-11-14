@@ -1,3 +1,4 @@
+import { clinicScenario } from './data/clinicScenario.js';
 import { dojoScenario } from './data/dojoScenario.js';
 import { introScenario } from './data/introScenario.js';
 import { jeromeTraderScenario } from './data/jeromeTraderScenario.js';
@@ -16,7 +17,8 @@ export const scenarioList = {
 	dojo: dojoScenario,
 	intro: introScenario,
 	kabuki: kabukiScenario,
-	kabegg: kabukiEggScenario
+	kabegg: kabukiEggScenario,
+	clinik: clinicScenario
 } as const;
 
 export type ScenarioKey = keyof typeof scenarioList;
