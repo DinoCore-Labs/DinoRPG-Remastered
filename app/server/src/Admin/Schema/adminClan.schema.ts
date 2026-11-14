@@ -34,3 +34,12 @@ export const adminClanPageParamsSchema = z.object({
 	id: z.coerce.number().int().positive(),
 	pageId: z.coerce.number().int().positive()
 });
+
+// Modification des compteurs collectifs réservée à l'administration.
+export const adminClanActionParamsSchema = adminClanParamsSchema.extend({
+	actionKey: z.string().min(1).max(64)
+});
+
+export const updateAdminClanActionProgressSchema = z.object({
+	progress: z.number().int().min(0)
+});

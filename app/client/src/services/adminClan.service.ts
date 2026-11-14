@@ -23,6 +23,13 @@ export interface AdminClanPage {
 	content: string;
 }
 
+export interface AdminClanAction {
+	actionKey: string;
+	progress: number;
+	total: number;
+	completedAt: string | null;
+}
+
 export interface AdminClan {
 	id: number;
 	name: string;
@@ -32,6 +39,7 @@ export interface AdminClan {
 	members: AdminClanMember[];
 	ingredients: AdminClanIngredient[];
 	pages: AdminClanPage[];
+	actions: AdminClanAction[];
 	creationDate: string;
 }
 
@@ -66,6 +74,10 @@ export class AdminClanService {
 
 	static async updateIngredient(id: number, ingredientId: number, amountToAddOrRemove: number): Promise<void> {
 		await api.patch(`/admin/clan/${id}/ingredients`, { ingredientId, amountToAddOrRemove });
+	}
+
+	static async updateActionProgress(id: number, actionKey: string, progress: number): Promise<AdminClanAction> {
+		return await api.patch<AdminClanAction>(`/admin/clan/${id}/actions/${encodeURIComponent(actionKey)}`, { progress });
 	}
 
 	static async clearPage(id: number, pageId: number): Promise<void> {

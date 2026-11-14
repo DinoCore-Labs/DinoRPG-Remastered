@@ -33,6 +33,7 @@ import {
 	getAdminClanHandler,
 	kickAdminClanMemberHandler,
 	searchAdminClanHandler,
+	updateAdminClanActionProgressHandler,
 	updateAdminClanIngredientHandler,
 	updateAdminClanLeaderHandler,
 	updateAdminClanNameHandler,
@@ -272,6 +273,11 @@ export async function adminRoutes(app: FastifyInstance) {
 		'/clan/:id',
 		{ preHandler: [app.authenticate, app.moderator], schema: { tags: ['Admin'] } },
 		getAdminClanHandler
+	);
+	app.patch(
+		'/clan/:id/actions/:actionKey',
+		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
+		updateAdminClanActionProgressHandler
 	);
 	app.patch(
 		'/clan/:id/name',

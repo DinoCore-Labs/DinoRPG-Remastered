@@ -1,3 +1,4 @@
+import { clanActionDefinitions, getClanActionDefinition } from '@dinorpg/core/models/clan/clanActions.js';
 import { ClanMemberRight } from '@dinorpg/core/models/enums/ClanMemberRight.js';
 import { ingredientList } from '@dinorpg/core/models/ingredients/ingredientList.js';
 import type { FastifyReply, FastifyRequest } from 'fastify';
@@ -6,10 +7,12 @@ import { GameLogType } from '../../../../prisma/index.js';
 import { CreateGameLogInput, safeCreateGameLog } from '../../Gamelog/Controller/gamelog.controller.js';
 import { prisma } from '../../prisma.js';
 import {
+	adminClanActionParamsSchema,
 	adminClanPageParamsSchema,
 	adminClanParamsSchema,
 	kickClanMemberSchema,
 	searchClanQuerySchema,
+	updateAdminClanActionProgressSchema,
 	updateClanIngredientSchema,
 	updateClanLeaderSchema,
 	updateClanNameSchema,
@@ -69,7 +72,86 @@ export async function getAdminClanHandler(request: FastifyRequest, reply: Fastif
 	});
 
 	if (!clan) return reply.status(404).send({ message: 'Clan not found' });
-	return reply.send(clan);
+
+	const progressRows = await prisma.clanActionProgress.findMany({
+		where: { clanId: clan.id },
+		select: { actionKey: true, progress: true, completedAt: true }
+	});
+	const byKey = new Map(progressRows.map(row => [row.actionKey, row]));
+	const actions = Object.values(clanActionDefinitions).map(definition => {
+		const current = byKey.get(definition.key);
+		return {
+			actionKey: definition.key,
+			progress: current?.progress ?? 0,
+			total: definition.requiredActions,
+			completedAt: current?.completedAt ?? null
+		};
+	});
+	return reply.send({ ...clan, actions });
+}
+
+/**
+ * Saisie manuelle de la progression d'une action de clan.
+ * Utilise le même advisory lock que contributeToClanAction : pas de perte de mise
+ * à jour lorsqu'un joueur contribue pendant qu'un administrateur intervient.
+ */
+export async function updateAdminClanActionProgressHandler(request: FastifyRequest, reply: FastifyReply) {
+	const params = adminClanActionParamsSchema.safeParse(request.params);
+	const body = updateAdminClanActionProgressSchema.safeParse(request.body);
+	if (!params.success || !body.success) return reply.status(400).send({ message: 'Invalid payload' });
+
+	const { id: clanId, actionKey } = params.data;
+	const definition = getClanActionDefinition(actionKey);
+	if (!definition) return reply.status(404).send({ message: 'Unknown clan action' });
+	if (body.data.progress > definition.requiredActions) {
+		return reply.status(400).send({ message: 'Progress exceeds required actions' });
+	}
+
+	const updated = await prisma.$transaction(
+		async tx => {
+			await tx.$executeRaw`
+			SELECT pg_advisory_xact_lock(hashtextextended(${`clan-action:${clanId}:${actionKey}`}, 0::bigint))
+		`;
+			const clan = await tx.clan.findUnique({ where: { id: clanId }, select: { id: true } });
+			if (!clan) return null;
+
+			const where = { clanId_actionKey: { clanId, actionKey } };
+			const current = await tx.clanActionProgress.findUnique({ where });
+			const progress = body.data.progress;
+			// Complétion liée à la progression, comme les contributions normales.
+			// Une valeur inférieure au seuil rouvre l'objectif.
+			const completedAt = progress === definition.requiredActions ? (current?.completedAt ?? new Date()) : null;
+			await tx.clanActionProgress.upsert({
+				where,
+				create: { clanId, actionKey, progress, completedAt },
+				update: { progress, completedAt }
+			});
+			return {
+				clanId,
+				actionKey,
+				progress,
+				total: definition.requiredActions,
+				completedAt,
+				previousProgress: current?.progress ?? 0
+			};
+		},
+		{ maxWait: 5_000, timeout: 30_000 }
+	);
+
+	if (!updated) return reply.status(404).send({ message: 'Clan not found' });
+	await logAdminClanAction(request, clanId, {
+		action: 'UPDATE_CLAN_ACTION_PROGRESS',
+		actionKey,
+		previousProgress: updated.previousProgress,
+		progress: updated.progress
+	});
+	return reply.send({
+		clanId: updated.clanId,
+		actionKey: updated.actionKey,
+		progress: updated.progress,
+		total: updated.total,
+		completedAt: updated.completedAt
+	});
 }
 
 export async function updateAdminClanNameHandler(request: FastifyRequest, reply: FastifyReply) {

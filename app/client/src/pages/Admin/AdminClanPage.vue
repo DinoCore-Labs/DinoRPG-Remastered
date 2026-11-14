@@ -68,6 +68,52 @@
 				</div>
 			</div>
 
+			<div class="card" v-if="uStore.isAdmin">
+				<div class="card-container">
+					<h3>Actions de clan</h3>
+					<p class="small-info">
+						Modifie les actions effectuées. Atteindre le seuil termine l'objectif ; une valeur inférieure le rend
+						incomplet. Les récompenses déjà obtenues ne sont pas annulées.
+					</p>
+					<div class="table-responsive">
+						<table class="members-table">
+							<thead>
+								<tr>
+									<th>Action</th>
+									<th>Progression</th>
+									<th>État</th>
+									<th>Modification</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr v-for="action in clan.actions" :key="action.actionKey">
+									<td>
+										{{ clanActionNames[action.actionKey] ?? action.actionKey }} <small>({{ action.actionKey }})</small>
+									</td>
+									<td>{{ action.progress }} / {{ action.total }}</td>
+									<td>{{ action.completedAt ? 'Terminée' : 'En cours' }}</td>
+									<td>
+										<div class="field-group clan-action-edit">
+											<input
+												v-model.number="editedActionProgress[action.actionKey]"
+												type="number"
+												min="0"
+												:max="action.total"
+												step="1"
+												:aria-label="'Progression ' + action.actionKey"
+											/>
+											<DZButton size="small" :disabled="savingActionKey !== null" @click="saveActionProgress(action)"
+												>Sauvegarder</DZButton
+											>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+
 			<div class="card">
 				<div class="card-container">
 					<h3>Pages du Clan</h3>
@@ -137,7 +183,7 @@ import { userStore } from '../../store/userStore';
 import TitleHeader from '../../components/utils/TitleHeader.vue';
 import AdminClanSearch from '../../components/admin/clan/AdminClanSearch.vue';
 import DZButton from '../../components/utils/DZButton.vue';
-import { AdminClanService, type AdminClan } from '../../services/adminClan.service';
+import { AdminClanService, type AdminClan, type AdminClanAction } from '../../services/adminClan.service';
 import { ingredientList } from '@dinorpg/core/models/ingredients/ingredientList.js';
 
 const route = useRoute();
@@ -154,6 +200,14 @@ const error = ref<string | null>(null);
 const editName = ref('');
 const editLeaderId = ref('');
 const editTreasure = ref(0);
+const editedActionProgress = ref<Record<string, number>>({});
+const savingActionKey = ref<string | null>(null);
+const clanActionNames: Record<string, string> = {
+	hopita: 'Clinique clanique',
+	tour: 'Tour de Karinbao',
+	pompe: 'Pompe des Steppes',
+	labora: 'Laboratoire'
+};
 
 const allIngredients = Object.entries(ingredientList);
 const selectedIngredientId = ref<number | ''>('');
@@ -174,6 +228,7 @@ async function loadClan(id: number | string) {
 		editName.value = data.name;
 		editLeaderId.value = data.leaderId;
 		editTreasure.value = data.treasureValue;
+		editedActionProgress.value = Object.fromEntries(data.actions.map(action => [action.actionKey, action.progress]));
 		// Update URL safely
 		router.replace({ query: { clanId: id } });
 	} catch (e: any) {
@@ -181,6 +236,31 @@ async function loadClan(id: number | string) {
 		clan.value = null;
 	} finally {
 		loading.value = false;
+	}
+}
+
+async function saveActionProgress(action: AdminClanAction) {
+	if (!clan.value || savingActionKey.value !== null) return;
+	const progress = editedActionProgress.value[action.actionKey];
+	if (!Number.isSafeInteger(progress) || progress < 0 || progress > action.total) {
+		instance?.proxy?.$toast?.error(`La progression doit être comprise entre 0 et ${action.total}.`);
+		return;
+	}
+	if (progress === action.progress) return;
+	const confirmed = await instance?.proxy?.$confirm({
+		header: 'Confirmer la modification',
+		message: `Définir la progression de ${clanActionNames[action.actionKey] ?? action.actionKey} à ${progress} / ${action.total} ?`
+	});
+	if (!confirmed) return;
+	savingActionKey.value = action.actionKey;
+	try {
+		await AdminClanService.updateActionProgress(clan.value.id, action.actionKey, progress);
+		await loadClan(clan.value.id);
+		instance?.proxy?.$toast?.success('Progression du clan mise à jour');
+	} catch (e: any) {
+		instance?.proxy?.$toast?.error(e.response?.data?.message || 'Erreur');
+	} finally {
+		savingActionKey.value = null;
 	}
 }
 
@@ -362,6 +442,12 @@ onMounted(() => {
 	select {
 		padding: 5px;
 		border: 1px solid #ccc;
+	}
+}
+.clan-action-edit {
+	margin-bottom: 0;
+	input {
+		width: 85px;
 	}
 }
 .small-info {
