@@ -94,6 +94,7 @@ model Dinoz {
 
   @@index([userId])
   @@index([leaderId])
+  surgery DinozSurgery?
 }
 
 
@@ -1680,6 +1681,21 @@ model UserRewards {
 }
 
 
+
+model DinozSurgery {
+  dinozId    Int       @id
+  userId     String    @db.Uuid
+  startedAt  DateTime  @db.Timestamptz(3)
+  readyAt    DateTime  @db.Timestamptz(3)
+  finishedAt DateTime? @db.Timestamptz(3)
+  oldDisplay String
+  newDisplay String
+
+  dinoz Dinoz @relation(fields: [dinozId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("dinoz_surgery")
+}
 
 model ClinicTreatment {
   userId     String    @id @db.Uuid

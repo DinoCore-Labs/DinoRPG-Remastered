@@ -3515,7 +3515,10 @@
 					"begin": "¡Hola, Maestro Dinoz! Puedo curar por completo a uno de tus Dinoz. Déjamelo durante una hora. Este servicio gratuito se puede utilizar una vez cada 20 horas.",
 					"soinok": "¡Ya está! Vuelve dentro de una hora y estará como nuevo.",
 					"soinok2": "¡Hola de nuevo! Espero que la espera no haya sido demasiado larga.",
-					"soinko": "Lo siento, solo puedes curar a un Dinoz cada 20 horas. Vuelve más tarde."
+					"soinko": "Lo siento, solo puedes curar a un Dinoz cada 20 horas. Vuelve más tarde.",
+					"ope": "La cirugía estética cambia para siempre el rostro de tu Dinoz. Dura una hora y solo se permite cada 30 días por Dinoz. Puede perder rasgos visuales raros. ¿Quieres continuar?",
+					"oui": "Tu Dinoz está en manos del cirujano. ¡Vuelve dentro de una hora para ver su nuevo rostro!",
+					"non": "Tu Dinoz parece aliviado. Prefieres conservar su apariencia actual."
 				}
 			},
 			"choice": {
@@ -3523,7 +3526,10 @@
 					"liste": "¿Puedo ayudarte en algo más?",
 					"go": "¡Cuenta conmigo!",
 					"quit": "¡Hoy no, tengo que irme!",
-					"offre": "Curar a tu Dinoz, que está agotado."
+					"offre": "Curar a tu Dinoz, que está agotado.",
+					"ope": "Quiero una operación estética para mi Dinoz.",
+					"oui": "¡Sí, confirmo esta operación irreversible!",
+					"non": "No, prefiero su aspecto actual."
 				}
 			}
 		},
@@ -6760,9 +6766,16 @@
 			}
 		}
 	},
+	"clinic": {
+		"surgeryUnavailable": "La cirugía estética no está disponible.",
+		"surgeryRequirements": "Se necesitan los desbloqueos Élites y Cirugía.",
+		"surgeryDinozUnavailable": "Este Dinoz no puede operarse ahora (lugar, grupo, estado o actividad).",
+		"surgeryInProgress": "Este Dinoz ya está siendo operado.",
+		"surgeryCooldown": "Este Dinoz solo puede operarse cada 30 días."
+	},
 	"clinicTreatment": {
-		"waiting": "Anna Tomie está tratando a tu Dinoz. Estará disponible en {time}.",
-		"ready": "¡Tratamiento terminado! Actualizando tu Dinoz."
+		"waiting": "Tu Dinoz está en la clínica. Estará disponible en {time}.",
+		"ready": "¡Tu Dinoz ha terminado en la clínica! Actualizando sus datos."
 	},
 	"scenarios": {
 		"clinik": { "name": "Clínica de Dinoland" },

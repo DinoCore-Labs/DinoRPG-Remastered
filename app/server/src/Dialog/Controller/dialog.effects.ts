@@ -17,6 +17,7 @@ import { Skill, skillList } from '@dinorpg/core/models/skills/skillList.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 
 import { Prisma } from '../../../../prisma/index.js';
+import { beginClinicSurgery } from '../../Clinic/Service/clinicSurgery.service.js';
 import { beginClinicTreatment } from '../../Clinic/Service/clinicTreatment.service.js';
 import { addSkillToDinoz } from '../../Dinoz/Controller/addSkillToDinoz.controller.js';
 import { startDinozConcentration } from '../../Dinoz/Controller/concentrationDinoz.controller.js';
@@ -599,6 +600,9 @@ async function applyDialogEffect(
 			await addUserItem(tx, context, itemId, 1);
 			return;
 		}
+		case 'clinicSurgery':
+			await beginClinicSurgery(tx, context.user.id, context.dinoz.id, context.now);
+			return;
 		case 'clinicTreatment':
 			await beginClinicTreatment(tx, context.user.id, context.dinoz.id);
 			return;

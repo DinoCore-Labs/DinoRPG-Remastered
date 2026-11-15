@@ -28,4 +28,5 @@ export type DialogEffect =
 	| { type: 'giveIngredient'; ingredientId: number; count: number }
 	| { type: 'giveMoney'; moneyType: DialogMoneyType; amount: number }
 	| { type: 'startConcentration' }
-	| { type: 'clinicTreatment' };
+	| { type: 'clinicTreatment' }
+	| { type: 'clinicSurgery' };

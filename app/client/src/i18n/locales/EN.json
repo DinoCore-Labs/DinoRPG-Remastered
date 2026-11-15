@@ -3620,7 +3620,10 @@
 					"begin": "Hello, Dinoz Master! I can restore one of your Dinoz to full health. Leave it with me for one hour. This free service is available once every 20 hours.",
 					"soinok": "All done! Come back in an hour; your Dinoz will be as good as new!",
 					"soinok2": "Hello again! I hope the wait was not too long.",
-					"soinko": "Sorry, only one Dinoz can receive treatment every 20 hours. Please come back later."
+					"soinko": "Sorry, only one Dinoz can receive treatment every 20 hours. Please come back later.",
+					"ope": "Cosmetic surgery permanently changes your Dinoz’s face. It takes one hour and is allowed once every 30 days per Dinoz. Rare visual features may be lost. Do you want to continue?",
+					"oui": "Your Dinoz is now with the surgeon. Come back in one hour to discover its new face!",
+					"non": "Your Dinoz looks relieved. You decide to keep its familiar appearance."
 				}
 			},
 			"choice": {
@@ -3628,7 +3631,10 @@
 					"liste": "Is there anything else I can do?",
 					"go": "I’m ready to help!",
 					"quit": "Not today. I have to go!",
-					"offre": "Have your exhausted Dinoz treated."
+					"offre": "Have your exhausted Dinoz treated.",
+					"ope": "I would like cosmetic surgery for my Dinoz.",
+					"oui": "Yes, I confirm this irreversible operation!",
+					"non": "No, I prefer its current appearance."
 				}
 			}
 		},
@@ -6889,9 +6895,16 @@
 			}
 		}
 	},
+	"clinic": {
+		"surgeryUnavailable": "Cosmetic surgery is currently unavailable.",
+		"surgeryRequirements": "The Elites and Surgery unlocks are both required.",
+		"surgeryDinozUnavailable": "This Dinoz cannot undergo surgery now (location, party, state or activity).",
+		"surgeryInProgress": "This Dinoz is already undergoing surgery.",
+		"surgeryCooldown": "This Dinoz can undergo surgery only once every 30 days."
+	},
 	"clinicTreatment": {
-		"waiting": "Anna Tomie is treating your Dinoz. Available in {time}.",
-		"ready": "Treatment finished! Refreshing your Dinoz."
+		"waiting": "Your Dinoz is at the clinic. It will be available in {time}.",
+		"ready": "Your Dinoz is ready to leave the clinic! Refreshing its details."
 	},
 	"scenarios": {
 		"clinik": { "name": "Dinoland Clinic" },

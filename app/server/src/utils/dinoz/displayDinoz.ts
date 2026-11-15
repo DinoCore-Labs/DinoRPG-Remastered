@@ -21,7 +21,6 @@ function getRandomNumber(min: number, max: number) {
 function getRandomLetter(maxLetter: string): string {
 	const allLetters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
 	const lettersAvailable: string = allLetters.substring(0, allLetters.indexOf(maxLetter) + 1);
-
 	return lettersAvailable[Math.floor(Math.random() * lettersAvailable.length)];
 }
 
@@ -61,11 +60,9 @@ export function generateDinozDisplay(race: DinozRace, palette: string, rare_1: s
 	// - the next (15th) is the provided 1st rare visual attribute
 	// - the last one (16h) is the provided 2nd rare visual attribute
 	let randomDisplay = race.swfLetter;
-
 	for (let i = 0; i < 11; i++) {
 		randomDisplay += getRandomLetter('z');
 	}
-
 	randomDisplay += palette + rare_1 + rare_2;
 	return randomDisplay;
 }

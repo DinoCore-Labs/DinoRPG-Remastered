@@ -4,6 +4,7 @@ import type { FastifyReply, FastifyRequest } from 'fastify';
 
 import { getAvailableClanActionsForDinoz } from '../../Clan/Service/clanActionDinoz.service.js';
 import { getCompletedClanActionKeys } from '../../Clan/Service/completedClanActionKeys.service.js';
+import { finishClinicSurgeryIfReady } from '../../Clinic/Service/clinicSurgery.service.js';
 import { finishClinicTreatmentIfReady } from '../../Clinic/Service/clinicTreatment.service.js';
 import { advanceDinozMissionOnWait } from '../../Mission/Controller/mission.progress.js';
 import { prisma } from '../../prisma.js';
@@ -57,6 +58,7 @@ export async function getDinozFiche(req: FastifyRequest<{ Params: Params }>, rep
 	const restInfos = await prisma.$transaction(async tx => {
 		await applyUnfreezeIfNeeded(tx, dinozId);
 		await finishClinicTreatmentIfReady(tx, authedId, dinozId);
+		await finishClinicSurgeryIfReady(tx, authedId, dinozId);
 		await advanceDinozMissionOnWait(tx, dinozId);
 		return applyRestIfNeeded(tx, dinozId);
 	});
