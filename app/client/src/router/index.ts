@@ -18,6 +18,7 @@ import AdminPage from '../pages/Admin/AdminPage.vue';
 import AdminReportsPage from '../pages/Admin/AdminReportsPage.vue';
 import AdminRoadmapPage from '../pages/Admin/AdminRoadmapPage.vue';
 import AdminSecretsPage from '../pages/Admin/AdminSecretsPage.vue';
+import AdminTournamentPage from '../pages/Admin/AdminTournamentPage.vue';
 import AdminUserPage from '../pages/Admin/AdminUserPage.vue';
 import BankPage from '../pages/BankPage.vue';
 import ClanList from '../pages/Clan/ClanList.vue';
@@ -627,6 +628,15 @@ const routes: RouteRecord[] = [
 						path: '/admin/monster-hunt',
 						name: 'AdminMonsterHunt',
 						component: AdminMonsterHuntPage,
+						meta: {
+							auth: true,
+							roles: ['ADMIN', 'SUPER_ADMIN']
+						}
+					},
+					{
+						path: '/admin/tournament',
+						name: 'AdminTournament',
+						component: AdminTournamentPage,
 						meta: {
 							auth: true,
 							roles: ['ADMIN', 'SUPER_ADMIN']
