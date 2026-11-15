@@ -38,6 +38,13 @@
 		>
 			<RouterLink to="/admin/monster-hunt"> Monster Hunt </RouterLink>
 		</li>
+		<li
+			:class="{
+				active: $route.path.startsWith('/admin/tournament')
+			}"
+		>
+			<RouterLink to="/admin/tournament"> TID </RouterLink>
+		</li>
 	</ul>
 	<RouterView />
 </template>

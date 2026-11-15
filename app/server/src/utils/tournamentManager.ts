@@ -13,7 +13,13 @@
  */
 
 import { Language } from '@dinorpg/core/models/config/language.js';
-import { POOL_COUNT, POOL_LOSS_COUNT, POOL_SIZE, POOL_WIN_COUNT } from '@dinorpg/core/models/dojo/constants.js';
+import {
+	DOJO_MAX_SERIES,
+	POOL_COUNT,
+	POOL_LOSS_COUNT,
+	POOL_SIZE,
+	POOL_WIN_COUNT
+} from '@dinorpg/core/models/dojo/constants.js';
 import { COMMON_TOURNAMENT_RACES, RARE_TOURNAMENT_RACES } from '@dinorpg/core/models/dojo/teamFormat.js';
 import {
 	type MetaData,
@@ -156,6 +162,17 @@ const TOURNAMENT_RULES: FightRules = {
 const FINALS_STEP_OFFSET = 10;
 // round 0 (1/16) → tournamentStep 10, round 1 (1/8) → 11, …, round 4 (finale) → 14
 
+export function getNextMondayMidnightUtc(date: Date): Date {
+	const result = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), 0, 0, 0, 0));
+	const day = date.getUTCDay();
+	if (day === 1 && date.getTime() <= result.getTime()) {
+		return result;
+	}
+	const daysUntilMonday = (8 - day) % 7 || 7;
+	result.setUTCDate(result.getUTCDate() + daysUntilMonday);
+	return result;
+}
+
 // ---------------------------------------------------------------------------
 
 export class TournamentManager {
@@ -166,7 +183,7 @@ export class TournamentManager {
 	): Date {
 		const qualificationStart = new Date(tournamentDate);
 		const qualificationEnd = new Date(tournamentDate);
-		qualificationEnd.setDate(qualificationEnd.getDate() + 7);
+		qualificationEnd.setDate(qualificationEnd.getDate() + 14); // Durée des qualifications : 2 semaines
 		const poolsStart = new Date(qualificationEnd);
 
 		const poolsR1Date = new Date(poolsStart.getTime() + 12 * 3600 * 1000); // Mon 12:00
@@ -176,10 +193,10 @@ export class TournamentManager {
 		const finalsR2Date = new Date(poolsStart.getTime() + 108 * 3600 * 1000); // Fri 12:00
 		const finalsR3Date = new Date(poolsStart.getTime() + 132 * 3600 * 1000); // Sat 12:00
 		const finalsR4Date = new Date(poolsStart.getTime() + 156 * 3600 * 1000); // Sun 12:00
-		const nextTournamentDate = new Date(qualificationStart.getTime() + 14 * 24 * 3600 * 1000); // Mon 00:00
+		const tournamentEndDate = new Date(poolsStart.getTime() + 168 * 3600 * 1000); // Mon 00:00 après finale
 
 		if (lastFightStep !== null && lastFightStep !== undefined) {
-			if (lastFightStep >= FINALS_STEP_OFFSET + 4) return nextTournamentDate; // Finale played -> next tournament
+			if (lastFightStep >= FINALS_STEP_OFFSET + 4) return tournamentEndDate; // Finale played
 			if (lastFightStep >= FINALS_STEP_OFFSET + 3) return finalsR4Date; // 1/2 played -> Finale
 			if (lastFightStep >= FINALS_STEP_OFFSET + 2) return finalsR3Date; // 1/4 played -> 1/2
 			if (lastFightStep >= FINALS_STEP_OFFSET + 1) return finalsR2Date; // 1/8 played -> 1/4
@@ -202,11 +219,11 @@ export class TournamentManager {
 			finalsR2Date,
 			finalsR3Date,
 			finalsR4Date,
-			nextTournamentDate
+			tournamentEndDate
 		];
 
 		const upcoming = milestones.find(date => date > currentDate);
-		return upcoming ?? nextTournamentDate;
+		return upcoming ?? tournamentEndDate;
 	}
 
 	static async getCurrentTournamentState(prismaClient = prisma): Promise<TournamentState | null> {
@@ -220,17 +237,38 @@ export class TournamentManager {
 
 		const qualificationStart = new Date(tournament.date);
 		const qualificationEnd = new Date(tournament.date);
-		qualificationEnd.setDate(qualificationEnd.getDate() + 7);
+		qualificationEnd.setDate(qualificationEnd.getDate() + 14); // Durée des qualifications : 2 semaines
 		const poolsStart = new Date(qualificationEnd);
 		const finalsStart = new Date(poolsStart);
 		finalsStart.setDate(finalsStart.getDate() + 2); // wednesday 00:00
+		const finalsEnd = new Date(finalsStart);
+		finalsEnd.setDate(finalsEnd.getDate() + 5); // next monday 00:00
 
 		const PHASE_TOLERANCE_MS = 60_000;
 
-		let phase: TournamentPhase = TournamentPhase.QUALIFICATION;
-		if (currentDate >= new Date(qualificationEnd.getTime() - PHASE_TOLERANCE_MS) && currentDate < finalsStart)
+		let phase: TournamentPhase = TournamentPhase.STARTING;
+		if (currentDate >= qualificationStart && currentDate < new Date(qualificationEnd.getTime()))
+			phase = TournamentPhase.QUALIFICATION;
+		else if (currentDate >= new Date(qualificationEnd.getTime() - PHASE_TOLERANCE_MS) && currentDate < finalsStart)
 			phase = TournamentPhase.POOLS;
-		else if (currentDate >= finalsStart) phase = TournamentPhase.FINALS;
+		else if (currentDate >= finalsStart && currentDate < finalsEnd) phase = TournamentPhase.FINALS;
+		else if (currentDate >= finalsEnd) phase = TournamentPhase.ENDED;
+
+		const hasFinalBracket =
+			(await prismaClient.tournamentTeam.count({
+				where: { tournamentId: tournament.id, finalSeed: { not: null } }
+			})) > 0;
+		if (hasFinalBracket) {
+			phase = TournamentPhase.FINALS;
+		} else {
+			const hasPools =
+				(await prismaClient.tournamentTeam.count({
+					where: { tournamentId: tournament.id, poolNumber: { not: null } }
+				})) > 0;
+			if (hasPools) {
+				phase = TournamentPhase.POOLS;
+			}
+		}
 
 		const lastFight = await prismaClient.fightArchive.findFirst({
 			where: { tournamentId: tournament.id },
@@ -259,31 +297,99 @@ export class TournamentManager {
 	// Job handlers
 	// -------------------------------------------------------------------------
 
+	static async scheduleTournamentStepJobs(
+		tournamentId: string,
+		qualificationStart: Date,
+		prismaClient = prisma
+	): Promise<void> {
+		const qualificationEnd = new Date(qualificationStart.getTime() + 14 * 24 * 3600 * 1000);
+		const poolsStart = qualificationEnd;
+		const poolsR1Date = new Date(poolsStart.getTime() + 12 * 3600 * 1000);
+		const poolsR2Date = new Date(poolsStart.getTime() + 36 * 3600 * 1000);
+		const finalsR0Date = new Date(poolsStart.getTime() + 60 * 3600 * 1000);
+		const finalsR1Date = new Date(poolsStart.getTime() + 84 * 3600 * 1000);
+		const finalsR2Date = new Date(poolsStart.getTime() + 108 * 3600 * 1000);
+		const finalsR3Date = new Date(poolsStart.getTime() + 132 * 3600 * 1000);
+		const finalsR4Date = new Date(poolsStart.getTime() + 156 * 3600 * 1000);
+
+		const stepJobs = [
+			{ key: TOURNAMENT_POOLS_START_JOB_KEY, name: 'Tournament — pools start + round 0', nextRunAt: poolsStart },
+			{ key: TOURNAMENT_POOLS_R1_JOB_KEY, name: 'Tournament — pool round 1', nextRunAt: poolsR1Date },
+			{ key: TOURNAMENT_POOLS_R2_JOB_KEY, name: 'Tournament — pool round 2 + bracket', nextRunAt: poolsR2Date },
+			{ key: TOURNAMENT_FINALS_R0_JOB_KEY, name: 'Tournament — finals 1/16', nextRunAt: finalsR0Date },
+			{ key: TOURNAMENT_FINALS_R1_JOB_KEY, name: 'Tournament — finals 1/8', nextRunAt: finalsR1Date },
+			{ key: TOURNAMENT_FINALS_R2_JOB_KEY, name: 'Tournament — finals QF', nextRunAt: finalsR2Date },
+			{ key: TOURNAMENT_FINALS_R3_JOB_KEY, name: 'Tournament — finals SF', nextRunAt: finalsR3Date },
+			{ key: TOURNAMENT_FINALS_R4_JOB_KEY, name: 'Tournament — finals Final', nextRunAt: finalsR4Date }
+		];
+
+		for (const step of stepJobs) {
+			await prismaClient.jobDefinition.upsert({
+				where: { key: step.key },
+				update: {
+					enabled: true,
+					nextRunAt: step.nextRunAt,
+					status: 'IDLE',
+					lastError: null,
+					lockedAt: null,
+					lockedBy: null
+				},
+				create: {
+					key: step.key,
+					name: step.name,
+					type: 'DAILY_AT',
+					timezone: 'UTC',
+					enabled: true,
+					nextRunAt: step.nextRunAt,
+					lockTimeoutS: 300
+				}
+			});
+		}
+	}
+
 	/**
-	 * Sunday 00:00 UTC — week 1.
-	 * Creates a new tournament, opens qualifications for 1 week.
+	 * Initialise un tournoi :
+	 * - Publie la news avec les règles du tournoi à la date indiquée par l'admin.
+	 * - Les qualifications débutent dans la nuit du dimanche au lundi qui suit et durent 2 semaines.
+	 * - Active et programme les 8 jobs d'étapes (poules et finales).
 	 */
-
-	static async initTournamentJob(prismaClient = prisma): Promise<void> {
+	static async initTournamentJob(
+		prismaClient = prisma,
+		force = false,
+		customOptions?: {
+			startDate?: Date | string;
+			teamSize?: number;
+			levelLimit?: number;
+			poison?: boolean;
+			itemsAllowed?: boolean;
+			cashPrice?: number;
+		}
+	): Promise<void> {
 		const existing = await TournamentManager.getCurrentTournament(prismaClient);
-		if (existing && existing.phase !== TournamentPhase.FINALS) return;
+		if (!force && existing && existing.phase !== TournamentPhase.FINALS) return;
 
-		const now = new Date();
-		const qualificationEnd = new Date(now.getTime() + 7 * 24 * 3600 * 1000);
+		const announcementDate = customOptions?.startDate ? new Date(customOptions.startDate) : new Date();
+		const qualificationStart = getNextMondayMidnightUtc(announcementDate);
+		const qualificationEnd = new Date(qualificationStart.getTime() + 14 * 24 * 3600 * 1000);
 
-		const { teamSize, raceMinimum, teamRace } = generateTournamentFormat();
+		const generated = generateTournamentFormat();
+		const teamSize = customOptions?.teamSize ?? generated.teamSize;
+		const raceMinimum = generated.raceMinimum;
+		const teamRace = generated.teamRace;
 
-		const itemsAllowed = Math.random() < 0.5;
-		const poison = Math.random() < 0.5;
+		const itemsAllowed = customOptions?.itemsAllowed ?? Math.random() < 0.5;
+		const poison = customOptions?.poison ?? Math.random() < 0.5;
+		const levelLimit = customOptions?.levelLimit ?? 50;
+		const cashPrice = customOptions?.cashPrice ?? 0;
 		const tournament = await prismaClient.tournament.create({
 			data: {
-				date: now,
+				date: qualificationStart,
 				formatName: 'custom',
-				levelLimit: 50,
+				levelLimit,
 				raceMinimum,
 				teamRace: teamRace.join(','),
 				teamSize,
-				cashPrice: 0,
+				cashPrice,
 				poison,
 				itemsAllowed,
 				nextRound: qualificationEnd
@@ -294,7 +400,7 @@ export class TournamentManager {
 		await prismaClient.dojo.updateMany({
 			data: {
 				reputation: 0,
-				dailyReset: 0,
+				dailyReset: DOJO_MAX_SERIES,
 				tournamentTeamId: null
 			}
 		});
@@ -305,13 +411,14 @@ export class TournamentManager {
 		});
 		await prismaClient.dojoChallengeHistory.deleteMany({});
 		await prismaClient.dojoOpponents.deleteMany({});
+		await prismaClient.dojoTeam.deleteMany({});
 
-		const slug = `tournament-${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+		const slug = `tournament-${announcementDate.getFullYear()}-${String(announcementDate.getMonth() + 1).padStart(2, '0')}-${String(announcementDate.getDate()).padStart(2, '0')}-${Date.now()}`;
 
-		// Paramètres dynamiques injectés dans la traduction
 		const params = JSON.stringify({
-			edition: tournament.id, // Ou dynamique selon l'ID
+			edition: tournament.id,
 			formatName: tournament.formatName,
+			startDate: qualificationStart.toISOString(),
 			endDate: qualificationEnd.toISOString(),
 			teamSize: tournament.teamSize,
 			raceMinimum: tournament.raceMinimum,
@@ -325,7 +432,7 @@ export class TournamentManager {
 			slug,
 			type: NewsType.TID_START,
 			isPublished: true,
-			publishedAt: now,
+			publishedAt: announcementDate,
 			translations: [
 				{
 					lang: Language.FR,
@@ -341,6 +448,9 @@ export class TournamentManager {
 				}
 			]
 		});
+
+		// Programmer et activer automatiquement les 8 jobs du tournoi
+		await TournamentManager.scheduleTournamentStepJobs(tournament.id, qualificationStart, prismaClient);
 	}
 
 	/**
@@ -348,9 +458,10 @@ export class TournamentManager {
 	 * Closes qualifications, assigns pools and plays immediately the round 0
 	 * (M1 and M2 of each pool).
 	 */
-	static async poolsStartJob(prismaClient = prisma): Promise<void> {
+	static async poolsStartJob(prismaClient = prisma, force = false): Promise<void> {
 		const tournament = await TournamentManager.getCurrentTournament(prismaClient);
-		if (!tournament || tournament.phase !== TournamentPhase.POOLS) return;
+		if (!tournament) return;
+		if (!force && tournament.phase !== TournamentPhase.POOLS) return;
 
 		await TournamentManager.rewardQualification();
 		await TournamentManager.generatePoolBrackets(tournament.id, tournament.schedule.poolsStart, prismaClient);
@@ -360,14 +471,21 @@ export class TournamentManager {
 			where: { id: tournament.id },
 			data: { nextRound: poolsR1Date }
 		});
+
+		// Désactivation du job une fois l'étape passée
+		await prismaClient.jobDefinition.updateMany({
+			where: { key: TOURNAMENT_POOLS_START_JOB_KEY },
+			data: { enabled: false }
+		});
 	}
 
 	/**
 	 * Monday 12:00 UTC — round 1 of the pools (M3 winners, M4 losers).
 	 */
-	static async poolsRound1Job(prismaClient = prisma): Promise<void> {
+	static async poolsRound1Job(prismaClient = prisma, force = false): Promise<void> {
 		const tournament = await TournamentManager.getCurrentTournament(prismaClient);
-		if (!tournament || tournament.phase !== TournamentPhase.POOLS) return;
+		if (!tournament) return;
+		if (!force && tournament.phase !== TournamentPhase.POOLS) return;
 
 		await TournamentManager.schedulePoolRound(1, prismaClient);
 
@@ -376,14 +494,21 @@ export class TournamentManager {
 			where: { id: tournament.id },
 			data: { nextRound: poolsR2Date }
 		});
+
+		// Désactivation du job une fois l'étape passée
+		await prismaClient.jobDefinition.updateMany({
+			where: { key: TOURNAMENT_POOLS_R1_JOB_KEY },
+			data: { enabled: false }
+		});
 	}
 
 	/**
 	 * Monday 22:00 UTC — round 2 of the pools (M5 decider).
 	 */
-	static async poolsRound2Job(prismaClient = prisma): Promise<void> {
+	static async poolsRound2Job(prismaClient = prisma, force = false): Promise<void> {
 		const tournament = await TournamentManager.getCurrentTournament(prismaClient);
-		if (!tournament || tournament.phase !== TournamentPhase.POOLS) return;
+		if (!tournament) return;
+		if (!force && tournament.phase !== TournamentPhase.POOLS) return;
 
 		await TournamentManager.schedulePoolRound(2, prismaClient);
 
@@ -397,15 +522,22 @@ export class TournamentManager {
 				data: { nextRound: finalsR0Date }
 			});
 		}
+
+		// Désactivation du job une fois l'étape passée
+		await prismaClient.jobDefinition.updateMany({
+			where: { key: TOURNAMENT_POOLS_R2_JOB_KEY },
+			data: { enabled: false }
+		});
 	}
 
 	/**
 	 * Wednesday 12:00 → Sunday 12:00 UTC — final bracket rounds.
 	 */
-	static async finalsRoundJob(finalsRound: number, prismaClient = prisma): Promise<void> {
+	static async finalsRoundJob(finalsRound: number, prismaClient = prisma, force = false): Promise<void> {
 		const tournament = await TournamentManager.getCurrentTournament(prismaClient);
 
-		if (!tournament || tournament.phase !== TournamentPhase.FINALS) return;
+		if (!tournament) return;
+		if (!force && tournament.phase !== TournamentPhase.FINALS) return;
 
 		const tournamentStep = FINALS_STEP_OFFSET + finalsRound;
 
@@ -531,10 +663,10 @@ export class TournamentManager {
 
 		if (finalsRound === 4) {
 			await TournamentManager.rewardTournament(tournament.id, prismaClient);
-			const nextTournamentDate = new Date(tournament.schedule.qualificationStart.getTime() + 14 * 24 * 3600 * 1000);
+			const tournamentEndDate = new Date(tournament.schedule.poolsStart.getTime() + 168 * 3600 * 1000);
 			await prismaClient.tournament.update({
 				where: { id: tournament.id },
-				data: { nextRound: nextTournamentDate }
+				data: { nextRound: tournamentEndDate }
 			});
 		} else {
 			const nextFinalsOffsets = [84, 108, 132, 156]; // R1, R2, R3, R4 in hours from poolsStart
@@ -546,6 +678,22 @@ export class TournamentManager {
 				data: { nextRound: nextDate }
 			});
 		}
+
+		// Désactivation du job de l'étape passée
+		const finalJobKeys = [
+			TOURNAMENT_FINALS_R0_JOB_KEY,
+			TOURNAMENT_FINALS_R1_JOB_KEY,
+			TOURNAMENT_FINALS_R2_JOB_KEY,
+			TOURNAMENT_FINALS_R3_JOB_KEY,
+			TOURNAMENT_FINALS_R4_JOB_KEY
+		];
+		const currentKey = finalJobKeys[finalsRound];
+		if (currentKey) {
+			await prismaClient.jobDefinition.updateMany({
+				where: { key: currentKey },
+				data: { enabled: false }
+			});
+		}
 	}
 
 	// -------------------------------------------------------------------------
@@ -554,30 +702,39 @@ export class TournamentManager {
 	static readonly HANDLERS = {
 		[TOURNAMENT_INIT_JOB_KEY]: async () => {
 			await TournamentManager.initTournamentJob();
+			return { disable: true, nextRunAt: null };
 		},
 		[TOURNAMENT_POOLS_START_JOB_KEY]: async () => {
 			await TournamentManager.poolsStartJob();
+			return { disable: true, nextRunAt: null };
 		},
 		[TOURNAMENT_POOLS_R1_JOB_KEY]: async () => {
 			await TournamentManager.poolsRound1Job();
+			return { disable: true, nextRunAt: null };
 		},
 		[TOURNAMENT_POOLS_R2_JOB_KEY]: async () => {
 			await TournamentManager.poolsRound2Job();
+			return { disable: true, nextRunAt: null };
 		},
 		[TOURNAMENT_FINALS_R0_JOB_KEY]: async () => {
 			await TournamentManager.finalsRoundJob(0);
+			return { disable: true, nextRunAt: null };
 		},
 		[TOURNAMENT_FINALS_R1_JOB_KEY]: async () => {
 			await TournamentManager.finalsRoundJob(1);
+			return { disable: true, nextRunAt: null };
 		},
 		[TOURNAMENT_FINALS_R2_JOB_KEY]: async () => {
 			await TournamentManager.finalsRoundJob(2);
+			return { disable: true, nextRunAt: null };
 		},
 		[TOURNAMENT_FINALS_R3_JOB_KEY]: async () => {
 			await TournamentManager.finalsRoundJob(3);
+			return { disable: true, nextRunAt: null };
 		},
 		[TOURNAMENT_FINALS_R4_JOB_KEY]: async () => {
 			await TournamentManager.finalsRoundJob(4);
+			return { disable: true, nextRunAt: null };
 		}
 	};
 
@@ -1243,6 +1400,7 @@ export class TournamentManager {
 
 		// Rangs 1-32 : classement de la phase finale
 		const finalsRanking = await TournamentManager.getFinalsEliminationRanking(tournamentId, prismaClient);
+		await TournamentManager.createTournamentEndNews(tournamentId, finalsRanking, prismaClient);
 		// Rangs 33-48 : perdants 1-2 (M5, round pool 2)
 		const oneTwoLosers = await TournamentManager.getPoolEliminatedTeams(2, 5, tournamentId, prismaClient);
 		// Rangs 49-64 : perdants 0-2 (M4, round pool 1)
@@ -1269,6 +1427,80 @@ export class TournamentManager {
 			rewardedUsers.add(userId);
 			rank++;
 			await grantTournamentPrize({ tournamentId, userId, rank, cashPrice: tournament.cashPrice }, prismaClient);
+		}
+	}
+
+	private static async createTournamentEndNews(
+		tournamentId: string,
+		finalsRanking: { teamId: string; dojoId: string | null }[],
+		prismaClient = prisma
+	) {
+		let winnerName = '???';
+		let runnerUpName = '???';
+
+		if (finalsRanking[0]?.dojoId) {
+			const winnerDojo = await prismaClient.dojo.findUnique({
+				where: { id: finalsRanking[0].dojoId },
+				select: { user: { select: { name: true } } }
+			});
+			if (winnerDojo?.user?.name) {
+				winnerName = winnerDojo.user.name;
+			}
+		}
+
+		if (finalsRanking[1]?.dojoId) {
+			const runnerUpDojo = await prismaClient.dojo.findUnique({
+				where: { id: finalsRanking[1].dojoId },
+				select: { user: { select: { name: true } } }
+			});
+			if (runnerUpDojo?.user?.name) {
+				runnerUpName = runnerUpDojo.user.name;
+			}
+		}
+
+		const finalFight = await prismaClient.fightArchive.findFirst({
+			where: {
+				tournamentId,
+				tournamentStep: FINALS_STEP_OFFSET + 4
+			},
+			select: { id: true }
+		});
+
+		const now = new Date();
+		const publishedAt = new Date(now.getTime() + 12 * 3600 * 1000);
+		const slug = `tournament-end-${tournamentId}-${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
+		const params = JSON.stringify({
+			winner: winnerName,
+			runnerUp: runnerUpName,
+			tournamentId,
+			finalFightId: finalFight?.id
+		});
+
+		try {
+			await newsService.createAdminNews({
+				slug,
+				type: NewsType.TID_END,
+				isPublished: true,
+				publishedAt: publishedAt,
+				translations: [
+					{
+						lang: Language.FR,
+						title: 'news.tournament.end.title',
+						excerpt: `news.tournament.end.excerpt|${params}`,
+						content: `news.tournament.end.content|${params}`
+					},
+					{
+						lang: Language.EN,
+						title: 'news.tournament.end.title',
+						excerpt: `news.tournament.end.excerpt|${params}`,
+						content: `news.tournament.end.content|${params}`
+					}
+				]
+			});
+		} catch (e) {
+			if ((e as Error).message && !(e as Error).message.includes('Unique constraint failed')) {
+				console.error('Failed to create tournament end news:', e);
+			}
 		}
 	}
 }

@@ -90,6 +90,12 @@ import {
 import { getAdminReportsHandler, updateAdminReportHandler } from '../Service/adminReportHandler.service.js';
 import { getAdminRoadmapHandler, updateAdminRoadmapHandler } from '../Service/adminRoadmapHandler.service.js';
 import {
+	createAdminTournamentHandler,
+	getAdminTournamentOverviewHandler,
+	runAdminTournamentNextStepHandler,
+	runAdminTournamentStepByKeyHandler
+} from '../Service/adminTournamentHandler.service.js';
+import {
 	getAdminUserDetailsHandler,
 	getAdminUserDinozHandler,
 	updateAdminUserIngredientsHandler,
@@ -717,5 +723,51 @@ export async function adminRoutes(app: FastifyInstance) {
 			}
 		},
 		deleteAdminMonsterHuntHandler
+	);
+
+	// --- Tournament Management ---
+
+	app.get(
+		'/tournament',
+		{
+			preHandler: [app.authenticate, app.admin],
+			schema: {
+				tags: ['Admin']
+			}
+		},
+		getAdminTournamentOverviewHandler
+	);
+
+	app.post(
+		'/tournament',
+		{
+			preHandler: [app.authenticate, app.admin],
+			schema: {
+				tags: ['Admin']
+			}
+		},
+		createAdminTournamentHandler
+	);
+
+	app.post(
+		'/tournament/next-step',
+		{
+			preHandler: [app.authenticate, app.admin],
+			schema: {
+				tags: ['Admin']
+			}
+		},
+		runAdminTournamentNextStepHandler
+	);
+
+	app.post(
+		'/tournament/step/:key',
+		{
+			preHandler: [app.authenticate, app.admin],
+			schema: {
+				tags: ['Admin']
+			}
+		},
+		runAdminTournamentStepByKeyHandler
 	);
 }
