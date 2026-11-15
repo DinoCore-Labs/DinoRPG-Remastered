@@ -75,7 +75,7 @@
 				<span class="name">
 					<span>{{ dinoz.name }}</span>
 				</span>
-				<em> {{ $t(`place.name.${getPlaceName(dinoz.placeId)}`) }} </em>
+				<em> {{ $t(`place.name.${getPlaceName(dinoz.placeId, dinoz.displayPlaceId)}`) }} </em>
 			</RouterLink>
 		</li>
 	</ul>
@@ -86,6 +86,7 @@ import { defineComponent } from 'vue';
 import { dinozStore } from '../../store/dinozStore.js';
 import { placeList } from '../../constants/place.js';
 import type { DinozFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
+import { getClinicDisplayPlaceKey } from '@dinorpg/core/models/place/clinicPlace.js';
 import { orderDinozList } from '@dinorpg/core/utils/dinozUtils.js';
 import { DINOZ_STATE } from '@dinorpg/core/models/dinoz/dinozState.js';
 
@@ -105,8 +106,12 @@ export default defineComponent({
 			const width: number = Math.round((actual / max) * 36);
 			return `width : ${width}px`;
 		},
-		getPlaceName(placeId: number): string {
-			return placeList.find(place => place.placeId === placeId)?.name ?? '';
+		getPlaceName(placeId: number, displayPlaceId?: number): string {
+			return getClinicDisplayPlaceKey(
+				placeId,
+				displayPlaceId,
+				placeList.find(place => place.placeId === placeId)?.name ?? ''
+			);
 		},
 		getLeaderGroup(dinoz: DinozFiche) {
 			if (!this.currentDinozId) return false;

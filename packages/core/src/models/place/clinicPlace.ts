@@ -12,3 +12,15 @@ import { PlaceEnum } from '../enums/PlaceEnum.js';
 export function getClinicDisplayPlaceId(placeId: number, completedClanActionKeys: readonly string[]): number {
 	return placeId === PlaceEnum.CLINIQUE && completedClanActionKeys.includes('hopita') ? PlaceEnum.CLINI2 : placeId;
 }
+
+/**
+ * Le lieu en base reste clinik (38) ; la représentation construite est
+ * 129 (enum historique CLINI2), mais la clé des ressources est clinik2.
+ */
+export function getClinicDisplayPlaceKey(
+	placeId: number,
+	displayPlaceId: number | undefined,
+	defaultName: string
+): string {
+	return placeId === PlaceEnum.CLINIQUE && displayPlaceId === PlaceEnum.CLINI2 ? 'clinik2' : defaultName;
+}
