@@ -16,7 +16,6 @@ import { Challenge, parseChallenge } from '@dinorpg/core/models/dojo/challenge.j
 import {
 	DOJO_FIGHT_COST,
 	DOJO_MAX_DAILY_CHALLENGE,
-	DOJO_MAX_SERIES,
 	DOJO_OPPONENT_IN_SERIE,
 	DOJO_REPUTATION_CHALLENGE,
 	DOJO_REPUTATION_WIN
@@ -28,6 +27,7 @@ import { Skill } from '@dinorpg/core/models/skills/skillList.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import type { FastifyReply, FastifyRequest } from 'fastify';
 
+import { Prisma } from '../../../../prisma/index.js';
 import { calculateFightBetweenPlayers } from '../../Fight/Service/fight.service.js';
 import { prisma } from '../../prisma.js';
 import { addTreasureTicket, removeMoneyTx } from '../../User/Controller/money.controller.js';
@@ -37,12 +37,12 @@ import { getDojo } from '../Controller/dojo.controller.js';
 import {
 	cleanCurrentOpponentTeam,
 	createOpponentTeam,
+	decrementDailyReset,
 	generateRandomChallenge,
 	getChallengeTeam,
 	getDojoChallengePreparationRequest,
 	getDojoDataForRanking,
 	getPlayerDinozInformationForTeam,
-	incrementDailyReset,
 	pickOpponentIds,
 	replaceMyTeam
 } from '../Controller/dojoChallenge.controller.js';
@@ -122,7 +122,7 @@ export async function skipOpponent(req: FastifyRequest, reply: FastifyReply) {
 	if (myDojo.DojoOpponents.filter(d => d.achieved).length + 1 === DOJO_OPPONENT_IN_SERIE) {
 		await addTreasureTicket(userId, 1);
 
-		await incrementDailyReset(myDojo.id);
+		await decrementDailyReset(myDojo.id);
 	}
 }
 
@@ -296,7 +296,7 @@ export async function fightChallenge(req: FastifyRequest, reply: FastifyReply) {
 
 	if (fightArchive.result && user.dojo.DojoOpponents.filter(o => o.achieved).length + 1 === DOJO_OPPONENT_IN_SERIE) {
 		promises.push(addTreasureTicket(userId, 1));
-		promises.push(incrementDailyReset(user.dojo.id));
+		promises.push(decrementDailyReset(user.dojo.id));
 	}
 
 	if (challengeWon && user.dojo.DojoChallengeHistory.filter(c => c.achieved).length < DOJO_MAX_DAILY_CHALLENGE) {
@@ -329,6 +329,10 @@ export async function createMyTeam(req: FastifyRequest, reply: FastifyReply) {
 
 	if (!myDojo) {
 		throw new ExpectedError('dojo.tournament.dojoNotFound');
+	}
+
+	if (myDojo.dailyReset <= 0) {
+		throw new ExpectedError('dojo.challenge.noSeriesLeft');
 	}
 
 	if (body.team.length < 5 || body.team.length > 10) {
@@ -365,10 +369,7 @@ export async function getMyTeam(req: FastifyRequest, reply: FastifyReply) {
 		return reply.send(myDojo);
 	}
 
-	if (
-		(myDojo.DojoOpponents.length === 0 || myDojo.DojoOpponents.every(d => d.achieved)) &&
-		myDojo.dailyReset < DOJO_MAX_SERIES
-	) {
+	if ((myDojo.DojoOpponents.length === 0 || myDojo.DojoOpponents.every(d => d.achieved)) && myDojo.dailyReset > 0) {
 		myDojo.team = await cleanCurrentOpponentTeam(myDojo.id);
 		myDojo.DojoOpponents = await createOpponentTeam(
 			myDojo.team.map(d => ({
@@ -389,4 +390,49 @@ export async function getMyTeam(req: FastifyRequest, reply: FastifyReply) {
 	}
 
 	return reply.send(myDojo);
+}
+
+export async function abandonChallenge(req: FastifyRequest, reply: FastifyReply) {
+	const userId = req.user.id;
+
+	const tournament = await TournamentManager.getCurrentTournamentState(prisma);
+
+	if (!tournament || tournament.phase !== TournamentPhase.QUALIFICATION) {
+		throw new ExpectedError('dojo.tournament.qualificationOver');
+	}
+
+	const user = await getDojoChallengePreparationRequest(userId);
+
+	if (!user.dojo) {
+		throw new ExpectedError('dojo.tournament.dojoNotFound');
+	}
+
+	const myDojo = user.dojo;
+
+	if (myDojo.team.length === 0) {
+		throw new ExpectedError('dojo.challenge.noActiveSeries');
+	}
+
+	await prisma.$transaction(async tx => {
+		await tx.dojoOpponents.deleteMany({
+			where: { dojoId: myDojo.id }
+		});
+		await tx.dojoTeam.deleteMany({
+			where: { dojoId: myDojo.id }
+		});
+		const current = await tx.dojo.findUnique({
+			where: { id: myDojo.id },
+			select: { dailyReset: true }
+		});
+		await tx.dojo.update({
+			where: { id: myDojo.id },
+			data: {
+				dailyReset: Math.max(0, (current?.dailyReset ?? 1) - 1),
+				activeChallenge: Prisma.DbNull
+			}
+		});
+	});
+
+	const updatedTeam = await getChallengeTeam(userId);
+	return reply.send(updatedTeam);
 }

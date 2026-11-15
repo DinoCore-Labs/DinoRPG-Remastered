@@ -10,7 +10,13 @@ import {
 	skipOpponentSchema
 } from '../Schema/dojo.schema.js';
 import { buildDojo, getMyDojo } from '../Service/dojo.service.js';
-import { createMyTeam, fightChallenge, getMyTeam, skipOpponent } from '../Service/dojoChallenge.service.js';
+import {
+	abandonChallenge,
+	createMyTeam,
+	fightChallenge,
+	getMyTeam,
+	skipOpponent
+} from '../Service/dojoChallenge.service.js';
 import { getArchivedFight, getMyHistory, tournamentsHistory } from '../Service/dojoHistory.service.js';
 import { dojoTest } from '../Service/dojoTest.service.js';
 import {
@@ -105,6 +111,14 @@ export async function dojoRoutes(app: FastifyInstance) {
 			schema: { tags: ['Dojo'] }
 		},
 		getMyTeam
+	);
+	app.post(
+		'/challenge/abandon',
+		{
+			preHandler: app.authenticate,
+			schema: { tags: ['Dojo'] }
+		},
+		abandonChallenge
 	);
 
 	//Tournament

@@ -14,6 +14,7 @@ export async function getDojo(userId: string) {
 			},
 			id: true,
 			userId: true,
+			dailyReset: true,
 			reputation: true,
 			activeChallenge: true,
 			TournamentTeam: true
