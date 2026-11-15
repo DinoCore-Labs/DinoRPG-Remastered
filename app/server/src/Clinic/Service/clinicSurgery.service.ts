@@ -66,22 +66,13 @@ export async function beginClinicSurgery(
 			life: true,
 			canRename: true,
 			raceId: true,
-			display: true,
-			leaderId: true,
-			followers: { select: { id: true } }
+			display: true
 		}
 	});
 	if (!dinoz || dinoz.userId !== userId) {
 		throw new ExpectedError('dinozDoesNotBelongToUser', { statusCode: 403 });
 	}
-	if (
-		dinoz.placeId !== PlaceEnum.CLINIQUE ||
-		dinoz.life <= 0 ||
-		dinoz.state !== null ||
-		dinoz.canRename ||
-		dinoz.leaderId !== null ||
-		dinoz.followers.length > 0
-	) {
+	if (dinoz.placeId !== PlaceEnum.CLINIQUE || dinoz.life <= 0 || dinoz.state !== null || dinoz.canRename) {
 		throw new ExpectedError('clinic.surgeryDinozUnavailable', { statusCode: 409 });
 	}
 	// Requêtes séquentielles : un client PostgreSQL transactionnel ne doit pas exécuter plusieurs queries simultanément.
@@ -121,6 +112,13 @@ export async function beginClinicSurgery(
 		data: { state: DinozState.clinic, stateTimer: null }
 	});
 	if (reserved.count !== 1) throw new ExpectedError('clinic.surgeryDinozUnavailable', { statusCode: 409 });
+	// CLINIC_SURGERY_DETACH_GROUP: only after all validation and reservation succeeded.
+	// Disconnect the patient; if they lead a group, detach all followers.
+	// This update and the operation are in the same transaction, so any failure rolls back both.
+	await tx.dinoz.updateMany({
+		where: { userId, OR: [{ id: dinozId }, { leaderId: dinozId }] },
+		data: { leaderId: null }
+	});
 	await tx.dinozSurgery.upsert({
 		where: { dinozId },
 		create: { dinozId, userId, startedAt: now, readyAt, finishedAt: null, oldDisplay: dinoz.display, newDisplay },
