@@ -3,6 +3,7 @@ import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import type { FastifyReply, FastifyRequest } from 'fastify';
 
 import { DinozState } from '../../../../prisma/index.js';
+import { finishClinicSurgeryIfReady } from '../../Clinic/Service/clinicSurgery.service.js';
 import { finishClinicTreatmentIfReady } from '../../Clinic/Service/clinicTreatment.service.js';
 import { prisma } from '../../prisma.js';
 import { toDinozFiche } from '../../utils/dinoz/dinozFiche.mapper.js';
@@ -30,6 +31,7 @@ export async function getDinozMenu(req: FastifyRequest, reply: FastifyReply) {
 		for (const dinoz of dinozIds) {
 			await applyUnfreezeIfNeeded(tx, dinoz.id);
 			await finishClinicTreatmentIfReady(tx, authedId, dinoz.id);
+			await finishClinicSurgeryIfReady(tx, authedId, dinoz.id);
 			const restInfo = await applyRestIfNeeded(tx, dinoz.id);
 			if (restInfo) {
 				restInfos.set(dinoz.id, {

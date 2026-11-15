@@ -24,7 +24,7 @@ export const clinicAnnaServicesDialog = defineDialog({
 		begin: {
 			id: 'begin',
 			text: 'npc.clinic.dialog.services.begin',
-			next: ['offre', 'offre2', 'offre3', 'liste']
+			next: ['offre', 'offre2', 'offre3', 'liste', 'ope']
 		},
 		liste: {
 			id: 'liste',
@@ -40,6 +40,22 @@ export const clinicAnnaServicesDialog = defineDialog({
 		quit: {
 			id: 'quit',
 			text: 'npc.clinic.dialog.services.quit',
+			next: []
+		},
+		ope: {
+			id: 'ope',
+			text: 'npc.clinic.dialog.services.ope',
+			next: ['oui', 'non']
+		},
+		oui: {
+			id: 'oui',
+			text: 'npc.clinic.dialog.services.oui',
+			next: [],
+			effects: [{ type: 'clinicSurgery' }]
+		},
+		non: {
+			id: 'non',
+			text: 'npc.clinic.dialog.services.non',
 			next: []
 		},
 		soinok: {
@@ -76,6 +92,22 @@ export const clinicAnnaServicesDialog = defineDialog({
 			id: 'quit',
 			text: 'npc.clinic.choice.services.quit',
 			target: 'quit'
+		},
+		ope: {
+			id: 'ope',
+			text: 'npc.clinic.choice.services.ope',
+			target: 'ope'
+		},
+		oui: {
+			id: 'oui',
+			text: 'npc.clinic.choice.services.oui',
+			target: 'oui',
+			confirm: true
+		},
+		non: {
+			id: 'non',
+			text: 'npc.clinic.choice.services.non',
+			target: 'non'
 		},
 		offre: {
 			id: 'offre',

@@ -35,7 +35,6 @@ export function buildDinozDisplay(input: {
 	rare2: string;
 }): string {
 	const seed = input.seed && input.seed.length === 11 ? input.seed : generateDinozDisplaySeed();
-
 	return `${input.race.swfLetter}${seed}${input.palette}${input.rare1}${input.rare2}`;
 }
 

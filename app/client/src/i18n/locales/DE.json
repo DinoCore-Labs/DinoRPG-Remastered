@@ -3515,7 +3515,10 @@
 					"begin": "Hallo, Dinoz-Meister! Ich kann einen deiner Dinoz vollständig heilen. Lass ihn eine Stunde bei mir. Diese kostenlose Behandlung ist alle 20 Stunden möglich.",
 					"soinok": "Geschafft! Komm in einer Stunde zurück, dann ist er wieder wie neu!",
 					"soinok2": "Da bist du ja wieder! Ich hoffe, die Wartezeit war nicht zu lang.",
-					"soinko": "Tut mir leid, du kannst nur alle 20 Stunden einen Dinoz behandeln lassen. Komm später wieder."
+					"soinko": "Tut mir leid, du kannst nur alle 20 Stunden einen Dinoz behandeln lassen. Komm später wieder.",
+					"ope": "Eine Schönheitsoperation verändert das Gesicht deines Dinoz dauerhaft. Sie dauert eine Stunde und ist pro Dinoz nur alle 30 Tage möglich. Seltene Merkmale können verloren gehen. Möchtest du fortfahren?",
+					"oui": "Dein Dinoz ist beim Chirurgen. Komm in einer Stunde wieder und sieh sein neues Gesicht!",
+					"non": "Dein Dinoz ist erleichtert. Du behältst lieber sein vertrautes Aussehen."
 				}
 			},
 			"choice": {
@@ -3523,7 +3526,10 @@
 					"liste": "Kann ich sonst noch helfen?",
 					"go": "Ich bin bereit!",
 					"quit": "Heute nicht, ich muss los!",
-					"offre": "Deinen erschöpften Dinoz behandeln lassen."
+					"offre": "Deinen erschöpften Dinoz behandeln lassen.",
+					"ope": "Ich möchte meinen Dinoz operieren lassen.",
+					"oui": "Ja, ich bestätige die unumkehrbare Operation!",
+					"non": "Nein, ich mag sein jetziges Aussehen."
 				}
 			}
 		},
@@ -6760,9 +6766,16 @@
 			}
 		}
 	},
+	"clinic": {
+		"surgeryUnavailable": "Schönheitsoperationen sind derzeit nicht verfügbar.",
+		"surgeryRequirements": "Die Freischaltungen Eliten und Chirurgie sind erforderlich.",
+		"surgeryDinozUnavailable": "Dieser Dinoz kann aktuell nicht operiert werden (Ort, Gruppe, Zustand oder Aktivität).",
+		"surgeryInProgress": "Dieser Dinoz wird bereits operiert.",
+		"surgeryCooldown": "Dieser Dinoz kann nur alle 30 Tage operiert werden."
+	},
 	"clinicTreatment": {
-		"waiting": "Anna Tomie behandelt deinen Dinoz. In {time} ist er wieder verfügbar.",
-		"ready": "Behandlung abgeschlossen! Dein Dinoz wird aktualisiert."
+		"waiting": "Dein Dinoz ist in der Klinik. Er ist in {time} wieder verfügbar.",
+		"ready": "Dein Dinoz kann die Klinik verlassen! Die Daten werden aktualisiert."
 	},
 	"scenarios": {
 		"clinik": { "name": "Klinik von Dinoland" },
