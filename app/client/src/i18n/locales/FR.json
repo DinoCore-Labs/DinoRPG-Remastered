@@ -7037,6 +7037,7 @@
 		"surgeryCooldown": "Ce Dinoz ne peut subir qu’une opération tous les 30 jours."
 	},
 	"clinicTreatment": {
+		"verifying": "Votre Dinoz est à la clinique. Vérification de son état en cours…",
 		"waiting": "Votre Dinoz est pris en charge à la clinique. Il sera disponible dans {time}.",
 		"ready": "Le passage à la clinique est terminé ! Actualisation de votre Dinoz."
 	},
