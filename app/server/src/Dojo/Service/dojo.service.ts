@@ -1,4 +1,5 @@
-import { DOJO_COST } from '@dinorpg/core/models/dojo/constants.js';
+import { DOJO_COST, DOJO_MAX_SERIES } from '@dinorpg/core/models/dojo/constants.js';
+import { TournamentPhase } from '@dinorpg/core/models/dojo/tournament.js';
 import { DOJO_SCENARIO_KEY, DOJO_SCENARIO_STEPS } from '@dinorpg/core/models/scenarios/data/dojoScenario.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import type { FastifyReply, FastifyRequest } from 'fastify';
@@ -71,10 +72,13 @@ export async function buildDojoTx(tx: DojoTransaction, userId: string) {
 	 * Une erreur sur n'importe quelle étape
 	 * rollback tout.
 	 */
+	const tournament = await TournamentManager.getCurrentTournamentState(tx as any);
+	const initialDailyReset = tournament?.phase === TournamentPhase.QUALIFICATION ? DOJO_MAX_SERIES : 0;
 	const wallet = await removeMoneyTx(tx, userId, DOJO_COST);
 	const dojo = await tx.dojo.create({
 		data: {
-			userId
+			userId,
+			dailyReset: initialDailyReset
 		}
 	});
 	return {
