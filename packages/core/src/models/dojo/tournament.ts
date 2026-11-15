@@ -127,7 +127,9 @@ export type DisplayedLeader = {
 };
 
 export enum TournamentPhase {
+	STARTING = 'starting',
 	QUALIFICATION = 'qualification',
 	POOLS = 'pools',
-	FINALS = 'finals'
+	FINALS = 'finals',
+	ENDED = 'ended'
 }
