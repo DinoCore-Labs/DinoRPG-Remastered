@@ -4,6 +4,7 @@ import type { FastifyReply, FastifyRequest } from 'fastify';
 
 import { DinozState } from '../../../../prisma/index.js';
 import { getCompletedClanActionKeys } from '../../Clan/Service/completedClanActionKeys.service.js';
+import { getActiveClinicStatuses } from '../../Clinic/Service/clinicActivity.service.js';
 import { finishClinicSurgeryIfReady } from '../../Clinic/Service/clinicSurgery.service.js';
 import { finishClinicTreatmentIfReady } from '../../Clinic/Service/clinicTreatment.service.js';
 import { prisma } from '../../prisma.js';
@@ -53,6 +54,10 @@ export async function getDinozMenu(req: FastifyRequest, reply: FastifyReply) {
 			}
 		});
 	}
+	const clinicStatuses = await getActiveClinicStatuses(
+		authedId,
+		playerData.dinoz.map(dinoz => dinoz.id)
+	);
 	const activeDinozCount = playerData.dinoz.filter(dinoz => isActiveDinozState(dinoz.state)).length;
 	const itinerantPlaceId = await getItinerantPlaceId();
 	const followableDinozCandidates = playerData.dinoz.map(dinoz => ({
@@ -91,6 +96,7 @@ export async function getDinozMenu(req: FastifyRequest, reply: FastifyReply) {
 				itinerantPlaceId
 			}
 		);
+		fiche.clinic = clinicStatuses.get(dinoz.id) ?? null;
 		dinozList.push(fiche);
 	}
 	return reply.send(dinozList);

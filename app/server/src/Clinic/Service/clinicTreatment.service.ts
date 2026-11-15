@@ -109,7 +109,7 @@ export async function beginClinicTreatment(
 	const readyAt = clinicTreatmentReadyAt(now);
 	const updated = await tx.dinoz.updateMany({
 		where: { id: dinozId, userId, placeId: PlaceEnum.CLINIQUE, state: null, life: { gt: 0, lt: dinoz.maxLife } },
-		data: { state: DinozState.clinic, stateTimer: readyAt }
+		data: { state: DinozState.clinic, stateTimer: null }
 	});
 	if (updated.count !== 1) {
 		throw new ExpectedError('clinic.dinozUnavailable', { statusCode: 409 });
@@ -160,18 +160,13 @@ export async function finishClinicTreatmentIfReady(
 	}
 	const dinoz = await tx.dinoz.findUnique({
 		where: { id: dinozId },
-		select: { id: true, userId: true, state: true, stateTimer: true, maxLife: true }
+		select: { id: true, userId: true, state: true, maxLife: true }
 	});
-	if (
-		!dinoz ||
-		dinoz.userId !== userId ||
-		dinoz.state !== DinozState.clinic ||
-		dinoz.stateTimer?.getTime() !== treatment.readyAt.getTime()
-	) {
+	if (!dinoz || dinoz.userId !== userId || dinoz.state !== DinozState.clinic) {
 		return false;
 	}
 	const updated = await tx.dinoz.updateMany({
-		where: { id: dinozId, userId, state: DinozState.clinic, stateTimer: treatment.readyAt },
+		where: { id: dinozId, userId, state: DinozState.clinic },
 		data: { state: null, stateTimer: null, life: dinoz.maxLife }
 	});
 	if (updated.count !== 1) return false;

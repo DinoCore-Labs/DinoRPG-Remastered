@@ -11,6 +11,7 @@
  *
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
+import type { ClinicActivityStatus } from '../clinic/clinicActivity.js';
 import { DinozCurrentMission } from '../missions/missionCurrent.js';
 import { ActionFiche } from './dinozActions.js';
 import { DinozRace } from './dinozRace.js';
@@ -55,6 +56,7 @@ export interface DinozFiche {
 	gather: boolean;
 	rest?: DinozRestInfos | null;
 	stateTimer?: string;
+	clinic?: ClinicActivityStatus | null;
 	tournament: { id: string; levelLimit: number } | null;
 }
 

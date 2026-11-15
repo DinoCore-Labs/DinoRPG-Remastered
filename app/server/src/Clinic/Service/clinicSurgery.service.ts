@@ -118,7 +118,7 @@ export async function beginClinicSurgery(
 	const readyAt = clinicSurgeryReadyAt(now);
 	const reserved = await tx.dinoz.updateMany({
 		where: { id: dinozId, userId, placeId: PlaceEnum.CLINIQUE, state: null, life: { gt: 0 } },
-		data: { state: DinozState.clinic, stateTimer: readyAt }
+		data: { state: DinozState.clinic, stateTimer: null }
 	});
 	if (reserved.count !== 1) throw new ExpectedError('clinic.surgeryDinozUnavailable', { statusCode: 409 });
 	await tx.dinozSurgery.upsert({
@@ -146,7 +146,7 @@ export async function finishClinicSurgeryIfReady(
 	)
 		return false;
 	const changed = await tx.dinoz.updateMany({
-		where: { id: dinozId, userId, state: DinozState.clinic, stateTimer: surgery.readyAt },
+		where: { id: dinozId, userId, state: DinozState.clinic },
 		data: { state: null, stateTimer: null, display: surgery.newDisplay }
 	});
 	if (changed.count !== 1) return false;

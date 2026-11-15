@@ -282,7 +282,7 @@ export default defineComponent({
 			const nowMs = Date.now();
 			const countdown = getClinicTreatmentCountdown(
 				this.dinoz.state === DINOZ_STATE.clinic,
-				this.dinoz.stateTimer,
+				this.dinoz.clinic?.readyAt,
 				nowMs
 			);
 			this.clinicSecondsLeft = countdown.secondsLeft;
