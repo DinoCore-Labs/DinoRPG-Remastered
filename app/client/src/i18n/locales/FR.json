@@ -485,6 +485,8 @@
 		"build": "Construire mon dojo",
 		"group": "Groupe {group}",
 		"seeFinal": "Voir la finale",
+		"remainingSeries": "Séries restantes : {qty}",
+		"dailyResetTooltip": "Vous avez {qty} séries restantes.&&Pendant les qualifications, 5 séries de défis sont ajoutées chaque jour à minuit et conservées si vous ne les utilisez pas.&&À chaque série terminée, vous gagnez un :ticket:.",
 		"dailyReset": "Vous en êtes à la vague {qty} de défis.&&À chaque vague terminée, vous gagnez un :ticket:.&&//Vous pouvez terminer {max} vagues par jour au maximum.//",
 		"soon": "Bientôt",
 		"seeFight": "Voir le combat entre {playerA} et {playerB}",
@@ -493,10 +495,11 @@
 		"on": "Activé",
 		"off": "Désactivé",
 		"timer": {
+			"starting": "Le tournoi démarre bientôt ! Les qualifications commenceront dans {day} jour(s), {hours} heure(s) et {minutes} minute(s).",
 			"qualification": ":chrono: Il reste encore {day} jour(s), {hours} heure(s) et {minutes} minute(s) avant la fin des qualifications.",
 			"pools": ":chrono: Le prochain match de poule aura lieu dans {day} jour(s), {hours} heure(s) et {minutes} minute(s).",
 			"finals": ":chrono: Le prochain match des finales aura lieu dans {day} jour(s), {hours} heure(s) et {minutes} minute(s).",
-			"nextQualif": ":chrono: Les prochaines qualifications commenceront dans {day} jour(s), {hours} heure(s) et {minutes} minute(s).",
+			"over": "Le tournoi est terminé ! Merci pour votre participation et à bientôt pour le prochain tournoi !",
 			"cashPrice": ":gold: La cagnotte pour ce tournoi est de {cashPrice} :gold: !!",
 			"noTeam": "Vous n'avez pas inscrit d'équipe pour ce tournoi."
 		},
@@ -555,10 +558,16 @@
 		"challenge": {
 			"selectChampions": "Choisissez vos champions",
 			"selectTeam": "Sélectionnez votre équipe de Dinoz pour les défis d'aujourd'hui",
-			"disclaimer": "Vous devez sélectionner **entre 5 et 10** Dinoz d'un niveau supérieur ou égal à 10 pour votre équipe. Choisissez bien, vous ne pourrez modifier votre sélection que demain.",
+			"disclaimer": "Vous devez sélectionner **entre 5 et 10** Dinoz d'un niveau supérieur ou égal à 10 pour votre équipe. Choisissez bien, votre équipe est conservée pour la journée sauf si vous abandonnez la série en cours.",
 			"validate": "Valider ma sélection",
 			"edit": "Modifier ma sélection",
 			"launch": "Lancer le combat",
+			"abandon": "Abandonner la série",
+			"confirmAbandon": "Êtes-vous sûr de vouloir abandonner la série en cours ? Cette série sera décomptée et votre équipe sera réinitialisée pour vous permettre d'en composer une nouvelle.",
+			"abandonSuccess": "La série a été abandonnée. Vous pouvez maintenant composer une nouvelle équipe.",
+			"noSeriesLeftDisclaimer": "**Aucune série disponible**&&Vous avez utilisé toutes vos séries de combats disponibles. Revenez demain pour obtenir 5 nouvelles séries !",
+			"noActiveSeries": "Aucune série n'est actuellement en cours.",
+			"noSeriesLeft": "Vous n'avez plus de séries disponibles.",
 			"challenge": {
 				"kill": "Remportez la victoire en anéantissant votre adversaire avant la fin du temps imparti, ne lui laissez aucune chance !",
 				"takeAttack": "Remportez la victoire en subissant au maximum {goal} attaque(s) de votre adversaire.",
@@ -599,8 +608,14 @@
 	"news": {
 		"tournament": {
 			"start": {
-				"title": "Nouveau Tournoi inter Dojo",
-				"content": "## Tournois \n\nLes phases qualificatives auront lieux jusqu'au {endDate}. Les règles de créations d'équipes sont:\n\n* Les équipes sont constituées de {teamSize} membres avec au moins {raceMinimum} races différentes.\n* Les races autorisées à participer sont {races}.\n* {poisonStatus}.\n* {itemsStatus}.\n* La limite de niveau maximum est fixé à {levelLimit}.\n\n### Récompenses\n\nLes récompenses seront les suivantes:\n\n* Pour le premier, un oeuf de Toufufu rare, une boîte légendaire et 15% du cash price.\n* Pour les deuxième, un oeuf de toufufu, une boite légendaire et 10% du cash price.\n* Pour le troisième et quatrième, un oeuf de Toufufu, une boîte épique et 7,5% du cash price chacun.\n* Pour les 5 à 8ème, une boîte rare et 4% du cash price chacun.\n* Pour les 9 à 16ème, une boîte rare et 2% du cash price chacun.\n* Pour les 17 à 32ème, 1% du cash price chacun.\n* Pour les 33 à 48ème, 0,75% du cash price chacun.\n* Pour les 49 à 64ème, 0,625% du cash price chacun.\n\n### Récompenses de qualifications\n\nN'oubliez pas qu'il y a des récompenses pour les personnes atteignant les paliers de 500, 750, 1000, 1200, 1300 et 1400 points à la fin des qualifications!\n\nBon tournois à tous !"
+				"title": "Nouveau Tournoi inter-Dojo",
+				"excerpt": "Un nouveau Tournoi inter-Dojo commence ! Préparez vos équipes et combattez pour la gloire !",
+				"content": "## Tournois \n\nLes phases qualificatives auront lieux du {startDate} jusqu'au {endDate}. Les règles de créations d'équipes sont:\n\n* Les équipes sont constituées de {teamSize} membres avec au moins {raceMinimum} races différentes.\n* Les races autorisées à participer sont {races}.\n* {poisonStatus}.\n* {itemsStatus}.\n* La limite de niveau maximum est fixé à {levelLimit}.\n\n### Récompenses\n\nLes récompenses seront les suivantes:\n\n* Pour le premier, un oeuf de Toufufu rare, une boîte légendaire et 15% du cash price.\n* Pour les deuxième, un oeuf de toufufu, une boite légendaire et 10% du cash price.\n* Pour le troisième et quatrième, un oeuf de Toufufu, une boîte épique et 7,5% du cash price chacun.\n* Pour les 5 à 8ème, une boîte rare et 4% du cash price chacun.\n* Pour les 9 à 16ème, une boîte rare et 2% du cash price chacun.\n* Pour les 17 à 32ème, 1% du cash price chacun.\n* Pour les 33 à 48ème, 0,75% du cash price chacun.\n* Pour les 49 à 64ème, 0,625% du cash price chacun.\n\n### Récompenses de qualifications\n\nN'oubliez pas qu'il y a des récompenses pour les personnes atteignant les paliers de 500, 750, 1000, 1200, 1300 et 1400 points à la fin des qualifications!\n\nBon tournois à tous !"
+			},
+			"end": {
+				"title": "Fin du Tournoi inter-Dojo !",
+				"excerpt": "Le Tournoi inter-Dojo est terminé ! Félicitations à nos grands champions !",
+				"content": "## Fin du Tournoi inter-Dojo\n\n**L**e Tournoi inter-Dojo est maintenant terminé !\n\n**F**élicitations à {winner} qui repart avec la médaille Zen, ainsi que de merveilleuses récompenses ! Félicitations également à son valeureux adversaire {runnerUp} qui n'a pas démérité, c'était un très beau combat !\n\n**V**ous pouvez voir et revoir le combat final ainsi que l'ensemble du tournoi depuis votre dojo, afin d'étudier les techniques des différents joueurs, pour un jour vous aussi, placer votre équipe tout en haut du classement et peut-être remporter à votre tour la prestigieuse médaille Zen !\n\n**M**erci à tous pour votre participation ! Les récompenses ont été distribuées. Rendez-vous au prochain tournoi !"
 			},
 			"poison": {
 				"enabled": "Le poison est activé",
