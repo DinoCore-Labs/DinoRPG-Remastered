@@ -342,20 +342,47 @@ export function calculateFightBetweenPlayers(
 	const rng_seed = seed ?? generateString(20);
 	const rng = createXorShift32(hashStringToInt(rng_seed));
 
+	const usedIds = new Set<number>();
+	const preparedTeamA = teamA.map(dinoz => {
+		let id = dinoz.id;
+		if (usedIds.has(id)) {
+			let candidateId = id + 10_000_000;
+			while (usedIds.has(candidateId)) {
+				candidateId++;
+			}
+			id = candidateId;
+		}
+		usedIds.add(id);
+		return { ...dinoz, id };
+	});
+
+	const preparedTeamB = teamB.map(dinoz => {
+		let id = dinoz.id;
+		if (usedIds.has(id)) {
+			let candidateId = id + 10_000_000;
+			while (usedIds.has(candidateId)) {
+				candidateId++;
+			}
+			id = candidateId;
+		}
+		usedIds.add(id);
+		return { ...dinoz, id };
+	});
+
 	const fighters = getFighters(
 		{
-			dinozList: teamA,
+			dinozList: preparedTeamA,
 			monsterList: []
 		},
 		{
-			dinozList: teamB,
+			dinozList: preparedTeamB,
 			monsterList: []
 		},
 		place,
 		rng
 	);
 
-	const initialDinozList = [...teamA, ...teamB];
+	const initialDinozList = [...preparedTeamA, ...preparedTeamB];
 
 	const fightConfiguration: FightConfiguration = {
 		seed: rng_seed,

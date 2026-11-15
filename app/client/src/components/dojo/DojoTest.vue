@@ -171,10 +171,6 @@ export default defineComponent({
 		},
 		async startFight() {
 			if (!this.opponentId) return;
-			if (this.myTeam.some(dinoz => this.opponentTeam.includes(dinoz))) {
-				this.$toast.open({ message: this.$t('dojo.challengeFriend.doubleDinoz'), type: 'error' });
-				return;
-			}
 			try {
 				const rawFight = await DojoService.fightTest(
 					this.myTeam,
