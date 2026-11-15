@@ -4,16 +4,16 @@
  */
 export function getClinicTreatmentCountdown(
 	isBeingTreated: boolean,
-	stateTimer: string | null | undefined,
+	readyAt: string | null | undefined,
 	nowMs: number = Date.now()
 ): { secondsLeft: number | null; shouldRefresh: boolean } {
 	if (!isBeingTreated) {
 		return { secondsLeft: null, shouldRefresh: false };
 	}
-	if (!stateTimer) {
+	if (!readyAt) {
 		return { secondsLeft: null, shouldRefresh: true };
 	}
-	const readyAtMs = Date.parse(stateTimer);
+	const readyAtMs = Date.parse(readyAt);
 	if (!Number.isFinite(readyAtMs)) {
 		return { secondsLeft: null, shouldRefresh: true };
 	}
