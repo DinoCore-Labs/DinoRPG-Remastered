@@ -49,6 +49,7 @@ export async function getDojoChallengePreparationRequest(userId: string) {
 			dojo: {
 				select: {
 					id: true,
+					dailyReset: true,
 					activeChallenge: true,
 					team: {
 						select: {
@@ -90,6 +91,22 @@ export async function getDojoDataForRanking(userId: string) {
 		select: {
 			reputation: true,
 			DojoChallengeHistory: true
+		}
+	});
+}
+
+export async function decrementDailyReset(dojoId: string) {
+	const dojo = await prisma.dojo.findUnique({
+		where: { id: dojoId },
+		select: { dailyReset: true }
+	});
+	if (!dojo) return;
+	await prisma.dojo.update({
+		where: {
+			id: dojoId
+		},
+		data: {
+			dailyReset: Math.max(0, dojo.dailyReset - 1)
 		}
 	});
 }
