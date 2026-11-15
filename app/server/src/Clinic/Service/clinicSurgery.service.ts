@@ -84,11 +84,13 @@ export async function beginClinicSurgery(
 	) {
 		throw new ExpectedError('clinic.surgeryDinozUnavailable', { statusCode: 409 });
 	}
-	const [concentration, dungeon, defender] = await Promise.all([
-		tx.dinozConcentration.findUnique({ where: { dinozId }, select: { dinozId: true } }),
-		tx.mtDungeonRun.findFirst({ where: { userId, leaderDinozId: dinozId }, select: { id: true } }),
-		tx.devourerControl.findFirst({ where: { dinozs: { some: { id: dinozId } } }, select: { id: true } })
-	]);
+	// Requêtes séquentielles : un client PostgreSQL transactionnel ne doit pas exécuter plusieurs queries simultanément.
+	const concentration = await tx.dinozConcentration.findUnique({ where: { dinozId }, select: { dinozId: true } });
+	const dungeon = await tx.mtDungeonRun.findFirst({ where: { userId, leaderDinozId: dinozId }, select: { id: true } });
+	const defender = await tx.devourerControl.findFirst({
+		where: { dinozs: { some: { id: dinozId } } },
+		select: { id: true }
+	});
 	if (concentration || dungeon || defender) {
 		throw new ExpectedError('clinic.surgeryDinozUnavailable', { statusCode: 409 });
 	}

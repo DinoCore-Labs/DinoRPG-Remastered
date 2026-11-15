@@ -227,7 +227,7 @@ export default defineComponent({
 			uStore: userStore(),
 			unfreezeSecondsLeft: 0,
 			restSecondsLeft: 0,
-			clinicSecondsLeft: 0,
+			clinicSecondsLeft: null as number | null,
 			clinicTimerRefreshed: false,
 			intervals: [] as number[],
 			DINOZ_STATE,
@@ -281,7 +281,7 @@ export default defineComponent({
 		},
 		updateClinicCountdown() {
 			if (this.dinoz.state !== DINOZ_STATE.clinic || !this.dinoz.stateTimer) {
-				this.clinicSecondsLeft = 0;
+				this.clinicSecondsLeft = null;
 				this.clinicTimerRefreshed = false;
 				return;
 			}
@@ -1091,7 +1091,7 @@ export default defineComponent({
 			return this.formatMMSS(this.restSecondsLeft);
 		},
 		clinicCountdown(): string {
-			return this.formatHHMMSS(this.clinicSecondsLeft);
+			return this.formatHHMMSS(this.clinicSecondsLeft ?? 0);
 		}
 	},
 	watch: {
