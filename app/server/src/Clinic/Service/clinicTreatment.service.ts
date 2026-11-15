@@ -80,9 +80,7 @@ export async function beginClinicTreatment(
 			state: true,
 			life: true,
 			maxLife: true,
-			canRename: true,
-			leaderId: true,
-			followers: { select: { id: true } }
+			canRename: true
 		}
 	});
 	if (!dinoz || dinoz.userId !== userId) {
@@ -93,17 +91,17 @@ export async function beginClinicTreatment(
 		dinoz.state !== null ||
 		dinoz.life <= 0 ||
 		dinoz.life >= dinoz.maxLife ||
-		dinoz.canRename ||
-		dinoz.leaderId !== null ||
-		dinoz.followers.length > 0
+		dinoz.canRename
 	) {
 		throw new ExpectedError('clinic.dinozUnavailable', { statusCode: 409 });
 	}
-	const [concentration, dungeon, defender] = await Promise.all([
-		tx.dinozConcentration.findUnique({ where: { dinozId }, select: { dinozId: true } }),
-		tx.mtDungeonRun.findFirst({ where: { userId, leaderDinozId: dinozId }, select: { id: true } }),
-		tx.devourerControl.findFirst({ where: { dinozs: { some: { id: dinozId } } }, select: { id: true } })
-	]);
+	// Requêtes séquentielles : un client PostgreSQL transactionnel ne doit pas exécuter plusieurs queries simultanément.
+	const concentration = await tx.dinozConcentration.findUnique({ where: { dinozId }, select: { dinozId: true } });
+	const dungeon = await tx.mtDungeonRun.findFirst({ where: { userId, leaderDinozId: dinozId }, select: { id: true } });
+	const defender = await tx.devourerControl.findFirst({
+		where: { dinozs: { some: { id: dinozId } } },
+		select: { id: true }
+	});
 	if (concentration || dungeon || defender) {
 		throw new ExpectedError('clinic.dinozUnavailable', { statusCode: 409 });
 	}
@@ -116,6 +114,15 @@ export async function beginClinicTreatment(
 	if (updated.count !== 1) {
 		throw new ExpectedError('clinic.dinozUnavailable', { statusCode: 409 });
 	}
+
+	// Le patient quitte son groupe lors de son admission.
+	// S'il est meneur, ses suiveurs deviennent indépendants.
+	// S'il est suiveur, les autres membres restent ensemble.
+	// La déliaison est atomique avec le soin : toute erreur provoque un rollback.
+	await tx.dinoz.updateMany({
+		where: { userId, OR: [{ id: dinozId }, { leaderId: dinozId }] },
+		data: { leaderId: null }
+	});
 
 	await tx.clinicTreatment.upsert({
 		where: { userId },
