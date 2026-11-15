@@ -115,6 +115,9 @@ export default defineComponent({
 				const [key, jsonParams] = rawContent.split(/\|(.+)/);
 				try {
 					const params = JSON.parse(jsonParams);
+					if (params.startDate) {
+						params.startDate = this.formatDateTime(params.startDate);
+					}
 					if (params.endDate) {
 						params.endDate = this.formatDateTime(params.endDate);
 					}
