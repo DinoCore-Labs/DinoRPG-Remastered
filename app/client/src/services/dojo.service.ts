@@ -70,6 +70,9 @@ export const DojoService = {
 	async getMyTeam(): Promise<myTeam> {
 		return api.get('/dojo/challenge/myTeam');
 	},
+	async abandonChallenge(): Promise<myTeam> {
+		return api.post('/dojo/challenge/abandon');
+	},
 
 	// Tournament
 	async getTournamentInfo(): Promise<
