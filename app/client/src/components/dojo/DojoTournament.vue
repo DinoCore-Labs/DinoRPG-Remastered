@@ -429,10 +429,13 @@ export default defineComponent({
 	},
 	async mounted() {
 		this.tournamentId = this.$route.params.id as string;
-		this.activeGroup = Number(this.$route.params.group ?? 16);
+		const groupParam = this.$route.params.group;
+
+		this.activeGroup = groupParam !== undefined ? Number(groupParam) : 0;
+
 		if (this.activeGroup === 16) {
 			await this.showFinal();
-		} else if (this.activeGroup < 16) {
+		} else {
 			await this.loadPage();
 		}
 	},
@@ -443,7 +446,7 @@ export default defineComponent({
 					this.tournamentId = String(newId);
 					if (this.activeGroup === 16) {
 						this.showFinal();
-					} else if (this.activeGroup < 16) {
+					} else {
 						this.loadPage();
 					}
 				}
@@ -451,8 +454,11 @@ export default defineComponent({
 		},
 		'$route.params.group': {
 			handler(newGroup) {
-				if (newGroup !== undefined && this.$route.name === 'DojoTournament') {
-					this.activeGroup = Number(newGroup);
+				if (newGroup !== undefined) {
+					const parsedGroup = Number(newGroup);
+					if (parsedGroup !== this.activeGroup) {
+						this.activeGroup = parsedGroup;
+					}
 				}
 			}
 		},
@@ -462,9 +468,9 @@ export default defineComponent({
 					if (!this.tournamentId && this.$route.params.id) {
 						this.tournamentId = String(this.$route.params.id);
 					}
-					if (newValue === 16) {
+					if (this.activeGroup === 16) {
 						this.showFinal();
-					} else if (newValue < 16) {
+					} else if (!isNaN(this.activeGroup)) {
 						this.loadPage();
 					}
 				}
