@@ -36,7 +36,7 @@
 			<td>{{ ranking.dojo }}</td>
 		</tr>
 	</DZTable>
-	<tr class="pagination-controls">
+	<div class="pagination-controls">
 		<button @click="previousPage" :disabled="page === 1">
 			<img class="left" src="/src/assets/button/button-back-arrow.webp" />
 		</button>
@@ -44,7 +44,7 @@
 		<button @click="nextPage">
 			<img class="right" src="/src/assets/button/button-back-arrow.webp" />
 		</button>
-	</tr>
+	</div>
 </template>
 
 <script lang="ts">
