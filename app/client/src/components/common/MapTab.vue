@@ -45,6 +45,7 @@
 import { defineComponent, type PropType, defineAsyncComponent } from 'vue';
 import type { DinozFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
 import { PlaceEnum } from '@dinorpg/core/models/enums/PlaceEnum.js';
+import { getClinicDisplayPlaceKey } from '@dinorpg/core/models/place/clinicPlace.js';
 import { placeList } from '../../constants/place';
 import DevourerService, { type DevourerDefendersResponse } from '../../services/devourer.service';
 import WorldMap from './WorldMap.vue';
@@ -119,11 +120,6 @@ export default defineComponent({
 			return new Date(date.getTime() - diff); // needs to substract
 		},
 		getPlaceName(placeId: number): string {
-			// MT real="clinik", goto="clinik": un seul lieu sur la carte,
-			// deux variantes visuelles selon le chantier du clan actuel.
-			if (placeId === PlaceEnum.CLINIQUE && this.dinozData.displayPlaceId === PlaceEnum.CLINI2) {
-				return 'clini2';
-			}
 			const place = placeList.find(place => place.placeId === placeId);
 			if (!place) return '';
 			const today = this.changeTimezone(new Date(), 'GMT');
@@ -144,7 +140,7 @@ export default defineComponent({
 						return 'marais';
 				}
 			}
-			return place.name;
+			return getClinicDisplayPlaceKey(placeId, this.dinozData.displayPlaceId, place.name);
 		}
 	}
 });

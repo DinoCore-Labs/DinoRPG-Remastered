@@ -105,7 +105,7 @@
 						>
 							{{ dinoz.name }}
 						</p>
-						<span class="place">{{ $t(`place.name.${getPlaceName(dinoz.placeId)}`) }}</span>
+						<span class="place">{{ $t(`place.name.${getPlaceName(dinoz.placeId, dinoz.displayPlaceId)}`) }}</span>
 					</div>
 					<div class="bars">
 						<span class="tinyBar">
@@ -211,6 +211,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import type { DinozFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
+import { getClinicDisplayPlaceKey } from '@dinorpg/core/models/place/clinicPlace.js';
 import { DINOZ_STATE } from '@dinorpg/core/models/dinoz/dinozState.js';
 import DinozMini from '../dinoz/DinozMini.vue';
 import { beautifulNumber } from '../../utils/beautifulNumber.js';
@@ -280,8 +281,12 @@ export default defineComponent({
 			const width: number = Math.round((actual / max) * 36);
 			return `width : ${width}px`;
 		},
-		getPlaceName(placeId: number): string {
-			return placeList.find(place => place.placeId === placeId)?.name ?? '';
+		getPlaceName(placeId: number, displayPlaceId?: number): string {
+			return getClinicDisplayPlaceKey(
+				placeId,
+				displayPlaceId,
+				placeList.find(place => place.placeId === placeId)?.name ?? ''
+			);
 		},
 		currentDinozId(): number {
 			return this.dinozStore.currentDinozId ?? 0;

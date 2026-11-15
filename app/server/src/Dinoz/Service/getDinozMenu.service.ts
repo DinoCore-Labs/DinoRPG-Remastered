@@ -3,6 +3,7 @@ import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import type { FastifyReply, FastifyRequest } from 'fastify';
 
 import { DinozState } from '../../../../prisma/index.js';
+import { getCompletedClanActionKeys } from '../../Clan/Service/completedClanActionKeys.service.js';
 import { finishClinicSurgeryIfReady } from '../../Clinic/Service/clinicSurgery.service.js';
 import { finishClinicTreatmentIfReady } from '../../Clinic/Service/clinicTreatment.service.js';
 import { prisma } from '../../prisma.js';
@@ -70,9 +71,16 @@ export async function getDinozMenu(req: FastifyRequest, reply: FastifyReply) {
 		nbrUpLightning: dinoz.nbrUpLightning,
 		nbrUpAir: dinoz.nbrUpAir
 	}));
+	const completedClanActionKeys = await getCompletedClanActionKeys(prisma, authedId);
 	const dinozList: DinozFiche[] = [];
 	for (const dinoz of playerData.dinoz) {
-		const fiche = toDinozFiche(playerData, dinoz.id, restInfosByDinozId.get(dinoz.id) ?? null);
+		const fiche = toDinozFiche(
+			playerData,
+			dinoz.id,
+			restInfosByDinozId.get(dinoz.id) ?? null,
+			null,
+			completedClanActionKeys
+		);
 		fiche.actions = await getAvailableActions(
 			dinoz,
 			playerData,

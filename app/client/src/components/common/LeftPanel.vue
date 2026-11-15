@@ -74,6 +74,7 @@
 
 <script lang="ts">
 import type { DinozFiche } from '@dinorpg/core/models/dinoz/dinozFiche.js';
+import { getClinicDisplayPlaceKey } from '@dinorpg/core/models/place/clinicPlace.js';
 import { DINOZ_STATE } from '@dinorpg/core/models/dinoz/dinozState.js';
 import { defineComponent } from 'vue';
 
@@ -126,7 +127,7 @@ export default defineComponent({
 			if (!currentDinoz) return null;
 			const place = Object.values(placeList).find(place => place.placeId === currentDinoz.placeId);
 			if (!place) return null;
-			return place.name;
+			return getClinicDisplayPlaceKey(currentDinoz.placeId, currentDinoz.displayPlaceId, place.name);
 		},
 		activeDinozCount(): number {
 			return this.dinoz.getDinozList.filter(dinoz => dinoz.state !== DINOZ_STATE.frozen).length;
