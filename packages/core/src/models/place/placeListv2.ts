@@ -1006,7 +1006,6 @@ export const placeListv2 = definePlaces({
 	/* -------------------------------------------------
 	 * DINOVILLE OUEST
 	 * ------------------------------------------------- */
-
 	[PlaceEnum.DINOPLAZA]: {
 		placeId: PlaceEnum.DINOPLAZA,
 		name: 'dplaza',
@@ -1021,7 +1020,6 @@ export const placeListv2 = definePlaces({
 		background: 's_plaza',
 		top: 110
 	},
-
 	[PlaceEnum.VILLA]: {
 		placeId: PlaceEnum.VILLA,
 		name: 'villa',
@@ -1034,7 +1032,6 @@ export const placeListv2 = definePlaces({
 		background: 'villa',
 		top: 110
 	},
-
 	[PlaceEnum.CINEMA_PARADINO]: {
 		placeId: PlaceEnum.CINEMA_PARADINO,
 		name: 'dcine',
@@ -1049,7 +1046,6 @@ export const placeListv2 = definePlaces({
 		background: 'dw_cine',
 		top: 110
 	},
-
 	[PlaceEnum.CLINIQUE]: {
 		placeId: PlaceEnum.CLINIQUE,
 		name: 'clinik',
@@ -1059,7 +1055,6 @@ export const placeListv2 = definePlaces({
 		background: 'clinique1',
 		top: 110
 	},
-
 	[PlaceEnum.CLINI2]: {
 		placeId: PlaceEnum.CLINI2,
 		name: 'clinik2',
@@ -1069,7 +1064,6 @@ export const placeListv2 = definePlaces({
 		realPlaceId: PlaceEnum.CLINIQUE,
 		background: 'clinique2'
 	},
-
 	[PlaceEnum.GO_TO_DINOVILLE]: {
 		placeId: PlaceEnum.GO_TO_DINOVILLE,
 		name: 'godnv',
@@ -1078,7 +1072,6 @@ export const placeListv2 = definePlaces({
 		gotoPlaceId: PlaceEnum.DINOVILLE,
 		background: 'dnv'
 	},
-
 	[PlaceEnum.POSTE_DE_GARDE]: {
 		placeId: PlaceEnum.POSTE_DE_GARDE,
 		name: 'poste',
@@ -1092,7 +1085,6 @@ export const placeListv2 = definePlaces({
 		background: 'dw_chato',
 		top: 130
 	},
-
 	[PlaceEnum.CHATEAU_DE_DINOVILLE]: {
 		placeId: PlaceEnum.CHATEAU_DE_DINOVILLE,
 		name: 'chato',
@@ -1102,7 +1094,6 @@ export const placeListv2 = definePlaces({
 		background: 'dw_trone',
 		top: 140
 	},
-
 	[PlaceEnum.GO_TO_VOIE_TEMPLE_CELESTE]: {
 		placeId: PlaceEnum.GO_TO_VOIE_TEMPLE_CELESTE,
 		name: 'portal',
@@ -1112,7 +1103,6 @@ export const placeListv2 = definePlaces({
 		hide: true,
 		background: 'dw_portal'
 	},
-
 	/* -------------------------------------------------
 	 * ILE DES MONSTRES
 	 * ------------------------------------------------- */
