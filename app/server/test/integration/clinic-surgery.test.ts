@@ -63,15 +63,15 @@ async function operateViaAnna(userId: string, dinozId: number) {
 }
 
 describe('Anna Tomie — cosmetic surgery', () => {
-	it('requires elites and surge both in the dialog and on the server', async () => {
+	it('allows surgery without legacy paid elites/surge entitlements', async () => {
 		const user = await createTestUser({ withTutorial: false });
 		await setup(user.id, true, false);
 		const dinoz = await eligibleDinoz(user.id);
-		const response = await startDialog({ userId: user.id, dinozId: dinoz.id, dialogId: 'clinic_anna_services' });
-		expect(response.links.some(link => link.id === 'ope')).toBe(false);
-		await expect(prisma.$transaction(tx => beginClinicSurgery(tx, user.id, dinoz.id))).rejects.toThrow();
-		const unchanged = await prisma.dinoz.findUniqueOrThrow({ where: { id: dinoz.id } });
-		expect(unchanged.state).toBeNull();
+		const dialog = await startDialog({ userId: user.id, dinozId: dinoz.id, dialogId: 'clinic_anna_services' });
+		expect(dialog.links.some(link => link.id === 'ope')).toBe(true);
+		await prisma.$transaction(tx => beginClinicSurgery(tx, user.id, dinoz.id));
+		const pending = await prisma.dinozSurgery.findUniqueOrThrow({ where: { dinozId: dinoz.id } });
+		expect(pending.finishedAt).toBeNull();
 	});
 
 	it('starts after explicit consent, immobilises one hour, then replaces only the visual display', async () => {
