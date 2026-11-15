@@ -32,6 +32,7 @@ import { calculatePvExp, getMaxXp } from '@dinorpg/core/utils/dinozUtils.js';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
 import { Dinoz, DinozMissions, DinozSkills, DinozStatus, GameLogType, User } from '../../../../prisma/index.js';
+import { getCompletedClanActionKeys } from '../../Clan/Service/completedClanActionKeys.service.js';
 import gameConfig from '../../config/game.config.js';
 import { assertDinozNotConcentrating } from '../../Dinoz/Controller/concentrationDinoz.controller.js';
 import { createCatch, removeCatch, updateCatch } from '../../Dinoz/Controller/dinozCatches.controller.js';
@@ -76,6 +77,7 @@ import randomBetween from '../../utils/fight/randomBetween.js';
 import weightedRandom from '../../utils/fight/weightedRandom.js';
 import { createXorShift32, hashStringToInt } from '../../utils/prng.js';
 import { ProcessFightInput } from '../Schema/fight.schema.js';
+import { resolveClinicFightBackground } from './clinicFightBackground.service.js';
 import { movementListener } from './movementListener.service.js';
 
 /**
@@ -126,6 +128,10 @@ export async function processFight(req: FastifyRequest<{ Body: ProcessFightInput
 	if (!isAlive(dinozData)) {
 		throw new ExpectedError(`dead`);
 	}
+	// Lire l'état de construction avant de déclencher un combat : une erreur de lecture
+	// ne doit pas survenir après consommation des actions et attribution des récompenses.
+	const clinicClanActionKeys =
+		dinozData.placeId === PlaceEnum.CLINIQUE ? await getCompletedClanActionKeys(prisma, user.id) : [];
 	// Look for a special action that happens on the fight.
 	let fight = await movementListener(user, team, dinozData.placeId, dinozId, { autoReequip });
 	// If no fight happened, trigger a regular fight.
@@ -174,6 +180,11 @@ export async function processFight(req: FastifyRequest<{ Body: ProcessFightInput
 		},
 		'Fight completed'
 	);
+	// Le lieu du combat reste 38, mais son décor peut être celui de l'alias 129.
+	// Les décors spécifiques d'un événement ou d'un scénario gardent la priorité.
+	if (fight.place === PlaceEnum.CLINIQUE && !fight.background) {
+		fight.background = resolveClinicFightBackground(fight.place, clinicClanActionKeys, fight.background);
+	}
 	return reply.send(fight);
 }
 
