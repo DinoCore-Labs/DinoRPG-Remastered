@@ -6903,6 +6903,7 @@
 		"surgeryCooldown": "This Dinoz can undergo surgery only once every 30 days."
 	},
 	"clinicTreatment": {
+		"verifying": "Your Dinoz is at the clinic. Checking its treatment status…",
 		"waiting": "Your Dinoz is at the clinic. It will be available in {time}.",
 		"ready": "Your Dinoz is ready to leave the clinic! Refreshing its details."
 	},

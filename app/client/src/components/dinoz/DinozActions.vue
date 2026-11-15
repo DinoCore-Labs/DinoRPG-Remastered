@@ -13,8 +13,6 @@
 -->
 <template>
 	<div class="actions">
-		<!-- STEP_20R_MT_ENTRY_DIALOG : texte MT après création, sur la fiche Dinoz. -->
-		<!-- STEP_20X_ENTRY -->
 		<MtDungeonMessageBox
 			variant="notice"
 			v-if="dungeonEntryMessage"
@@ -37,14 +35,13 @@
 		</div>
 		<div class="action_content">
 			<DZDisclaimer
-				v-if="dinoz.state === DINOZ_STATE.clinic && clinicSecondsLeft > 0"
-				:content="$t('clinicTreatment.waiting', { time: clinicCountdown })"
-				timer
-			/>
-			<DZDisclaimer
-				v-if="dinoz.state === DINOZ_STATE.clinic && clinicSecondsLeft === 0"
-				:content="$t('clinicTreatment.ready')"
-				help
+				v-if="dinoz.state === DINOZ_STATE.clinic"
+				:content="
+					clinicSecondsLeft !== null && clinicSecondsLeft > 0 ? 'clinicTreatment.waiting' : 'clinicTreatment.verifying'
+				"
+				:params="clinicSecondsLeft !== null && clinicSecondsLeft > 0 ? { time: clinicCountdown } : {}"
+				:timer="clinicSecondsLeft !== null && clinicSecondsLeft > 0"
+				:help="clinicSecondsLeft === null || clinicSecondsLeft === 0"
 			/>
 			<DZDisclaimer v-if="dinozInDungeon" :content="$t('action.description.dungeon_status')" help />
 			<template v-for="didi in dinozFullParty" :key="didi.id">
@@ -191,6 +188,7 @@ import { errorHandler } from '../../utils/errorHandler';
 import DZDisclaimer from '../utils/DZDisclaimer.vue';
 import { GatherType } from '@dinorpg/core/models/enums/GatherType.js';
 import { formatText } from '../../utils/formatText';
+import { getClinicTreatmentCountdown } from '../../utils/clinicTreatmentCountdown';
 import eventBus from '../../events';
 import { orderDinozList } from '@dinorpg/core/utils/dinozUtils.js';
 import { itinerantShopNameList, shopNameList } from '../../constants/shop';
@@ -228,7 +226,8 @@ export default defineComponent({
 			unfreezeSecondsLeft: 0,
 			restSecondsLeft: 0,
 			clinicSecondsLeft: null as number | null,
-			clinicTimerRefreshed: false,
+			clinicRefreshInFlight: false,
+			clinicLastRefreshAt: 0,
 			intervals: [] as number[],
 			DINOZ_STATE,
 			missionTalkTextKey: null as string | null,
@@ -280,16 +279,27 @@ export default defineComponent({
 			}
 		},
 		updateClinicCountdown() {
-			if (this.dinoz.state !== DINOZ_STATE.clinic || !this.dinoz.stateTimer) {
-				this.clinicSecondsLeft = null;
-				this.clinicTimerRefreshed = false;
+			const nowMs = Date.now();
+			const countdown = getClinicTreatmentCountdown(
+				this.dinoz.state === DINOZ_STATE.clinic,
+				this.dinoz.stateTimer,
+				nowMs
+			);
+			this.clinicSecondsLeft = countdown.secondsLeft;
+			if (!countdown.shouldRefresh) {
+				if (this.dinoz.state !== DINOZ_STATE.clinic) this.clinicLastRefreshAt = 0;
 				return;
 			}
-			this.clinicSecondsLeft = Math.max(0, Math.ceil((new Date(this.dinoz.stateTimer).getTime() - Date.now()) / 1000));
-			if (this.clinicSecondsLeft === 0 && !this.clinicTimerRefreshed) {
-				this.clinicTimerRefreshed = true;
-				void this.refreshDinoz();
-			}
+			// Le temps écoulé ne prouve pas que le soin est terminé.
+			// On réessaie côté serveur (max. une fois / 10 s) sans rafraîchissements parallèles.
+			if (this.clinicRefreshInFlight || nowMs - this.clinicLastRefreshAt < 10_000) return;
+			this.clinicLastRefreshAt = nowMs;
+			this.clinicRefreshInFlight = true;
+			void this.refreshDinoz()
+				.catch(error => console.error('[clinic] Failed to refresh Dinoz treatment state', error))
+				.finally(() => {
+					this.clinicRefreshInFlight = false;
+				});
 		},
 		updateRestCountdown() {
 			if (this.dinoz.rest?.maxed) {
