@@ -74,7 +74,8 @@ describe('Anna Tomie — soins MT', () => {
 		expect(treated.fight).toBe(false);
 		const treatment = await prisma.clinicTreatment.findUniqueOrThrow({ where: { userId: user.id } });
 		expect(treatment.readyAt.getTime() - treatment.startedAt.getTime()).toBe(3_600_000);
-		expect(treated.stateTimer?.getTime()).toBe(treatment.readyAt.getTime());
+		expect(treated.state).toBe(DinozState.clinic);
+		expect(treated.stateTimer).toBeNull();
 		expect(
 			(await prisma.userScenario.findFirst({ where: { userId: user.id, scenarioKey: 'clinik' } }))?.progression
 		).toBe(9);

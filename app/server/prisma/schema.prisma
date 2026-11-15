@@ -217,205 +217,86 @@ model ForcebrutTournamentOpponent {
 }
 
 model ForumTopic {
-
-  id       Int           @id @default(autoincrement())
-
-  category ForumCategory
-
-  title    String        @db.VarChar(120)
-
-
-
-  isPinned Boolean @default(false)
-
-  isClosed Boolean @default(false)
-
-
-
-  messageCount Int @default(1)
-
-
-
-  authorId   String? @db.Uuid
-
-  author     User?   @relation("ForumTopicAuthor", fields: [authorId], references: [id], onDelete: SetNull)
-
-  authorName String
-
-
-
-  createdAt      DateTime @default(now()) @db.Timestamptz(3)
-
-  updatedAt      DateTime @default(now()) @updatedAt @db.Timestamptz(3)
-
-  lastActivityAt DateTime @default(now()) @db.Timestamptz(3)
-
-
-
-  messages      ForumMessage[]
-
-  favorites     ForumFavorite[]
-
-  subscriptions ForumSubscription[]
-
-  reads         ForumTopicRead[]
-
-
+  id             Int           @id @default(autoincrement())
+  category       ForumCategory
+  title          String        @db.VarChar(120)
+  isPinned       Boolean       @default(false)
+  isClosed       Boolean       @default(false)
+  messageCount   Int           @default(1)
+  authorId       String?       @db.Uuid
+  author         User?         @relation("ForumTopicAuthor", fields: [authorId], references: [id], onDelete: SetNull)
+  authorName     String
+  createdAt      DateTime      @default(now()) @db.Timestamptz(3)
+  updatedAt      DateTime      @default(now()) @updatedAt @db.Timestamptz(3)
+  lastActivityAt DateTime      @default(now()) @db.Timestamptz(3)
+  messages       ForumMessage[]
+  favorites      ForumFavorite[]
+  subscriptions  ForumSubscription[]
+  reads          ForumTopicRead[]
 
   @@index([category, isPinned, lastActivityAt])
-
   @@index([lastActivityAt])
-
   @@map("forum_topic")
-
 }
-
-
 
 model ForumTopicRead {
-
-  userId  String @db.Uuid
-
-  topicId Int
-
-
-
+  userId            String     @db.Uuid
+  topicId           Int
   lastReadMessageId Int
-
-
-
-  readAt DateTime @default(now()) @updatedAt @db.Timestamptz(3)
-
-
-
-  user  User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  topic ForumTopic @relation(fields: [topicId], references: [id], onDelete: Cascade)
-
-
+  readAt            DateTime   @default(now()) @updatedAt @db.Timestamptz(3)
+  user              User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  topic             ForumTopic @relation(fields: [topicId], references: [id], onDelete: Cascade)
 
   @@id([userId, topicId])
-
   @@index([topicId])
-
   @@map("forum_topic_read")
-
 }
-
-
 
 model ForumMessage {
-
-  id Int @id @default(autoincrement())
-
-
-
-  topicId Int
-
-  topic   ForumTopic @relation(fields: [topicId], references: [id], onDelete: Cascade)
-
-
-
-  authorId   String? @db.Uuid
-
-  author     User?   @relation("ForumMessageAuthor", fields: [authorId], references: [id], onDelete: SetNull)
-
-  authorName String
-
-
-
-  content String @db.Text
-
-
-
-  reports Report[] @relation("ReportReportedForumMessage")
-
-
-
-  deletedAt      DateTime?                 @db.Timestamptz(3)
-
-  deletedById    String?                   @db.Uuid
-
+  id             Int                        @id @default(autoincrement())
+  topicId        Int
+  topic          ForumTopic                 @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  authorId       String?                    @db.Uuid
+  author         User?                      @relation("ForumMessageAuthor", fields: [authorId], references: [id], onDelete: SetNull)
+  authorName     String
+  content        String                     @db.Text
+  reports        Report[]                   @relation("ReportReportedForumMessage")
+  deletedAt      DateTime?                  @db.Timestamptz(3)
+  deletedById    String?                    @db.Uuid
   deletedByName  String?
-
   deletionKind   ForumMessageDeletionKind?
-
-  deletionReason String?                   @db.VarChar(500)
-
-
-
-  createdAt DateTime @default(now()) @db.Timestamptz(3)
-
-  updatedAt DateTime @default(now()) @updatedAt @db.Timestamptz(3)
-
-
+  deletionReason String?                    @db.VarChar(500)
+  createdAt      DateTime                   @default(now()) @db.Timestamptz(3)
+  updatedAt      DateTime                   @default(now()) @updatedAt @db.Timestamptz(3)
 
   @@index([topicId, createdAt, id])
-
   @@index([authorId])
-
   @@index([topicId, deletedAt])
-
   @@map("forum_message")
-
 }
-
-
 
 model ForumFavorite {
-
-  userId  String @db.Uuid
-
-  topicId Int
-
-
-
-  createdAt DateTime @default(now()) @db.Timestamptz(3)
-
-
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-
-
-  topic ForumTopic @relation(fields: [topicId], references: [id], onDelete: Cascade)
-
-
+  userId    String     @db.Uuid
+  topicId   Int
+  createdAt DateTime   @default(now()) @db.Timestamptz(3)
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  topic     ForumTopic @relation(fields: [topicId], references: [id], onDelete: Cascade)
 
   @@id([userId, topicId])
-
   @@index([topicId])
-
   @@map("forum_favorite")
-
 }
 
-
-
 model ForumSubscription {
-
-  userId  String @db.Uuid
-
-  topicId Int
-
-
-
-  createdAt DateTime @default(now()) @db.Timestamptz(3)
-
-
-
-  user  User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  topic ForumTopic @relation(fields: [topicId], references: [id], onDelete: Cascade)
-
-
+  userId    String     @db.Uuid
+  topicId   Int
+  createdAt DateTime   @default(now()) @db.Timestamptz(3)
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  topic     ForumTopic @relation(fields: [topicId], references: [id], onDelete: Cascade)
 
   @@id([userId, topicId])
-
   @@index([topicId])
-
   @@map("forum_subscription")
-
 }
 
 
