@@ -30,7 +30,10 @@
 					/>
 				</RouterLink>
 				<RouterLink
-					v-else-if="tournamentState"
+					v-else-if="
+						tournamentState &&
+						(tournamentState.phase === TournamentPhase.POOLS || tournamentState.phase === TournamentPhase.FINALS)
+					"
 					:to="{
 						name: 'DojoTournament',
 						params: { id: tournamentState.id, group: '0' }
