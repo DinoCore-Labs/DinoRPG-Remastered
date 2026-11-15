@@ -15,9 +15,23 @@
 <template>
 	<TitleHeader :title="$t('pageTitle.dojo')" />
 	<div id="dojoChallenge">
+		<div class="series-header" v-if="!fightTransformed">
+			<Tippy theme="small" class="series-counter">
+				<span class="series-label">{{ $t('dojo.remainingSeries', { qty: dailyReset }) }}</span>
+				<template #content>
+					<div v-html="formatContent($t('dojo.dailyResetTooltip', { qty: dailyReset }))" />
+				</template>
+			</Tippy>
+			<DZButton v-if="canAbandon" size="small" class="abandon-button" @click="abandonCurrentSeries">
+				{{ $t('dojo.challenge.abandon') }}
+			</DZButton>
+		</div>
 		<template v-if="composeTeam">
 			<DZDisclaimer content="dojo.challenge.disclaimer" help round />
 			<SelectDinoz :dinozList="myDinoz" :selectLimit="10" :minLimit="5" @validate="composeMyTeam"></SelectDinoz>
+		</template>
+		<template v-else-if="dailyReset <= 0 && (!opponents.length || opponents.every(o => o.achieved))">
+			<DZDisclaimer content="dojo.challenge.noSeriesLeftDisclaimer" help round />
 		</template>
 		<div class="challenge" v-if="!fightTransformed && activeChallenge">
 			<p v-html="$t(`dojo.challenge.challenge.${activeChallenge.type}`, { goal: activeChallenge.goal })" />
@@ -46,13 +60,13 @@
 				/>
 			</div>
 		</div>
-		<template v-if="!fightTransformed">
-			<Tippy theme="small" tag="progress" :value="dailyReset" :max="dojoMaxSeries">
-				<template #content>
-					<div v-html="formatContent($t('dojo.dailyReset', { qty: dailyReset, max: dojoMaxSeries }))" />
-				</template>
-			</Tippy>
-			<!--			<progress ></progress>-->
+		<template
+			v-if="
+				!fightTransformed &&
+				!(dailyReset <= 0 && (!opponents.length || opponents.every(o => o.achieved))) &&
+				!composeTeam
+			"
+		>
 			<CarousselDinoz
 				v-if="!opponent.id"
 				:ennemyList="opponents"
@@ -254,26 +268,50 @@ export default defineComponent({
 				errorHandler.handle(e, this.$toast);
 			}
 		},
+		async abandonCurrentSeries() {
+			const confirmed = await (this as any).$confirm({
+				message: this.$t('dojo.challenge.confirmAbandon')
+			});
+			if (!confirmed) return;
+			try {
+				const dojo = await DojoService.abandonChallenge();
+				this.dailyReset = dojo.dailyReset;
+				this.opponent = {} as Pick<DinozFiche, 'id' | 'name' | 'level' | 'display'>;
+				this.myFighter = {} as Pick<DinozFiche, 'id' | 'name' | 'level' | 'display'>;
+				await this.refresh();
+				(this as any).$toast.success(this.$t('dojo.challenge.abandonSuccess'));
+			} catch (e) {
+				errorHandler.handle(e, (this as any).$toast);
+			}
+		},
 		async refresh() {
 			try {
 				const dojo = await DojoService.getMyTeam();
+				this.dailyReset = dojo.dailyReset;
 				if (dojo.team.length === 0) {
-					this.composeTeam = true;
-					this.myDinoz = dinozStore()
-						.getDinozList.filter(d => d.state === null || d.state === DINOZ_STATE.resting)
-						.filter(d => d.level >= 10)
-						.map(d => {
-							return {
-								id: d.id,
-								name: d.name,
-								display: d.display,
-								level: d.level
-							};
-						});
+					if (this.dailyReset > 0) {
+						this.composeTeam = true;
+						this.myDinoz = dinozStore()
+							.getDinozList.filter(d => d.state === null || d.state === DINOZ_STATE.resting)
+							.filter(d => d.level >= 10)
+							.map(d => {
+								return {
+									id: d.id,
+									name: d.name,
+									display: d.display,
+									level: d.level
+								};
+							});
+					} else {
+						this.composeTeam = false;
+						this.myDinoz = [];
+					}
+					this.myTeam = [];
+					this.opponents = [];
 				} else {
+					this.composeTeam = false;
 					this.myTeam = dojo.team.sort((a, b) => b.dinoz.level - a.dinoz.level);
 					this.opponents = dojo.DojoOpponents.sort((a, b) => b.dinoz.level - a.dinoz.level);
-					this.dailyReset = dojo.dailyReset;
 				}
 				if (dojo.activeChallenge) this.activeChallenge = dojo.activeChallenge;
 				await this.dojoStore.update();
@@ -283,6 +321,11 @@ export default defineComponent({
 		}
 	},
 	computed: {
+		canAbandon(): boolean {
+			return (
+				!this.composeTeam && this.myTeam.length > 0 && !this.fightTransformed && this.opponents.some(o => !o.achieved)
+			);
+		},
 		formattedGoal() {
 			const challenge = this.currentChallenge ?? this.activeChallenge;
 			if (!challenge) return 0;
@@ -327,6 +370,47 @@ $b: 3px;
 	flex-direction: column;
 	gap: 5px;
 	align-self: center;
+	.series-header {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 15px;
+		align-self: center;
+		margin: 5px 0 10px 0;
+		flex-wrap: wrap;
+
+		.series-counter {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			background: linear-gradient(180deg, #4a2810 0%, #2b1406 100%);
+			border: 2px solid #8c532b;
+			border-radius: 12px;
+			padding: 6px 18px;
+			box-shadow:
+				inset 0 1px 2px rgba(255, 255, 255, 0.2),
+				0 2px 4px rgba(0, 0, 0, 0.4);
+			cursor: help;
+
+			.series-label {
+				color: #ffda97;
+				font-weight: bold;
+				font-size: 11pt;
+				text-shadow: 0 1px 2px #000;
+				letter-spacing: 0.5px;
+			}
+		}
+
+		.abandon-button {
+			background: linear-gradient(180deg, #a83232 0%, #701e1e 100%);
+			border-color: #d15a5a;
+			color: #fff;
+			font-weight: bold;
+			&:hover {
+				filter: brightness(1.15);
+			}
+		}
+	}
 	.recap {
 		display: flex;
 		flex-direction: column;
