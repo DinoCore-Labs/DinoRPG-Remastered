@@ -30,7 +30,7 @@ export function chooseClinicSurgeryVisualTraits(
 	currentDisplay: string,
 	random: () => number = Math.random
 ): { palette: string; rare1: string; rare2: string } {
-	if (!/^[0-9A-Za-z]{16}$/.test(currentDisplay) || currentDisplay.slice(0, 2) !== race.swfLetter) {
+	if (!/^[0-9A-Za-z]{16}$/.test(currentDisplay) || currentDisplay.slice(0, 1) !== race.swfLetter.slice(0, 1)) {
 		throw new Error('Invalid Dinoz display for cosmetic surgery');
 	}
 	const original = parseDinozDisplay(currentDisplay);
