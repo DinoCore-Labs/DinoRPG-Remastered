@@ -13,7 +13,12 @@
 -->
 
 <template>
-	<DZDisclaimer v-if="isFinished" round :content="$t(`dojo.timer.nextQualif`, timeRemaining)" />
+	<DZDisclaimer v-if="isFinished" round :content="$t(`dojo.timer.over`, timeRemaining)" />
+	<DZDisclaimer
+		v-else-if="state.phase === 'starting'"
+		round
+		:content="$t(`dojo.timer.${state.phase}`, { ...timeRemaining, day: timeRemaining.day - 14 })"
+	/>
 	<DZDisclaimer v-else round :content="$t(`dojo.timer.${state.phase}`, timeRemaining)" />
 	<DZDisclaimer round :content="$t(`dojo.timer.cashPrice`, { cashPrice: beautifulNumber(state.cashPrice) })" />
 	<DZDisclaimer v-if="!tournamentTeam && state" round help :content="$t(`dojo.timer.noTeam`)" />
