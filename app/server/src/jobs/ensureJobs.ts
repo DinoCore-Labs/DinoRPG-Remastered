@@ -266,9 +266,9 @@ export async function ensureJobsExist() {
 				dailyMinute: job.minute,
 				nextRunAt: nextWeeklyAtUtc(job.dayOfWeek, job.hour, job.minute),
 				lockTimeoutS: 300,
-				enabled: true
+				enabled: false
 			},
-			update: {}
+			update: job.key === TOURNAMENT_INIT_JOB_KEY ? { enabled: false } : {}
 		});
 	}
 }

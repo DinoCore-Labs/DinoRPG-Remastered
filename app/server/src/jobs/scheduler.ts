@@ -27,8 +27,8 @@ const WEEKLY_JOB_DAYS: Record<string, number> = {
 
 const INSTANCE_ID = process.env.INSTANCE_ID ?? `local-${process.pid}`;
 
-type JobHandlerResult = void | { nextRunAt?: Date | null };
-type JobHandler = () => Promise<JobHandlerResult>;
+export type JobHandlerResult = void | { nextRunAt?: Date | null; disable?: boolean };
+export type JobHandler = () => Promise<JobHandlerResult>;
 
 function resolveNextRun(
 	job: {
@@ -121,13 +121,15 @@ export function startScheduler(
 					'Job started'
 				);
 				const result = await handler();
-				const nextRunAt = resolveNextRun(job as any, result);
+				const shouldDisable = Boolean(result && typeof result === 'object' && result.disable === true);
+				const nextRunAt = shouldDisable ? null : resolveNextRun(job as any, result);
 				await prisma.jobDefinition.update({
 					where: { id: job.id },
 					data: {
 						status: 'SUCCESS',
 						lastRunAt: new Date(),
 						nextRunAt,
+						enabled: shouldDisable ? false : job.enabled,
 						lastError: null,
 						lockedAt: null,
 						lockedBy: null
