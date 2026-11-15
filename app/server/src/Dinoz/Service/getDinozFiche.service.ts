@@ -4,6 +4,7 @@ import type { FastifyReply, FastifyRequest } from 'fastify';
 
 import { getAvailableClanActionsForDinoz } from '../../Clan/Service/clanActionDinoz.service.js';
 import { getCompletedClanActionKeys } from '../../Clan/Service/completedClanActionKeys.service.js';
+import { getActiveClinicStatuses } from '../../Clinic/Service/clinicActivity.service.js';
 import { finishClinicSurgeryIfReady } from '../../Clinic/Service/clinicSurgery.service.js';
 import { finishClinicTreatmentIfReady } from '../../Clinic/Service/clinicTreatment.service.js';
 import { advanceDinozMissionOnWait } from '../../Mission/Controller/mission.progress.js';
@@ -97,5 +98,7 @@ export async function getDinozFiche(req: FastifyRequest<{ Params: Params }>, rep
 	if (!inExclusiveActivity && myDinoz.state === null) {
 		ret.actions.push(...(await getAvailableClanActionsForDinoz(authedId, myDinoz.placeId)));
 	}
+	// The deadline comes from ClinicTreatment/DinozSurgery, never Dinoz.stateTimer.
+	ret.clinic = (await getActiveClinicStatuses(authedId, [dinozId])).get(dinozId) ?? null;
 	return reply.send(ret);
 }
