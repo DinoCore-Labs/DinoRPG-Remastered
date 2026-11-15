@@ -36,7 +36,7 @@
 			</td>
 		</tr>
 	</DZTable>
-	<tr class="pagination-controls">
+	<div class="pagination-controls">
 		<button @click="previousPage" :disabled="currentPage === 1">
 			<img class="left" :src="getImgURL('button', 'button-back-arrow')" />
 		</button>
@@ -44,7 +44,7 @@
 		<button @click="nextPage" :disabled="currentPage === totalPages">
 			<img class="right" :src="getImgURL('button', 'button-back-arrow')" />
 		</button>
-	</tr>
+	</div>
 </template>
 
 <script lang="ts">
