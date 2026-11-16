@@ -136,6 +136,8 @@ export default defineComponent({
 				await DinozService.reincarnate(dinozId, keepSeed);
 				if (keepSeed) {
 					this.uStore.incrementKeepSeedReincarnationCount();
+				} else {
+					this.uStore.incrementClassicReincarnationCount();
 				}
 				this.$toast.open({
 					message: this.$t('toast.reincarnation'),

@@ -22,6 +22,7 @@ export const userStore = defineStore('userStore', {
 		dojoId: null,
 		gameRules: null,
 		keepSeedReincarnationCount: 0,
+		classicReincarnationCount: 0,
 		maxKeepSeedReincarnations: 5
 	}),
 	getters: {
@@ -67,6 +68,7 @@ export const userStore = defineStore('userStore', {
 			this.dojoId = data.dojoId ?? null;
 			this.gameRules = data.gameRules;
 			this.keepSeedReincarnationCount = data.keepSeedReincarnationCount ?? 0;
+			this.classicReincarnationCount = data.classicReincarnationCount ?? 0;
 			this.maxKeepSeedReincarnations = data.maxKeepSeedReincarnations ?? 5;
 		},
 		setGold(gold: number) {
@@ -112,6 +114,9 @@ export const userStore = defineStore('userStore', {
 		incrementKeepSeedReincarnationCount() {
 			this.keepSeedReincarnationCount++;
 		},
+		incrementClassicReincarnationCount() {
+			this.classicReincarnationCount++;
+		},
 		clearUser() {
 			this.id = null;
 			this.name = null;
@@ -128,6 +133,7 @@ export const userStore = defineStore('userStore', {
 			this.dojoId = null;
 			this.gameRules = null;
 			this.keepSeedReincarnationCount = 0;
+			this.classicReincarnationCount = 0;
 			this.maxKeepSeedReincarnations = 5;
 		}
 	},

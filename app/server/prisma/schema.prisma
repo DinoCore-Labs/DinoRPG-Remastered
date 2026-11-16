@@ -1164,6 +1164,7 @@ model User {
 
 
   keepSeedReincarnationCount Int @default(0)
+  classicReincarnationCount  Int @default(0)
 
 
 

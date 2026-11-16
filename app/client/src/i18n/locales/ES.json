@@ -810,8 +810,8 @@
 			"explanation": "Puedes reencarnar a tu Dinoz conservando su destino:",
 			"list1": "Il retournera au niveau 1",
 			"list2": "Tendrá los mismos elementos, en el mismo orden que durante su primera vida.",
-			"quota": "Destinos conservados: {count} / {max}<br />({remaining} restantes)",
-			"limitReached": "Límite alcanzado: {max} / {max} destinos conservados"
+			"quota": "Reencarnaciones especiales: {count} / {max}<br />({remaining} restantes)",
+			"limitReached": "Límite alcanzado: {max} / {max} reencarnaciones especiales"
 		},
 		"choice2": {
 			"name": "Choix 2 : <br/>Nouvelle destinée",
@@ -1121,7 +1121,8 @@
 		"dinoz": "Dinos:",
 		"inscription": "Inscrito el",
 		"clan": "Clan:",
-		"keepSeedReincarnation": "Destinos conservados:",
+		"keepSeedReincarnation": "Reencarnaciones especiales:",
+		"classicReincarnation": "Reencarnaciones clásicas:",
 		"rewards": "Recompensas Épicas",
 		"editAccount": "Edite el perfil",
 		"edit": "Editar",

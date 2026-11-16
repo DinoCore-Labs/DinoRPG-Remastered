@@ -847,8 +847,8 @@
 			"explanation": "You can reincarnate your Dinoz while keeping its destiny:",
 			"list1": "Will return to level 1",
 			"list2": "It will have the same elements, in the same order as in its first life.",
-			"quota": "Destinies kept: {count} / {max}<br />({remaining} remaining)",
-			"limitReached": "Limit reached: {max} / {max} kept destinies used"
+			"quota": "Special reincarnations: {count} / {max}<br />({remaining} remaining)",
+			"limitReached": "Limit reached: {max} / {max} special reincarnations"
 		},
 		"choice2": {
 			"name": "Choice 2: <br/>New Destiny",
@@ -1213,7 +1213,8 @@
 		"dinoz": "Dinoz:",
 		"inscription": "Registered on",
 		"clan": "Clan:",
-		"keepSeedReincarnation": "Kept destinies:",
+		"keepSeedReincarnation": "Special reincarnations:",
+		"classicReincarnation": "Classic reincarnations:",
 		"rewards": "Epic rewards",
 		"editAccount": "Edit Profile",
 		"edit": "Edit",

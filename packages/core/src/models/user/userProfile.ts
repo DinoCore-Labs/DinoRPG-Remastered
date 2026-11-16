@@ -22,6 +22,7 @@ export interface UserProfile {
 	stats: UserStats[];
 	completion: number;
 	keepSeedReincarnationCount?: number;
+	classicReincarnationCount?: number;
 	maxKeepSeedReincarnations?: number;
 }
 
