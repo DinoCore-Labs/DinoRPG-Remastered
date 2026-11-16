@@ -71,6 +71,12 @@
 				<dd v-if="isMyAccount()">
 					{{ keepSeedReincarnationDisplay }}
 				</dd>
+				<dt v-if="isMyAccount()">
+					{{ $t(`accountPage.classicReincarnation`) }}
+				</dt>
+				<dd v-if="isMyAccount()">
+					{{ classicReincarnationDisplay }}
+				</dd>
 			</dl>
 			<div class="profilContent" v-if="!isEditOn">
 				<div class="contentTexte">{{ customText }}</div>
@@ -351,6 +357,9 @@ export default defineComponent({
 			const count = this.profile.keepSeedReincarnationCount ?? this.uStore.keepSeedReincarnationCount ?? 0;
 			const max = this.profile.maxKeepSeedReincarnations ?? this.uStore.maxKeepSeedReincarnations ?? 5;
 			return `${count} / ${max}`;
+		},
+		classicReincarnationDisplay(): number {
+			return this.profile.classicReincarnationCount ?? this.uStore.classicReincarnationCount ?? 0;
 		}
 	},
 	watch: {
@@ -408,12 +417,15 @@ export default defineComponent({
 		dt {
 			float: left;
 			position: relative;
-			width: 135px;
+			width: auto;
+			min-width: 135px;
+			max-width: 195px;
 			height: 19px;
 			font-weight: bold;
 			font-size: 9pt;
 			font-variant: small-caps;
 			color: #ffee92;
+			white-space: nowrap;
 		}
 		dd {
 			min-height: 19px;
@@ -421,6 +433,7 @@ export default defineComponent({
 			font-size: 10pt;
 			text-align: right;
 			color: #fce3bb;
+			white-space: nowrap;
 			a {
 				color: white;
 				font-weight: normal;

@@ -11,6 +11,7 @@ describe('userStore keepSeedReincarnation', () => {
 	it('initializes with default reincarnation quota values', () => {
 		const store = userStore();
 		expect(store.keepSeedReincarnationCount).toBe(0);
+		expect(store.classicReincarnationCount).toBe(0);
 		expect(store.maxKeepSeedReincarnations).toBe(5);
 		expect(store.remainingKeepSeedReincarnations).toBe(5);
 		expect(store.hasReachedKeepSeedLimit).toBe(false);
@@ -37,10 +38,12 @@ describe('userStore keepSeedReincarnation', () => {
 				required: false
 			},
 			keepSeedReincarnationCount: 3,
+			classicReincarnationCount: 7,
 			maxKeepSeedReincarnations: 5
 		});
 
 		expect(store.keepSeedReincarnationCount).toBe(3);
+		expect(store.classicReincarnationCount).toBe(7);
 		expect(store.maxKeepSeedReincarnations).toBe(5);
 		expect(store.remainingKeepSeedReincarnations).toBe(2);
 		expect(store.hasReachedKeepSeedLimit).toBe(false);
@@ -67,6 +70,7 @@ describe('userStore keepSeedReincarnation', () => {
 				required: false
 			},
 			keepSeedReincarnationCount: 5,
+			classicReincarnationCount: 0,
 			maxKeepSeedReincarnations: 5
 		});
 
@@ -80,5 +84,12 @@ describe('userStore keepSeedReincarnation', () => {
 		store.incrementKeepSeedReincarnationCount();
 		expect(store.keepSeedReincarnationCount).toBe(1);
 		expect(store.remainingKeepSeedReincarnations).toBe(4);
+	});
+
+	it('increments the classic count via incrementClassicReincarnationCount', () => {
+		const store = userStore();
+		expect(store.classicReincarnationCount).toBe(0);
+		store.incrementClassicReincarnationCount();
+		expect(store.classicReincarnationCount).toBe(1);
 	});
 });

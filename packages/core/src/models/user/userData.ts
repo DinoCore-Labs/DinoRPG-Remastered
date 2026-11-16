@@ -18,5 +18,6 @@ export interface UserData {
 	lastLogin?: Date | string;
 	userEventTrackings?: { total: number; daily: number }[];
 	keepSeedReincarnationCount: number;
+	classicReincarnationCount: number;
 	maxKeepSeedReincarnations: number;
 }

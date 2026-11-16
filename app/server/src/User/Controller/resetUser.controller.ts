@@ -66,7 +66,8 @@ export async function resetUser(req: FastifyRequest<{ Body: { password: string }
 				matelasseur: false,
 				messie: false,
 				discoveredSkills: [],
-				keepSeedReincarnationCount: 0
+				keepSeedReincarnationCount: 0,
+				classicReincarnationCount: 0
 			}
 		});
 		await tx.ranking.update({

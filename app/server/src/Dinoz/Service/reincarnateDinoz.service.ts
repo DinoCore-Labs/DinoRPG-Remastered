@@ -118,6 +118,17 @@ async function reincarnateUnlocked(req: ReincarnateRequest) {
 				}
 			}
 		});
+	} else {
+		await prisma.user.update({
+			where: {
+				id: authed.id
+			},
+			data: {
+				classicReincarnationCount: {
+					increment: 1
+				}
+			}
+		});
 	}
 	/*
 	 * À partir d'ici la réincarnation

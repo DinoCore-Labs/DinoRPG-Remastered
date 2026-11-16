@@ -72,6 +72,7 @@ export async function getOwnProfileService(userId: string) {
 		rewards: user.rewards.map(r => r.rewardId),
 		stats: user.statsTracking.map(s => ({ stat: s.stat, quantity: s.quantity })),
 		keepSeedReincarnationCount: user.keepSeedReincarnationCount,
+		classicReincarnationCount: user.classicReincarnationCount,
 		maxKeepSeedReincarnations: gameConfig.dinoz.maxKeepSeedReincarnations
 	};
 }
@@ -143,6 +144,7 @@ export async function getUserProfileService(id: string) {
 		rewards: user.rewards.map(r => r.rewardId),
 		stats: user.statsTracking.map(s => ({ stat: s.stat, quantity: s.quantity })),
 		keepSeedReincarnationCount: user.keepSeedReincarnationCount,
+		classicReincarnationCount: user.classicReincarnationCount,
 		maxKeepSeedReincarnations: gameConfig.dinoz.maxKeepSeedReincarnations
 	};
 }

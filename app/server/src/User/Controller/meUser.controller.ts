@@ -182,6 +182,7 @@ export async function meUser(req: FastifyRequest, reply: FastifyReply) {
 				rewards: true,
 				discoveredSkills: true,
 				keepSeedReincarnationCount: true,
+				classicReincarnationCount: true,
 				gameRulesAcceptedVersion: true,
 				gameRulesAcceptedAt: true
 			}
@@ -255,6 +256,7 @@ export async function meUser(req: FastifyRequest, reply: FastifyReply) {
 			rewards: user.rewards.map(reward => reward.rewardId),
 			discoveredSkills: user.discoveredSkills,
 			keepSeedReincarnationCount: user.keepSeedReincarnationCount,
+			classicReincarnationCount: user.classicReincarnationCount,
 			maxKeepSeedReincarnations: gameConfig.dinoz.maxKeepSeedReincarnations,
 			gameRules: {
 				currentVersion: GAME_RULES_VERSION,
