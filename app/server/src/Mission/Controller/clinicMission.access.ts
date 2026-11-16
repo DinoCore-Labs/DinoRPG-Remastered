@@ -18,17 +18,19 @@ export async function assertClinicMissionAccess(
 	if (!gameConfig.world.activeFeatures.includes('clinik')) {
 		throw new ExpectedError('clinic.missionsUnavailable', { statusCode: 403 });
 	}
-	const [dinoz, scenario, member] = await Promise.all([
-		tx.dinoz.findUnique({
-			where: { id: params.dinozId },
-			select: { userId: true, placeId: true, state: true, life: true }
-		}),
-		tx.userScenario.findUnique({
-			where: { scenarioKey_userId: { userId: params.userId, scenarioKey: CLINIC_SCENARIO_KEY } },
-			select: { progression: true }
-		}),
-		tx.clanMember.findUnique({ where: { userId: params.userId }, select: { clanId: true } })
-	]);
+	// Requêtes séquentielles sur le même client de transaction Prisma.
+	const dinoz = await tx.dinoz.findUnique({
+		where: { id: params.dinozId },
+		select: { userId: true, placeId: true, state: true, life: true }
+	});
+	const scenario = await tx.userScenario.findUnique({
+		where: { scenarioKey_userId: { userId: params.userId, scenarioKey: CLINIC_SCENARIO_KEY } },
+		select: { progression: true }
+	});
+	const member = await tx.clanMember.findUnique({
+		where: { userId: params.userId },
+		select: { clanId: true }
+	});
 	if (
 		!dinoz ||
 		dinoz.userId !== params.userId ||
