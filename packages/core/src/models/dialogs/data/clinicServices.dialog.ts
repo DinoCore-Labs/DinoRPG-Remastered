@@ -6,7 +6,7 @@ import { defineDialog } from '../defineDialog.js';
  * Dixième dialogue du XML Motion Twin `dialogs/infirmiere.xml`.
  * `offre` commence un soin de 1 h sans consommer d'action Dinoz.
  * `swait(clinik,20)` limite les débuts de soin à un par tranche de 20 h.
- * Les missions `infirmiere` et la chirurgie seront ajoutées séparément.
+ * Les missions `infirmiere` et la chirurgie sont accessibles depuis ce même dialogue.
  */
 export const clinicAnnaServicesDialog = defineDialog({
 	id: 'clinic_anna_services',

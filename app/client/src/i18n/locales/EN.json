@@ -6897,15 +6897,16 @@
 	},
 	"clinic": {
 		"surgeryUnavailable": "Cosmetic surgery is currently unavailable.",
-		"surgeryRequirements": "The Elites and Surgery unlocks are both required.",
-		"surgeryDinozUnavailable": "This Dinoz cannot undergo surgery now (location, party, state or activity).",
+		"surgeryDinozUnavailable": "This Dinoz cannot undergo surgery now (location, state or activity).",
 		"surgeryInProgress": "This Dinoz is already undergoing surgery.",
 		"surgeryCooldown": "This Dinoz can undergo surgery only once every 30 days."
 	},
 	"clinicTreatment": {
 		"verifying": "Your Dinoz is at the clinic. Checking its treatment status…",
 		"waiting": "Your Dinoz is at the clinic. It will be available in {time}.",
-		"ready": "Your Dinoz is ready to leave the clinic! Refreshing its details."
+		"ready": "Your Dinoz is ready to leave the clinic! Refreshing its details.",
+		"surgeryWaiting": "Your Dinoz is undergoing cosmetic surgery. It will be available in {time}.",
+		"surgeryVerifying": "The surgery wait is over. Checking the new appearance…"
 	},
 	"scenarios": {
 		"clinik": { "name": "Dinoland Clinic" },

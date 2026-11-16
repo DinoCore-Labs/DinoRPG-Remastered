@@ -6768,15 +6768,16 @@
 	},
 	"clinic": {
 		"surgeryUnavailable": "Schönheitsoperationen sind derzeit nicht verfügbar.",
-		"surgeryRequirements": "Die Freischaltungen Eliten und Chirurgie sind erforderlich.",
-		"surgeryDinozUnavailable": "Dieser Dinoz kann aktuell nicht operiert werden (Ort, Gruppe, Zustand oder Aktivität).",
+		"surgeryDinozUnavailable": "Dieser Dinoz kann aktuell nicht operiert werden (Ort, Zustand oder Aktivität).",
 		"surgeryInProgress": "Dieser Dinoz wird bereits operiert.",
 		"surgeryCooldown": "Dieser Dinoz kann nur alle 30 Tage operiert werden."
 	},
 	"clinicTreatment": {
 		"verifying": "Dein Dinoz ist in der Klinik. Sein Behandlungsstatus wird überprüft…",
 		"waiting": "Dein Dinoz ist in der Klinik. Er ist in {time} wieder verfügbar.",
-		"ready": "Dein Dinoz kann die Klinik verlassen! Die Daten werden aktualisiert."
+		"ready": "Dein Dinoz kann die Klinik verlassen! Die Daten werden aktualisiert.",
+		"surgeryWaiting": "Dein Dinoz wird kosmetisch operiert. Er ist in {time} wieder verfügbar.",
+		"surgeryVerifying": "Die Wartezeit der Operation ist abgelaufen. Das neue Aussehen wird überprüft…"
 	},
 	"scenarios": {
 		"clinik": { "name": "Klinik von Dinoland" },
