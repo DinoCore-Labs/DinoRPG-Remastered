@@ -19,6 +19,7 @@ import {
 	Dinoz,
 	DinozSkills,
 	DinozSkillsUnlockable,
+	DinozState,
 	DinozStatus,
 	GameLogType,
 	User,
@@ -70,6 +71,9 @@ export async function useItemUnlocked(
 	}
 	if (dinoz.user.id !== authed.id) {
 		throw new ExpectedError(`Dinoz ${dinozId} doesn't belong to player.`, { statusCode: 403 });
+	}
+	if (dinoz.state === DinozState.clinic) {
+		throw new ExpectedError('clinic.treatmentInProgress', { statusCode: 409 });
 	}
 	const item = Object.values(itemList).find(i => i.itemId === itemId);
 	if (!item) {
