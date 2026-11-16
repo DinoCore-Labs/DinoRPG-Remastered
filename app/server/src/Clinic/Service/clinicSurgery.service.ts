@@ -72,21 +72,10 @@ export async function beginClinicSurgery(
 	if (!dinoz || dinoz.userId !== userId) {
 		throw new ExpectedError('dinozDoesNotBelongToUser', { statusCode: 403 });
 	}
-	// CLINIC_SURGERY_409_DIAGNOSTIC: temporary reason codes for the user's own Dinoz.
-	if (dinoz.placeId !== PlaceEnum.CLINIQUE)
-		throw new ExpectedError('clinic.surgeryDinozUnavailable', {
-			statusCode: 409,
-			params: { reason: 'wrongPlace', placeId: dinoz.placeId }
-		});
-	if (dinoz.life <= 0)
-		throw new ExpectedError('clinic.surgeryDinozUnavailable', { statusCode: 409, params: { reason: 'dead' } });
-	if (dinoz.state !== null)
-		throw new ExpectedError('clinic.surgeryDinozUnavailable', {
-			statusCode: 409,
-			params: { reason: 'stateNotIdle', state: dinoz.state }
-		});
-	if (dinoz.canRename)
-		throw new ExpectedError('clinic.surgeryDinozUnavailable', { statusCode: 409, params: { reason: 'canRename' } });
+	// Admission rules are checked server-side, regardless of UI state.
+	if (dinoz.placeId !== PlaceEnum.CLINIQUE || dinoz.life <= 0 || dinoz.state !== null || dinoz.canRename) {
+		throw new ExpectedError('clinic.surgeryDinozUnavailable', { statusCode: 409 });
+	}
 	// Requêtes séquentielles : un client PostgreSQL transactionnel ne doit pas exécuter plusieurs queries simultanément.
 	const concentration = await tx.dinozConcentration.findUnique({ where: { dinozId }, select: { dinozId: true } });
 	const dungeon = await tx.mtDungeonRun.findFirst({ where: { userId, leaderDinozId: dinozId }, select: { id: true } });
@@ -94,15 +83,9 @@ export async function beginClinicSurgery(
 		where: { dinozs: { some: { id: dinozId } } },
 		select: { id: true }
 	});
-	if (concentration)
-		throw new ExpectedError('clinic.surgeryDinozUnavailable', { statusCode: 409, params: { reason: 'concentration' } });
-	if (dungeon)
-		throw new ExpectedError('clinic.surgeryDinozUnavailable', { statusCode: 409, params: { reason: 'dungeon' } });
-	if (defender)
-		throw new ExpectedError('clinic.surgeryDinozUnavailable', {
-			statusCode: 409,
-			params: { reason: 'devourerDefense' }
-		});
+	if (concentration || dungeon || defender) {
+		throw new ExpectedError('clinic.surgeryDinozUnavailable', { statusCode: 409 });
+	}
 	const previous = await tx.dinozSurgery.findUnique({ where: { dinozId } });
 	if (previous?.finishedAt === null) {
 		throw new ExpectedError('clinic.surgeryInProgress', { statusCode: 409 });
@@ -111,11 +94,7 @@ export async function beginClinicSurgery(
 		throw new ExpectedError('clinic.surgeryCooldown', { statusCode: 409 });
 	}
 	const race = raceList[dinoz.raceId as RaceEnum];
-	if (!race)
-		throw new ExpectedError('clinic.surgeryDinozUnavailable', {
-			statusCode: 409,
-			params: { reason: 'unknownRace', raceId: dinoz.raceId }
-		});
+	if (!race) throw new ExpectedError('clinic.surgeryDinozUnavailable', { statusCode: 409 });
 	let newDisplay: string;
 	try {
 		const traits = chooseClinicSurgeryVisualTraits(race, dinoz.display);
@@ -127,23 +106,18 @@ export async function beginClinicSurgery(
 			newDisplay = generateDinozDisplay(visualRace, traits.palette, traits.rare1, traits.rare2);
 		}
 		if (newDisplay === dinoz.display) throw new Error('Unchanged Dinoz display');
-	} catch (error) {
-		throw new ExpectedError('clinic.surgeryDinozUnavailable', {
-			statusCode: 409,
-			params: { reason: 'invalidDisplay', detail: error instanceof Error ? error.message : 'unknown' }
-		});
+	} catch {
+		throw new ExpectedError('clinic.surgeryDinozUnavailable', { statusCode: 409 });
 	}
 	const readyAt = clinicSurgeryReadyAt(now);
 	const reserved = await tx.dinoz.updateMany({
 		where: { id: dinozId, userId, placeId: PlaceEnum.CLINIQUE, state: null, life: { gt: 0 } },
 		data: { state: DinozState.clinic, stateTimer: null }
 	});
-	if (reserved.count !== 1)
-		throw new ExpectedError('clinic.surgeryDinozUnavailable', {
-			statusCode: 409,
-			params: { reason: 'reservationFailed' }
-		});
-	// CLINIC_SURGERY_DETACH_GROUP: only after all validation and reservation succeeded.
+	if (reserved.count !== 1) {
+		throw new ExpectedError('clinic.surgeryDinozUnavailable', { statusCode: 409 });
+	}
+	// Detach the group only after validation and reservation succeed.
 	// Disconnect the patient; if they lead a group, detach all followers.
 	// This update and the operation are in the same transaction, so any failure rolls back both.
 	await tx.dinoz.updateMany({

@@ -7031,15 +7031,16 @@
 	},
 	"clinic": {
 		"surgeryUnavailable": "La chirurgie esthétique est indisponible.",
-		"surgeryRequirements": "Il faut avoir débloqué les avantages Élites et Chirurgie.",
-		"surgeryDinozUnavailable": "Ce Dinoz ne peut pas être opéré actuellement (lieu, groupe, état ou activité).",
+		"surgeryDinozUnavailable": "Ce Dinoz ne peut pas être opéré actuellement (lieu, état ou activité).",
 		"surgeryInProgress": "Une opération est déjà en cours sur ce Dinoz.",
 		"surgeryCooldown": "Ce Dinoz ne peut subir qu’une opération tous les 30 jours."
 	},
 	"clinicTreatment": {
 		"verifying": "Votre Dinoz est à la clinique. Vérification de son état en cours…",
 		"waiting": "Votre Dinoz est pris en charge à la clinique. Il sera disponible dans {time}.",
-		"ready": "Le passage à la clinique est terminé ! Actualisation de votre Dinoz."
+		"ready": "Le passage à la clinique est terminé ! Actualisation de votre Dinoz.",
+		"surgeryWaiting": "Votre Dinoz subit une chirurgie esthétique. Il sera disponible dans {time}.",
+		"surgeryVerifying": "Le délai de chirurgie est écoulé. Vérification de la nouvelle apparence en cours…"
 	},
 	"scenarios": {
 		"clinik": { "name": "Clinique de Dinoland" },

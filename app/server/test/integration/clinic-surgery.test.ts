@@ -14,7 +14,7 @@ import { createTestUser } from '../helpers/factories/user.factory.js';
 beforeAll(() => loadDialogs());
 beforeEach(() => cleanDatabase());
 
-async function setup(userId: string, completed = true, perks = true) {
+async function setup(userId: string, completed = true) {
 	const clan = await prisma.clan.create({ data: { name: `ClinicSurgery-${userId}`, leaderId: userId, langs: [] } });
 	await prisma.clanMember.create({ data: { userId, clanId: clan.id } });
 	await prisma.user.update({ where: { id: userId }, data: { clanId: clan.id } });
@@ -27,13 +27,6 @@ async function setup(userId: string, completed = true, perks = true) {
 		}
 	});
 	await prisma.userScenario.create({ data: { userId, scenarioKey: 'clinik', progression: 8 } });
-	if (perks)
-		await prisma.userTracking.createMany({
-			data: [
-				{ userId, stat: 'elites', quantity: 1 },
-				{ userId, stat: 'surge', quantity: 1 }
-			]
-		});
 	return clan;
 }
 
@@ -63,15 +56,33 @@ async function operateViaAnna(userId: string, dinozId: number) {
 }
 
 describe('Anna Tomie — cosmetic surgery', () => {
-	it('allows surgery without legacy paid elites/surge entitlements', async () => {
+	it('allows surgery without subscription requirements', async () => {
 		const user = await createTestUser({ withTutorial: false });
-		await setup(user.id, true, false);
+		await setup(user.id);
 		const dinoz = await eligibleDinoz(user.id);
 		const dialog = await startDialog({ userId: user.id, dinozId: dinoz.id, dialogId: 'clinic_anna_services' });
 		expect(dialog.links.some(link => link.id === 'ope')).toBe(true);
 		await prisma.$transaction(tx => beginClinicSurgery(tx, user.id, dinoz.id));
 		const pending = await prisma.dinozSurgery.findUniqueOrThrow({ where: { dinozId: dinoz.id } });
 		expect(pending.finishedAt).toBeNull();
+	});
+
+	it('returns a stable 409 without internal diagnostic details', async () => {
+		const user = await createTestUser({ withTutorial: false });
+		await setup(user.id);
+		const dinoz = await eligibleDinoz(user.id);
+		await prisma.dinoz.update({ where: { id: dinoz.id }, data: { placeId: PlaceEnum.DINOVILLE } });
+		await expect(prisma.$transaction(tx => beginClinicSurgery(tx, user.id, dinoz.id))).rejects.toMatchObject({
+			code: 'clinic.surgeryDinozUnavailable',
+			statusCode: 409,
+			params: undefined
+		});
+		await prisma.dinoz.update({ where: { id: dinoz.id }, data: { placeId: PlaceEnum.CLINIQUE, display: 'invalid' } });
+		await expect(prisma.$transaction(tx => beginClinicSurgery(tx, user.id, dinoz.id))).rejects.toMatchObject({
+			code: 'clinic.surgeryDinozUnavailable',
+			statusCode: 409,
+			params: undefined
+		});
 	});
 
 	it('starts after explicit consent, immobilises one hour, then replaces only the visual display', async () => {
