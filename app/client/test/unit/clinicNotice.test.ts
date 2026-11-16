@@ -1,4 +1,5 @@
 import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 
 import { describe, expect, it } from 'vitest';
 
@@ -21,8 +22,8 @@ describe('clinic operation labels', () => {
 	});
 
 	it.each(['FR', 'EN', 'ES', 'DE'])('provides translated notices in %s', language => {
-		const url = new URL(`../../src/i18n/locales/${language}.json`, import.meta.url);
-		const messages = JSON.parse(readFileSync(url, 'utf8')) as {
+		const filePath = resolve(process.cwd(), 'src', 'i18n', 'locales', `${language}.json`);
+		const messages = JSON.parse(readFileSync(filePath, 'utf8')) as {
 			clinic: Record<string, string>;
 			clinicTreatment: Record<string, string>;
 		};
