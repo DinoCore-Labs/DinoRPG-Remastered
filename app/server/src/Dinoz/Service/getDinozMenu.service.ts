@@ -4,9 +4,7 @@ import type { FastifyReply, FastifyRequest } from 'fastify';
 
 import { DinozState } from '../../../../prisma/index.js';
 import { getCompletedClanActionKeys } from '../../Clan/Service/completedClanActionKeys.service.js';
-import { getActiveClinicStatuses } from '../../Clinic/Service/clinicActivity.service.js';
-import { finishClinicSurgeryIfReady } from '../../Clinic/Service/clinicSurgery.service.js';
-import { finishClinicTreatmentIfReady } from '../../Clinic/Service/clinicTreatment.service.js';
+import { finishReadyClinicOperations, getActiveClinicStatuses } from '../../Clinic/Service/clinicActivity.service.js';
 import { prisma } from '../../prisma.js';
 import { toDinozFiche } from '../../utils/dinoz/dinozFiche.mapper.js';
 import { getDinozMenuRequest } from '../Controller/getDinozMenu.controller.js';
@@ -25,15 +23,17 @@ export async function getDinozMenu(req: FastifyRequest, reply: FastifyReply) {
 			userId: authedId
 		},
 		select: {
-			id: true
+			id: true,
+			state: true
 		}
 	});
 	const restInfosByDinozId = await prisma.$transaction(async tx => {
 		const restInfos = new Map<number, { regen: number; next: string; maxed: boolean }>();
+		// Seuls les Dinoz réellement hospitalisés nécessitent une lecture des opérations.
+		const clinicIds = dinozIds.filter(dinoz => dinoz.state === DinozState.clinic).map(dinoz => dinoz.id);
+		await finishReadyClinicOperations(tx, authedId, clinicIds);
 		for (const dinoz of dinozIds) {
 			await applyUnfreezeIfNeeded(tx, dinoz.id);
-			await finishClinicTreatmentIfReady(tx, authedId, dinoz.id);
-			await finishClinicSurgeryIfReady(tx, authedId, dinoz.id);
 			const restInfo = await applyRestIfNeeded(tx, dinoz.id);
 			if (restInfo) {
 				restInfos.set(dinoz.id, {
@@ -56,7 +56,7 @@ export async function getDinozMenu(req: FastifyRequest, reply: FastifyReply) {
 	}
 	const clinicStatuses = await getActiveClinicStatuses(
 		authedId,
-		playerData.dinoz.map(dinoz => dinoz.id)
+		playerData.dinoz.filter(dinoz => dinoz.state === DinozState.clinic).map(dinoz => dinoz.id)
 	);
 	const activeDinozCount = playerData.dinoz.filter(dinoz => isActiveDinozState(dinoz.state)).length;
 	const itinerantPlaceId = await getItinerantPlaceId();
