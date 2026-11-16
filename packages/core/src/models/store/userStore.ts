@@ -17,5 +17,6 @@ export interface UserStore {
 	dojoId: string | null;
 	gameRules: GameRulesAcceptance | null;
 	keepSeedReincarnationCount: number;
+	classicReincarnationCount: number;
 	maxKeepSeedReincarnations: number;
 }
