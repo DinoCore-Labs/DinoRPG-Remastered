@@ -6,6 +6,7 @@ export async function getDinozFicheItemRequest(dinozId: number) {
 		where: { id: dinozId },
 		select: {
 			id: true,
+			state: true,
 			life: true,
 			maxLife: true,
 			experience: true,

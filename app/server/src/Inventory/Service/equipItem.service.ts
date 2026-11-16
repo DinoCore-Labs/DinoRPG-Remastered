@@ -9,6 +9,7 @@ import type { FastifyRequest } from 'fastify';
 
 import { DinozState } from '../../../../prisma/index.js';
 import { getDinozEquipItemRequest } from '../../Dinoz/Controller/getDinozEquipItem.controller.js';
+import { withUserGameplayLock } from '../../utils/database/userGameplayLock.js';
 import { backpackSlot } from '../../utils/dinoz/dinozFiche.mapper.js';
 import { addItemToInventory } from '../Controller/addItem.controller.js';
 import { addItemToDinoz } from '../Controller/addItemToDinoz.controller.js';
@@ -27,7 +28,7 @@ type EquipItemBody = {
 
 const MAGIC_ITEM_COOLDOWN_HOURS = 119;
 
-export async function equipItem(
+async function equipItemUnlocked(
 	req: FastifyRequest<{ Params: EquipItemParams; Body: EquipItemBody }>
 ): Promise<EquipItemResponse> {
 	const dinozId = Number(req.params.dinozId);
@@ -47,6 +48,9 @@ export async function equipItem(
 	const itemToEquip = Object.values(itemList).find(i => i.itemId === itemId);
 	if (!dinoz.user || dinoz.user.id !== authed.id) {
 		throw new ExpectedError(`Dinoz ${dinoz.id} doesn't belong to player ${authed.id}`);
+	}
+	if (dinoz.state === DinozState.clinic) {
+		throw new ExpectedError('clinic.treatmentInProgress', { statusCode: 409 });
 	}
 	if (!itemToEquip) {
 		throw new ExpectedError('itemNotFound');
@@ -117,6 +121,13 @@ export async function equipItem(
 			scenarios: dinoz.user.scenarios
 		})
 	};
+}
+
+/** Serialize equipment changes with clinic admission for this player. */
+export async function equipItem(
+	req: FastifyRequest<{ Params: EquipItemParams; Body: EquipItemBody }>
+): Promise<EquipItemResponse> {
+	return withUserGameplayLock(req.user.id, () => equipItemUnlocked(req));
 }
 
 function shouldRefreshDinozAfterEquip(input: {
