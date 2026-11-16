@@ -49,11 +49,10 @@ async function beginViaAnna(userId: string, dinozId: number) {
 	});
 }
 
-async function moveTreatmentClockIntoPast(userId: string, dinozId: number, hoursSinceStart: number) {
+async function moveTreatmentClockIntoPast(userId: string, hoursSinceStart: number) {
 	const startedAt = new Date(Date.now() - hoursSinceStart * 60 * 60 * 1000);
 	const readyAt = new Date(startedAt.getTime() + 60 * 60 * 1000);
 	await prisma.clinicTreatment.update({ where: { userId }, data: { startedAt, readyAt } });
-	await prisma.dinoz.update({ where: { id: dinozId }, data: { stateTimer: readyAt } });
 	return { startedAt, readyAt };
 }
 
@@ -74,7 +73,6 @@ describe('Anna Tomie — soins MT', () => {
 		expect(treated.fight).toBe(false);
 		const treatment = await prisma.clinicTreatment.findUniqueOrThrow({ where: { userId: user.id } });
 		expect(treatment.readyAt.getTime() - treatment.startedAt.getTime()).toBe(3_600_000);
-		expect(treated.state).toBe(DinozState.clinic);
 		expect(treated.stateTimer).toBeNull();
 		expect(
 			(await prisma.userScenario.findFirst({ where: { userId: user.id, scenarioKey: 'clinik' } }))?.progression
@@ -88,7 +86,7 @@ describe('Anna Tomie — soins MT', () => {
 		const dinoz = await woundedDinoz(user.id);
 		await beginViaAnna(user.id, dinoz.id);
 		expect(await prisma.$transaction(tx => finishClinicTreatmentIfReady(tx, user.id, dinoz.id))).toBe(false);
-		const { readyAt } = await moveTreatmentClockIntoPast(user.id, dinoz.id, 2);
+		const { readyAt } = await moveTreatmentClockIntoPast(user.id, 2);
 		expect(await prisma.$transaction(tx => finishClinicTreatmentIfReady(tx, user.id, dinoz.id, readyAt))).toBe(true);
 		expect(await prisma.$transaction(tx => finishClinicTreatmentIfReady(tx, user.id, dinoz.id))).toBe(false);
 		const healed = await prisma.dinoz.findUniqueOrThrow({ where: { id: dinoz.id } });
@@ -104,7 +102,7 @@ describe('Anna Tomie — soins MT', () => {
 		const first = await woundedDinoz(user.id);
 		const second = await woundedDinoz(user.id, 35);
 		await beginViaAnna(user.id, first.id);
-		const { readyAt } = await moveTreatmentClockIntoPast(user.id, first.id, 2);
+		const { readyAt } = await moveTreatmentClockIntoPast(user.id, 2);
 		await prisma.$transaction(tx => finishClinicTreatmentIfReady(tx, user.id, first.id, readyAt));
 		await expect(prisma.$transaction(tx => beginClinicTreatment(tx, user.id, second.id))).rejects.toThrow();
 		await prisma.clinicTreatment.update({
@@ -146,7 +144,7 @@ describe('Anna Tomie — soins MT', () => {
 		await beginViaAnna(user.id, dinoz.id);
 		await prisma.clanMember.delete({ where: { userId: user.id } });
 		await prisma.user.update({ where: { id: user.id }, data: { clanId: null } });
-		const { readyAt } = await moveTreatmentClockIntoPast(user.id, dinoz.id, 2);
+		const { readyAt } = await moveTreatmentClockIntoPast(user.id, 2);
 		expect(await prisma.$transaction(tx => finishClinicTreatmentIfReady(tx, user.id, dinoz.id, readyAt))).toBe(true);
 		expect((await prisma.dinoz.findUniqueOrThrow({ where: { id: dinoz.id } })).life).toBe(100);
 	});

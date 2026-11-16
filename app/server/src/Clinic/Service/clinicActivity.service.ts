@@ -2,6 +2,8 @@ import type { ClinicActivityStatus } from '@dinorpg/core/models/clinic/clinicAct
 
 import type { Prisma } from '../../../../prisma/index.js';
 import { prisma } from '../../prisma.js';
+import { finishClinicSurgeryIfReady } from './clinicSurgery.service.js';
+import { finishClinicTreatmentIfReady } from './clinicTreatment.service.js';
 
 /** Only the clinic tables own deadlines. Dinoz.state only marks the Dinoz as unavailable. */
 type ClinicActivityReader = Pick<Prisma.TransactionClient, 'clinicTreatment' | 'dinozSurgery'>;
@@ -41,4 +43,29 @@ export async function getActiveClinicStatuses(
 		}
 	}
 	return statuses;
+}
+
+/**
+ * Étape 8 : un seul relevé des traitements actifs par chargement du menu/fiche.
+ * Les échéances sont celles des tables de clinique, jamais de Dinoz.stateTimer.
+ * Les finalisateurs existants gardent leurs verrous, contrôles d'ownership et
+ * vérifications de fin atomiques : aucune double guérison / double chirurgie.
+ */
+export async function finishReadyClinicOperations(
+	tx: Prisma.TransactionClient,
+	userId: string,
+	dinozIds: readonly number[],
+	now = new Date()
+): Promise<void> {
+	if (dinozIds.length === 0) return;
+
+	const statuses = await getActiveClinicStatuses(userId, dinozIds, tx);
+	for (const [dinozId, status] of statuses) {
+		if (Date.parse(status.readyAt) > now.getTime()) continue;
+		if (status.kind === 'treatment') {
+			await finishClinicTreatmentIfReady(tx, userId, dinozId, now);
+		} else {
+			await finishClinicSurgeryIfReady(tx, userId, dinozId, now);
+		}
+	}
 }
