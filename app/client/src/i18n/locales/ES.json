@@ -6768,15 +6768,16 @@
 	},
 	"clinic": {
 		"surgeryUnavailable": "La cirugía estética no está disponible.",
-		"surgeryRequirements": "Se necesitan los desbloqueos Élites y Cirugía.",
-		"surgeryDinozUnavailable": "Este Dinoz no puede operarse ahora (lugar, grupo, estado o actividad).",
+		"surgeryDinozUnavailable": "Este Dinoz no puede operarse ahora (lugar, estado o actividad).",
 		"surgeryInProgress": "Este Dinoz ya está siendo operado.",
 		"surgeryCooldown": "Este Dinoz solo puede operarse cada 30 días."
 	},
 	"clinicTreatment": {
 		"verifying": "Tu Dinoz está en la clínica. Comprobando el estado de su tratamiento…",
 		"waiting": "Tu Dinoz está en la clínica. Estará disponible en {time}.",
-		"ready": "¡Tu Dinoz ha terminado en la clínica! Actualizando sus datos."
+		"ready": "¡Tu Dinoz ha terminado en la clínica! Actualizando sus datos.",
+		"surgeryWaiting": "Tu Dinoz se está sometiendo a una cirugía estética. Estará disponible en {time}.",
+		"surgeryVerifying": "El tiempo de la operación ha terminado. Comprobando su nueva apariencia…"
 	},
 	"scenarios": {
 		"clinik": { "name": "Clínica de Dinoland" },

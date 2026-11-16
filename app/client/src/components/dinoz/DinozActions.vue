@@ -36,9 +36,7 @@
 		<div class="action_content">
 			<DZDisclaimer
 				v-if="dinoz.state === DINOZ_STATE.clinic"
-				:content="
-					clinicSecondsLeft !== null && clinicSecondsLeft > 0 ? 'clinicTreatment.waiting' : 'clinicTreatment.verifying'
-				"
+				:content="clinicNoticeKey"
 				:params="clinicSecondsLeft !== null && clinicSecondsLeft > 0 ? { time: clinicCountdown } : {}"
 				:timer="clinicSecondsLeft !== null && clinicSecondsLeft > 0"
 				:help="clinicSecondsLeft === null || clinicSecondsLeft === 0"
@@ -189,6 +187,7 @@ import DZDisclaimer from '../utils/DZDisclaimer.vue';
 import { GatherType } from '@dinorpg/core/models/enums/GatherType.js';
 import { formatText } from '../../utils/formatText';
 import { getClinicTreatmentCountdown } from '../../utils/clinicTreatmentCountdown';
+import { getClinicNoticeKey } from '../../utils/clinicNotice';
 import eventBus from '../../events';
 import { orderDinozList } from '@dinorpg/core/utils/dinozUtils.js';
 import { itinerantShopNameList, shopNameList } from '../../constants/shop';
@@ -296,7 +295,7 @@ export default defineComponent({
 			this.clinicLastRefreshAt = nowMs;
 			this.clinicRefreshInFlight = true;
 			void this.refreshDinoz()
-				.catch(error => console.error('[clinic] Failed to refresh Dinoz treatment state', error))
+				.catch(error => console.error('[clinic] Failed to refresh Dinoz clinic operation state', error))
 				.finally(() => {
 					this.clinicRefreshInFlight = false;
 				});
@@ -1102,6 +1101,9 @@ export default defineComponent({
 		},
 		clinicCountdown(): string {
 			return this.formatHHMMSS(this.clinicSecondsLeft ?? 0);
+		},
+		clinicNoticeKey(): string {
+			return getClinicNoticeKey(this.dinoz.clinic?.kind, this.clinicSecondsLeft);
 		}
 	},
 	watch: {
