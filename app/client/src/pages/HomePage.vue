@@ -1,7 +1,7 @@
 <template>
 	<div class="homepage">
 		<div class="homepage-container">
-			<img class="homepage-banner" :src="getImgURL('background', 'background_alpha')" alt="DinoRPG" />
+			<img class="homepage-banner" :src="getImgURL('background', 'background_beta')" alt="DinoRPG" />
 			<div class="homepage-content">
 				<div class="homepage-menu">
 					<div>

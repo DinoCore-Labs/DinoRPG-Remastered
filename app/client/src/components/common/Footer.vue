@@ -41,27 +41,6 @@
 						</template>
 					</i18n-t>
 					<div class="status">
-						<span>
-							<svg
-								style="height: 11px; width: 11px"
-								class="triangle"
-								aria-hidden="true"
-								focusable="false"
-								data-prefix="fa"
-								data-icon="exclamation-triangle"
-								role="img"
-								xmlns="http://www.w3.org/2000/svg"
-								viewBox="0 0 576 512"
-								data-fa-i2svg=""
-							>
-								<path
-									fill="currentColor"
-									d="M569.517 440.013C587.975 472.007 564.806 512 527.94 512H48.054c-36.937 0-59.999-40.055-41.577-71.987L246.423 23.985c18.467-32.009 64.72-31.951 83.154 0l239.94 416.028zM288 354c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"
-								></path>
-							</svg>
-							<b>{{ $t('footer.version') }}</b>
-							<a href="#" target="_blank"></a>
-						</span>
 						<div class="versionId">
 							<span>
 								<svg
@@ -107,25 +86,6 @@
 								<a :href="`https://github.com/DinoCore-Labs/DinoRPG-Remastered/commit/${release}`" target="_blank">
 									{{ release }}
 								</a>
-							</span>
-							<span>
-								<svg
-									style="height: 11px; width: 11px"
-									aria-hidden="true"
-									focusable="false"
-									data-prefix="fa"
-									data-icon="flask"
-									role="img"
-									xmlns="http://www.w3.org/2000/svg"
-									viewBox="0 0 448 512"
-									data-fa-i2svg=""
-								>
-									<path
-										fill="currentColor"
-										d="M437.2 403.5L320 215V64h8c13.3 0 24-10.7 24-24V24c0-13.3-10.7-24-24-24H120c-13.3 0-24 10.7-24 24v16c0 13.3 10.7 24 24 24h8v151L10.8 403.5C-18.5 450.6 15.3 512 70.9 512h306.2c55.7 0 89.4-61.5 60.1-108.5zM137.9 320l48.2-77.6c3.7-5.2 5.8-11.6 5.8-18.4V64h64v160c0 6.9 2.2 13.2 5.8 18.4l48.2 77.6h-172z"
-									></path>
-								</svg>
-								{{ channel }}
 							</span>
 						</div>
 					</div>
@@ -290,6 +250,8 @@ footer {
 	transform: translate(-50%, -60%);
 }
 .status {
+	display: flex;
+	justify-content: center;
 	margin-top: 1em;
 	border-top: 2px solid $box-border-color;
 	padding-top: 1em;
@@ -298,7 +260,7 @@ footer {
 		text-decoration: none;
 	}
 	svg {
-		height: 0.9em;
+		height: 1.2em;
 		margin-right: 0.3em;
 	}
 }
