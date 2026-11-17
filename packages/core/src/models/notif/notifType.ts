@@ -7,5 +7,6 @@ export enum NotificationType {
 	FORUM_TOPIC_REPLY = 'forumTopicReply',
 	DEVOURER_ATTACKED = 'devourerAttacked',
 	DEVOURER_SEEDS_GATHERED = 'devourerSeedsGathered',
-	XMAS_REWARD = 'xmasReward'
+	XMAS_REWARD = 'xmasReward',
+	ELEMENTAL_MASTER_SPHERE = 'elementalMasterSphere'
 }

@@ -49,6 +49,7 @@
 		"forumTopicReply": "{name} replied to the topic “{topic}”.",
 		"devourerAttacked": "Someone is trying to take control of the Devourer from you!",
 		"devourerSeedsGathered": "You harvested {amount} Devourer seed(s)!",
+		"elementalMasterSphere": "The Elemental Master offers you: {sphere}",
 		"view": "View"
 	},
 	"homepage": {

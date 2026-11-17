@@ -81,6 +81,18 @@ export const helpers = {
 				return `<img class="text-icon" src="${getImgURL('item', 'item_easter_egg')}" alt="easter_egg">`;
 			case 'triceragnon_baby':
 				return `<img class="text-icon" src="${getImgURL('item', 'item_triceragnon_baby')}" alt="triceragnon_baby">`;
+			case 'fire_sphere':
+				return `<img class="text-icon" src="${getImgURL('item', 'item_fire_sphere')}" alt="fire_sphere">`;
+			case 'wood_sphere':
+				return `<img class="text-icon" src="${getImgURL('item', 'item_wood_sphere')}" alt="wood_sphere">`;
+			case 'water_sphere':
+				return `<img class="text-icon" src="${getImgURL('item', 'item_water_sphere')}" alt="water_sphere">`;
+			case 'lightning_sphere':
+				return `<img class="text-icon" src="${getImgURL('item', 'item_lightning_sphere')}" alt="lightning_sphere">`;
+			case 'air_sphere':
+				return `<img class="text-icon" src="${getImgURL('item', 'item_air_sphere')}" alt="air_sphere">`;
+			case 'void_sphere':
+				return `<img class="text-icon" src="${getImgURL('item', 'item_void_sphere')}" alt="void_sphere">`;
 			case 'cup1':
 				return `<img class="text-icon" src="${getImgURL('status', 'fx_cup1')}" alt="cup1">`;
 			case 'conts1':
@@ -142,6 +154,12 @@ export function formatText(text: string): string {
 				'smog_egg',
 				'easter_egg',
 				'triceragnon_baby',
+				'fire_sphere',
+				'wood_sphere',
+				'water_sphere',
+				'lightning_sphere',
+				'air_sphere',
+				'void_sphere',
 				'cup1',
 				'conts1'
 			];

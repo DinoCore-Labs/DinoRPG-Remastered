@@ -12,6 +12,7 @@ export type DialogPhaseResponseActions = {
 	popup?: boolean;
 	statusKey?: string;
 	missionsGroup?: string;
+	elementalMasterSphere?: { itemId: number };
 };
 
 export type I18nKey = string;
