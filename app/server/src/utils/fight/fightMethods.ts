@@ -1623,22 +1623,6 @@ const activateEvent = (fightData: DetailedFight, event: SkillDetails | ItemFiche
 				fighter.elements = [randomElement];
 				break;
 			}
-			case Skill.M_YAKUZI: {
-				// createMonster already pushes the fighter AND its arrive step.
-				// Never reassign the ID or push the same clone a second time:
-				// the history must reference the fighter returned in the recap.
-				const clone = createMonster(fightData, fighter, bossList.YAKUZI);
-				clone.level = 1;
-				clone.hp = 1;
-				clone.startingHp = 1;
-				clone.maxHp = 1;
-				clone.type = FighterType.CLONE;
-				clone.master = fighter.id;
-
-				applyStrategy(fightData, clone);
-				clone.time = fighter.time;
-				break;
-			}
 			case Skill.M_CURSED_WAND: {
 				const opponents = getOpponents(fightData, fighter, [FighterType.DINOZ]);
 				const validTargets = opponents.filter(o => !fightData.cursedWandTargets.includes(o.id));
@@ -2773,6 +2757,36 @@ const activateSkill = (fightData: DetailedFight, skill: SkillDetails): boolean =
 			attackSingleOpponent(fightData, fighter, getElementalAttack(fighter, ElementType.AIR, 25), skill.id);
 			break;
 		}
+
+		case Skill.M_YAKUZI: {
+			// MT: f.multiAttack *= 1.25
+			fighter.stats.special.multihit *= 1.25;
+
+			// MT: f.clone(m.generateId(), 1)
+			// Clone the current fighter, not the Yakuzi monster definition.
+			const clone = cloneDinoz(fighter, fightData, true);
+
+			clone.level = 1;
+			clone.hp = 1;
+			clone.startingHp = 1;
+			clone.maxHp = 1;
+			clone.master = fighter.id;
+			clone.time = fighter.time;
+
+			// MT: m.addFighter(c)
+			fightData.fighters.push(clone);
+
+			fightData.steps.push({
+				action: 'arrive',
+				fid: clone.id
+			});
+
+			checkReinforcementBan(fightData, clone);
+			updateStat(fightData, fighter, 'reinforcements', 1);
+
+			break;
+		}
+
 		// RACE
 		case Skill.CHARGE_PIGMOU:
 			attackSingleOpponent(

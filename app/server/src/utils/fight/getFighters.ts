@@ -292,7 +292,7 @@ export const initializeDinoz = (
 	return fighter;
 };
 
-export const cloneDinoz = (dinoz: DetailedFighter, fightData: DetailedFight) => {
+export const cloneDinoz = (dinoz: DetailedFighter, fightData: DetailedFight, preserveElementWheel = false) => {
 	const has_tear = dinoz.items.some(item => item.itemId === Item.TEAR_OF_LIFE);
 	const clone_id = -1 - fightData.fighters.filter(f => f.type !== FighterType.DINOZ).length;
 
@@ -302,7 +302,7 @@ export const cloneDinoz = (dinoz: DetailedFighter, fightData: DetailedFight) => 
 		display: dinoz.display,
 		name: dinoz.name,
 		level: dinoz.level,
-		type: FighterType.CLONE, // TODO: this may not work well, in case a monster calls a clone, it's still a monster
+		type: FighterType.CLONE,
 		attacker: dinoz.attacker,
 		maxHp: dinoz.maxHp,
 		startingHp: has_tear ? dinoz.maxHp * 0.1 : 1,
@@ -367,6 +367,17 @@ export const cloneDinoz = (dinoz: DetailedFighter, fightData: DetailedFight) => 
 		hasUsedHypnose: false,
 		hasUsedHyperventilation: false
 	};
+
+	if (preserveElementWheel) {
+		// MT f.clone(): preserve the summoner's current element wheel.
+		// Essential for VOID-only monsters such as Yakuzi.
+		clone.elements = [...dinoz.elements];
+		clone.element = dinoz.element;
+		if (clone.elements.length === 0 || !clone.elements.includes(clone.element)) {
+			throw new Error(`Cannot clone fighter ${dinoz.id}: invalid element wheel`);
+		}
+		return clone;
+	}
 
 	// Redo the element ordering because the original dinoz may have altered elements
 	// Handle elements (from highest to lowest)

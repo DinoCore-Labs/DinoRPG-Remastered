@@ -255,9 +255,6 @@ export const MonsterBonus: Partial<Record<Monster | Boss, (monster: DetailedFigh
 		monster.stats.special.evasion *= 1.25;
 		monster.stats.speed.global *= 3;
 	},
-	[Boss.YAKUZI]: monster => {
-		monster.stats.special.multihit *= 1.25;
-	},
 	[Boss.DARK_MEGASHROOM]: monster => {
 		ggoupi(monster);
 	},

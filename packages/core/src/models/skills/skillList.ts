@@ -5137,7 +5137,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 	[Skill.M_YAKUZI]: {
 		id: Skill.M_YAKUZI,
 		name: 'Yakuzi',
-		type: SkillType.E,
+		type: SkillType.S,
 		energy: Energy.E20,
 		element: [ElementType.VOID],
 		activatable: false,
