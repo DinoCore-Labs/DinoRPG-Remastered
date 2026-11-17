@@ -162,6 +162,22 @@ export async function denyJoinClanRequest(req: FastifyRequest, reply: FastifyRep
 	return reply.send({ success: true });
 }
 
+export function getClanJoinRequestNotificationRecipients(clan: {
+	leaderId?: string | null;
+	members: Array<{ userId: string; rights: unknown }>;
+}): string[] {
+	const recipientUserIds = new Set<string>();
+	if (clan.leaderId) {
+		recipientUserIds.add(clan.leaderId);
+	}
+	for (const member of clan.members) {
+		if (Array.isArray(member.rights) && member.rights.includes(ClanMemberRight.MEMBER_ACCEPT_AND_DENY_REQUESTS)) {
+			recipientUserIds.add(member.userId);
+		}
+	}
+	return Array.from(recipientUserIds);
+}
+
 export async function joinClan(req: FastifyRequest, reply: FastifyReply) {
 	if (isEventEndingInDays(10)) {
 		throw new ExpectedError('eventLock');
@@ -227,8 +243,9 @@ export async function joinClan(req: FastifyRequest, reply: FastifyReply) {
 			}
 		}
 	});
-	if (request.clan.leaderId) {
-		void newNotif(request.clan.leaderId, NotificationType.NEW_CLAN_JOIN_REQUEST, { playerName: request.user.name });
+	const recipientUserIds = getClanJoinRequestNotificationRecipients(request.clan);
+	for (const recipientId of recipientUserIds) {
+		void newNotif(recipientId, NotificationType.NEW_CLAN_JOIN_REQUEST, { playerName: request.user.name });
 	}
 
 	return reply.send(request);
