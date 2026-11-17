@@ -6,7 +6,7 @@ export const localStore = defineStore('localStore', {
 	state: (): StateLocalStore => ({
 		langue: undefined,
 		skipLevelAnimation: false,
-		skipFightAnimation: true,
+		skipFightAnimation: false,
 		autoReequipItems: false,
 		bypassGatheringGrid: false
 	}),
