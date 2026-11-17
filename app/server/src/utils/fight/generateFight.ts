@@ -537,6 +537,30 @@ const generateFight = (config: FightConfiguration, place: PlaceEnum, rng: Seeded
 		}
 	});
 
+	for (const fighter of fightData.fighters) {
+		if (fighter.type !== FighterType.DINOZ) continue;
+		const hpLost = fighter.startingHp - Math.max(fighter.hp, 0);
+		if (
+			!Number.isSafeInteger(fighter.startingHp) ||
+			!Number.isSafeInteger(fighter.hp) ||
+			!Number.isSafeInteger(hpLost) ||
+			hpLost < 0 ||
+			hpLost > fighter.startingHp
+		) {
+			throw new Error(
+				`Invalid fighter HP state: ${JSON.stringify({
+					seed: config.seed,
+					scriptedEncounter: config.scriptedEncounter,
+					fighterId: fighter.id,
+					name: fighter.name,
+					startingHp: String(fighter.startingHp),
+					currentHp: String(fighter.hp),
+					hpLost: String(hpLost)
+				})}`
+			);
+		}
+	}
+
 	// Get dinoz results
 	const attackersResults: FighterResultFiche[] = fightData.fighters
 		.filter(fighter => fighter.attacker && fighter.type === FighterType.DINOZ)

@@ -436,6 +436,23 @@ export async function rewardFightVsMonsters(
 		throw new ExpectedError('userNotFound');
 	}
 
+	for (const dinoz of team) {
+		const attacker = fightResult.attackers.find(a => a.dinozId === dinoz.id);
+		if (!attacker || !Number.isSafeInteger(attacker.hpLost) || attacker.hpLost < 0 || attacker.hpLost > dinoz.life) {
+			const fighter = fightResult.fighters.find(f => f.id === dinoz.id && f.attacker);
+			throw new Error(
+				`Invalid fight HP loss: ${JSON.stringify({
+					seed: fightResult.seed,
+					dinozId: dinoz.id,
+					hpLost: String(attacker?.hpLost),
+					life: dinoz.life,
+					startingHp: fighter?.startingHp,
+					outcome: fightResult.outcome
+				})}`
+			);
+		}
+	}
+
 	// Victory and rewards against monsters are granted only by defeating them. Tie counts as defeat.
 	const victory = fightResult.outcome === FightOutcome.AttackerWin;
 

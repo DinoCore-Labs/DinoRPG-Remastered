@@ -222,7 +222,6 @@ export async function processDialogFightUnlocked(
 	});
 	for (const attacker of fightResult.attackers) {
 		const fighter = fightResult.fighters.find(f => f.id === attacker.dinozId);
-
 		req.log.info(
 			{
 				category: 'fight',
