@@ -40,6 +40,7 @@ import TitleHeader from '../components/utils/TitleHeader.vue';
 import { DialogService } from '../services/dialog.service.js';
 import { FightService, UserService } from '../services';
 import { MissionService } from '../services/mission.service.js';
+import { notificationStore } from '../store/notificationStore.js';
 import { sessionStore } from '../store/sessionStore';
 import { userStore } from '../store/userStore';
 import { useTutorialStore } from '../store/tutorialStore';
@@ -59,6 +60,7 @@ const sStore = sessionStore();
 const uStore = userStore();
 const tutorialStore = useTutorialStore();
 const lStore = useLocalStore();
+const nStore = notificationStore();
 
 const dinozId = computed(() => Number(route.params.id));
 const dialogId = computed(() => String(route.params.dialogId));
@@ -144,7 +146,8 @@ function buildInlineMissionDialogState(): DialogPhaseResponse {
 			missionsGroup: undefined,
 			popup: undefined,
 			url: undefined,
-			statusKey: undefined
+			statusKey: undefined,
+			elementalMasterSphere: undefined
 		}
 	};
 }
@@ -180,6 +183,9 @@ async function handlePhaseActions(phase: DialogPhaseResponse) {
 			params: { dinozId: String(dinozId.value) }
 		});
 		return;
+	}
+	if (phase.actions.elementalMasterSphere) {
+		void nStore.refreshNotifications();
 	}
 	if (phase.actions.missionsGroup) {
 		await router.push({

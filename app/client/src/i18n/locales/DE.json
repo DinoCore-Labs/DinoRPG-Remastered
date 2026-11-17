@@ -48,6 +48,7 @@
 		"forumTopicReply": "{name} a répondu au sujet « {topic} ».",
 		"devourerAttacked": "Quelqu'un tente de vous prendre le contrôle de la dévoreuse !",
 		"devourerSeedsGathered": "Vous avez récolté {amount} graine(s) de dévoreuse !",
+		"elementalMasterSphere": "Der Elementarmeister schenkt dir: {sphere}",
 		"view": "Voir"
 	},
 	"homepage": {

@@ -5,6 +5,7 @@ import { DialogSpecial } from '@dinorpg/core/models/dialogs/dialogSpecial.js';
 import { dinozStatusIdByKey } from '@dinorpg/core/models/dinoz/statusKeyMap.js';
 import { ItemType } from '@dinorpg/core/models/enums/ItemType.js';
 import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
+import { NotificationType } from '@dinorpg/core/models/notif/notifType.js';
 import { rewardIdByKey, statTrackingByCollectionKey } from '@dinorpg/core/models/rewards/rewardsKeyMap.js';
 import {
 	MERGUEZ_CARD_MAX_QUANTITY,
@@ -598,6 +599,23 @@ async function applyDialogEffect(
 		case 'giveRandomItem': {
 			const itemId = pickRandomItemId(effect.itemIds);
 			await addUserItem(tx, context, itemId, 1);
+			const isSphere = [
+				Item.FIRE_SPHERE,
+				Item.WOOD_SPHERE,
+				Item.WATER_SPHERE,
+				Item.LIGHTNING_SPHERE,
+				Item.AIR_SPHERE
+			].includes(itemId as Item);
+			if (isSphere) {
+				await tx.notification.create({
+					data: {
+						userId: context.user.id,
+						type: NotificationType.ELEMENTAL_MASTER_SPHERE,
+						content: { itemId }
+					}
+				});
+				actions.elementalMasterSphere = { itemId };
+			}
 			return;
 		}
 		case 'clinicSurgery':
