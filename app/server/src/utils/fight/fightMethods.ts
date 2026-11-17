@@ -3697,6 +3697,20 @@ const loseHp = (fightData: DetailedFight, fighter: DetailedFighter, damage: numb
 	// TODO: check for danger detector item
 	let hp_lost = damage;
 	const initial_hp = fighter.hp;
+
+	if (!Number.isFinite(damage) || !Number.isFinite(fighter.hp)) {
+		throw new Error(
+			`Invalid HP loss: ${JSON.stringify({
+				fighterId: fighter.id,
+				fighterName: fighter.name,
+				currentHp: String(fighter.hp),
+				damage: String(damage),
+				effect: fx,
+				recentActions: fightData.steps.slice(-5).map(step => step.action)
+			})}`
+		);
+	}
+
 	fighter.hp -= damage;
 
 	fightData.steps.push({
@@ -3873,6 +3887,19 @@ export const heal = (
 		} else if (!fighter.attacker && fightData.defenderData.hasCook) {
 			healBonus *= 1.1;
 		}
+	}
+
+	if (!Number.isFinite(hp) || !Number.isFinite(healBonus) || !Number.isFinite(fighter.hp)) {
+		throw new Error(
+			`Invalid HP healing: ${JSON.stringify({
+				fighterId: fighter.id,
+				fighterName: fighter.name,
+				currentHp: String(fighter.hp),
+				healing: String(hp),
+				healBonus: String(healBonus),
+				recentActions: fightData.steps.slice(-5).map(step => step.action)
+			})}`
+		);
 	}
 
 	fighter.hp += Math.round(hp * healBonus);
@@ -4117,6 +4144,25 @@ const attackTarget = (
 				? Math.round(target.maxHp * 0.05)
 				: 0;
 		if (febrezHeal > 0) damage = 0;
+
+		if (!Number.isFinite(damage) || !Number.isFinite(target.hp)) {
+			throw new Error(
+				`Invalid attack damage: ${JSON.stringify({
+					attackerId: attacker.id,
+					attackerName: attacker.name,
+					targetId: target.id,
+					targetName: target.name,
+					targetHp: String(target.hp),
+					damage: String(damage),
+					attack: String(attack),
+					defense: String(defense),
+					elements,
+					skill,
+					isAssault,
+					recentActions: fightData.steps.slice(-5).map(step => step.action)
+				})}`
+			);
+		}
 
 		// Apply and log damage
 		target.hp -= damage;
