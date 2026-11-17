@@ -294,6 +294,7 @@ import { messagingStore } from '../../store/messagingStore.js';
 import { localStore } from '../../store/localStore.js';
 import type { NotificationItem } from '../../services/notification.service.js';
 import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
+import { NotificationType } from '@dinorpg/core/models/notif/notifType.js';
 import { notificationStore } from '../../store/notificationStore.js';
 import { Reward, rewardList } from '@dinorpg/core/models/rewards/rewardList.js';
 
@@ -511,6 +512,17 @@ export default defineComponent({
 			if (notification.type === 'devourerSeedsGathered') {
 				const content = this.parseContent(notification.content);
 				return this.$t('notifications.devourerSeedsGathered', { amount: content?.amount || 3 });
+			}
+			if (notification.type === NotificationType.ELEMENTAL_MASTER_SPHERE) {
+				const content = this.parseContent(notification.content);
+				const itemId = content?.itemId;
+				const item = itemId ? itemList[itemId as Item] : null;
+				if (item) {
+					return this.$t('notifications.elementalMasterSphere', {
+						sphere: `:${item.name}:`
+					});
+				}
+				return this.$t('notifications.elementalMasterSphere', { sphere: '' });
 			}
 			return '';
 		},
