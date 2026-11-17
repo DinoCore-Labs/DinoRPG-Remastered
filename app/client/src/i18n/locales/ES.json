@@ -7071,6 +7071,7 @@
 		},
 		"goldPickup": "¡Has recogido {amount} monedas de oro!",
 		"goldEmpty": "Este tesoro ya no contiene monedas de oro.",
+		"healZoneNotice": "¡Estás en una zona de curación! Puedes curar a tus Dinoz usando objetos curativos mientras permanezcas en esta casilla. Atención: una vez que la abandones, la zona ya no se podrá utilizar.",
 		"missingDoorKey": "Esta puerta está cerrada con llave. Debes encontrarla en la mazmorra.",
 		"moveRefused": "El servidor ha rechazado el movimiento.",
 		"scenarioProcessed": "Evento procesado por el servidor.",

@@ -173,6 +173,7 @@ import { localStore } from '../store/localStore';
 import { userStore } from '../store/userStore.js';
 import type { MtDungeonSession } from '@dinorpg/core/models/dungeon/dungeon.session.js';
 import type { DungeonCommand } from '@dinorpg/core/models/dungeon/dungeon.types.js';
+import { shouldShowMtDungeonHealNotice } from '../components/dungeon/mtDungeonHealNotice.js';
 
 const { t } = useI18n();
 const route = useRoute();
@@ -554,6 +555,14 @@ function move(direction: 'north' | 'south' | 'west' | 'east' | 'up' | 'down') {
 			if (typeof result.walletGold === 'number') userStore().setGold(result.walletGold);
 			pickupMessage.value =
 				result.goldAwarded > 0 ? t('dungeon.goldPickup', { amount: result.goldAwarded }) : t('dungeon.goldEmpty');
+		}
+		if (
+			!pickupMessage.value &&
+			view.value &&
+			shouldShowMtDungeonHealNotice(previous, result.session, view.value.scene.features)
+		) {
+			pickupIcon.value = null;
+			pickupMessage.value = t('dungeon.healZoneNotice');
 		}
 	});
 }

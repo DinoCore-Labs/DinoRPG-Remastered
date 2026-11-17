@@ -7071,6 +7071,7 @@
 		},
 		"goldPickup": "Du hast {amount} Goldmünzen eingesammelt!",
 		"goldEmpty": "In diesem Schatz sind keine Goldmünzen mehr.",
+		"healZoneNotice": "Du befindest dich auf einem Heilfeld! Solange du auf diesem Feld bleibst, kannst du deine Dinoz mit Heilgegenständen heilen. Achtung: Sobald du das Feld verlässt, kann es nicht mehr genutzt werden.",
 		"missingDoorKey": "Diese Tür ist verschlossen. Du musst den passenden Schlüssel im Dungeon finden.",
 		"moveRefused": "Der Server hat die Bewegung abgelehnt.",
 		"scenarioProcessed": "Ereignis vom Server verarbeitet.",

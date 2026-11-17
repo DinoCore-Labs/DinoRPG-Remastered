@@ -7216,6 +7216,7 @@
 		},
 		"goldPickup": "You collected {amount} gold coins!",
 		"goldEmpty": "There are no gold coins left in this treasure.",
+		"healZoneNotice": "You are standing on a healing zone! You can heal your Dinoz using healing items as long as you remain on this tile. Be careful: once you leave, the healing zone can no longer be used.",
 		"missingDoorKey": "This door is locked. You need to find its key in the dungeon.",
 		"moveRefused": "The server refused the move.",
 		"scenarioProcessed": "Event processed by the server.",

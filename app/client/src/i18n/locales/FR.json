@@ -7350,6 +7350,7 @@
 		},
 		"goldPickup": "Vous avez récupéré {amount} pièces d'or !",
 		"goldEmpty": "Ce trésor ne contient plus de pièces d’or.",
+		"healZoneNotice": "Vous êtes sur une zone de soin ! Vous pouvez soigner vos Dinoz à l'aide de vos objets de soin tant que vous restez sur cette case. Attention : dès que vous la quittez, la zone devient inutilisable.",
 		"missingDoorKey": "Cette porte est verrouillée. Il faut trouver sa clé dans le donjon.",
 		"moveRefused": "Déplacement refusé par le serveur.",
 		"scenarioProcessed": "Événement traité par le serveur.",
