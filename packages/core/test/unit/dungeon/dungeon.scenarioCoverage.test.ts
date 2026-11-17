@@ -16,7 +16,7 @@ for (const item of Object.values(itemList)) {
 	const prior = items.get(item.display);
 	items.set(item.display, {
 		maxQuantity: item.maxQuantity,
-		duplicates: prior !== undefined || prior?.duplicates === true
+		duplicates: prior !== undefined
 	});
 }
 
@@ -43,7 +43,7 @@ function audit() {
 							? 'ambiguous-display'
 							: !Number.isSafeInteger(item.maxQuantity) || item.maxQuantity < 1
 								? 'invalid-item-limit'
-								: !Number.isSafeInteger(kind.count) || kind.count < 1 || kind.count > item.maxQuantity
+								: !Number.isSafeInteger(kind.count) || kind.count < 1
 									? 'unsupported-count'
 									: null;
 					if (reason)

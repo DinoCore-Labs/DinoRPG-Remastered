@@ -18,9 +18,7 @@ import { getMtDungeonArchive, mtDungeonDependencies } from './mtDungeonRuntime.s
 import type { MtSessionIdentity } from './mtDungeonSession.service.js';
 
 export class MtDungeonScenarioSettlementError extends Error {
-	constructor(
-		public readonly code: 'not-found' | 'stale-revision' | 'unsupported-original-reward' | 'inventory-full' | 'conflict'
-	) {
+	constructor(public readonly code: 'not-found' | 'stale-revision' | 'unsupported-original-reward' | 'conflict') {
 		super(`MT dungeon scenario settlement: ${code}`);
 		this.name = 'MtDungeonScenarioSettlementError';
 	}
@@ -93,8 +91,7 @@ export async function resolveMtDungeonScenarioReward(
 		const rewardId = effect.type === 'collection' ? rewardIdByKey[effect.key] : undefined;
 		if (effect.type === 'collection' && rewardId === undefined)
 			throw new MtDungeonScenarioSettlementError('unsupported-original-reward');
-		if (effect.type === 'object' && (!item || effect.count > item.maxQuantity))
-			throw new MtDungeonScenarioSettlementError('unsupported-original-reward');
+		if (effect.type === 'object' && !item) throw new MtDungeonScenarioSettlementError('unsupported-original-reward');
 
 		const settled = settleMtDungeonInteraction(map, session, true);
 		try {
@@ -125,17 +122,25 @@ export async function resolveMtDungeonScenarioReward(
 					if (changed.count !== 1) throw new MtDungeonScenarioSettlementError('conflict');
 					if (effect.type === 'object') {
 						const itemId = item!.itemId;
-						const current = await tx.userItems.findUnique({
-							where: { itemId_userId: { itemId, userId: identity.userId } },
-							select: { quantity: true }
-						});
-						// Never silently give fewer items than the original chest specifies.
-						if ((current?.quantity ?? 0) + effect.count > item!.maxQuantity)
-							throw new MtDungeonScenarioSettlementError('inventory-full');
+						// Dungeon rewards bypass the normal inventory quantity limit.
+						// The original scenario determines the exact quantity awarded.
 						await tx.userItems.upsert({
-							where: { itemId_userId: { itemId, userId: identity.userId } },
-							create: { itemId, userId: identity.userId, quantity: effect.count },
-							update: { quantity: { increment: effect.count } }
+							where: {
+								itemId_userId: {
+									itemId,
+									userId: identity.userId
+								}
+							},
+							create: {
+								itemId,
+								userId: identity.userId,
+								quantity: effect.count
+							},
+							update: {
+								quantity: {
+									increment: effect.count
+								}
+							}
 						});
 					} else if (effect.type === 'collection') {
 						await tx.userRewards.upsert({

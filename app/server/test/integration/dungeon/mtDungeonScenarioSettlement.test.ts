@@ -78,23 +78,52 @@ describe('MT original chest settlement (PostgreSQL)', () => {
 		).toMatchObject({ quantity: count });
 	});
 
-	it('rolls back flag and session when inventory is already full', async () => {
-		const { identity, item } = await prepareOriginalChest();
+	it.each([0, 5])('awards the complete chest reward with inventory at max + %i', async extraQuantity => {
+		const { identity, cfg, point, item, count } = await prepareOriginalChest();
+
+		const initialQuantity = item.maxQuantity + extraQuantity;
+
 		await prisma.userItems.create({
 			data: {
 				userId: identity.userId,
 				itemId: item.itemId,
-				quantity: item.maxQuantity
+				quantity: initialQuantity
 			}
 		});
-		await expect(resolveMtDungeonScenarioReward(identity, 1, 'fr')).rejects.toMatchObject({ code: 'inventory-full' });
-		const reloaded = await prismaMtDungeonRunRepository.load(identity);
-		expect(reloaded?.revision).toBe(1);
-		expect(reloaded?.pending?.kind).toBe('scenario');
-		expect(
-			await prisma.userItems.findUnique({
-				where: { itemId_userId: { itemId: item.itemId, userId: identity.userId } }
-			})
-		).toMatchObject({ quantity: item.maxQuantity });
+
+		const result = await resolveMtDungeonScenarioReward(identity, 1, 'fr');
+
+		expect(result.reward).toEqual({
+			type: 'item',
+			itemId: item.itemId,
+			quantity: count
+		});
+
+		const inventory = await prisma.userItems.findUniqueOrThrow({
+			where: {
+				itemId_userId: {
+					itemId: item.itemId,
+					userId: identity.userId
+				}
+			}
+		});
+		expect(inventory.quantity).toBe(initialQuantity + count);
+		const session = await prismaMtDungeonRunRepository.load(identity);
+		expect(session?.revision).toBe(2);
+		expect(session?.pending).toBeNull();
+		expect(session?.flags).toContain(getMtFlagIndex(cfg.map, point.l, point.x, point.y));
+		// Prevent collecting the same chest twice.
+		await expect(resolveMtDungeonScenarioReward(identity, 1, 'fr')).rejects.toMatchObject({
+			code: 'stale-revision'
+		});
+		const afterReplay = await prisma.userItems.findUniqueOrThrow({
+			where: {
+				itemId_userId: {
+					itemId: item.itemId,
+					userId: identity.userId
+				}
+			}
+		});
+		expect(afterReplay.quantity).toBe(initialQuantity + count);
 	});
 });
