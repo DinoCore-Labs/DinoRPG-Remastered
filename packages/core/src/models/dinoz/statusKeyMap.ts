@@ -42,6 +42,7 @@ export const dinozStatusIdByKey: Partial<Record<string, DinozStatusId>> = {
 	gshop: DinozStatusId.FLOWERING_BRANCH,
 	bckpck: DinozStatusId.BACKPACK,
 	reinca: DinozStatusId.REINCARNATION,
+	reincas: DinozStatusId.SPECIAL_REINCARNATION,
 	renais: DinozStatusId.RENAISSANCE,
 	fspele: DinozStatusId.FSPELE,
 	cup1: DinozStatusId.BRONZE_CUP,

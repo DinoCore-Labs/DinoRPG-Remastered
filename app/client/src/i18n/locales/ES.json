@@ -1933,7 +1933,8 @@
 			"62": "Maldito",
 			"63": "Demonio",
 			"65": "Maldición de Cuzcús",
-			"66": "Guante de Captura"
+			"66": "Guante de Captura",
+			"75": "Reencarnación especial"
 		},
 		"description": {
 			"1": "El salvavidas permite atravesar algunas superficies de agua sin arriesgar la vida de tu Dino.",
@@ -1985,7 +1986,8 @@
 			"62": "¡Esta maldición impide a tu Dino ganar experiencia en combate!",
 			"63": "Este Dino es un verdadero Demonio. ¿De dónde salen estos?",
 			"65": "Tu Dino ha sido maldecido por el Guardián de Cuzcús...",
-			"66": "Gracias a esta herramienta muy útil, ¡tu Dino podrá capturar Monstruos que irán a ayudarle en los combates!"
+			"66": "Gracias a esta herramienta muy útil, ¡tu Dino podrá capturar Monstruos que irán a ayudarle en los combates!",
+			"75": "Este Dino ha sido reencarnado conservando su destino. ¡Atención! ¡es un Dino muy poderoso!"
 		}
 	},
 	"levelup": {

@@ -8,7 +8,8 @@ export function getImgURL(path: string, imgName: string, pixel?: boolean, animat
 	const ext = animated ? 'gif' : pixel ? 'png' : 'webp';
 	const key = `../assets/${path}/${imgName}.${ext}`.replace(/\/+/g, '/');
 
-	const image = images[key];
+	const image =
+		images[key] ?? images[`../assets/${path}/${imgName}.png`] ?? images[`../assets/${path}/${imgName}.webp`];
 
 	if (!image) {
 		console.warn(`[getImgURL] Missing image: ${key}`);
