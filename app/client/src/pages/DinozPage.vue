@@ -34,6 +34,10 @@
 	<div class="dinozPanels" v-if="nameChoosen === true">
 		<DinozActions v-show="isReady" :dinoz="dinozData" :refreshDinoz="refreshDinoz" />
 		<TabPanels v-if="isReady" :key="dinozData.id" :dinozData="dinozData" />
+		<div class="mobile-only mobile-dinoz-details" v-if="isReady">
+			<DinozStatus :dinozStatus="dinozData.status" />
+			<DinozElements :dinozData="dinozData" />
+		</div>
 		<div class="footer" />
 	</div>
 </template>
@@ -51,6 +55,8 @@ import DinozName from '../components/dinoz/DinozName.vue';
 import DinozActions from '../components/dinoz/DinozActions.vue';
 import TabPanels from '../components/common/TabPanels.vue';
 import MtDungeonMessageBox from '../components/dungeon/MtDungeonMessageBox.vue';
+import DinozElements from '../components/dinoz/DinozElements.vue';
+import DinozStatus from '../components/dinoz/DinozStatus.vue';
 
 function isRenderableDinozFiche(dinoz: DinozFiche | undefined): dinoz is DinozFiche {
 	return !!dinoz && !!dinoz.race && Array.isArray(dinoz.borderPlace) && Array.isArray(dinoz.followers);
@@ -73,6 +79,8 @@ export default defineComponent({
 		DinozActions,
 		TabPanels,
 		MtDungeonMessageBox,
+		DinozElements,
+		DinozStatus,
 		DinozDisplay: defineAsyncComponent(() => import('../components/dinoz/DinozDisplay.vue'))
 	},
 	methods: {
@@ -198,6 +206,9 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.mobile-only {
+	display: none;
+}
 .dinozPanels {
 	display: flex;
 	flex-wrap: wrap;
@@ -224,9 +235,15 @@ export default defineComponent({
 		'vie elements equip ';
 }
 @media (max-width: 539px) {
+	.mobile-only {
+		display: flex !important;
+		flex-direction: column;
+		width: 95%;
+		gap: 3px;
+	}
 	.dinoz {
 		grid-template-columns: [first] 2.5% [line1] 26% [line2] 8% [line3] 13% [line3] 1%[line4] 13% [line5] 8% [line6] 26% [line7] 2.5% [end];
-		grid-template-rows: [first] 40px [row2] 120px [row3] 20px [row4] 30px [row5] auto [row6] 3px [row7] auto [end];
+		grid-template-rows: [first] 40px [row2] 120px [row3] 20px [row4] 30px [end];
 		column-gap: 0;
 		row-gap: 0;
 		width: 100%;
@@ -235,10 +252,7 @@ export default defineComponent({
 			'. . name name name name name . .'
 			'. dinoz dinoz dinoz dinoz dinoz equip equip .'
 			'. vie vie vie vie vie equip equip .'
-			'. vie vie vie vie vie . . .'
-			'. elements elements elements elements elements elements elements .'
-			'. . . . . . . . .'
-			'. status status status status status status status .';
+			'. vie vie vie vie vie . . .';
 		margin-bottom: 5px;
 	}
 	.dinozPanels {

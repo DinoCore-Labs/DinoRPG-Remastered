@@ -44,10 +44,10 @@
 				</p>
 			</template>
 		</Tippy>
-		<DinozElements :dinozData="dinozData" />
+		<DinozElements class="desktop-only" :dinozData="dinozData" />
 		<DinozBars :dinozData="dinozData" />
 		<DinozEquip :dinozData="dinozData" />
-		<DinozStatus :dinozStatus="dinozData.status" />
+		<DinozStatus class="desktop-only" :dinozStatus="dinozData.status" />
 	</div>
 </template>
 
@@ -177,9 +177,12 @@ export default defineComponent({
 	align-self: center;
 }
 @media (max-width: 539px) {
+	.desktop-only {
+		display: none !important;
+	}
 	.dinoz {
 		grid-template-columns: [first] 2.5% [line1] 26% [line2] 8% [line3] 13% [line3] 1%[line4] 13% [line5] 8% [line6] 26% [line7] 2.5% [end];
-		grid-template-rows: [first] 40px [row2] 120px [row3] 20px [row4] 30px [row5] auto [row6] 3px [row7] auto [end];
+		grid-template-rows: [first] 40px [row2] 120px [row3] 20px [row4] 30px [end];
 		column-gap: 0;
 		row-gap: 0;
 		width: 100%;
@@ -188,10 +191,7 @@ export default defineComponent({
 			'. . name name name name name . .'
 			'. dinoz dinoz dinoz dinoz dinoz equip equip .'
 			'. vie vie vie vie vie equip equip .'
-			'. vie vie vie vie vie . . .'
-			'. elements elements elements elements elements elements elements .'
-			'. . . . . . . . .'
-			'. status status status status status status status .';
+			'. vie vie vie vie vie . . .';
 		margin-bottom: 5px;
 	}
 }
