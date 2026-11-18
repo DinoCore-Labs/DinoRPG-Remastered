@@ -18,4 +18,14 @@ describe('formatText elemental spheres', () => {
 			expect(formatted).toContain(`alt="${sphere}"`);
 		}
 	});
+
+	it('formats pv and xp tags with consistent height', () => {
+		const formattedPv = formatText('Perdu : :pv:');
+		expect(formattedPv).toContain('alt="pv"');
+		expect(formattedPv).toContain('height: 10px');
+
+		const formattedXp = formatText('Gagné : :xp:');
+		expect(formattedXp).toContain('alt="xp"');
+		expect(formattedXp).toContain('height: 10px');
+	});
 });

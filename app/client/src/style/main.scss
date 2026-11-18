@@ -19,4 +19,10 @@ body {
 	margin: -2px 2px !important;
 	border-radius: 0 !important;
 	object-fit: contain;
+
+	&[alt='pv'],
+	&[alt='xp'] {
+		height: 10px;
+		width: auto;
+	}
 }
