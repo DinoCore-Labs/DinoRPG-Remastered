@@ -69,7 +69,9 @@ async function reincarnateUnlocked(req: ReincarnateRequest) {
 	if (
 		!dinoz.skills.some(s => s.skillId === Skill.REINCARNATION) ||
 		dinoz.level < 40 ||
-		dinoz.status.some(s => s.statusId === DinozStatusId.REINCARNATION)
+		dinoz.status.some(
+			s => s.statusId === DinozStatusId.REINCARNATION || s.statusId === DinozStatusId.SPECIAL_REINCARNATION
+		)
 	) {
 		throw new ExpectedError('reincarnationNotPossible', {
 			params: {
@@ -162,7 +164,8 @@ async function reincarnateUnlocked(req: ReincarnateRequest) {
 	 * Ce statut empêche une nouvelle
 	 * réincarnation du même cycle.
 	 */
-	await addStatusToDinoz(dinozId, DinozStatusId.REINCARNATION);
+	const statusToApply = keepSeed ? DinozStatusId.SPECIAL_REINCARNATION : DinozStatusId.REINCARNATION;
+	await addStatusToDinoz(dinozId, statusToApply);
 }
 
 export async function reincarnate(req: ReincarnateRequest, _reply: FastifyReply) {

@@ -372,7 +372,9 @@ export async function getAvailableActions(
 		if (
 			dinoz.skills.some(s => s.skillId === Skill.REINCARNATION) &&
 			dinoz.level >= 40 &&
-			!dinoz.status.some(s => s.statusId === DinozStatusId.REINCARNATION)
+			!dinoz.status.some(
+				s => s.statusId === DinozStatusId.REINCARNATION || s.statusId === DinozStatusId.SPECIAL_REINCARNATION
+			)
 		) {
 			availableActions.push(actionList[Action.REINCARNATION]);
 		}
