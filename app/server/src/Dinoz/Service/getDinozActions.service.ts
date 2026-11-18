@@ -351,20 +351,6 @@ export async function getAvailableActions(
 	}
 	if (dinoz.followers.length > 0) {
 		availableActions.push(actionList[Action.DISBAND]);
-		for (const follower of dinoz.followers) {
-			if (!follower.gather) {
-				continue;
-			}
-			const followerContext = getContext(follower.id);
-			for (const gatherFound of normalGatherEntries) {
-				if (checkCondition(gatherFound.condition, followerContext)) {
-					pushUniqueAction(availableActions, {
-						...getGatherActionFiche(gatherFound),
-						forDinoz: follower.id
-					});
-				}
-			}
-		}
 	}
 	// If dinoz is not alive, only show resurrect action
 	if (!isAlive(dinoz)) {
@@ -576,5 +562,24 @@ export async function getAvailableActions(
 			if (!(error instanceof MtDungeonEntryError)) throw error;
 		}
 	}
+
+	// Follower actions (placed after all leader actions)
+	if (dinoz.followers.length > 0) {
+		for (const follower of dinoz.followers) {
+			if (!follower.gather) {
+				continue;
+			}
+			const followerContext = getContext(follower.id);
+			for (const gatherFound of normalGatherEntries) {
+				if (checkCondition(gatherFound.condition, followerContext)) {
+					pushUniqueAction(availableActions, {
+						...getGatherActionFiche(gatherFound),
+						forDinoz: follower.id
+					});
+				}
+			}
+		}
+	}
+
 	return availableActions;
 }
