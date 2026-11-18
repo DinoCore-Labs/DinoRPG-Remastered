@@ -2025,7 +2025,8 @@
 			"62": "Cursed!",
 			"63": "Demon",
 			"65": "Curse of Cuzcous",
-			"66": "Capture Glove"
+			"66": "Capture Glove",
+			"75": "Special Reincarnation"
 		},
 		"description": {
 			"1": "This Buoy enables your Dinoz to cross water without drowning.",
@@ -2077,7 +2078,8 @@
 			"62": "This curse prevents your Dinoz from gaining combat experience!",
 			"63": "This Dinoz is a real demon... but where do they come from? ...",
 			"65": "Your Dinoz has been Cursed by the Guardian of Cuzcous...",
-			"66": "Thanks to this very useful tool, your Dinoz can capture Monsters that will help him in all his fights!"
+			"66": "Thanks to this very useful tool, your Dinoz can capture Monsters that will help him in all his fights!",
+			"75": "This Dinoz has been reincarnated while keeping its destiny. Beware! He is very powerful!"
 		}
 	},
 	"levelup": {

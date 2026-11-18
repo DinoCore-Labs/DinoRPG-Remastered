@@ -427,6 +427,47 @@ describe('Dinoz reincarnation', () => {
 		).toBe(40);
 	});
 
+	it('prevents reincarnating again while the Special Reincarnation status is present', async () => {
+		const user = await createTestUser({
+			name: 'DoubleSpecialReincarnationOwner',
+			withTutorial: false
+		});
+		await prepareRanking(user.id, 40);
+		const dinoz = await createTestDinoz({
+			userId: user.id,
+			canRename: false,
+			level: 40
+		});
+		await addReincarnationSkill(dinoz.id);
+		await prisma.dinozStatus.create({
+			data: {
+				dinozId: dinoz.id,
+				statusId: DinozStatusId.SPECIAL_REINCARNATION
+			}
+		});
+		const response = await server.inject({
+			method: 'PUT',
+			url: `/api/dinoz/reincarnate/${dinoz.id}`,
+			headers: {
+				cookie: createAuthCookie(server, user)
+			},
+			payload: {}
+		});
+		expect(response.statusCode).toBe(400);
+		expect(response.json()).toMatchObject({
+			code: 'reincarnationNotPossible'
+		});
+		expect(
+			(
+				await prisma.dinoz.findUniqueOrThrow({
+					where: {
+						id: dinoz.id
+					}
+				})
+			).level
+		).toBe(40);
+	});
+
 	it('keeps the destiny seed when keepSeed is purchased', async () => {
 		const user = await createTestUser({
 			name: 'KeepSeedOwner',
@@ -468,6 +509,12 @@ describe('Dinoz reincarnation', () => {
 			}
 		});
 		expect(updatedUser.keepSeedReincarnationCount).toBe(1);
+		const statuses = await prisma.dinozStatus.findMany({
+			where: {
+				dinozId: dinoz.id
+			}
+		});
+		expect(statuses.map(status => status.statusId)).toEqual([DinozStatusId.SPECIAL_REINCARNATION]);
 	});
 
 	it('does not mutate the Dinoz when the keepSeed quota is exhausted', async () => {

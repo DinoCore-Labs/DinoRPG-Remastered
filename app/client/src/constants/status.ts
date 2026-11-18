@@ -86,7 +86,8 @@ export const statusList: {
 		65: 'cuzmal',
 		66: 'mcapt',
 		67: 'joze',
-		68: 'sphere'
+		68: 'sphere',
+		75: 'reincas'
 	},
 	id: {
 		bouee: 1,
@@ -156,7 +157,8 @@ export const statusList: {
 		cuzmal: 65,
 		mcapt: 66,
 		joze: 67,
-		sphere: 68
+		sphere: 68,
+		reincas: 75
 	},
 	displayed: {
 		1: true,
@@ -226,6 +228,7 @@ export const statusList: {
 		65: true,
 		66: true,
 		67: false,
-		68: false
+		68: false,
+		75: true
 	}
 };

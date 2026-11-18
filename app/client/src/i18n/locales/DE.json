@@ -1933,7 +1933,8 @@
 			"62": "Maudit !",
 			"63": "Démon",
 			"65": "Malédiction de Cuzcous",
-			"66": "Gant de Capture"
+			"66": "Gant de Capture",
+			"75": "Spezielle Reinkarnation"
 		},
 		"description": {
 			"1": "La Bouée permet à ce Dinoz de traverser certaines petites étendues d'eau sans aucun risque de noyade.",
@@ -1985,7 +1986,8 @@
 			"62": "Cette malédiction empêche votre Dinoz de gagner de l'expérience en combat !",
 			"63": "Ce Dinoz est un véritable Démon, mais d'où peuvent-ils bien venir ? ...",
 			"65": "Votre Dinoz a été Maudit par le Gardien de Cuzcous...",
-			"66": "Grâce à cet outil très utile, votre Dinoz peut capturer des Monstres qui viendront l'aider dans tous ses combats !"
+			"66": "Grâce à cet outil très utile, votre Dinoz peut capturer des Monstres qui viendront l'aider dans tous ses combats !",
+			"75": "Dieses Dinoz wurde mit großer Kraft wiedergeboren und hat sein Schicksal bewahrt. Achtung! Es ist sehr mächtig!"
 		}
 	},
 	"levelup": {

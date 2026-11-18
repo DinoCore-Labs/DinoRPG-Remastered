@@ -9,7 +9,7 @@ describe('getClanJoinRequestNotificationRecipients', () => {
 			leaderId: 'leader-123',
 			members: [
 				{ userId: 'member-1', rights: [] },
-				{ userId: 'member-2', rights: [ClanMemberRight.CAN_CHANGE_MEMBERS_RIGHT] }
+				{ userId: 'member-2', rights: [ClanMemberRight.MEMBER_EDIT] }
 			]
 		});
 
@@ -24,7 +24,7 @@ describe('getClanJoinRequestNotificationRecipients', () => {
 				{ userId: 'member-2', rights: [] },
 				{
 					userId: 'member-3',
-					rights: [ClanMemberRight.MEMBER_ACCEPT_AND_DENY_REQUESTS, ClanMemberRight.CAN_REMOVE_MEMBERS]
+					rights: [ClanMemberRight.MEMBER_ACCEPT_AND_DENY_REQUESTS, ClanMemberRight.MEMBER_EXCLUDE]
 				}
 			]
 		});
