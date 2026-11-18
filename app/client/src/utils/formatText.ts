@@ -50,7 +50,6 @@ export const helpers = {
 			case 'pv':
 				return `<img class="text-icon" style="height: 10px; width: auto;" src="${getImgURL('icons', 'small_pv')}" alt="pv">`;
 			case 'xp':
-				return `<img class="text-icon" src="${getImgURL('icons', 'small_xp')}" alt="xp">`;
 				return `<img class="text-icon" style="height: 10px; width: auto;" src="${getImgURL('icons', 'small_xp')}" alt="xp">`;
 			case 'irma':
 				return `<img class="text-icon" src="${getImgURL('item', 'item_irma')}" alt="irma">`;
