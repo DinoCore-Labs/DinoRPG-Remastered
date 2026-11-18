@@ -225,13 +225,17 @@ export default defineComponent({
 							id: this.dinozId.toString(),
 							dialogId: this.fight.dialogReturn.dialogId
 						},
-						query: { phaseId: this.fight.dialogReturn.phaseId }
+						query: {
+							phaseId: this.fight.dialogReturn.phaseId,
+							...(this.$route.query.returnTo ? { returnTo: String(this.$route.query.returnTo) } : {})
+						}
 					});
 					return;
 				}
+				const returnDinozId = (this.$route.query.returnTo as string | undefined) ?? this.dinozId.toString();
 				await this.$router.replace({
 					name: 'DinozPage',
-					params: { id: this.dinozId.toString() }
+					params: { id: returnDinozId }
 				});
 			} catch (error) {
 				console.error('Erreur de retour après combat', error);

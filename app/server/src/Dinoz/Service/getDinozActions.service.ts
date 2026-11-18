@@ -565,6 +565,28 @@ export async function getAvailableActions(
 
 	// Follower actions (placed after all leader actions)
 	if (dinoz.followers.length > 0) {
+		// Follower mission actions
+		for (const follower of dinoz.followers) {
+			const followerDinoz = user.dinoz?.find(d => d.id === follower.id);
+			if (!followerDinoz || followerDinoz.life <= 0 || !followerDinoz.missions) {
+				continue;
+			}
+			const followerMission = resolveCurrentMission(
+				followerDinoz.missions as unknown as DinozMissionState[],
+				dinoz.placeId
+			);
+			if (followerMission?.currentGoal && followerMission.currentGoal.type !== 'WAIT') {
+				const missionAction = getMissionActionFiche(followerMission.currentGoal, actualPlace(dinoz).placeId);
+				if (missionAction) {
+					pushUniqueAction(availableActions, {
+						...missionAction,
+						forDinoz: follower.id
+					});
+				}
+			}
+		}
+
+		// Follower gather actions
 		for (const follower of dinoz.followers) {
 			if (!follower.gather) {
 				continue;
