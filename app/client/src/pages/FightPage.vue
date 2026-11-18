@@ -88,6 +88,7 @@ export default defineComponent({
 		}
 	},
 	created(): void {
+		const returnDinozId = (this.$route.query.returnTo as string | undefined) ?? this.dinozId;
 		const fightResult = this.sessionStore.getFightResult;
 		if (!fightResult) {
 			this.$toast.open({
@@ -97,7 +98,7 @@ export default defineComponent({
 
 			this.$router.replace({
 				name: 'DinozPage',
-				params: { id: this.dinozId }
+				params: { id: returnDinozId }
 			});
 
 			return;
@@ -113,7 +114,7 @@ export default defineComponent({
 
 			this.$router.replace({
 				name: 'DinozPage',
-				params: { id: this.dinozId }
+				params: { id: returnDinozId }
 			});
 			return;
 		}

@@ -143,7 +143,7 @@
 						v-html="formatContent($t(`shop.item.${getShopNameFromAction(action)}.description`))"
 					/>
 					<p v-else-if="action.name === Action.NPC" v-html="formatContent($t(`npc.description`))" />
-					<p v-else-if="action.name === Action.MISSION" v-html="formatContent(getMissionActionDescription())" />
+					<p v-else-if="action.name === Action.MISSION" v-html="formatContent(getMissionActionDescription(action))" />
 					<p v-else-if="action.name === Action.CLAN_ACTION && action.clanAction">
 						{{
 							$t('action.clanAction.description', {
@@ -231,6 +231,7 @@ export default defineComponent({
 			DINOZ_STATE,
 			missionTalkTextKey: null as string | null,
 			missionTalkNameKey: null as string | null,
+			missionTalkDinozId: null as number | null,
 			missionReward: null as MissionInteractionRewardModal | null,
 			reincarnate: false as boolean,
 			fastGatherOver: false,
@@ -343,19 +344,24 @@ export default defineComponent({
 			return this.$te(value) ? this.$t(value) : value;
 		},
 		getNpcActionName(action: ActionFiche) {
+			const follower = action.forDinoz ? `${this.dinoz.followers?.find(f => f.id === action.forDinoz)?.name}: ` : '';
+			let name = '';
 			if (typeof action.label === 'string' && action.label.length > 0) {
-				return this.translateI18nText(action.label);
+				name = this.translateI18nText(action.label);
+			} else if (typeof action.prop === 'string') {
+				name = this.translateI18nText(action.prop);
 			}
-			if (typeof action.prop === 'string') {
-				return this.translateI18nText(action.prop);
-			}
-			return '';
+			return `${follower}${name}`;
 		},
 		getMissionActionName(action: ActionFiche) {
+			const follower = action.forDinoz ? `${this.dinoz.followers?.find(f => f.id === action.forDinoz)?.name}: ` : '';
+			let label = '';
 			if (typeof action.label === 'string' && action.label.length > 0) {
-				return this.translateI18nText(action.label).toString();
+				label = this.translateI18nText(action.label).toString();
+			} else {
+				label = this.$t('action.name.mission').toString();
 			}
-			return this.$t('action.name.mission').toString();
+			return `${follower}${label}`;
 		},
 		getActionLabel(action: ActionFiche): string {
 			if (action.name === Action.CLAN_ACTION && action.clanAction) {
@@ -379,8 +385,11 @@ export default defineComponent({
 		isLongAction(action: ActionFiche): boolean {
 			return this.getActionLabel(action).length >= 20;
 		},
-		getMissionActionDescription(): string {
-			const goal = this.dinoz.currentMission?.currentGoal;
+		getMissionActionDescription(action?: ActionFiche): string {
+			const followerFiche = action?.forDinoz
+				? (this.dinozStore.getDinoz(action.forDinoz) as DinozFiche | undefined)
+				: null;
+			const goal = followerFiche?.currentMission?.currentGoal ?? this.dinoz.currentMission?.currentGoal;
 			if (!goal) {
 				return this.$t('npc.description').toString();
 			}
@@ -413,11 +422,12 @@ export default defineComponent({
 			}
 			return `dialog:${action.prop}`;
 		},
-		async handleMissionInteractionResult(result: MissionInteractionStartResponse) {
+		async handleMissionInteractionResult(result: MissionInteractionStartResponse, dinozIdOverride?: number) {
+			const targetDinozId = dinozIdOverride ?? this.dinozId;
 			switch (result.mode) {
 				case 'modal': {
 					if (result.goalType === 'VALIDATE') {
-						const completion = await MissionService.completeAction(this.dinozId);
+						const completion = await MissionService.completeAction(targetDinozId);
 						if (completion.rewardModal) {
 							this.missionReward = completion.rewardModal;
 						}
@@ -431,7 +441,7 @@ export default defineComponent({
 						result.goalType === 'USE_MONEY' ||
 						result.goalType === 'USE_INGREDIENT'
 					) {
-						const completion = await MissionService.completeAction(this.dinozId);
+						const completion = await MissionService.completeAction(targetDinozId);
 						await this.refreshDinoz();
 						await this.$refreshGold();
 						await this.$refreshTreasureTicket();
@@ -441,23 +451,25 @@ export default defineComponent({
 							return;
 						}
 						if (!completion.completed) {
-							const nextResult = await MissionService.startAction(this.dinozId, this.localStore.getAutoReequipItems);
-							await this.handleMissionInteractionResult(nextResult);
+							const nextResult = await MissionService.startAction(targetDinozId, this.localStore.getAutoReequipItems);
+							await this.handleMissionInteractionResult(nextResult, targetDinozId);
 						}
 						return;
 					}
 					this.missionTalkNameKey = result.nameKey;
 					this.missionTalkTextKey = result.textKey ?? null;
+					this.missionTalkDinozId = targetDinozId;
 					return;
 				}
 				case 'dialog':
 					this.$router.push({
 						name: 'DialogPage',
 						params: {
-							id: this.dinozId.toString(),
+							id: targetDinozId.toString(),
 							dialogId: result.dialogId
 						},
 						query: {
+							...(targetDinozId !== this.dinozId ? { returnTo: this.dinozId.toString() } : {}),
 							missionAction: '1',
 							missionNameKey: result.nameKey,
 							missionTextKey: result.textKey,
@@ -471,7 +483,8 @@ export default defineComponent({
 					this.sessionStore.setFightResult(result.fight);
 					this.$router.push({
 						name: 'FightPage',
-						params: { dinozId: this.dinozId.toString() }
+						params: { dinozId: targetDinozId.toString() },
+						query: targetDinozId !== this.dinozId ? { returnTo: this.dinozId.toString() } : undefined
 					});
 					return;
 			}
@@ -591,14 +604,13 @@ export default defineComponent({
 					this.$router.push({
 						name: 'DialogPage',
 						params: {
-							id: this.dinozId.toString(),
+							id: (action.forDinoz ?? this.dinozId).toString(),
 							dialogId: action.prop
 						},
-						query: action.dialogPhaseId
-							? {
-									phaseId: action.dialogPhaseId
-								}
-							: undefined
+						query: {
+							...(action.forDinoz ? { returnTo: this.dinozId.toString() } : {}),
+							...(action.dialogPhaseId ? { phaseId: action.dialogPhaseId } : {})
+						}
 					});
 					break;
 				case Action.FIGHT: {
@@ -634,8 +646,9 @@ export default defineComponent({
 					break;
 				case Action.MISSION:
 					try {
-						const result = await MissionService.startAction(this.dinozId, this.localStore.getAutoReequipItems);
-						await this.handleMissionInteractionResult(result);
+						const targetDinozId = action.forDinoz ? Number(action.forDinoz) : this.dinozId;
+						const result = await MissionService.startAction(targetDinozId, this.localStore.getAutoReequipItems);
+						await this.handleMissionInteractionResult(result, targetDinozId);
 					} catch (e) {
 						errorHandler.handle(e, this.$toast);
 					}
@@ -1062,9 +1075,11 @@ export default defineComponent({
 		},
 		async closeMissionTalkModal() {
 			try {
-				const result = await MissionService.completeAction(this.dinozId);
+				const dinozIdToComplete = this.missionTalkDinozId ?? this.dinozId;
+				const result = await MissionService.completeAction(dinozIdToComplete);
 				this.missionTalkTextKey = null;
 				this.missionTalkNameKey = null;
+				this.missionTalkDinozId = null;
 				if (result.rewardModal) {
 					this.missionReward = result.rewardModal;
 				}
@@ -1112,6 +1127,7 @@ export default defineComponent({
 				if (newVal?.id !== oldVal?.id) {
 					this.missionTalkTextKey = null;
 					this.missionTalkNameKey = null;
+					this.missionTalkDinozId = null;
 					this.missionReward = null;
 					this.reincarnate = false;
 					this.resurrect = false;

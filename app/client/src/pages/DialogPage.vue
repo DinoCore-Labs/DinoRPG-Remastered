@@ -153,9 +153,10 @@ function buildInlineMissionDialogState(): DialogPhaseResponse {
 }
 
 async function navigateBackToDinoz() {
+	const returnDinozId = (route.query.returnTo as string | undefined) ?? String(dinozId.value);
 	await router.replace({
 		name: 'DinozPage',
-		params: { id: String(dinozId.value) }
+		params: { id: returnDinozId }
 	});
 }
 
@@ -180,7 +181,8 @@ async function handlePhaseActions(phase: DialogPhaseResponse) {
 		// This prevents Cmd+Left (Mac back) from re-opening the NPC dialog after a combat.
 		await router.replace({
 			name: 'FightPage',
-			params: { dinozId: String(dinozId.value) }
+			params: { dinozId: String(dinozId.value) },
+			query: route.query.returnTo ? { returnTo: String(route.query.returnTo) } : undefined
 		});
 		return;
 	}
