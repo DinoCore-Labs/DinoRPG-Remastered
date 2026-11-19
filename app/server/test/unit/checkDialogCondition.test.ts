@@ -65,7 +65,8 @@ function createContext(): DialogContext {
 			place: PlaceEnum.DINOVILLE
 		},
 		world: {
-			activeFeatures: new Set(['starquest'])
+			activeFeatures: new Set(['starquest']),
+			activeEvents: new Set<string>()
 		},
 		now: new Date(2026, 8, 22, 6, 30)
 	};
