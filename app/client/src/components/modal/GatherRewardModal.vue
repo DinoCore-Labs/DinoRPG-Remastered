@@ -13,7 +13,7 @@
 -->
 <template>
 	<Transition>
-		<div class="modal-background">
+		<div class="modal-background" :class="{ 'can-skip': isBypassGatheringGrid }" @click="onPageClick">
 			<div v-if="rewardList.ingredients.length === 0 && rewardList.item.length === 0 && rewardList.gold === 0">
 				<span class="nothing">{{ $t('gather.nothing') }}</span>
 			</div>
@@ -90,6 +90,7 @@
 import { defineComponent, type PropType } from 'vue';
 import type { GatherRewards } from '@dinorpg/core/models/gather/gatherRewards.js';
 import { userStore } from '../../store/userStore';
+import { localStore } from '../../store/localStore.js';
 import { itemList } from '@dinorpg/core/models/items/itemList.js';
 import type { GatherIngredientInventoryState } from '@dinorpg/core/models/gather/gatherResult.js';
 
@@ -125,8 +126,25 @@ export default defineComponent({
 		if (this.rewardList.gold > 0) {
 			this.userStore.setGold(this.rewardList.gold);
 		}
+		window.addEventListener('keydown', this.handleKeyDown);
+	},
+	beforeUnmount() {
+		window.removeEventListener('keydown', this.handleKeyDown);
 	},
 	methods: {
+		onPageClick() {
+			if (this.isBypassGatheringGrid) {
+				this.$emit('close');
+			}
+		},
+		handleKeyDown(event: KeyboardEvent) {
+			if (!this.isBypassGatheringGrid) return;
+
+			if (event.key === 'Enter' || event.key === ' ' || event.key === 'Escape') {
+				event.preventDefault();
+				this.$emit('close');
+			}
+		},
 		getItemById(itemId: number) {
 			return Object.values(this.itemList).find(item => item.itemId === itemId);
 		},
@@ -159,6 +177,9 @@ export default defineComponent({
 		}
 	},
 	computed: {
+		isBypassGatheringGrid(): boolean {
+			return localStore().getBypassGatheringGrid;
+		},
 		displayedIngredients(): DisplayIngredientReward[] {
 			const totalWonByIngredient = new Map<number, number>();
 			for (const ingredient of this.rewardList.ingredients) {
@@ -209,6 +230,9 @@ export default defineComponent({
 	align-items: center;
 	flex-direction: column;
 	min-height: auto;
+	&.can-skip {
+		cursor: pointer;
+	}
 	img {
 		margin-top: 15px;
 	}
