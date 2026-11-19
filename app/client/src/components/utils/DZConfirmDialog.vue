@@ -36,7 +36,7 @@
 						<span>{{ rejectLabel }}</span>
 					</div>
 				</DZButton>
-				<DZButton class="btn btn-accept" @click="acceptDialog" @keydown.enter="acceptDialog">
+				<DZButton class="btn btn-accept" @click="acceptDialog">
 					<div class="btn-content">
 						<img :src="getImgURL('icons', 'small_right')" alt="right" />
 						<span>{{ acceptLabel }}</span>
@@ -80,7 +80,48 @@ export default {
 		onConfirm: Function,
 		onReject: Function
 	},
+	watch: {
+		visible(newVal: boolean) {
+			if (newVal) {
+				window.addEventListener('keydown', this.handleKeyDown);
+			} else {
+				window.removeEventListener('keydown', this.handleKeyDown);
+			}
+		}
+	},
+	mounted() {
+		if (this.visible) {
+			window.addEventListener('keydown', this.handleKeyDown);
+		}
+	},
+	beforeUnmount() {
+		window.removeEventListener('keydown', this.handleKeyDown);
+	},
 	methods: {
+		handleKeyDown(event: KeyboardEvent) {
+			if (!this.visible) return;
+
+			const target = event.target as HTMLElement | null;
+			if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable)) {
+				return;
+			}
+
+			if (event.key === 'Enter' || event.key === ' ') {
+				if (target && target.closest('.btn-reject, .simple-confirm-dialog-close')) {
+					event.preventDefault();
+					event.stopPropagation();
+					this.rejectDialog();
+					return;
+				}
+				event.preventDefault();
+				event.stopPropagation();
+				this.acceptDialog();
+			} else if (event.key === 'Escape') {
+				event.preventDefault();
+				event.stopPropagation();
+				this.rejectDialog();
+			}
+		},
 		acceptDialog() {
 			if (this.onConfirm) {
 				this.onConfirm();
