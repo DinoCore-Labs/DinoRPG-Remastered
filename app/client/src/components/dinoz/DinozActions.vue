@@ -87,74 +87,179 @@
 				:content="$t('dinoz.hud.defendingDevourer')"
 			/>
 			<DZFollow v-if="dinoz.actions?.some(a => a.name === Action.FOLLOW)" :dinoz="dinozId"></DZFollow>
-			<Tippy
-				tag="div"
-				theme="normal"
-				class="action"
-				:class="{
-					'long-text': isLongAction(action),
-					'clan-action': action.name === Action.CLAN_ACTION,
-					'disabled-action':
-						action.name === Action.CLAN_ACTION &&
-						(action.clanAction?.completed || !dinoz.fight || dinoz.state !== null || dinoz.life <= 0)
-				}"
+			<template
 				v-for="(action, index) in dinoz.actions?.filter(
 					a => a.name !== Action.FOLLOW && a.name !== Action.DEFENDING_DEVOURER
 				)"
 				:key="(action.imgName || action.name) + '_' + index"
-				:id="action.imgName"
-				:data-tutorial-action="getTutorialActionKey(action)"
-				@click="launch(action)"
 			>
-				<img :src="getImgURL('act', action.imgName)" :alt="action.imgName" />
-				<p v-if="action.name === 'shop'">{{ $t(`shop.item.${getShopNameFromAction(action)}.name`) }}</p>
-				<p v-else-if="action.name === Action.NPC">
-					{{ getNpcActionName(action) }}
-				</p>
-				<p v-else-if="action.name === Action.MISSION">
-					{{ getMissionActionName(action) }}
-				</p>
-				<p v-else-if="action.name === Action.CLAN_ACTION && action.clanAction" class="clan-action-label">
-					{{ getActionLabel(action) }}
-					<small>{{
-						$t('action.clanAction.count', { progress: action.clanAction.progress, total: action.clanAction.total })
-					}}</small>
-				</p>
-				<p v-else>
-					{{ action.forDinoz ? `${dinoz.followers.find(f => f.id === action.forDinoz)?.name}: ` : '' }}
-					{{ $t(`action.name.${action.name}`) }}
-				</p>
-				<template #content>
-					<h1
-						v-if="action.name === 'shop'"
-						v-html="formatContent($t(`shop.item.${getShopNameFromAction(action)}.name`))"
-					/>
-					<h1 v-else-if="action.name === 'npc'">
-						{{ getNpcActionName(action) }}
-					</h1>
-					<h1 v-else-if="action.name === Action.MISSION">
-						{{ getMissionActionName(action) }}
-					</h1>
-					<h1 v-else-if="action.name === Action.CLAN_ACTION">{{ getActionLabel(action) }}</h1>
-					<h1 v-else v-html="formatContent($t(`action.name.${action.name}`))" />
-					<!-- DESCRIPTION ACTIONS -->
-					<p
-						v-if="action.name === 'shop'"
-						v-html="formatContent($t(`shop.item.${getShopNameFromAction(action)}.description`))"
-					/>
-					<p v-else-if="action.name === Action.NPC" v-html="formatContent($t(`npc.description`))" />
-					<p v-else-if="action.name === Action.MISSION" v-html="formatContent(getMissionActionDescription(action))" />
-					<p v-else-if="action.name === Action.CLAN_ACTION && action.clanAction">
-						{{
-							$t('action.clanAction.description', {
-								progress: action.clanAction.progress,
-								total: action.clanAction.total
-							})
-						}}
-					</p>
-					<p v-else v-html="formatContent($t(`action.description.${action.name}`))" />
+				<!-- GROUP ACCORDION BUTTON & PANEL (for Leader or Follower) -->
+				<template
+					v-if="(action.name === Action.DISBAND && isLeader) || (action.name === Action.UNFOLLOW && isFollower)"
+				>
+					<div
+						class="action group-toggle-action"
+						:class="{ open: groupAccordionOpen }"
+						@click="groupAccordionOpen = !groupAccordionOpen"
+					>
+						<img :src="getImgURL('act', 'act_leader')" alt="act_leader" />
+						<p>{{ $t('common.group') }}</p>
+					</div>
+					<div v-show="groupAccordionOpen" class="group-panel">
+						<!-- COMPANIONS IN GROUP (Leader only) -->
+						<div v-if="isLeader && followerDinozList.length > 0" class="followers-grid">
+							<div
+								v-for="member in followerDinozList"
+								:key="member.id"
+								class="follower-card"
+								:class="{ dead: member.life === 0 }"
+								v-tippy="{ content: member.name, theme: 'small' }"
+								@click="goToDinoz(member.id)"
+							>
+								<div class="mini-container">
+									<DinozMini v-if="member.display" :display="member.display" :key="`${member.id}-${member.display}`" />
+									<img
+										v-if="canLevelUp(member)"
+										class="lvlup-badge"
+										:src="getImgURL('icons', 'small_lup')"
+										alt="lvlup"
+										v-tippy="{ content: $t('action.name.levelup'), theme: 'small' }"
+									/>
+									<img
+										v-if="canLevelUp(member)"
+										class="lvlup-badge"
+										:src="getImgURL('icons', 'small_lup')"
+										alt="lvlup"
+										v-tippy="{ content: $t('action.name.levelup'), theme: 'small' }"
+									/>
+								</div>
+								<div class="bars">
+									<div class="bar-wrapper">
+										<div class="bar-fill-pv" :style="{ width: `${getBarPercent(member.life, member.maxLife)}%` }"></div>
+										<span class="bar-text">{{ member.life ?? 0 }}/{{ member.maxLife ?? 100 }}</span>
+									</div>
+									<div class="bar-wrapper">
+										<div
+											class="bar-fill-xp"
+											:style="{ width: `${getBarPercent(member.experience, member.maxExperience)}%` }"
+										></div>
+										<span class="bar-text">{{ member.experience ?? 0 }}/{{ member.maxExperience ?? 100 }}</span>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- LEADER ACTION (Dissoudre le groupe) -->
+						<template v-if="action.name === Action.DISBAND">
+							<Tippy tag="div" theme="normal" class="action group-sub-action" @click="launch(action)">
+								<img :src="getImgURL('act', action.imgName)" :alt="action.imgName" />
+								<p>{{ $t(`action.name.${action.name}`) }}</p>
+								<template #content>
+									<h1 v-html="formatContent($t(`action.name.${action.name}`))" />
+									<p v-html="formatContent($t(`action.description.${action.name}`))" />
+								</template>
+							</Tippy>
+						</template>
+
+						<!-- FOLLOWER ACTIONS (Devenir Leader & Ne plus suivre) -->
+						<template v-else-if="action.name === Action.UNFOLLOW">
+							<Tippy
+								v-if="changeLeaderAction"
+								tag="div"
+								theme="normal"
+								class="action group-sub-action"
+								@click="launch(changeLeaderAction)"
+							>
+								<img :src="getImgURL('act', changeLeaderAction.imgName)" :alt="changeLeaderAction.imgName" />
+								<p>{{ $t(`action.name.${changeLeaderAction.name}`) }}</p>
+								<template #content>
+									<h1 v-html="formatContent($t(`action.name.${changeLeaderAction.name}`))" />
+									<p v-html="formatContent($t(`action.description.${changeLeaderAction.name}`))" />
+								</template>
+							</Tippy>
+							<Tippy tag="div" theme="normal" class="action group-sub-action" @click="launch(action)">
+								<img :src="getImgURL('act', action.imgName)" :alt="action.imgName" />
+								<p>{{ $t(`action.name.${action.name}`) }}</p>
+								<template #content>
+									<h1 v-html="formatContent($t(`action.name.${action.name}`))" />
+									<p v-html="formatContent($t(`action.description.${action.name}`))" />
+								</template>
+							</Tippy>
+						</template>
+					</div>
 				</template>
-			</Tippy>
+
+				<!-- HIDE CHANGE_LEADER from top-level when follower (rendered inside group accordion) -->
+				<template v-else-if="action.name === Action.CHANGE_LEADER && isFollower">
+					<!-- Hidden: Rendered inside the UNFOLLOW group panel -->
+				</template>
+
+				<Tippy
+					v-else
+					tag="div"
+					theme="normal"
+					class="action"
+					:class="{
+						'long-text': isLongAction(action),
+						'clan-action': action.name === Action.CLAN_ACTION,
+						'disabled-action':
+							action.name === Action.CLAN_ACTION &&
+							(action.clanAction?.completed || !dinoz.fight || dinoz.state !== null || dinoz.life <= 0)
+					}"
+					:id="action.imgName"
+					:data-tutorial-action="getTutorialActionKey(action)"
+					@click="launch(action)"
+				>
+					<img :src="getImgURL('act', action.imgName)" :alt="action.imgName" />
+					<p v-if="action.name === 'shop'">{{ $t(`shop.item.${getShopNameFromAction(action)}.name`) }}</p>
+					<p v-else-if="action.name === Action.NPC">
+						{{ getNpcActionName(action) }}
+					</p>
+					<p v-else-if="action.name === Action.MISSION">
+						{{ getMissionActionName(action) }}
+					</p>
+					<p v-else-if="action.name === Action.CLAN_ACTION && action.clanAction" class="clan-action-label">
+						{{ getActionLabel(action) }}
+						<small>{{
+							$t('action.clanAction.count', { progress: action.clanAction.progress, total: action.clanAction.total })
+						}}</small>
+					</p>
+					<p v-else>
+						{{ action.forDinoz ? `${dinoz.followers.find(f => f.id === action.forDinoz)?.name}: ` : '' }}
+						{{ $t(`action.name.${action.name}`) }}
+					</p>
+					<template #content>
+						<h1
+							v-if="action.name === 'shop'"
+							v-html="formatContent($t(`shop.item.${getShopNameFromAction(action)}.name`))"
+						/>
+						<h1 v-else-if="action.name === 'npc'">
+							{{ getNpcActionName(action) }}
+						</h1>
+						<h1 v-else-if="action.name === Action.MISSION">
+							{{ getMissionActionName(action) }}
+						</h1>
+						<h1 v-else-if="action.name === Action.CLAN_ACTION">{{ getActionLabel(action) }}</h1>
+						<h1 v-else v-html="formatContent($t(`action.name.${action.name}`))" />
+						<!-- DESCRIPTION ACTIONS -->
+						<p
+							v-if="action.name === 'shop'"
+							v-html="formatContent($t(`shop.item.${getShopNameFromAction(action)}.description`))"
+						/>
+						<p v-else-if="action.name === Action.NPC" v-html="formatContent($t(`npc.description`))" />
+						<p v-else-if="action.name === Action.MISSION" v-html="formatContent(getMissionActionDescription(action))" />
+						<p v-else-if="action.name === Action.CLAN_ACTION && action.clanAction">
+							{{
+								$t('action.clanAction.description', {
+									progress: action.clanAction.progress,
+									total: action.clanAction.total
+								})
+							}}
+						</p>
+						<p v-else v-html="formatContent($t(`action.description.${action.name}`))" />
+					</template>
+				</Tippy>
+			</template>
 			<DZDisclaimer timer v-if="isSelling()" class="selling" :content="$t('toast.isSelling')" />
 		</div>
 	</div>
@@ -207,6 +312,7 @@ import type { GatherResult } from '@dinorpg/core/models/gather/gatherResult.js';
 import { DojoService } from '../../services/dojo.service.ts';
 import { MtDungeonService } from '../../services/mtDungeon.service.js';
 import MtDungeonMessageBox from '../dungeon/MtDungeonMessageBox.vue';
+import DinozMini from './DinozMini.vue';
 
 export default defineComponent({
 	name: 'DinozActions',
@@ -237,7 +343,8 @@ export default defineComponent({
 			fastGatherOver: false,
 			fastGatherResult: null as GatherResult | null,
 			dungeonEntryMessage: null as { title: string; text: string } | null,
-			clanActionBusy: false
+			clanActionBusy: false,
+			groupAccordionOpen: false as boolean
 		};
 	},
 	components: {
@@ -249,7 +356,8 @@ export default defineComponent({
 		DZFollow,
 		Reincarnate,
 		GatherRewardModal,
-		MtDungeonMessageBox
+		MtDungeonMessageBox,
+		DinozMini
 	},
 	props: {
 		dinoz: {
@@ -888,6 +996,13 @@ export default defineComponent({
 					}
 					break;
 				case Action.CHANGE_LEADER:
+					if (this.dinoz.life <= 0) {
+						this.$toast.open({
+							message: formatText(this.$t('toast.dinozGroupDead')),
+							type: 'error'
+						});
+						return;
+					}
 					try {
 						const followerId = this.dinozId;
 						const currentLeader = this.dinozStore.getDinozList.find(d => d.id === followerId)?.leaderId;
@@ -1059,6 +1174,23 @@ export default defineComponent({
 			if (!this.leaderDinoz) return;
 			this.$router.push({ name: 'DinozPage', params: { id: this.leaderDinoz.id } });
 		},
+		goToDinoz(dinozId: number) {
+			this.$router.push({ name: 'DinozPage', params: { id: dinozId } });
+		},
+		canLevelUp(dinoz: DinozFiche): boolean {
+			return Boolean(dinoz.experience >= dinoz.maxExperience && dinoz.maxExperience > 0);
+		},
+		getBarPercent(actual?: number, max?: number): number {
+			if (!actual || !max || max <= 0) return 0;
+			const safeActual = Math.max(0, actual > max ? max : actual);
+			return Math.round((safeActual / max) * 100);
+		},
+		getBarWidth(actual?: number, max?: number): string {
+			if (!actual || !max || max <= 0) return 'width: 0px';
+			const safeActual = actual > max ? max : actual;
+			const width = Math.round((safeActual / max) * 36);
+			return `width: ${width}px`;
+		},
 		async endMission(dinozId: number) {
 			const dinozToUpdate = this.dinozStore.getDinoz(dinozId) as DinozFiche | undefined;
 			if (dinozToUpdate) {
@@ -1092,6 +1224,43 @@ export default defineComponent({
 	computed: {
 		dinozInDungeon(): boolean {
 			return this.dinoz.actions?.some(action => action.name === Action.DUNGEON) ?? false;
+		},
+		isLeader(): boolean {
+			return (this.dinoz.followers?.length ?? 0) > 0;
+		},
+		isFollower(): boolean {
+			return Boolean(this.dinoz.leaderId);
+		},
+		changeLeaderAction(): ActionFiche | undefined {
+			return this.dinoz.actions?.find(a => a.name === Action.CHANGE_LEADER);
+		},
+		otherGroupDinozList(): DinozFiche[] {
+			const list = this.dinozStore.getDinozList ?? [];
+			const byId = new Map(list.map(dinoz => [dinoz.id, dinoz]));
+
+			if (this.isLeader) {
+				if (!this.dinoz.followers?.length) return [];
+				return this.dinoz.followers
+					.map(f => byId.get(f.id) ?? this.dinozStore.getDinoz(f.id))
+					.filter((d): d is DinozFiche => d !== undefined);
+			}
+
+			if (this.isFollower && this.dinoz.leaderId) {
+				const leader = byId.get(this.dinoz.leaderId) ?? this.dinozStore.getDinoz(this.dinoz.leaderId);
+				if (!leader) return [];
+
+				const coFollowers = (leader.followers ?? [])
+					.filter(f => f.id !== this.dinoz.id)
+					.map(f => byId.get(f.id) ?? this.dinozStore.getDinoz(f.id))
+					.filter((d): d is DinozFiche => d !== undefined);
+
+				return [leader, ...coFollowers];
+			}
+
+			return [];
+		},
+		followerDinozList(): DinozFiche[] {
+			return this.otherGroupDinozList;
 		},
 		dinozFullParty(): DinozFiche[] {
 			const list = this.dinozStore.getDinozList ?? [];
@@ -1133,6 +1302,7 @@ export default defineComponent({
 					this.resurrect = false;
 					this.fastGatherOver = false;
 					this.fastGatherResult = null;
+					this.groupAccordionOpen = false;
 				}
 				this.dinozId = this.dinoz.id;
 				this.updateRestCountdown();
@@ -1157,10 +1327,11 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .follow {
-	padding: 5px 5px 5px 20px;
+	margin: 1px 0;
+	padding: 2px 5px 2px 20px;
 	background-color: #bc683c;
 	background-image: url('../../assets/icons/small_missAct.webp');
-	background-position: 5px 8px;
+	background-position: 5px center;
 	background-repeat: no-repeat;
 	line-height: 10pt;
 	overflow: hidden;
@@ -1169,6 +1340,10 @@ export default defineComponent({
 	color: #fce3bc;
 	font-size: 9pt;
 	align-self: stretch;
+	transition: background-color 0.15s;
+	&:hover {
+		background-color: #9a4029;
+	}
 }
 .actions {
 	background:
@@ -1266,6 +1441,132 @@ export default defineComponent({
 				line-height: 1.05;
 			}
 		}
+		.group-toggle-action {
+			cursor: pointer;
+			user-select: none;
+			&.open {
+				background-color: #9a4029;
+			}
+		}
+		.group-panel {
+			width: 100%;
+			background-color: #be7546;
+			border: 1px solid #8e3a20;
+			border-radius: 5px;
+			padding: 4px;
+			box-sizing: border-box;
+			display: flex;
+			flex-direction: column;
+			gap: 4px;
+			margin-top: 2px;
+			margin-bottom: 3px;
+			.followers-grid {
+				display: grid;
+				grid-template-columns: repeat(2, 1fr);
+				gap: 4px;
+				width: 100%;
+			}
+			.follower-card {
+				background-color: #f2ca8e;
+				border: 1px solid #bc683c;
+				border-radius: 4px;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				padding: 3px 4px 4px 4px;
+				cursor: pointer;
+				user-select: none;
+				box-sizing: border-box;
+				gap: 2px;
+				overflow: hidden;
+				&:hover {
+					background-color: #f8db9f;
+					border-color: #8e3a20;
+				}
+				&.dead {
+					background-color: #a9a9a9;
+					border-color: #7b7b7b;
+					filter: grayscale(85%);
+					opacity: 0.8;
+					&:hover {
+						background-color: #b8b8b8;
+						border-color: #666;
+					}
+				}
+				.mini-container {
+					position: relative;
+					width: 55px;
+					height: 42px;
+					overflow: hidden;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					flex-shrink: 0;
+					:deep(.dinoWrap) {
+						transform: scale(0.78) translateY(-4px);
+						transform-origin: center center;
+					}
+					.lvlup-badge {
+						position: absolute;
+						top: 1px;
+						right: 1px;
+						z-index: 2;
+						pointer-events: auto;
+					}
+				}
+				.bars {
+					width: 100%;
+					display: flex;
+					flex-direction: column;
+					gap: 2px;
+					justify-content: center;
+					.bar-wrapper {
+						position: relative;
+						height: 11px;
+						background-color: #000;
+						border: 1px solid #783515;
+						border-radius: 2px;
+						overflow: hidden;
+						display: flex;
+						align-items: center;
+						width: 100%;
+						box-sizing: border-box;
+						.bar-fill-pv {
+							height: 100%;
+							background-color: yellow;
+						}
+						.bar-fill-xp {
+							height: 100%;
+							background-color: #ff54e4;
+						}
+						.bar-text {
+							position: absolute;
+							inset: 0;
+							display: flex;
+							align-items: center;
+							justify-content: center;
+							font-size: 7pt;
+							font-family: Arial, sans-serif;
+							font-weight: bold;
+							color: #fff;
+							text-shadow:
+								1px 1px 1px #000,
+								-1px -1px 1px #000,
+								1px -1px 1px #000,
+								-1px 1px 1px #000;
+							line-height: 11px;
+							white-space: nowrap;
+							pointer-events: none;
+							letter-spacing: -0.2px;
+						}
+					}
+				}
+			}
+			.group-sub-action {
+				margin-top: 2px;
+				width: 100% !important;
+			}
+		}
 	}
 }
 @media (max-width: 539px) {
@@ -1289,6 +1590,35 @@ export default defineComponent({
 				&.long-text {
 					font-size: 8pt;
 					line-height: 1;
+				}
+			}
+			.group-panel {
+				width: 100% !important;
+				.followers-grid {
+					display: grid;
+					grid-template-columns: repeat(2, 1fr);
+					gap: 6px;
+				}
+				.follower-card {
+					padding: 4px 6px;
+					gap: 3px;
+					.mini-container {
+						width: 60px;
+						height: 46px;
+						:deep(.dinoWrap) {
+							transform: scale(0.85) translateY(-4px);
+						}
+					}
+					.bars .bar-wrapper {
+						height: 12px;
+						.bar-text {
+							font-size: 8pt;
+							letter-spacing: normal;
+						}
+					}
+				}
+				.group-sub-action {
+					width: 100% !important;
 				}
 			}
 			.follow {
