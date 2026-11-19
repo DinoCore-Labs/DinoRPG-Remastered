@@ -149,7 +149,7 @@ describe('getAvailableActions - follower actions ordering', () => {
 			nbrUpLightning: 1,
 			nbrUpAir: 1,
 			raceId: 1,
-			skills: [{ skillId: Skill.PECHEUR_DE_PETIT_POISSON, state: 'unlocked' }],
+			skills: [{ skillId: Skill.APPRENTI_PECHEUR, state: 'unlocked' }],
 			status: [],
 			items: [],
 			missions: [
