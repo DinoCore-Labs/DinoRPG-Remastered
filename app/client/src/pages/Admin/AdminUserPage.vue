@@ -11,14 +11,17 @@
 		<p v-else-if="error" class="red">{{ error }}</p>
 		<template v-else-if="user">
 			<AdminUserSummaryCard :user="user" />
-			<AdminUserProfileForm :user="user" @updated="reloadUser" />
-			<AdminUserSanctionForm :user="user" @updated="reloadUser" />
-			<AdminUserWalletForm v-if="uStore.isAdmin" :user="user" @updated="reloadUser" />
-			<AdminUserUniqueSkillsForm v-if="uStore.isAdmin" :user="user" @updated="reloadUser" />
-			<AdminUserInventoryForm v-if="uStore.isAdmin" :user="user" type="items" @updated="reloadUser" />
-			<AdminUserInventoryForm v-if="uStore.isAdmin" :user="user" type="ingredients" @updated="reloadUser" />
-			<AdminUserRewardsForm v-if="uStore.isAdmin" :user="user" @updated="reloadUser" />
-			<AdminUserScenariosForm v-if="user && uStore.isAdmin" :user="user" @updated="reloadUser" />
+			<p v-if="isProtectedSuperAdmin" class="red">Compte SUPER_ADMIN protégé : modification interdite.</p>
+			<template v-else>
+				<AdminUserProfileForm :user="user" @updated="reloadUser" />
+				<AdminUserSanctionForm :user="user" @updated="reloadUser" />
+				<AdminUserWalletForm v-if="uStore.isAdmin" :user="user" @updated="reloadUser" />
+				<AdminUserUniqueSkillsForm v-if="uStore.isAdmin" :user="user" @updated="reloadUser" />
+				<AdminUserInventoryForm v-if="uStore.isAdmin" :user="user" type="items" @updated="reloadUser" />
+				<AdminUserInventoryForm v-if="uStore.isAdmin" :user="user" type="ingredients" @updated="reloadUser" />
+				<AdminUserRewardsForm v-if="uStore.isAdmin" :user="user" @updated="reloadUser" />
+				<AdminUserScenariosForm v-if="user && uStore.isAdmin" :user="user" @updated="reloadUser" />
+			</template>
 			<AdminUserDinozList :user-id="user.id" :dinoz-list="dinozList" />
 		</template>
 	</div>
@@ -54,6 +57,7 @@ const loading = ref(false);
 const error = ref<string | null>(null);
 const user = ref<AdminUserDetails | null>(null);
 const dinozList = ref<AdminDinozSummary[]>([]);
+const isProtectedSuperAdmin = computed(() => user.value?.role === 'SUPER_ADMIN' && uStore.role !== 'SUPER_ADMIN');
 
 const routeUserId = computed(() => (typeof route.query.userId === 'string' ? route.query.userId : undefined));
 

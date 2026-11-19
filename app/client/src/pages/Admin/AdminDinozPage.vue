@@ -8,16 +8,62 @@
 		<p v-else-if="error" class="red">{{ error }}</p>
 		<template v-else-if="dinoz && userId">
 			<AdminDinozSummaryCard :user-id="userId" :dinoz="dinoz" />
-			<AdminDinozProfileForm :user-id="userId" :dinoz="dinoz" @updated="reloadDinoz" />
-			<AdminDinozStatsForm v-if="uStore.isAdmin" :user-id="userId" :dinoz="dinoz" @updated="reloadDinoz" />
-			<AdminDinozStateForm v-if="uStore.isAdmin" :user-id="userId" :dinoz="dinoz" @updated="reloadDinoz" />
-			<AdminDinozPlaceForm v-if="uStore.isAdmin" :user-id="userId" :dinoz="dinoz" @updated="reloadDinoz" />
-			<AdminDinozLeaderForm v-if="uStore.isAdmin" :user-id="userId" :dinoz="dinoz" @updated="reloadDinoz" />
-			<AdminDinozStatusForm v-if="uStore.isAdmin" :user-id="userId" :dinoz="dinoz" @updated="reloadDinoz" />
-			<AdminDinozSkillsForm v-if="uStore.isAdmin" :user-id="userId" :dinoz="dinoz" @updated="reloadDinoz" />
-			<AdminDinozUnlockableSkillsForm v-if="uStore.isAdmin" :user-id="userId" :dinoz="dinoz" @updated="reloadDinoz" />
-			<AdminDinozItemsForm v-if="uStore.isAdmin" :user-id="userId" :dinoz="dinoz" @updated="reloadDinoz" />
-			<AdminDinozMissionsForm v-if="uStore.isAdmin" :user-id="userId" :dinoz="dinoz" @updated="reloadDinoz" />
+			<p v-if="isProtectedSuperAdmin" class="red">Dinoz du SUPER_ADMIN : modification interdite.</p>
+			<AdminDinozProfileForm v-if="!isProtectedSuperAdmin" :user-id="userId" :dinoz="dinoz" @updated="reloadDinoz" />
+			<AdminDinozStatsForm
+				v-if="uStore.isAdmin && !isProtectedSuperAdmin"
+				:user-id="userId"
+				:dinoz="dinoz"
+				@updated="reloadDinoz"
+			/>
+			<AdminDinozStateForm
+				v-if="uStore.isAdmin && !isProtectedSuperAdmin"
+				:user-id="userId"
+				:dinoz="dinoz"
+				@updated="reloadDinoz"
+			/>
+			<AdminDinozPlaceForm
+				v-if="uStore.isAdmin && !isProtectedSuperAdmin"
+				:user-id="userId"
+				:dinoz="dinoz"
+				@updated="reloadDinoz"
+			/>
+			<AdminDinozLeaderForm
+				v-if="uStore.isAdmin && !isProtectedSuperAdmin"
+				:user-id="userId"
+				:dinoz="dinoz"
+				@updated="reloadDinoz"
+			/>
+			<AdminDinozStatusForm
+				v-if="uStore.isAdmin && !isProtectedSuperAdmin"
+				:user-id="userId"
+				:dinoz="dinoz"
+				@updated="reloadDinoz"
+			/>
+			<AdminDinozSkillsForm
+				v-if="uStore.isAdmin && !isProtectedSuperAdmin"
+				:user-id="userId"
+				:dinoz="dinoz"
+				@updated="reloadDinoz"
+			/>
+			<AdminDinozUnlockableSkillsForm
+				v-if="uStore.isAdmin && !isProtectedSuperAdmin"
+				:user-id="userId"
+				:dinoz="dinoz"
+				@updated="reloadDinoz"
+			/>
+			<AdminDinozItemsForm
+				v-if="uStore.isAdmin && !isProtectedSuperAdmin"
+				:user-id="userId"
+				:dinoz="dinoz"
+				@updated="reloadDinoz"
+			/>
+			<AdminDinozMissionsForm
+				v-if="uStore.isAdmin && !isProtectedSuperAdmin"
+				:user-id="userId"
+				:dinoz="dinoz"
+				@updated="reloadDinoz"
+			/>
 		</template>
 	</div>
 </template>
@@ -32,6 +78,7 @@ import type { AdminDinozDetails } from '@dinorpg/core/models/admin/adminDinoz.js
 import TitleHeader from '../../components/utils/TitleHeader.vue';
 import DZButton from '../../components/utils/DZButton.vue';
 import { AdminDinozService } from '../../services/adminDinoz.service';
+import { AdminUserService } from '../../services/adminUsers.service';
 import AdminDinozItemsForm from '../../components/admin/dinoz/AdminDinozItemsForm.vue';
 import AdminDinozLeaderForm from '../../components/admin/dinoz/AdminDinozLeaderForm.vue';
 import AdminDinozPlaceForm from '../../components/admin/dinoz/AdminDinozPlaceForm.vue';
@@ -51,6 +98,8 @@ const uStore = userStore();
 const loading = ref(false);
 const error = ref('');
 const dinoz = ref<AdminDinozDetails | null>(null);
+const ownerRole = ref<string | null>(null);
+const isProtectedSuperAdmin = computed(() => ownerRole.value === 'SUPER_ADMIN' && uStore.role !== 'SUPER_ADMIN');
 
 const userId = computed(() => (typeof route.query.playerId === 'string' ? route.query.playerId : undefined));
 
@@ -68,8 +117,15 @@ async function loadDinoz() {
 	loading.value = true;
 	error.value = '';
 	try {
-		dinoz.value = await AdminDinozService.getDinozDetails(userId.value, dinozId.value);
+		const [dinozDetails, owner] = await Promise.all([
+			AdminDinozService.getDinozDetails(userId.value, dinozId.value),
+			AdminUserService.getUserDetails(userId.value)
+		]);
+		dinoz.value = dinozDetails;
+		ownerRole.value = owner.role;
 	} catch (err) {
+		dinoz.value = null;
+		ownerRole.value = null;
 		error.value = err instanceof Error ? err.message : 'Impossible de charger le Dinoz.';
 	} finally {
 		loading.value = false;

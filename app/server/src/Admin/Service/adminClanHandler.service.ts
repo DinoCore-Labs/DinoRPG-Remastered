@@ -3,7 +3,7 @@ import { ClanMemberRight } from '@dinorpg/core/models/enums/ClanMemberRight.js';
 import { ingredientList } from '@dinorpg/core/models/ingredients/ingredientList.js';
 import type { FastifyReply, FastifyRequest } from 'fastify';
 
-import { GameLogType } from '../../../../prisma/index.js';
+import { GameLogType, Role } from '../../../../prisma/index.js';
 import { CreateGameLogInput, safeCreateGameLog } from '../../Gamelog/Controller/gamelog.controller.js';
 import { prisma } from '../../prisma.js';
 import {
@@ -176,6 +176,23 @@ export async function updateAdminClanLeaderHandler(request: FastifyRequest, repl
 
 	const clan = await prisma.clan.findUnique({ where: { id: params.data.id }, include: { members: true } });
 	if (!clan) return reply.status(404).send({ message: 'Clan not found' });
+
+	// Reassigning leadership also modifies the old and new leader's rights.
+	if (request.user.role !== Role.SUPER_ADMIN) {
+		const protectedLeader = await prisma.user.findFirst({
+			where: {
+				id: { in: [clan.leaderId, body.data.newLeaderId] },
+				role: Role.SUPER_ADMIN
+			},
+			select: { id: true }
+		});
+		if (protectedLeader) {
+			return reply.status(403).send({
+				code: 'admin.superAdminProtected',
+				message: 'Only SUPER_ADMIN may change the SUPER_ADMIN clan rights.'
+			});
+		}
+	}
 
 	const newLeaderIsMember = clan.members.some(m => m.userId === body.data.newLeaderId);
 	if (!newLeaderIsMember) return reply.status(400).send({ message: 'New leader must be a member of the clan' });
