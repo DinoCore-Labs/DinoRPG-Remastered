@@ -82,10 +82,15 @@
 				</tbody>
 			</table>
 		</div>
-		<div v-if="ingredientList.length !== 0 && totalSell > 0" class="sell">
+		<div v-if="ingredientList.length !== 0" class="sell">
+			<DZButton :disabled="!hasIngredientsInStock" @click="toggleSelectAll()">
+				{{ isAllSelected ? $t('common.deselectAll') : $t('common.selectAll') }}
+			</DZButton>
 			<DZButton
-				class="button"
-				v-html="formatContent($t('shop.item.sell', { sell: totalSell }))"
+				:disabled="totalSell === 0"
+				v-html="
+					formatContent(totalSell > 0 ? $t('shop.item.sell', { sell: totalSell, gold: totalSell }) : $t('common.sell'))
+				"
 				@click="sellIngredientPopinConfirmChoice()"
 			/>
 		</div>
@@ -173,9 +178,35 @@ export default defineComponent({
 		},
 		liveGold() {
 			this.totalSell = this.ingredientList.reduce((sum, ing) => {
-				const qty = this.inputValuesById[ing.ingredientId] ?? 0;
+				const qty = Number(this.inputValuesById[ing.ingredientId] ?? 0);
 				return sum + (ing.price ?? 0) * qty;
 			}, 0);
+		},
+		toggleSelectAll(): void {
+			if (this.isAllSelected) {
+				for (const ing of this.ingredientList) {
+					this.inputValuesById[ing.ingredientId] = 0;
+				}
+			} else {
+				for (const ing of this.ingredientList) {
+					this.inputValuesById[ing.ingredientId] = ing.quantity ?? 0;
+				}
+			}
+			this.liveGold();
+		}
+	},
+	computed: {
+		hasIngredientsInStock(): boolean {
+			return this.availableIngredients.length > 0;
+		},
+		availableIngredients(): IngredientFiche[] {
+			return this.ingredientList.filter(ing => (ing.quantity ?? 0) > 0);
+		},
+		isAllSelected(): boolean {
+			if (this.availableIngredients.length === 0) return false;
+			return this.availableIngredients.every(
+				ing => Number(this.inputValuesById[ing.ingredientId] ?? 0) === (ing.quantity ?? 0)
+			);
 		}
 	},
 	async mounted(): Promise<void> {
@@ -333,16 +364,8 @@ export default defineComponent({
 		display: flex;
 		justify-content: center;
 		margin-top: 20px;
-		.button {
-			background-size: cover;
-			font-size: 10pt;
-			padding-top: 3px;
-			width: 217px;
-			height: 39px;
-		}
-		.disabled {
-			opacity: 0.3;
-		}
+		gap: 10px;
+		flex-wrap: wrap;
 	}
 }
 </style>
