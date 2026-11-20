@@ -47,7 +47,14 @@
 			</template>
 		</Tippy>
 	</DZTable>
-	<DZButton v-if="isClan" @click="giveToClan()">{{ $t(`clan.ingredients.giveAway`) }}</DZButton>
+	<div class="actions" v-if="isClan">
+		<DZButton :disabled="!hasIngredientsInStock" @click="toggleSelectAll()">
+			{{ isAllSelected ? $t('common.deselectAll') : $t('common.selectAll') }}
+		</DZButton>
+		<DZButton :disabled="totalGivenIngredients === 0" @click="giveToClan()">
+			{{ $t(`clan.ingredients.giveAway`) }}
+		</DZButton>
+	</div>
 </template>
 
 <script lang="ts">
@@ -151,6 +158,17 @@ export default defineComponent({
 			}
 
 			await this.load();
+		},
+		toggleSelectAll(): void {
+			if (this.isAllSelected) {
+				for (const ing of this.filteredIngredientList) {
+					this.giveAwayMap[ing.ingredientId] = 0;
+				}
+			} else {
+				for (const ing of this.filteredIngredientList) {
+					this.giveAwayMap[ing.ingredientId] = ing.quantity ?? 0;
+				}
+			}
 		}
 	},
 	computed: {
@@ -161,8 +179,20 @@ export default defineComponent({
 				return false;
 			}
 		},
+		hasIngredientsInStock(): boolean {
+			return this.filteredIngredientList.length > 0;
+		},
 		filteredIngredientList(): IngredientFiche[] {
 			return this.ingredientList.filter(i => (i.quantity ?? 0) > 0);
+		},
+		isAllSelected(): boolean {
+			if (this.filteredIngredientList.length === 0) return false;
+			return this.filteredIngredientList.every(
+				ing => Number(this.giveAwayMap[ing.ingredientId] ?? 0) === (ing.quantity ?? 0)
+			);
+		},
+		totalGivenIngredients(): number {
+			return Object.values(this.giveAwayMap).reduce((sum, qty) => sum + (Number(qty) || 0), 0);
 		}
 	}
 });
@@ -197,5 +227,12 @@ export default defineComponent({
 .tdStock {
 	padding: 1px 5px;
 	width: 52px;
+}
+.actions {
+	display: flex;
+	justify-content: center;
+	gap: 10px;
+	margin-top: 15px;
+	flex-wrap: wrap;
 }
 </style>
