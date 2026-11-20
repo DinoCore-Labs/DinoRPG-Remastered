@@ -8,14 +8,16 @@ export const localStore = defineStore('localStore', {
 		skipLevelAnimation: false,
 		skipFightAnimation: false,
 		autoReequipItems: false,
-		bypassGatheringGrid: false
+		bypassGatheringGrid: false,
+		moveDinozDetailsDownMobile: true
 	}),
 	getters: {
 		getLanguage: (state: StateLocalStore) => state.langue,
 		getSkipLevelAnimation: (state: StateLocalStore) => state.skipLevelAnimation,
 		getSkipFightAnimation: (state: StateLocalStore) => state.skipFightAnimation,
 		getAutoReequipItems: (state: StateLocalStore) => state.autoReequipItems,
-		getBypassGatheringGrid: (state: StateLocalStore) => state.bypassGatheringGrid
+		getBypassGatheringGrid: (state: StateLocalStore) => state.bypassGatheringGrid,
+		getMoveDinozDetailsDownMobile: (state: StateLocalStore) => state.moveDinozDetailsDownMobile ?? true
 	},
 	actions: {
 		setLanguage(langue: Language): void {
@@ -32,6 +34,9 @@ export const localStore = defineStore('localStore', {
 		},
 		setBypassGatheringGrid(bypassGatheringGrid: boolean): void {
 			this.bypassGatheringGrid = bypassGatheringGrid;
+		},
+		setMoveDinozDetailsDownMobile(moveDinozDetailsDownMobile: boolean): void {
+			this.moveDinozDetailsDownMobile = moveDinozDetailsDownMobile;
 		}
 	},
 	persist: {

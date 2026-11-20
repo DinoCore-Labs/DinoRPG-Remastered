@@ -249,6 +249,23 @@
 						<span class="slider round"></span>
 					</label>
 				</div>
+				<div class="parameter">
+					<svg class="svgIcon" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="InfoIcon">
+						<path
+							d="m17 7-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4z"
+						></path>
+					</svg>
+					<span class="param" v-html="formatContent($t('topBar.userMenu.moveDinozDetailsDownMobile'))"></span>
+					<label class="switch">
+						<input
+							:checked="localStore.getMoveDinozDetailsDownMobile"
+							class="optionCheckbox"
+							type="checkbox"
+							@change="onMoveDinozDetailsDownMobileChange"
+						/>
+						<span class="slider round"></span>
+					</label>
+				</div>
 			</div>
 			<div class="notifications" v-if="nStore.notifications.length > 0">
 				<div class="section">
@@ -400,6 +417,10 @@ export default defineComponent({
 		onBypassGatheringGridChange(event: Event): void {
 			const target = event.target as HTMLInputElement;
 			this.localStore.setBypassGatheringGrid(target.checked);
+		},
+		onMoveDinozDetailsDownMobileChange(event: Event): void {
+			const target = event.target as HTMLInputElement;
+			this.localStore.setMoveDinozDetailsDownMobile(target.checked);
 		},
 		async fetchNotifications() {
 			await this.nStore.refreshNotifications();

@@ -6,4 +6,5 @@ export interface StateLocalStore {
 	skipFightAnimation: boolean;
 	autoReequipItems: boolean;
 	bypassGatheringGrid: boolean;
+	moveDinozDetailsDownMobile: boolean;
 }
