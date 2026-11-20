@@ -106,7 +106,7 @@ describe('SUPER_ADMIN protection', () => {
 		] as const) {
 			const response = await server.inject({
 				method: 'PATCH',
-			url: `/api/admin/user/${target.id}/profile`,
+				url: `/api/admin/user/${target.id}/profile`,
 				headers: { cookie: createAuthCookie(server, actor) },
 				payload: { role, description: null, removeAvatar: false }
 			});
@@ -124,7 +124,7 @@ describe('SUPER_ADMIN protection', () => {
 		] as const) {
 			const response = await server.inject({
 				method: 'PATCH',
-			url: `/api/admin/user/${target.id}/profile`,
+				url: `/api/admin/user/${target.id}/profile`,
 				headers: { cookie: createAuthCookie(server, actor) },
 				payload: { role, description: 'Updated', removeAvatar: false }
 			});
