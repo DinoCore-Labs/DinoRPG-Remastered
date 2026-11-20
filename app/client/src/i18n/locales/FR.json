@@ -103,6 +103,7 @@
 			"skipFightAnimation": "Passer l'animation des combats",
 			"autoReequipItems": "Rééquiper automatiquement les objets consommés",
 			"bypassGatheringGrid": "Passer la grille de collecte",
+			"moveDinozDetailsDownMobile": "Affichage mobile : descendre les informations et statuts",
 			"goodbye": "Au revoir Maître {name}..."
 		}
 	},

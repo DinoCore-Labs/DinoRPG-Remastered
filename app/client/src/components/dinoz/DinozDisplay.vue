@@ -12,7 +12,7 @@
   SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 <template>
-	<div class="dinoz" :style="themeStyle">
+	<div class="dinoz" :class="{ 'compact-mobile': isMobileDetailsDown }" :style="themeStyle">
 		<TitleHeader :title="$t('pageTitle.dinoz', { dinoz: dinozData.name })" />
 		<div class="navigation">
 			<router-link v-if="prevId" :to="{ name: 'DinozPage', params: { id: prevId } }" class="see-button">
@@ -44,10 +44,10 @@
 				</p>
 			</template>
 		</Tippy>
-		<DinozElements class="desktop-only" :dinozData="dinozData" />
+		<DinozElements :class="{ 'mobile-hidden': isMobileDetailsDown }" :dinozData="dinozData" />
 		<DinozBars :dinozData="dinozData" />
 		<DinozEquip :dinozData="dinozData" />
-		<DinozStatus class="desktop-only" :dinozStatus="dinozData.status" />
+		<DinozStatus :class="{ 'mobile-hidden': isMobileDetailsDown }" :dinozStatus="dinozData.status" />
 	</div>
 </template>
 
@@ -68,6 +68,7 @@ import { DINOZ_STATE } from '@dinorpg/core/models/dinoz/dinozState.js';
 import { orderDinozList } from '@dinorpg/core/utils/dinozUtils.js';
 import { gameConfigStore } from '../../store/gameConfigStore.ts';
 import { getGameTheme } from '../../config/gameTheme.config.ts';
+import { localStore } from '../../store/localStore.js';
 
 export default defineComponent({
 	name: 'DinozDisplay',
@@ -122,6 +123,9 @@ export default defineComponent({
 			return {
 				'--dinoz-bg': `url("${theme.dinoz}")`
 			};
+		},
+		isMobileDetailsDown(): boolean {
+			return localStore().getMoveDinozDetailsDownMobile;
 		}
 	},
 	methods: {
@@ -177,12 +181,13 @@ export default defineComponent({
 	align-self: center;
 }
 @media (max-width: 539px) {
-	.desktop-only {
+	.desktop-only,
+	.mobile-hidden {
 		display: none !important;
 	}
 	.dinoz {
 		grid-template-columns: [first] 2.5% [line1] 26% [line2] 8% [line3] 13% [line3] 1%[line4] 13% [line5] 8% [line6] 26% [line7] 2.5% [end];
-		grid-template-rows: [first] 40px [row2] 120px [row3] 20px [row4] 30px [end];
+		grid-template-rows: [first] 40px [row2] 120px [row3] 20px [row4] 30px [row5] auto [row6] 3px [row7] auto [end];
 		column-gap: 0;
 		row-gap: 0;
 		width: 100%;
@@ -191,8 +196,20 @@ export default defineComponent({
 			'. . name name name name name . .'
 			'. dinoz dinoz dinoz dinoz dinoz equip equip .'
 			'. vie vie vie vie vie equip equip .'
-			'. vie vie vie vie vie . . .';
+			'. vie vie vie vie vie . . .'
+			'. elements elements elements elements elements elements elements .'
+			'. . . . . . . . .'
+			'. status status status status status status status .';
 		margin-bottom: 5px;
+
+		&.compact-mobile {
+			grid-template-rows: [first] 40px [row2] 120px [row3] 20px [row4] 30px [end];
+			grid-template-areas:
+				'. . name name name name name . .'
+				'. dinoz dinoz dinoz dinoz dinoz equip equip .'
+				'. vie vie vie vie vie equip equip .'
+				'. vie vie vie vie vie . . .';
+		}
 	}
 }
 .navigation {

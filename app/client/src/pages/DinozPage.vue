@@ -34,7 +34,7 @@
 	<div class="dinozPanels" v-if="nameChoosen === true">
 		<DinozActions v-show="isReady" :dinoz="dinozData" :refreshDinoz="refreshDinoz" />
 		<TabPanels v-if="isReady" :key="dinozData.id" :dinozData="dinozData" />
-		<div class="mobile-only mobile-dinoz-details" v-if="isReady">
+		<div class="mobile-only mobile-dinoz-details" v-if="isReady && isMobileDetailsDown">
 			<DinozStatus :dinozStatus="dinozData.status" />
 			<DinozElements :dinozData="dinozData" />
 		</div>
@@ -57,6 +57,7 @@ import TabPanels from '../components/common/TabPanels.vue';
 import MtDungeonMessageBox from '../components/dungeon/MtDungeonMessageBox.vue';
 import DinozElements from '../components/dinoz/DinozElements.vue';
 import DinozStatus from '../components/dinoz/DinozStatus.vue';
+import { localStore } from '../store/localStore.js';
 
 function isRenderableDinozFiche(dinoz: DinozFiche | undefined): dinoz is DinozFiche {
 	return !!dinoz && !!dinoz.race && Array.isArray(dinoz.borderPlace) && Array.isArray(dinoz.followers);
@@ -73,6 +74,11 @@ export default defineComponent({
 			isReady: false as boolean,
 			dungeonExitMessage: null as string | null
 		};
+	},
+	computed: {
+		isMobileDetailsDown(): boolean {
+			return localStore().getMoveDinozDetailsDownMobile;
+		}
 	},
 	components: {
 		DinozName,
@@ -243,7 +249,7 @@ export default defineComponent({
 	}
 	.dinoz {
 		grid-template-columns: [first] 2.5% [line1] 26% [line2] 8% [line3] 13% [line3] 1%[line4] 13% [line5] 8% [line6] 26% [line7] 2.5% [end];
-		grid-template-rows: [first] 40px [row2] 120px [row3] 20px [row4] 30px [end];
+		grid-template-rows: [first] 40px [row2] 120px [row3] 20px [row4] 30px [row5] auto [row6] 3px [row7] auto [end];
 		column-gap: 0;
 		row-gap: 0;
 		width: 100%;
@@ -252,8 +258,20 @@ export default defineComponent({
 			'. . name name name name name . .'
 			'. dinoz dinoz dinoz dinoz dinoz equip equip .'
 			'. vie vie vie vie vie equip equip .'
-			'. vie vie vie vie vie . . .';
+			'. vie vie vie vie vie . . .'
+			'. elements elements elements elements elements elements elements .'
+			'. . . . . . . . .'
+			'. status status status status status status status .';
 		margin-bottom: 5px;
+
+		&.compact-mobile {
+			grid-template-rows: [first] 40px [row2] 120px [row3] 20px [row4] 30px [end];
+			grid-template-areas:
+				'. . name name name name name . .'
+				'. dinoz dinoz dinoz dinoz dinoz equip equip .'
+				'. vie vie vie vie vie equip equip .'
+				'. vie vie vie vie vie . . .';
+		}
 	}
 	.dinozPanels {
 		display: flex;
