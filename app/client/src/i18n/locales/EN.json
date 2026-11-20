@@ -32,6 +32,8 @@
 		"ranking": "Ranking:",
 		"selectAll": "Select all",
 		"deselectAll": "Remove all",
+		"selection": "Selection",
+		"donation": "Donation",
 		"sell": "Sell",
 		"skills": "...Skills :",
 		"stock": "Stock",
@@ -2395,6 +2397,21 @@
 	},
 	"ingredients": {
 		"disclaimer": "This page lists the ingredients you have found using the \"Collect\" action.",
+		"categories": {
+			"energies": "Energies",
+			"plants": "Gathering",
+			"rocks": "Search",
+			"hunt": "Hunting",
+			"fish": "Fishing",
+			"special": "Special"
+		},
+		"days": {
+			"monday": "Monday",
+			"tuesday": "Tuesday",
+			"wednesday": "Wednesday",
+			"thursday": "Thursday",
+			"friday": "Friday"
+		},
 		"name": {
 			"merou_lujidane": "Lujidanee Grouper",
 			"poisson_vengeur": "Avenger-Fish",

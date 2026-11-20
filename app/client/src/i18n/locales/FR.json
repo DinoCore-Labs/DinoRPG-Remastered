@@ -32,6 +32,8 @@
 		"ranking": "Classement :",
 		"selectAll": "Tout sélectionner",
 		"deselectAll": "Tout enlever",
+		"selection": "Sélection",
+		"donation": "Don",
 		"sell": "Vendre",
 		"skills": "Compétences",
 		"stock": "Stock",
@@ -2412,6 +2414,21 @@
 	},
 	"ingredients": {
 		"disclaimer": "Cette page rassemble les ingrédients que vous avez récupérés lors de vos différentes actions de Collecte.",
+		"categories": {
+			"energies": "Énergies",
+			"plants": "Cueillette",
+			"rocks": "Fouille",
+			"hunt": "Chasse",
+			"fish": "Pêche",
+			"special": "Spécial"
+		},
+		"days": {
+			"monday": "Lundi",
+			"tuesday": "Mardi",
+			"wednesday": "Mercredi",
+			"thursday": "Jeudi",
+			"friday": "Vendredi"
+		},
 		"name": {
 			"merou_lujidane": "Mérou Lujidané",
 			"poisson_vengeur": "Poisson-Vengeur",
