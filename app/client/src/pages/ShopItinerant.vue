@@ -42,9 +42,11 @@
 						:key="ingredient.ingredientId"
 						:class="{
 							full: (ingredient.quantity ?? 0) >= ingredient.maxQuantity,
-							even: (index + 1) % 2 == 0
+							even: (index + 1) % 2 == 0,
+							clickable: (ingredient.quantity ?? 0) > 0
 						}"
 						tag="tr"
+						@click="toggleIngredient(ingredient)"
 					>
 						<td class="icon">
 							<img
@@ -60,13 +62,14 @@
 							{{ ingredient.quantity }}/{{ ingredient.maxQuantity }}
 						</td>
 						<td class="stock" v-else>--</td>
-						<td class="quantity">
+						<td class="quantity" @click.stop>
 							<DZInput
 								type="number"
 								min="0"
 								:max="ingredient.quantity"
 								v-model="inputValuesById[ingredient.ingredientId]"
 								@input="liveGold()"
+								:disabled="(ingredient.quantity ?? 0) === 0"
 							/>
 						</td>
 
@@ -182,6 +185,17 @@ export default defineComponent({
 				return sum + (ing.price ?? 0) * qty;
 			}, 0);
 		},
+		toggleIngredient(ingredient: IngredientFiche): void {
+			const stock = ingredient.quantity ?? 0;
+			if (stock <= 0) return;
+			const current = Number(this.inputValuesById[ingredient.ingredientId] ?? 0);
+			if (current === stock) {
+				this.inputValuesById[ingredient.ingredientId] = 0;
+			} else {
+				this.inputValuesById[ingredient.ingredientId] = stock;
+			}
+			this.liveGold();
+		},
 		toggleSelectAll(): void {
 			if (this.isAllSelected) {
 				for (const ing of this.ingredientList) {
@@ -287,6 +301,9 @@ export default defineComponent({
 			tr {
 				display: table-row;
 				cursor: help;
+				&.clickable {
+					cursor: pointer;
+				}
 				th {
 					font-size: 8pt;
 					text-shadow: 1px 1px 0px #356847;
@@ -343,6 +360,7 @@ export default defineComponent({
 					&.quantity {
 						padding: 1px 12px;
 						width: 40px;
+						cursor: default;
 						.input {
 							width: 40px;
 						}
