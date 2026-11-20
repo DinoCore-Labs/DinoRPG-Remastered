@@ -296,7 +296,7 @@ import { getClinicNoticeKey } from '../../utils/clinicNotice';
 import eventBus from '../../events';
 import { orderDinozList } from '@dinorpg/core/utils/dinozUtils.js';
 import { itinerantShopNameList, shopNameList } from '../../constants/shop';
-import { itemList } from '@dinorpg/core/models/items/itemList.js';
+import { Item, itemList } from '@dinorpg/core/models/items/itemList.js';
 import { itemNameList } from '@dinorpg/core/models/items/itemNameList.js';
 import MissionTalkModal from '../modal/MissionTalkModal.vue';
 import { MissionService } from '../../services/mission.service';
@@ -1146,10 +1146,13 @@ export default defineComponent({
 				}
 
 				if (result?.isGridComplete) {
+					const isDaily =
+						gatherType?.toLowerCase() === 'daily' || result.rewards?.item?.some(item => item.id === Item.VOID_SPHERE);
+					if (isDaily) {
+						this.$toast.success(formatText(this.$t('toast.finishDailyGrid')));
+					}
 					if (result.gridCompletionGoldReward > 0) {
 						this.$toast.success(formatText(this.$t('toast.finishGrid')));
-					} else {
-						this.$toast.info(formatText(this.$t('toast.dailyGridRewardsFinished')));
 					}
 				}
 

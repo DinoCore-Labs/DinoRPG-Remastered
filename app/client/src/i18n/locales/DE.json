@@ -954,6 +954,7 @@
 		"ingredientSold": "Du hast deine Zutaten zu einem Gesamtpreis von {value} :gold: verkauft.",
 		"needIngredientToSell": "Du benötigst die Zutaten, die du verkaufen möchtest.",
 		"finishGrid": "Glückwunsch! Du hast für das Freiräumen des Rasters 1000 Gold erhalten!",
+		"finishDailyGrid": "Du hast :void_sphere: für das Abschließen des täglichen Rasters erhalten.",
 		"errorFetchingRankings": "Beim Abrufen der Rangliste ist ein Fehler aufgetreten.",
 		"maxDinozSelected": "Du hast bereits die Höchstanzahl an Dinoz ausgewählt.",
 		"noDinozSelected": "Keine Dinoz ausgewählt.",

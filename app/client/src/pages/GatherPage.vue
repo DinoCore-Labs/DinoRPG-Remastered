@@ -69,6 +69,7 @@ import TitleHeader from '../components/utils/TitleHeader.vue';
 import DZDisclaimer from '../components/utils/DZDisclaimer.vue';
 import { formatText } from '../utils/formatText.js';
 import { GatherService } from '../services/gather.service.js';
+import { Item } from '@dinorpg/core/models/items/itemList.js';
 
 export default defineComponent({
 	name: 'GatherPage',
@@ -111,12 +112,14 @@ export default defineComponent({
 					this.gatherResult = await GatherService.gatherWithDinoz(this.dinozId, this.gatherType, this.clickedBox);
 					// Check if the grid is complete
 					if (this.gatherResult.isGridComplete) {
-						// If there is a gold reward, show a success message
+						const isDaily =
+							this.gatherType.toLowerCase() === 'daily' ||
+							this.gatherResult.rewards.item.some(item => item.id === Item.VOID_SPHERE);
+						if (isDaily) {
+							this.$toast.success(formatText(this.$t('toast.finishDailyGrid')));
+						}
 						if (this.gatherResult.gridCompletionGoldReward > 0) {
 							this.$toast.success(formatText(this.$t('toast.finishGrid')));
-						} else {
-							// If no gold reward, show an informational message about daily rewards being finished
-							this.$toast.info(formatText(this.$t('toast.dailyGridRewardsFinished')));
 						}
 					}
 				} catch (err) {
