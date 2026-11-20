@@ -1,7 +1,7 @@
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import type { FastifyReply, FastifyRequest } from 'fastify';
 
-import { GameLogType } from '../../../../prisma/index.js';
+import { GameLogType, Role } from '../../../../prisma/index.js';
 import { CreateGameLogInput, safeCreateGameLog } from '../../Gamelog/Controller/gamelog.controller.js';
 import { prisma } from '../../prisma.js';
 import {
@@ -90,6 +90,20 @@ export async function updateAdminUserProfileHandler(request: FastifyRequest, rep
 		return reply.status(400).send({ message: 'Invalid request payload' });
 	}
 	const targetUser = await prisma.user.findUnique({ where: { id: parsedParams.data.id } });
+	if (!targetUser) return reply.status(404).send({ message: 'User not found' });
+	if (targetUser.role === Role.SUPER_ADMIN && request.user.role !== Role.SUPER_ADMIN) {
+		return reply.status(403).send({
+			code: 'admin.superAdminProtected',
+			message: 'Only SUPER_ADMIN may modify the SUPER_ADMIN account.'
+		});
+	}
+	// SUPER_ADMIN is a reserved role. Its assignment/removal requires a controlled DB operation.
+	if ((targetUser.role === Role.SUPER_ADMIN) !== (parsedBody.data.role === Role.SUPER_ADMIN)) {
+		return reply.status(403).send({
+			code: 'admin.superAdminRoleProtected',
+			message: 'SUPER_ADMIN cannot be assigned or removed through the admin API.'
+		});
+	}
 	if ((request.user as any).role === 'MODERATOR' && targetUser && targetUser.role !== parsedBody.data.role) {
 		return reply.status(403).send({ message: 'Only administrators can modify roles.' });
 	}

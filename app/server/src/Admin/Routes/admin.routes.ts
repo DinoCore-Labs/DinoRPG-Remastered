@@ -109,6 +109,7 @@ import {
 	updateAdminUserUniqueSkillsHandler,
 	updateAdminUserWalletHandler
 } from '../Service/adminUserHandler.service.js';
+import { protectSuperAdminTarget } from '../Service/protectSuperAdminTarget.service.js';
 
 export async function adminRoutes(app: FastifyInstance) {
 	// User
@@ -124,38 +125,38 @@ export async function adminRoutes(app: FastifyInstance) {
 	);
 	app.patch(
 		'/user/:id/profile',
-		{ preHandler: [app.authenticate, app.moderator], schema: { tags: ['Admin'] } },
+		{ preHandler: [app.authenticate, app.moderator, protectSuperAdminTarget], schema: { tags: ['Admin'] } },
 		updateAdminUserProfileHandler
 	);
 	app.post(
 		'/user/:id/wallets/update',
-		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
+		{ preHandler: [app.authenticate, app.admin, protectSuperAdminTarget], schema: { tags: ['Admin'] } },
 		updateAdminUserWalletHandler
 	);
 	app.patch(
 		'/user/:id/unique-skills',
-		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
+		{ preHandler: [app.authenticate, app.admin, protectSuperAdminTarget], schema: { tags: ['Admin'] } },
 		updateAdminUserUniqueSkillsHandler
 	);
 	app.patch(
 		'/user/:id/items',
-		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
+		{ preHandler: [app.authenticate, app.admin, protectSuperAdminTarget], schema: { tags: ['Admin'] } },
 		updateAdminUserItemsHandler
 	);
 	app.patch(
 		'/user/:id/ingredients',
-		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
+		{ preHandler: [app.authenticate, app.admin, protectSuperAdminTarget], schema: { tags: ['Admin'] } },
 		updateAdminUserIngredientsHandler
 	);
 	app.patch(
 		'/user/:id/rewards',
-		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
+		{ preHandler: [app.authenticate, app.admin, protectSuperAdminTarget], schema: { tags: ['Admin'] } },
 		updateAdminUserRewardsHandler
 	);
 	app.patch(
 		'/user/:id/password',
 		{
-			preHandler: [app.authenticate, app.admin],
+			preHandler: [app.authenticate, app.admin, protectSuperAdminTarget],
 			schema: {
 				tags: ['Admin']
 			}
@@ -165,7 +166,7 @@ export async function adminRoutes(app: FastifyInstance) {
 	app.patch(
 		'/user/:id/scenarios',
 		{
-			preHandler: [app.authenticate, app.admin],
+			preHandler: [app.authenticate, app.admin, protectSuperAdminTarget],
 			schema: {
 				tags: ['Admin']
 			}
@@ -175,7 +176,7 @@ export async function adminRoutes(app: FastifyInstance) {
 	app.patch(
 		'/user/:id/sanction',
 		{
-			preHandler: [app.authenticate, app.moderator],
+			preHandler: [app.authenticate, app.moderator, protectSuperAdminTarget],
 			schema: {
 				tags: ['Admin']
 			}
@@ -190,77 +191,77 @@ export async function adminRoutes(app: FastifyInstance) {
 	);
 	app.patch(
 		'/user/:userId/dinoz/:dinozId/profile',
-		{ preHandler: [app.authenticate, app.moderator], schema: { tags: ['Admin'] } },
+		{ preHandler: [app.authenticate, app.moderator, protectSuperAdminTarget], schema: { tags: ['Admin'] } },
 		updateAdminDinozProfileHandler
 	);
 	app.patch(
 		'/user/:userId/dinoz/:dinozId/stats',
-		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
+		{ preHandler: [app.authenticate, app.admin, protectSuperAdminTarget], schema: { tags: ['Admin'] } },
 		updateAdminDinozStatsHandler
 	);
 	app.patch(
 		'/user/:userId/dinoz/:dinozId/state',
-		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
+		{ preHandler: [app.authenticate, app.admin, protectSuperAdminTarget], schema: { tags: ['Admin'] } },
 		updateAdminDinozStateHandler
 	);
 	app.patch(
 		'/user/:userId/dinoz/:dinozId/place',
-		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
+		{ preHandler: [app.authenticate, app.admin, protectSuperAdminTarget], schema: { tags: ['Admin'] } },
 		teleportAdminDinozHandler
 	);
 	app.patch(
 		'/user/:userId/dinoz/:dinozId/leader',
-		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
+		{ preHandler: [app.authenticate, app.admin, protectSuperAdminTarget], schema: { tags: ['Admin'] } },
 		updateAdminDinozLeaderHandler
 	);
 	app.post(
 		'/user/:userId/dinoz/:dinozId/status',
-		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
+		{ preHandler: [app.authenticate, app.admin, protectSuperAdminTarget], schema: { tags: ['Admin'] } },
 		addAdminDinozStatusHandler
 	);
 	app.patch(
 		'/user/:userId/dinoz/:dinozId/status/remove',
-		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
+		{ preHandler: [app.authenticate, app.admin, protectSuperAdminTarget], schema: { tags: ['Admin'] } },
 		removeAdminDinozStatusHandler
 	);
 	app.post(
 		'/user/:userId/dinoz/:dinozId/skills',
-		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
+		{ preHandler: [app.authenticate, app.admin, protectSuperAdminTarget], schema: { tags: ['Admin'] } },
 		addAdminDinozSkillHandler
 	);
 	app.patch(
 		'/user/:userId/dinoz/:dinozId/skills/state',
-		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
+		{ preHandler: [app.authenticate, app.admin, protectSuperAdminTarget], schema: { tags: ['Admin'] } },
 		updateAdminDinozSkillStateHandler
 	);
 	app.patch(
 		'/user/:userId/dinoz/:dinozId/skills/remove',
-		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
+		{ preHandler: [app.authenticate, app.admin, protectSuperAdminTarget], schema: { tags: ['Admin'] } },
 		removeAdminDinozSkillHandler
 	);
 	app.post(
 		'/user/:userId/dinoz/:dinozId/unlockable-skills',
-		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
+		{ preHandler: [app.authenticate, app.admin, protectSuperAdminTarget], schema: { tags: ['Admin'] } },
 		addAdminDinozUnlockableSkillController
 	);
 	app.patch(
 		'/user/:userId/dinoz/:dinozId/unlockable-skills/remove',
-		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
+		{ preHandler: [app.authenticate, app.admin, protectSuperAdminTarget], schema: { tags: ['Admin'] } },
 		removeAdminDinozUnlockableSkillController
 	);
 	app.patch(
 		'/user/:userId/dinoz/:dinozId/items',
-		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
+		{ preHandler: [app.authenticate, app.admin, protectSuperAdminTarget], schema: { tags: ['Admin'] } },
 		updateAdminDinozItemsHandler
 	);
 	app.patch(
 		'/user/:userId/dinoz/:dinozId/missions/:missionKey',
-		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
+		{ preHandler: [app.authenticate, app.admin, protectSuperAdminTarget], schema: { tags: ['Admin'] } },
 		updateAdminDinozMissionHandler
 	);
 	app.delete(
 		'/user/:userId/dinoz/:dinozId/missions/:missionKey/replayable',
-		{ preHandler: [app.authenticate, app.admin], schema: { tags: ['Admin'] } },
+		{ preHandler: [app.authenticate, app.admin, protectSuperAdminTarget], schema: { tags: ['Admin'] } },
 		makeAdminDinozMissionReplayableHandler
 	);
 	// Clan
@@ -291,7 +292,7 @@ export async function adminRoutes(app: FastifyInstance) {
 	);
 	app.delete(
 		'/clan/:id/members/:userId',
-		{ preHandler: [app.authenticate, app.moderator], schema: { tags: ['Admin'] } },
+		{ preHandler: [app.authenticate, app.moderator, protectSuperAdminTarget], schema: { tags: ['Admin'] } },
 		kickAdminClanMemberHandler
 	);
 	app.delete(

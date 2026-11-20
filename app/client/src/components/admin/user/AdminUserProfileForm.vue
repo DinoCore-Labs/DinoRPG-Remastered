@@ -3,7 +3,7 @@
 		<div class="card-container">
 			<form class="card-container" @submit.prevent="submit">
 				<h3>Profil</h3>
-				<div class="field" v-if="uStore.isAdmin">
+				<div class="field" v-if="uStore.isAdmin && user.role !== 'SUPER_ADMIN'">
 					<label for="role">Rôle</label>
 					<DZSelect id="role" v-model="form.role" :options="roleOptions" />
 				</div>
@@ -68,7 +68,7 @@ const emit = defineEmits<{
 
 const submitting = ref(false);
 const roleOptions = computed<SelectOption<UserRole>[]>(() =>
-	UserRoles.map(role => ({
+	UserRoles.filter(role => role !== 'SUPER_ADMIN').map(role => ({
 		value: role,
 		label: role
 	}))

@@ -16,7 +16,7 @@
 generator client {
   provider        = "prisma-client-js"
   output          = "../../prisma"
-  previewFeatures = ["nativeDistinct", "relationJoins"]
+  previewFeatures = ["nativeDistinct", "relationJoins", "partialIndexes"]
   binaryTargets   = ["native", "debian-openssl-3.0.x", "debian-openssl-1.1.x"]
 }
 
@@ -1071,7 +1071,7 @@ model User {
 
   password    String
 
-  role        Role      @default(PLAYER)
+  role        Role      @default(PLAYER) @unique(map: "User_single_super_admin", where: raw("(role = 'SUPER_ADMIN'::\"Role\")"))
 
   createdDate DateTime  @default(now()) @db.Timestamptz(3)
 
