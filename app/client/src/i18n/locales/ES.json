@@ -954,6 +954,7 @@
 		"ingredientSold": "Vendiste tus ingredientes por un total de {value} :gold:.",
 		"needIngredientToSell": "Debes tener los ingredientes que quieres vender.",
 		"finishGrid": "¡Felicidades! ¡Has ganado 1000 :gold: por completar el tablero!",
+		"finishDailyGrid": "Has recibido :void_sphere: por completar el tablero diario.",
 		"errorFetchingRankings": "Se produjo un error al obtener la clasificación.",
 		"maxDinozSelected": "Ya has seleccionado el máximo número de Dinos",
 		"noDinozSelected": "Ningún Dino seleccionado",

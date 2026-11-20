@@ -1006,6 +1006,7 @@
 		"ingredientSold": "Vous avez vendu vos ingrédients pour un total de {value} :gold:.",
 		"needIngredientToSell": "Vous devez posséder les ingrédients à vendre.",
 		"finishGrid": "Félicitations ! Vous avez gagné 1000 :gold: pour avoir terminé la grille !",
+		"finishDailyGrid": "Vous avez reçu :void_sphere: en terminant la grille quotidienne.",
 		"errorFetchingRankings": "Une erreur est survenue lors de la récupération des classements.",
 		"maxDinozSelected": "Vous avez déjà sélectionné le nombre maximum de Dinoz",
 		"noDinozSelected": "Aucun Dinoz sélectionné",
