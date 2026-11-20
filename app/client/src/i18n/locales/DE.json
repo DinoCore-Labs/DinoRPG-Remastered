@@ -102,6 +102,7 @@
 			"skipFightAnimation": "Kampfergebnis sofort anzeigen",
 			"autoReequipItems": "Rééquiper automatiquement les objets consommés",
 			"bypassGatheringGrid": "Passer la grille de collecte",
+			"moveDinozDetailsDownMobile": "Mobile Anzeige: Informationen und Status nach unten verschieben",
 			"goodbye": "Auf Wiedersehen, Meister {name}..."
 		}
 	},

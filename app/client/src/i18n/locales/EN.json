@@ -103,6 +103,7 @@
 			"skipFightAnimation": "Skip battle animation",
 			"autoReequipItems": "Automatically re-equip consumed items",
 			"bypassGatheringGrid": "Skip gathering grid",
+			"moveDinozDetailsDownMobile": "Mobile display: move information and status down",
 			"goodbye": "Goodbye, Master {name}..."
 		}
 	},
