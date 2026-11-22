@@ -54,7 +54,8 @@
 		padding: 0;
 		.text-icon {
 			width: 18px;
-			vertical-align: bottom;
+			height: 18px;
+			vertical-align: middle;
 		}
 	}
 	&.v-toast__item--error .v-toast__icon {

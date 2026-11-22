@@ -53,7 +53,8 @@ export async function applyRestIfNeeded(tx: Prisma.TransactionClient, dinozId: n
 		hasRegen: skillSet.has(Skill.REGENERESCENCE),
 		hasPhoenixHeart: skillSet.has(Skill.COEUR_DU_PHOENIX),
 		isPriest: !!d.user?.priest,
-		hasDivineWater: skillSet.has(Skill.EAU_DIVINE)
+		hasDivineWater: skillSet.has(Skill.EAU_DIVINE),
+		hasGrosDormeur: skillSet.has(Skill.GROS_DORMEUR)
 	});
 
 	// ✅ sécurité: si timer dans le futur, on le traite comme "now"

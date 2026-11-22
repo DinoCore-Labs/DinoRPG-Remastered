@@ -168,9 +168,25 @@ export async function useItemUnlocked(
 			if (!skill) {
 				throw new ExpectedError(`Skill ${skillToLearn} doesn't exist.`, { statusCode: 404 });
 			}
-			await applySkillEffect(dinoz, skill, dinoz.user.id);
+			const result = await applySkillEffect(dinoz, skill, dinoz.user.id);
 			await addSkillToDinoz(dinozId, skillToLearn);
 			effects.push({ category: ItemEffect.SPHERE, value: skill.name });
+
+			if (result?.transeNocturneElements) {
+				const el = result.transeNocturneElements;
+				const parts: string[] = [];
+				if (el.fire > 0) parts.push(`${el.fire} :fire:`);
+				if (el.wood > 0) parts.push(`${el.wood} :wood:`);
+				if (el.water > 0) parts.push(`${el.water} :water:`);
+				if (el.lightning > 0) parts.push(`${el.lightning} :lightning:`);
+				if (el.air > 0) parts.push(`${el.air} :air:`);
+				if (parts.length > 0) {
+					effects.push({
+						category: ItemEffect.TRANSE_NOCTURNE,
+						value: parts.join(' | ')
+					});
+				}
+			}
 			break;
 		}
 		case ItemEffect.GOLD: {

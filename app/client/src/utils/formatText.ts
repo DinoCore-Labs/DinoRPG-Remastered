@@ -18,25 +18,25 @@ export const helpers = {
 		switch (key) {
 			case 'feu':
 			case 'fire':
-				return `<img src="${getImgURL('elements', 'elem_fire')}" alt="feu">`;
+				return `<img class="text-icon" src="${getImgURL('elements', 'elem_fire')}" alt="feu">`;
 			case 'bois':
 			case 'wood':
-				return `<img src="${getImgURL('elements', 'elem_wood')}" alt="bois">`;
+				return `<img class="text-icon" src="${getImgURL('elements', 'elem_wood')}" alt="bois">`;
 			case 'eau':
 			case 'water':
-				return `<img src="${getImgURL('elements', 'elem_water')}" alt="eau">`;
+				return `<img class="text-icon" src="${getImgURL('elements', 'elem_water')}" alt="eau">`;
 			case 'foudre':
 			case 'lightning':
-				return `<img src="${getImgURL('elements', 'elem_lightning')}" alt="foudre">`;
+				return `<img class="text-icon" src="${getImgURL('elements', 'elem_lightning')}" alt="foudre">`;
 			case 'air':
-				return `<img src="${getImgURL('elements', 'elem_air')}" alt="air">`;
+				return `<img class="text-icon" src="${getImgURL('elements', 'elem_air')}" alt="air">`;
 			case 'neutre':
 			case 'void':
-				return `<img src="${getImgURL('elements', 'elem_void')}" alt="pmo">`;
+				return `<img class="text-icon" src="${getImgURL('elements', 'elem_void')}" alt="pmo">`;
 			case 'right':
-				return `<img src="${getImgURL('icons', 'small_right')}" alt="pmo">`;
+				return `<img class="text-icon" src="${getImgURL('icons', 'small_right')}" alt="pmo">`;
 			case 'gold':
-				return `<img src="${getImgURL('icons', 'gold')}" alt="gold">`;
+				return `<img class="text-icon" src="${getImgURL('icons', 'gold')}" alt="gold">`;
 			case 'ticket':
 				return `<img class="text-icon" style="height: 15px; width: auto;" src="${getImgURL('icons', 'ticket')}" alt="ticket">`;
 			case 'chrono':
