@@ -118,7 +118,7 @@ const SPHERE_CHAINS = [
 		name: 'void',
 		element: ElementType.VOID,
 		item: Item.VOID_SPHERE,
-		skills: [Skill.GROS_DORMEUR, Skill.VEILLEUSE, Skill.MATELASSEUR]
+		skills: [Skill.GROS_DORMEUR, Skill.TRANSE_NOCTURNE, Skill.MATELASSEUR]
 	}
 ] as const;
 
@@ -2026,7 +2026,7 @@ describe('Dinoz skills', () => {
 			const itemId = itemList[Item.VOID_SPHERE].itemId;
 			await addItemToInventory(user.id, itemId, 3);
 			expect((await getUserUSkills(user.id)).matelasseur).toBe(false);
-			for (const expectedSkill of [Skill.GROS_DORMEUR, Skill.VEILLEUSE, Skill.MATELASSEUR]) {
+			for (const expectedSkill of [Skill.GROS_DORMEUR, Skill.TRANSE_NOCTURNE, Skill.MATELASSEUR]) {
 				const response = await useItem(user, dinoz.id, itemId);
 				expect(response.statusCode).toBe(200);
 				expect(

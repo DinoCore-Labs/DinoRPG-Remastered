@@ -19,5 +19,6 @@ export enum ItemEffect {
 	SPHERE = 'sphere',
 	GOLD = 'gold',
 	SPECIAL = 'special',
-	QUEST = 'quest'
+	QUEST = 'quest',
+	TRANSE_NOCTURNE = 'transeNocturne'
 }

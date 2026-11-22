@@ -320,6 +320,7 @@ export enum Skill {
 	BIGMAGNON = 61117,
 	DUR_A_CUIRE = 61118,
 	GROS_DORMEUR = 61122,
+	TRANSE_NOCTURNE = 61201,
 	VEILLEUSE = 61201,
 	MATELASSEUR = 61301,
 	// Monster Skills
@@ -4813,11 +4814,14 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		tree: SkillTreeType.VANILLA,
 		unlockedFrom: [],
 		isBaseSkill: false,
-		isSphereSkill: true
+		isSphereSkill: true,
+		effects: {
+			[Stat.HP_REGEN]: { operator: MathOperator.ADD, value: 1 }
+		}
 	},
-	[Skill.VEILLEUSE]: {
-		id: Skill.VEILLEUSE,
-		name: 'Veilleuse',
+	[Skill.TRANSE_NOCTURNE]: {
+		id: Skill.TRANSE_NOCTURNE,
+		name: 'TranseNocturne',
 		type: SkillType.S,
 		energy: Energy.NONE,
 		element: [ElementType.VOID],
@@ -4835,7 +4839,7 @@ export const skillList: Readonly<Record<Skill, SkillDetails>> = {
 		element: [ElementType.VOID],
 		activatable: false,
 		tree: SkillTreeType.VANILLA,
-		unlockedFrom: [Skill.VEILLEUSE],
+		unlockedFrom: [Skill.TRANSE_NOCTURNE],
 		isBaseSkill: false,
 		isSphereSkill: true
 	},

@@ -2,7 +2,6 @@ import { StatTracking } from '@dinorpg/core/models/enums/StatsTracking.js';
 import { GameEvent } from '@dinorpg/core/models/game/gameEvents.js';
 import { GAME_RULES_VERSION } from '@dinorpg/core/models/game/gameRules.js';
 import { Item } from '@dinorpg/core/models/items/itemList.js';
-import { Skill } from '@dinorpg/core/models/skills/skillList.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { getMaxXp, orderDinozList } from '@dinorpg/core/utils/dinozUtils.js';
 import { FastifyReply, FastifyRequest } from 'fastify';
@@ -106,19 +105,10 @@ export async function meUser(req: FastifyRequest, reply: FastifyReply) {
 					data: { life: newHp }
 				});
 			}
-			// Give 3 action for active dinoz
-			const leadersWithVeilleuse = user.dinoz.filter(d =>
-				d.skills.some(s => s.skillId === Skill.VEILLEUSE && s.state === true)
-			);
 			// Reset remaining for each dinoz
 			for (const d of user.dinoz) {
 				let remaining = 3;
 				if (user.matelasseur) remaining++;
-				if (d.skills.some(s => s.skillId === Skill.GROS_DORMEUR && s.state === true)) {
-					remaining++;
-				}
-				const hasLeaderVeilleuse = leadersWithVeilleuse.some(leader => leader.followers.some(f => f.id === d.id));
-				if (hasLeaderVeilleuse) remaining++;
 				await tx.dinoz.update({
 					where: { id: d.id },
 					data: { remaining }

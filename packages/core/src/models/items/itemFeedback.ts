@@ -23,7 +23,7 @@ export type ItemFeedBack =
 			category: ItemEffect.RESURRECT;
 	  }
 	| {
-			category: ItemEffect.EGG | ItemEffect.SPHERE;
+			category: ItemEffect.EGG | ItemEffect.SPHERE | ItemEffect.TRANSE_NOCTURNE;
 			value: string;
 	  }
 	| {
