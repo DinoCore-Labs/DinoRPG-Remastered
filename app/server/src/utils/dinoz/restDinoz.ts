@@ -6,12 +6,14 @@ export function calculateRegeneration(params: {
 	hasPhoenixHeart: boolean;
 	isPriest: boolean;
 	hasDivineWater: boolean;
+	hasGrosDormeur?: boolean;
 }): RestRegen {
 	let reg = 1;
 	let p = 0.5;
 
 	if (params.hasCocon) reg += 2;
 	if (params.hasRegen) reg += 2;
+	if (params.hasGrosDormeur) reg += 1;
 	if (params.hasPhoenixHeart) p += 0.15;
 	if (params.isPriest) reg += 1;
 	if (params.hasDivineWater) reg *= 2;

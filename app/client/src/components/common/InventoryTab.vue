@@ -225,6 +225,11 @@ export default defineComponent({
 								value: this.$t(`skill.name.${effect.value}`)
 							});
 							break;
+						case ItemEffect.TRANSE_NOCTURNE:
+							message = this.$t(`toast.transeNocturneBonus`, {
+								elements: effect.value
+							});
+							break;
 						case ItemEffect.QUEST:
 							message = this.$t(String(effect.value));
 							break;
@@ -245,7 +250,8 @@ export default defineComponent({
 					}
 					this.$toast.open({
 						message: formatText(message),
-						type: 'info'
+						type: 'info',
+						...(effect.category === ItemEffect.TRANSE_NOCTURNE ? { duration: 6000 } : {})
 					});
 				}
 				if (createdDinoz) {
