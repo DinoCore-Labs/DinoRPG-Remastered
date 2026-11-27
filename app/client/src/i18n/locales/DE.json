@@ -55,7 +55,8 @@
 		"devourerAttacked": "Quelqu'un tente de vous prendre le contrôle de la dévoreuse !",
 		"devourerSeedsGathered": "Vous avez récolté {amount} graine(s) de dévoreuse !",
 		"elementalMasterSphere": "Der Elementarmeister schenkt dir: {sphere}",
-		"view": "Voir"
+		"view": "Voir",
+		"bastilleDayReward": "Frohen Nationalfeiertag! Hier ist dein tägliches Geschenk:<br><br>{rewards}"
 	},
 	"homepage": {
 		"connexion": "Anmeldung",
@@ -618,6 +619,13 @@
 					"title": "Fin de l'événement de Noël !",
 					"excerpt": "Les Piglous ont tous été chassés, il est l'heure de distribuer les récompenses !",
 					"content": "La grande chasse aux Piglous est officiellement terminée !\n\nGrâce à vos efforts conjoints, la menace des Piglous a été repoussée (du moins pour l'instant...). Les récompenses individuelles et de clan ont été distribuées automatiquement et ajoutées dans vos inventaires. Vous devriez avoir reçu une notification détaillant vos gains lors de votre connexion.\n\n### :conts1: Top 3 Joueurs\n{topPlayers}\n\n### :cup1: Top 3 Clans\n{topClans}\n\nFélicitations à tous les participants, et merci pour votre incroyable engouement !\n\nÀ très bientôt pour de prochaines aventures !"
+				}
+			},
+			"bastille_day": {
+				"start": {
+					"title": "Schönen Nationalfeiertag!",
+					"excerpt": "Vom 14. bis 28. Juli erstrahlt Dinoville im Glanz! Loggt euch täglich ein, um Magische Knallkörper zu erhalten und die Schätze des Feuerwerks freizulegen!",
+					"content": "Anlässlich des **Nationalfeiertags** erstrahlt Dinoville in tausend Lichtern!\n\nVom **14. bis 28. Juli** lädt der König von Dinoland alle Dinoz-Meister ein, an den großen Feuerwerksfeierlichkeiten teilzunehmen!\n\n## Jeden Tag Magische Knallkörper!\n\n* **Erster Tag beim Einloggen:** Erhaltet ein Startpaket von **6 :fire_cracker: Magischen Knallkörpern**!\n* **Folgende Tage:** Loggt euch täglich ein, um **2 weitere :fire_cracker: Magische Knallkörper** zu erhalten.\n\n## Auf nach Dinoville zum Feuerwerk!\n\nReist mit euren Dinoz nach **Dinoville**, um eure Knallkörper zu zünden. Jeder gezündete magische Knallkörper ermöglicht es, unglaubliche Belohnungen zu gewinnen: seltene Dinoz-Eier, Kampfausrüstung, Elementarenergien, Gold und vieles mehr!\n\nDas Event endet am **{eventEndDate} um 23:59 Uhr**."
 				}
 			}
 		}

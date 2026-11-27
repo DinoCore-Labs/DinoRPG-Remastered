@@ -478,7 +478,11 @@ export default defineComponent({
 				const content = this.parseContent(notification.content);
 				return this.$t('notifications.newClanJoinRequest', { name: content?.playerName || '' });
 			}
-			if (notification.type === 'newReward' || notification.type === 'xmasReward') {
+			if (
+				notification.type === 'newReward' ||
+				notification.type === 'xmasReward' ||
+				notification.type === 'bastilleDayReward'
+			) {
 				const rewardsList = this.parseContent(notification.content) || [];
 				const formattedRewards = rewardsList
 					.map((r: any) => {
@@ -500,6 +504,7 @@ export default defineComponent({
 							else if (r.value === Item.TRICERAGNON_BABY) iconStr = ':triceragnon_baby:';
 							else if (r.value === Item.SMOG_EGG) iconStr = ':smog_egg:';
 							else if (r.value === Item.DEMON_TICKET) iconStr = ':demon_ticket:';
+							else if (r.value === Item.FIRE_CRACKER) iconStr = ':fire_cracker:';
 							return iconStr ? `${qty} ${iconStr}` : `${qty} ${itemName}`;
 						}
 						if (r.rewardType === 'epic') {
@@ -510,7 +515,12 @@ export default defineComponent({
 					.filter(Boolean)
 					.map((text: string) => `- ${text}`)
 					.join('<br><br>');
-				const tKey = notification.type === 'xmasReward' ? 'notifications.xmasReward' : 'notifications.newReward';
+				const tKey =
+					notification.type === 'xmasReward'
+						? 'notifications.xmasReward'
+						: notification.type === 'bastilleDayReward'
+							? 'notifications.bastilleDayReward'
+							: 'notifications.newReward';
 				return this.$t(tKey, { rewards: formattedRewards });
 			}
 			if (notification.type === 'marketOfferWin') {

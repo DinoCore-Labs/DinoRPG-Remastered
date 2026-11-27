@@ -56,7 +56,8 @@
 		"devourerAttacked": "Someone is trying to take control of the Devourer from you!",
 		"devourerSeedsGathered": "You harvested {amount} Devourer seed(s)!",
 		"elementalMasterSphere": "The Elemental Master offers you: {sphere}",
-		"view": "View"
+		"view": "View",
+		"bastilleDayReward": "Happy Bastille Day! Here is your daily gift:<br><br>{rewards}"
 	},
 	"homepage": {
 		"connexion": "Login",
@@ -643,6 +644,13 @@
 					"title": "🎂 Happy Birthday DinoRPG!",
 					"excerpt": "From July 1 to 11, log in every day to receive a Birthday Ticket and try your luck at the Port of Prêche!",
 					"content": "On **July 4**, DinoRPG celebrates its birthday! 🎉\n\nTo celebrate, a special surprise awaits every Dinoz tamer!\n\n## 🎟️ A daily gift!\n\nFrom **July 1 to 7**, log in each day to receive **1 Birthday Ticket** directly in your inventory.\n\n## 🏖️ Head to the Port of Prêche!\n\nUse your tickets to play the **special birthday scratch grid** and discover amazing treasures and exclusive rewards!\n\nEach ticket lets you **scratch 3 squares**.\n\nDon't forget to log in every day to maximize your chances!\n\n🎉 The entire DinoRPG Remastered team thanks you for keeping this adventure alive. Happy Birthday DinoRPG!"
+				}
+			},
+			"bastille_day": {
+				"start": {
+					"title": "Happy Bastille Day!",
+					"excerpt": "From July 14 to July 28, light up Dinoville! Log in each day to receive Magic Firecrackers and uncover dazzling fireworks treasures!",
+					"content": "To celebrate **Bastille Day**, Dinoville is sparkling with a thousand lights!\n\nFrom **July 14 to July 28**, the King of Dinoland invites all Dinoz masters to take part in the grand fireworks festivities!\n\n## Daily Magic Firecrackers!\n\n* **First connection:** Receive a starting pack of **6 :fire_cracker: Magic Firecrackers**!\n* **Following days:** Log in each day to collect **2 :fire_cracker: additional Magic Firecrackers**.\n\n## Head to Dinoville for the Fireworks!\n\nTake your Dinoz to **Dinoville** to set off your fireworks. Each firecracker set off will grant you incredible rewards: rare Dinoz eggs, combat gear, elemental energies, gold, and much more!\n\nThe event ends on **{eventEndDate} at 11:59 PM**."
 				}
 			}
 		},

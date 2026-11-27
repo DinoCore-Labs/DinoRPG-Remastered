@@ -56,7 +56,8 @@
 		"devourerAttacked": "Quelqu'un tente de vous prendre le contrôle de la dévoreuse !",
 		"devourerSeedsGathered": "Vous avez récolté {amount} graine(s) de dévoreuse !",
 		"elementalMasterSphere": "Le Maître élémentaire vous offre : {sphere}",
-		"view": "Voir"
+		"view": "Voir",
+		"bastilleDayReward": "Joyeuse Fête Nationale ! Voici votre cadeau du jour :<br><br>{rewards}"
 	},
 	"homepage": {
 		"connexion": "Connexion",
@@ -658,6 +659,13 @@
 					"title": "Joyeux anniversaire DinoRPG !",
 					"excerpt": "Du 1er au 11 juillet, connectez-vous chaque jour pour recevoir un Ticket d'Anniversaire et tenter votre chance au Port de Prêche !",
 					"content": "Le **4 juillet**, DinoRPG fête son anniversaire ! \n\nPour célébrer cet événement, une surprise attend tous les éleveurs de Dinoland !\n\n## Un cadeau chaque jour !\n\nDu **1er au 7 juillet**, chaque jour où vous vous connecterez, vous recevrez **1 Ticket d'Anniversaire** directement dans votre inventaire.\n\n## Direction le Port de Prêche !\n\nUtilisez vos tickets pour participer à une **grille à gratter spéciale anniversaire** et tenter de remporter de nombreux trésors, ainsi que des récompenses exclusives !\n\nChaque ticket vous permettra de **gratter 3 cases**.\n\nN'oubliez pas de vous connecter quotidiennement pour multiplier vos chances !\n\nToute l'équipe de DinoRPG Remastered vous remercie de faire vivre cette aventure. Joyeux anniversaire DinoRPG !"
+				}
+			},
+			"bastille_day": {
+				"start": {
+					"title": "Joyeuse fête du 14 Juillet !",
+					"excerpt": "Du 14 au 28 juillet, faites scintiller Dinoville ! Connectez-vous chaque jour pour obtenir vos Pétards Magiques et faire éclater les trésors du Feu d'artifice !",
+					"content": "À l'occasion de la **Fête Nationale**, Dinoville s'illumine de mille feux !\n\nPour célébrer les festivités du **14 au 28 juillet**, le Roi de Dinoland invite tous les maîtres Dinoz à participer au grand spectacle pyrotechnique !\n\n## Des Pétards Magiques chaque jour !\n\n* **Premier jour de connexion :** Recevez un assortiment de départ de **6 :fire_cracker: Pétards Magiques** !\n* **Chaque jour suivant :** Connectez-vous chaque jour pour recevoir **2 :fire_cracker: Pétards Magiques** supplémentaires.\n\n## Direction Dinoville pour le Feu d'Artifice !\n\nRendez-vous à **Dinoville** avec vos Dinoz pour faire exploser vos pétards. Chaque pétard magique tiré permettra de remporter d'incroyables trésors : des œufs de Dinoz rares, des équipements de combat, des énergies élémentaires, de l'or et bien plus encore !\n\nL'événement se terminera le **{eventEndDate} à 23h59**."
 				}
 			}
 		},

@@ -266,6 +266,10 @@ export default defineComponent({
 	background-image: url('../assets/gather/overlay/anniv.webp');
 	background-size: 340px;
 }
+.party::after {
+	background-image: url('../assets/gather/overlay/party.webp');
+	background-size: 340px;
+}
 .xmas::after {
 	background-image: url('../assets/gather/overlay/xmas.webp');
 	background-size: 340px;
