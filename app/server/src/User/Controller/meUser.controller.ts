@@ -2,6 +2,7 @@ import { StatTracking } from '@dinorpg/core/models/enums/StatsTracking.js';
 import { GameEvent } from '@dinorpg/core/models/game/gameEvents.js';
 import { GAME_RULES_VERSION } from '@dinorpg/core/models/game/gameRules.js';
 import { Item } from '@dinorpg/core/models/items/itemList.js';
+import { NotificationType } from '@dinorpg/core/models/notif/notifType.js';
 import { ExpectedError } from '@dinorpg/core/models/utils/expectedError.js';
 import { getMaxXp, orderDinozList } from '@dinorpg/core/utils/dinozUtils.js';
 import { FastifyReply, FastifyRequest } from 'fastify';
@@ -10,6 +11,7 @@ import { GameLogType } from '../../../../prisma/index.js';
 import { ACCESS_TOKEN_COOKIE, authCookieOptions } from '../../config/cookie.js';
 import gameConfig from '../../config/game.config.js';
 import { getUserMaxDinoz } from '../../Dinoz/Controller/getActiveDinoz.js';
+import { getEventEdition } from '../../Events/Service/eventTracking.service.js';
 import { getActiveGameEvents } from '../../GameEvent/Service/gameEvent.service.js';
 import { safeCreateGameLog } from '../../Gamelog/Controller/gamelog.controller.js';
 import { prisma } from '../../prisma.js';
@@ -91,6 +93,76 @@ export async function meUser(req: FastifyRequest, reply: FastifyReply) {
 					},
 					update: {
 						quantity: { increment: 1 }
+					}
+				});
+			}
+			// Give firecrackers during the Bastille Day event (14 Juillet)
+			const isBastilleDayActive = getActiveGameEvents(connectedAt).some(
+				event => event.event === GameEvent.BASTILLE_DAY
+			);
+			if (isBastilleDayActive) {
+				const edition = getEventEdition(connectedAt);
+				const tracking = await tx.userEventTracking.findUnique({
+					where: {
+						eventId_edition_userId: {
+							eventId: GameEvent.BASTILLE_DAY,
+							edition,
+							userId
+						}
+					}
+				});
+				const isFirstLogin = !tracking;
+				const firecrackersToGive = isFirstLogin ? 6 : 2;
+
+				await tx.userEventTracking.upsert({
+					where: {
+						eventId_edition_userId: {
+							eventId: GameEvent.BASTILLE_DAY,
+							edition,
+							userId
+						}
+					},
+					create: {
+						eventId: GameEvent.BASTILLE_DAY,
+						edition,
+						userId,
+						daily: firecrackersToGive,
+						total: firecrackersToGive
+					},
+					update: {
+						daily: firecrackersToGive,
+						total: { increment: firecrackersToGive }
+					}
+				});
+
+				await tx.userItems.upsert({
+					where: {
+						itemId_userId: {
+							userId,
+							itemId: Item.FIRE_CRACKER
+						}
+					},
+					create: {
+						userId,
+						itemId: Item.FIRE_CRACKER,
+						quantity: firecrackersToGive
+					},
+					update: {
+						quantity: { increment: firecrackersToGive }
+					}
+				});
+
+				await tx.notification.create({
+					data: {
+						userId,
+						type: NotificationType.BASTILLE_DAY_REWARD,
+						content: [
+							{
+								rewardType: 'item',
+								value: Item.FIRE_CRACKER,
+								quantity: firecrackersToGive
+							}
+						]
 					}
 				});
 			}

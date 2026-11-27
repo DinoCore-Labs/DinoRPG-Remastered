@@ -1,6 +1,8 @@
 import { Language } from '@dinorpg/core/models/config/language.js';
 import { GameEvent } from '@dinorpg/core/models/game/gameEvents.js';
 import { NewsType } from '@dinorpg/core/models/news/news.js';
+import fs from 'fs';
+import path from 'path';
 
 import gameConfig from '../../config/game.config.js';
 import { distributeChristmasRewards } from '../../Events/Service/eventChristmasRewards.service.js';
@@ -51,7 +53,20 @@ export async function checkEventNews() {
 				eventEndDate: `${endDayStr}/${endMonthStr}`
 			});
 			try {
-				await newsService.createAdminNews({
+				let imageBuffer: Uint8Array | undefined;
+				let imageMimeType: string | null = null;
+				const possiblePaths = [
+					path.resolve(process.cwd(), `app/client/src/assets/news/event_${eventNameLower}_illustration.webp`),
+					path.resolve(process.cwd(), `../client/src/assets/news/event_${eventNameLower}_illustration.webp`)
+				];
+				for (const p of possiblePaths) {
+					if (fs.existsSync(p)) {
+						imageBuffer = new Uint8Array(fs.readFileSync(p));
+						imageMimeType = 'image/webp';
+						break;
+					}
+				}
+				const newsData = {
 					slug,
 					type: newsType,
 					isPublished: true,
@@ -68,9 +83,26 @@ export async function checkEventNews() {
 							title: titleKey,
 							excerpt: excerptKey,
 							content: `${contentKey}|${params}`
+						},
+						{
+							lang: Language.ES,
+							title: titleKey,
+							excerpt: excerptKey,
+							content: `${contentKey}|${params}`
+						},
+						{
+							lang: Language.DE,
+							title: titleKey,
+							excerpt: excerptKey,
+							content: `${contentKey}|${params}`
 						}
 					]
-				});
+				};
+				if (imageBuffer) {
+					await newsService.createAdminNews(newsData, imageBuffer, imageMimeType);
+				} else {
+					await newsService.createAdminNews(newsData);
+				}
 				console.log(`[Events] Automatically created start news for ${event.event}`);
 			} catch (e) {
 				if ((e as Error).message && !(e as Error).message.includes('Unique constraint failed')) {
@@ -83,7 +115,13 @@ export async function checkEventNews() {
 		 *
 		 * There is no end ranking/news associated with Madame Urma.
 		 */
-		if (isEndDay && event.event !== GameEvent.EASTER && event.event !== GameEvent.BIRTHDAY) {
+		if (
+			isEndDay &&
+			event.event !== GameEvent.EASTER &&
+			event.event !== GameEvent.BIRTHDAY &&
+			event.event !== GameEvent.BASTILLE_DAY
+		) {
+			const newsType = (NewsType as any)[`EVENT_${event.event}`] || NewsType.ANNOUNCE;
 			const titleKey = `news.event.${eventNameLower}.end.title`;
 			const excerptKey = `news.event.${eventNameLower}.end.excerpt`;
 			const contentKey = `news.event.${eventNameLower}.end.content`;
