@@ -36,6 +36,7 @@ export enum Action {
 	HUNT = 'hunt',
 	SEEK = 'seek',
 	ANNIV = 'anniv',
+	PARTY = 'party',
 	DAILY = 'daily',
 	XMAS = 'xmas',
 	TICTAC = 'tictac',
@@ -177,6 +178,10 @@ export const actionList: Readonly<Record<Action, ActionFiche>> = {
 	},
 	[Action.ANNIV]: {
 		name: Action.ANNIV,
+		imgName: 'act_gather'
+	},
+	[Action.PARTY]: {
+		name: Action.PARTY,
 		imgName: 'act_gather'
 	},
 	[Action.DAILY]: {

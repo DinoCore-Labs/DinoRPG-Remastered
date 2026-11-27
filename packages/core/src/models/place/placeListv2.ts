@@ -43,7 +43,7 @@ export const placeListv2 = definePlaces({
 			{ target: PlaceEnum.FOUTAINE_DE_JOUVENCE },
 			{ target: PlaceEnum.GO_TO_DINOPLAZA, condition: 'fx(plaza)' }
 		],
-		gathers: [GatherType.SEEK, GatherType.XMAS],
+		gathers: [GatherType.SEEK, GatherType.XMAS, GatherType.PARTY],
 		ground: GroundEnum.NONE,
 		background: 's_dnv',
 		top: 155,

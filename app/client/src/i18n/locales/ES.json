@@ -55,7 +55,8 @@
 		"devourerAttacked": "Quelqu'un tente de vous prendre le contrôle de la dévoreuse !",
 		"devourerSeedsGathered": "Vous avez récolté {amount} graine(s) de dévoreuse !",
 		"elementalMasterSphere": "El Maestro Elemental te ofrece: {sphere}",
-		"view": "Voir"
+		"view": "Voir",
+		"bastilleDayReward": "¡Feliz Fiesta Nacional! Aquí tienes tu regalo del día:<br><br>{rewards}"
 	},
 	"homepage": {
 		"connexion": "Conexión",
@@ -618,6 +619,13 @@
 					"title": "Fin de l'événement de Noël !",
 					"excerpt": "Les Piglous ont tous été chassés, il est l'heure de distribuer les récompenses !",
 					"content": "La grande chasse aux Piglous est officiellement terminée !\n\nGrâce à vos efforts conjoints, la menace des Piglous a été repoussée (du moins pour l'instant...). Les récompenses individuelles et de clan ont été distribuées automatiquement et ajoutées dans vos inventaires. Vous devriez avoir reçu une notification détaillant vos gains lors de votre connexion.\n\n### :conts1: Top 3 Joueurs\n{topPlayers}\n\n### :cup1: Top 3 Clans\n{topClans}\n\nFélicitations à tous les participants, et merci pour votre incroyable engouement !\n\nÀ très bientôt pour de prochaines aventures !"
+				}
+			},
+			"bastille_day": {
+				"start": {
+					"title": "¡Feliz fiesta del 14 de julio!",
+					"excerpt": "¡Del 14 al 28 de julio, haz brillar Dinovilla! ¡Inicia sesión cada día para recibir tus Petardos Mágicos y descubrir los tesoros de los fuegos artificiales!",
+					"content": "¡Con motivo de la **Fiesta Nacional**, Dinovilla se ilumina con mil colores!\n\nDel **14 al 28 de julio**, el Rey de Dinoland invita a todos los maestros Dinoz a unirse al gran espectáculo pirotécnico.\n\n## ¡Petardos Mágicos cada día!\n\n* **Primer día de conexión:** ¡Recibe un lote inicial de **6 :fire_cracker: Petardos Mágicos**!\n* **Días siguientes:** Conéctate cada día para recibir **2 :fire_cracker: Petardos Mágicos** adicionales.\n\n## ¡Rumbo a Dinovilla para los Fuegos Artificiales!\n\nDirígete a **Dinovilla** con tus Dinoz para lanzar tus petardos. Cada petardo mágico utilizado permitirá ganar fabulosas recompensas: huevos de Dinoz raros, raciones de combate, energías elementales, oro y ¡mucho más!\n\nEl evento finalizará el **{eventEndDate} a las 23:59**."
 				}
 			}
 		}

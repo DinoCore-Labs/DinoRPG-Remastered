@@ -19,6 +19,18 @@ const events = [
 		theme: GameTheme.APRIL_FOOLS
 	},
 	{
+		event: GameEvent.BASTILLE_DAY,
+		start: {
+			month: 7,
+			day: 14
+		},
+		end: {
+			month: 7,
+			day: 28
+		},
+		theme: GameTheme.BASTILLE_DAY
+	},
+	{
 		event: GameEvent.BIRTHDAY,
 		start: {
 			month: 1,

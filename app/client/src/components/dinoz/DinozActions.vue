@@ -824,6 +824,7 @@ export default defineComponent({
 				case GatherType.LABO:
 				case Action.ANNIV:
 				case GatherType.PARTY:
+				case Action.PARTY:
 				case Action.DAILY:
 					{
 						const dId = action.forDinoz ? Number(action.forDinoz) : Number(this.dinozId);

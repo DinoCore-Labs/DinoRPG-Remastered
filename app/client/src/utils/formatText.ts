@@ -57,6 +57,8 @@ export const helpers = {
 				return `<img class="text-icon" src="${getImgURL('item', 'item_golden_napodino')}" alt="napo">`;
 			case 'xmas_ticket':
 				return `<img class="text-icon" src="${getImgURL('item', 'item_christmas_ticket')}" alt="xmas_ticket">`;
+			case 'fire_cracker':
+				return `<img class="text-icon" src="${getImgURL('item', 'item_fire_cracker')}" alt="fire_cracker">`;
 			case 'demon_ticket':
 				return `<img class="text-icon" src="${getImgURL('item', 'item_demon_ticket')}" alt="demon_ticket">`;
 			case 'xmas_egg':
@@ -142,6 +144,7 @@ export function formatText(text: string): string {
 				'irma',
 				'napo',
 				'xmas_ticket',
+				'fire_cracker',
 				'demon_ticket',
 				'xmas_egg',
 				'santaz_egg',

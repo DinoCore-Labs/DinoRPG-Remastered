@@ -8,5 +8,6 @@ export enum NotificationType {
 	DEVOURER_ATTACKED = 'devourerAttacked',
 	DEVOURER_SEEDS_GATHERED = 'devourerSeedsGathered',
 	XMAS_REWARD = 'xmasReward',
-	ELEMENTAL_MASTER_SPHERE = 'elementalMasterSphere'
+	ELEMENTAL_MASTER_SPHERE = 'elementalMasterSphere',
+	BASTILLE_DAY_REWARD = 'bastilleDayReward'
 }
